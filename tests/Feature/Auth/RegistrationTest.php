@@ -3,37 +3,69 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Route;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
+    /*
+    |--------------------------------------------------------------------------
+    | ROUTES D'INSCRIPTION DÉSACTIVÉES
+    |--------------------------------------------------------------------------
+    */
 
-        $this->skipUnlessFortifyHas(Features::registration());
+    public function test_registration_routes_are_disabled(): void
+    {
+        $this->assertFalse(
+            Route::has('register')
+        );
+
+        $this->assertFalse(
+            Route::has('register.store')
+        );
     }
 
-    public function test_registration_screen_can_be_rendered()
-    {
-        $response = $this->get(route('register'));
+    /*
+    |--------------------------------------------------------------------------
+    | GET /register
+    |--------------------------------------------------------------------------
+    */
 
-        $response->assertOk();
+    public function test_registration_page_cannot_be_accessed(): void
+    {
+        $this
+            ->get('/register')
+            ->assertNotFound();
     }
 
-    public function test_new_users_can_register()
-    {
-        $response = $this->post(route('register.store'), [
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]);
+    /*
+    |--------------------------------------------------------------------------
+    | POST /register
+    |--------------------------------------------------------------------------
+    |
+    | Même si quelqu'un essaie d'envoyer directement
+    | une requête HTTP, aucun compte ne doit être créé.
+    |
+    */
 
-        $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+    public function test_visitors_cannot_register_by_posting_directly(): void
+    {
+        $this
+            ->post('/register', [
+                'name' => 'Attacker',
+                'email' => 'attacker@example.com',
+                'password' => 'Password123!',
+                'password_confirmation' => 'Password123!',
+            ])
+            ->assertNotFound();
+
+        $this->assertDatabaseMissing(
+            'users',
+            [
+                'email' => 'attacker@example.com',
+            ]
+        );
     }
 }

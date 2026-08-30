@@ -1,12 +1,26 @@
-<script setup lang="ts">
+<script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import { dashboard, login } from '@/routes';
 /* @chisel-registration */
 import { register } from '@/routes';
 /* @end-chisel-registration */
+
+import { onMounted } from 'vue';
+import { animate } from 'animejs';
+
+onMounted(() => {
+    animate('.anime-test', {
+        x: 100,
+        duration: 1500,
+        ease: 'inOutQuad',
+    });
+});
 </script>
 
 <template>
+    <h1 class="anime-test">
+    VVS FLAWLESS
+</h1>
     <Head title="Welcome">
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
