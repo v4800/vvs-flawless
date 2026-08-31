@@ -18,7 +18,7 @@ const updateStatus = (reservation, status) => {
     router.patch(
         `/dashboard/reservations/${reservation.id}/status`,
         {
-            status: status,
+            status,
         },
         {
             preserveScroll: true,
@@ -26,20 +26,49 @@ const updateStatus = (reservation, status) => {
     );
 };
 
-const getPrice = (reservation) => {
-    if (!reservation.watch) {
+const formatDate = (date) => {
+    return new Date(date).toLocaleString('fr-BE');
+};
+
+const formatSource = (source) => {
+    if (!source) {
+        return 'Direct / non attribué';
+    }
+
+    const sources = {
+        tiktok: 'TikTok',
+        instagram: 'Instagram',
+        facebook: 'Facebook',
+        google: 'Google',
+        youtube: 'YouTube',
+    };
+
+    return sources[source.toLowerCase()] ?? source;
+};
+
+const formatMedium = (medium) => {
+    if (!medium) {
         return null;
     }
 
-    if (reservation.movement === 'Suisse') {
-        return reservation.watch.swiss_promo_price;
-    }
+    const mediums = {
+        organic_social: 'Réseaux sociaux organiques',
+        social: 'Réseaux sociaux',
+        organic: 'Organique',
+        referral: 'Lien externe',
+        email: 'Email',
+        cpc: 'Publicité payante',
+    };
 
-    return reservation.watch.japanese_promo_price;
+    return mediums[medium.toLowerCase()] ?? medium;
 };
 
-const formatDate = (date) => {
-    return new Date(date).toLocaleString('fr-BE');
+const hasMarketingAttribution = (reservation) => {
+    return Boolean(
+        reservation.utm_source ||
+        reservation.utm_medium ||
+        reservation.utm_campaign,
+    );
 };
 </script>
 
@@ -122,15 +151,30 @@ const formatDate = (date) => {
                                         </span>
 
                                         <span
-                                            v-if="getPrice(reservation)"
+                                            v-if="reservation.price !== null"
                                             class="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-xs"
                                         >
                                             {{
                                                 Number(
-                                                    getPrice(reservation),
+                                                    reservation.price,
                                                 ).toFixed(0)
                                             }}
                                             €
+                                        </span>
+
+                                        <span
+                                            v-if="
+                                                hasMarketingAttribution(
+                                                    reservation,
+                                                )
+                                            "
+                                            class="rounded-full border border-amber-400/20 bg-amber-400/[0.08] px-3 py-1 text-xs text-amber-200"
+                                        >
+                                            {{
+                                                formatSource(
+                                                    reservation.utm_source,
+                                                )
+                                            }}
                                         </span>
                                     </div>
                                 </div>
@@ -211,7 +255,7 @@ const formatDate = (date) => {
                                 </div>
                             </div>
 
-                            <!-- REMISE -->
+                            <!-- COMMANDE -->
                             <div class="mt-6 grid gap-5 md:grid-cols-3">
                                 <div>
                                     <p class="text-xs text-zinc-500">
@@ -239,6 +283,61 @@ const formatDate = (date) => {
                                     <p class="mt-1 font-medium">
                                         #{{ reservation.id }}
                                     </p>
+                                </div>
+                            </div>
+
+                            <!-- MARKETING -->
+                            <div
+                                v-if="hasMarketingAttribution(reservation)"
+                                class="mt-6 rounded-2xl border border-amber-400/15 bg-amber-400/[0.04] p-5"
+                            >
+                                <p
+                                    class="text-xs tracking-[0.2em] text-amber-300/70 uppercase"
+                                >
+                                    Provenance marketing
+                                </p>
+
+                                <div class="mt-4 grid gap-5 md:grid-cols-3">
+                                    <div>
+                                        <p class="text-xs text-zinc-500">
+                                            Source
+                                        </p>
+
+                                        <p class="mt-1 font-medium">
+                                            {{
+                                                formatSource(
+                                                    reservation.utm_source,
+                                                )
+                                            }}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p class="text-xs text-zinc-500">
+                                            Canal
+                                        </p>
+
+                                        <p class="mt-1 font-medium">
+                                            {{
+                                                formatMedium(
+                                                    reservation.utm_medium,
+                                                ) || 'Non renseigné'
+                                            }}
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p class="text-xs text-zinc-500">
+                                            Campagne
+                                        </p>
+
+                                        <p class="mt-1 font-medium">
+                                            {{
+                                                reservation.utm_campaign ||
+                                                'Non renseignée'
+                                            }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 

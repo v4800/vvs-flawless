@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\SeoController;
 use App\Http\Controllers\WatchController;
 use App\Http\Middleware\EnsureUserIsAdmin;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,10 +14,43 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::redirect(
+Route::inertia('/conditions-reservation', 'Legal/ReservationTerms')
+    ->name('reservation-terms');
+
+Route::get(
     '/',
-    '/watches'
+    function (Request $request) {
+        return redirect()->route(
+            'watches.index',
+            $request->query()
+        );
+    }
 )->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| SEO
+|--------------------------------------------------------------------------
+*/
+
+Route::inertia('/confidentialite', 'Legal/Privacy')
+    ->name('privacy');
+
+Route::get(
+    '/sitemap.xml',
+    [
+        SeoController::class,
+        'sitemap',
+    ]
+)->name('sitemap');
+
+Route::get(
+    '/robots.txt',
+    [
+        SeoController::class,
+        'robots',
+    ]
+)->name('robots');
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +60,10 @@ Route::redirect(
 
 Route::get(
     '/watches',
-    [WatchController::class, 'index']
+    [
+        WatchController::class,
+        'index',
+    ]
 )->name('watches.index');
 
 /*
@@ -36,7 +74,10 @@ Route::get(
 
 Route::get(
     '/watches/{watch}',
-    [WatchController::class, 'show']
+    [
+        WatchController::class,
+        'show',
+    ]
 )->name('watches.show');
 
 /*
@@ -50,7 +91,10 @@ Route::get(
 
 Route::post(
     '/reservations',
-    [ReservationController::class, 'store']
+    [
+        ReservationController::class,
+        'store',
+    ]
 )
     ->middleware(
         'throttle:5,1'
@@ -100,7 +144,6 @@ Route::middleware([
     'auth',
     EnsureUserIsAdmin::class,
 ])->group(function () {
-
     Route::get(
         '/dashboard',
         [

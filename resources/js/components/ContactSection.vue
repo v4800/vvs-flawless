@@ -51,9 +51,7 @@
                     sur TikTok.
                 </p>
 
-                <!-- ================================================= -->
                 <!-- PROFIL TIKTOK -->
-                <!-- ================================================= -->
 
                 <a
                     href="https://www.tiktok.com/@vvsflawless43"
@@ -70,8 +68,12 @@
                             ></div>
 
                             <img
-                                src="/images/vvs-flawless-profile.png"
+                                src="/images/vvs-flawless-profile.webp"
                                 alt="VVS FLAWLESS"
+                                width="72"
+                                height="72"
+                                loading="lazy"
+                                decoding="async"
                                 class="relative h-16 w-16 rounded-full border border-white/15 object-cover shadow-[0_0_25px_rgba(255,255,255,0.06)] sm:h-[72px] sm:w-[72px]"
                             />
                         </div>
@@ -114,9 +116,7 @@
                     </div>
                 </a>
 
-                <!-- ================================================= -->
                 <!-- BOUTONS -->
-                <!-- ================================================= -->
 
                 <div
                     class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"

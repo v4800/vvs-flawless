@@ -1,9 +1,12 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed, watch as vueWatch } from 'vue';
-
-import VvsNavigation from '@/components/VvsNavigation.vue';
+import ReservationTrust from '@/components/ReservationTrust.vue';
+import MobileReservationBar from '@/components/MobileReservationBar.vue';
+import PurchaseGuide from '@/components/PurchaseGuide.vue';
+import RelatedWatches from '@/components/RelatedWatches.vue';
 import StockBadge from '@/components/StockBadge.vue';
+import VvsNavigation from '@/components/VvsNavigation.vue';
 
 const props = defineProps({
     watch: {
@@ -15,13 +18,16 @@ const props = defineProps({
         type: String,
         default: 'Japonais',
     },
+
+    relatedWatches: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const form = useForm({
     watch_id: props.watch.id,
-
     movement: props.selectedMovement === 'Suisse' ? 'Suisse' : 'Japonais',
-
     customer_name: '',
     email: '',
     phone: '',
@@ -81,11 +87,7 @@ const submit = () => {
 <template>
     <Head :title="`${watch.name} — VVS FLAWLESS`" />
 
-    <div class="min-h-screen bg-black text-white">
-        <!-- ========================================================= -->
-        <!-- NAVIGATION -->
-        <!-- ========================================================= -->
-
+    <div class="min-h-screen bg-black pb-24 text-white lg:pb-0">
         <VvsNavigation
             current="watch"
             back-href="/watches"
@@ -94,15 +96,11 @@ const submit = () => {
         />
 
         <main>
-            <!-- ========================================================= -->
             <!-- PRODUIT -->
-            <!-- ========================================================= -->
 
             <section
                 class="relative overflow-hidden px-5 pt-10 pb-20 sm:px-6 lg:px-10 lg:pt-14"
             >
-                <!-- HALOS -->
-
                 <div
                     class="pointer-events-none absolute top-20 -left-40 -z-10 h-[500px] w-[500px] rounded-full bg-amber-400/[0.05] blur-[150px]"
                 ></div>
@@ -114,19 +112,13 @@ const submit = () => {
                 <div
                     class="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16"
                 >
-                    <!-- ================================================= -->
                     <!-- IMAGE -->
-                    <!-- ================================================= -->
 
                     <div>
                         <div class="relative">
-                            <!-- STOCK -->
-
                             <div class="absolute top-5 left-5 z-20">
                                 <StockBadge :quantity="watch.stock_quantity" />
                             </div>
-
-                            <!-- IMAGE : ON GARDE TON FOND -->
 
                             <div
                                 class="self-start overflow-hidden rounded-3xl bg-zinc-400"
@@ -134,11 +126,10 @@ const submit = () => {
                                 <img
                                     :src="watch.image"
                                     :alt="watch.name"
+                                    decoding="async"
                                     class="block h-auto w-full object-contain"
                                 />
                             </div>
-
-                            <!-- LABEL -->
 
                             <div
                                 class="absolute right-5 bottom-5 left-5 flex items-center justify-between rounded-2xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl"
@@ -174,8 +165,6 @@ const submit = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <!-- PETITES CARACTÉRISTIQUES -->
 
                         <div class="mt-4 grid grid-cols-3 gap-3">
                             <div
@@ -222,13 +211,9 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <!-- ================================================= -->
                     <!-- INFORMATIONS -->
-                    <!-- ================================================= -->
 
                     <div class="lg:pt-5">
-                        <!-- MARQUE -->
-
                         <div class="flex items-center gap-3">
                             <span class="h-px w-8 bg-amber-300"></span>
 
@@ -238,8 +223,6 @@ const submit = () => {
                                 VVS FLAWLESS
                             </p>
                         </div>
-
-                        <!-- TITRE -->
 
                         <h1
                             class="mt-6 max-w-2xl text-4xl leading-[1.03] font-black tracking-[-0.035em] uppercase sm:text-5xl"
@@ -251,11 +234,11 @@ const submit = () => {
                             class="mt-4 text-xs font-bold tracking-[0.22em] text-zinc-500 uppercase"
                         >
                             Moissanite VVS
+
                             <span class="mx-2 text-amber-400"> • </span>
+
                             Couleur D
                         </p>
-
-                        <!-- DESCRIPTION -->
 
                         <p
                             class="mt-7 max-w-2xl text-base leading-8 text-zinc-400"
@@ -263,13 +246,11 @@ const submit = () => {
                             {{ watch.description }}
                         </p>
 
-                        <!-- SÉPARATEUR -->
-
                         <div
                             class="my-9 h-px bg-gradient-to-r from-white/10 via-white/5 to-transparent"
                         ></div>
 
-                        <!-- CHOIX MOUVEMENT -->
+                        <!-- MOUVEMENTS -->
 
                         <div>
                             <div class="flex items-end justify-between gap-5">
@@ -293,14 +274,11 @@ const submit = () => {
                             </div>
 
                             <div class="mt-5 grid gap-4 sm:grid-cols-2">
-                                <!-- JAPONAIS -->
-
                                 <Link
                                     :href="`/watches/${watch.id}?movement=Japonais`"
                                     preserve-scroll
                                     :class="[
                                         'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
-
                                         form.movement === 'Japonais'
                                             ? 'border-amber-300/70 bg-amber-300/[0.06] shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                                             : 'border-white/10 bg-zinc-950 hover:-translate-y-1 hover:border-white/20',
@@ -324,7 +302,6 @@ const submit = () => {
                                         <div
                                             :class="[
                                                 'flex h-7 w-7 items-center justify-center rounded-full border text-[10px] font-black transition',
-
                                                 form.movement === 'Japonais'
                                                     ? 'border-amber-300 bg-amber-300 text-black'
                                                     : 'border-white/15 text-transparent',
@@ -365,14 +342,11 @@ const submit = () => {
                                     </p>
                                 </Link>
 
-                                <!-- SUISSE -->
-
                                 <Link
                                     :href="`/watches/${watch.id}?movement=Suisse`"
                                     preserve-scroll
                                     :class="[
                                         'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
-
                                         form.movement === 'Suisse'
                                             ? 'border-amber-300/70 bg-amber-300/[0.06] shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                                             : 'border-white/10 bg-zinc-950 hover:-translate-y-1 hover:border-white/20',
@@ -396,7 +370,6 @@ const submit = () => {
                                         <div
                                             :class="[
                                                 'flex h-7 w-7 items-center justify-center rounded-full border text-[10px] font-black transition',
-
                                                 form.movement === 'Suisse'
                                                     ? 'border-amber-300 bg-amber-300 text-black'
                                                     : 'border-white/15 text-transparent',
@@ -435,7 +408,7 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <!-- PRIX CHOISI -->
+                        <!-- PRIX -->
 
                         <div
                             class="mt-5 flex items-center justify-between gap-5 rounded-2xl border border-amber-300/20 bg-gradient-to-r from-amber-300/[0.055] to-transparent p-5"
@@ -466,7 +439,7 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <!-- REMISE -->
+                        <!-- DISPONIBILITÉ -->
 
                         <div class="mt-5 grid gap-3 sm:grid-cols-2">
                             <div
@@ -498,8 +471,6 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <!-- CTA SCROLL -->
-
                         <a
                             href="#reservation"
                             class="mt-6 flex w-full items-center justify-between rounded-2xl bg-amber-300 px-6 py-5 font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:-translate-y-1 hover:bg-amber-200"
@@ -512,9 +483,7 @@ const submit = () => {
                 </div>
             </section>
 
-            <!-- ========================================================= -->
             <!-- BANDE DE CONFIANCE -->
-            <!-- ========================================================= -->
 
             <section
                 class="border-y border-white/10 bg-zinc-950/60 px-5 py-6 sm:px-6 lg:px-10"
@@ -560,9 +529,11 @@ const submit = () => {
                 </div>
             </section>
 
-            <!-- ========================================================= -->
+            <!-- GUIDE -->
+
+            <PurchaseGuide />
+
             <!-- RÉSERVATION -->
-            <!-- ========================================================= -->
 
             <section
                 id="reservation"
@@ -575,9 +546,7 @@ const submit = () => {
                 <div
                     class="mx-auto grid max-w-[1200px] gap-8 lg:grid-cols-[0.75fr_1.25fr]"
                 >
-                    <!-- ================================================= -->
                     <!-- RÉCAP -->
-                    <!-- ================================================= -->
 
                     <div class="lg:sticky lg:top-28 lg:self-start">
                         <p
@@ -598,8 +567,6 @@ const submit = () => {
                             la remise en main propre.
                         </p>
 
-                        <!-- MINI PRODUIT -->
-
                         <div
                             class="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950"
                         >
@@ -608,6 +575,8 @@ const submit = () => {
                                     <img
                                         :src="watch.image"
                                         :alt="watch.name"
+                                        loading="lazy"
+                                        decoding="async"
                                         class="h-full w-full object-cover"
                                     />
                                 </div>
@@ -634,8 +603,6 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <!-- INFO -->
-
                         <div
                             class="mt-4 rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5"
                         >
@@ -650,13 +617,11 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <!-- ================================================= -->
                     <!-- FORMULAIRE -->
-                    <!-- ================================================= -->
 
                     <form
-                        @submit.prevent="submit"
                         class="rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-6 shadow-[0_30px_100px_rgba(0,0,0,0.35)] sm:p-8"
+                        @submit.prevent="submit"
                     >
                         <div
                             class="mb-8 flex items-center justify-between gap-5 border-b border-white/10 pb-6"
@@ -784,7 +749,7 @@ const submit = () => {
                                 </p>
                             </div>
 
-                            <!-- MODE -->
+                            <!-- REMISE -->
 
                             <div class="md:col-span-2">
                                 <p
@@ -825,6 +790,7 @@ const submit = () => {
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Message
+
                                     <span
                                         class="tracking-normal text-zinc-700 normal-case"
                                     >
@@ -845,6 +811,34 @@ const submit = () => {
                                 >
                                     {{ form.errors.message }}
                                 </p>
+                            </div>
+
+                            <ReservationTrust />
+                            <div
+                                class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-zinc-950/70 p-5 sm:flex-row sm:items-center sm:justify-between md:col-span-2"
+                            >
+                                <div>
+                                    <p class="font-black text-white">
+                                        Une question avant de réserver ?
+                                    </p>
+
+                                    <p
+                                        class="mt-1 text-xs leading-5 text-zinc-600"
+                                    >
+                                        Contactez directement VVS FLAWLESS pour
+                                        une précision sur la montre ou le
+                                        mouvement.
+                                    </p>
+                                </div>
+
+                                <a
+                                    href="https://www.tiktok.com/@vvsflawless43"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="shrink-0 rounded-xl border border-amber-300/25 px-5 py-3 text-center text-xs font-black tracking-[0.1em] text-amber-200 uppercase transition hover:border-amber-300 hover:bg-amber-300 hover:text-black"
+                                >
+                                    @vvsflawless43 →
+                                </a>
                             </div>
 
                             <!-- CONFIRMATION -->
@@ -939,15 +933,17 @@ const submit = () => {
                     </form>
                 </div>
             </section>
+
+            <!-- AUTRES PIÈCES -->
+
+            <RelatedWatches :watches="relatedWatches" />
         </main>
 
-        <!-- ========================================================= -->
-        <!-- FOOTER SIMPLE -->
-        <!-- ========================================================= -->
+        <!-- FOOTER -->
 
         <footer class="border-t border-white/10 px-6 py-9">
             <div
-                class="mx-auto flex max-w-[1400px] flex-col gap-4 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
+                class="mx-auto flex max-w-[1400px] flex-col gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
             >
                 <div>
                     <p class="text-sm font-black tracking-[0.12em] uppercase">
@@ -959,13 +955,36 @@ const submit = () => {
                     </p>
                 </div>
 
-                <Link
-                    href="/watches"
-                    class="text-xs font-bold tracking-[0.12em] text-zinc-500 uppercase transition hover:text-amber-300"
+                <div
+                    class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end"
                 >
-                    ← Retour à la collection
-                </Link>
+                    <Link
+                        href="/confidentialite"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                    >
+                        Confidentialité
+                    </Link>
+
+                    <Link
+                        href="/conditions-reservation"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                    >
+                        Conditions de réservation
+                    </Link>
+
+                    <Link
+                        href="/watches"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        ← Collection
+                    </Link>
+                </div>
             </div>
         </footer>
+
+        <MobileReservationBar
+            :movement="form.movement"
+            :price="selectedPrice"
+        />
     </div>
 </template>

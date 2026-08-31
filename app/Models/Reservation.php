@@ -19,6 +19,9 @@ class Reservation extends Model
         'status',
         'reservation_number',
         'message',
+        'utm_source',
+        'utm_medium',
+        'utm_campaign',
     ];
 
     protected $casts = [

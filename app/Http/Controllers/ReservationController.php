@@ -99,6 +99,17 @@ class ReservationController extends Controller
                 ->exists()
         );
 
+        $attribution = $request
+            ->session()
+            ->get(
+                'marketing_attribution',
+                []
+            );
+
+        if (! is_array($attribution)) {
+            $attribution = [];
+        }
+
         $reservation = Reservation::create([
             'watch_id' => $watch->id,
 
@@ -121,6 +132,21 @@ class ReservationController extends Controller
             'reservation_number' => $reservationNumber,
 
             'message' => $validated['message'] ?? null,
+
+            'utm_source' => $this->attributionValue(
+                $attribution,
+                'utm_source'
+            ),
+
+            'utm_medium' => $this->attributionValue(
+                $attribution,
+                'utm_medium'
+            ),
+
+            'utm_campaign' => $this->attributionValue(
+                $attribution,
+                'utm_campaign'
+            ),
         ]);
 
         $reservation->load('watch');
@@ -138,7 +164,6 @@ class ReservationController extends Controller
                 'Erreur mail client VVS FLAWLESS',
                 [
                     'reservation_id' => $reservation->id,
-
                     'error' => $exception->getMessage(),
                 ]
             );
@@ -165,7 +190,6 @@ class ReservationController extends Controller
                     'Erreur mail admin VVS FLAWLESS',
                     [
                         'reservation_id' => $reservation->id,
-
                         'error' => $exception->getMessage(),
                     ]
                 );
@@ -254,9 +278,7 @@ class ReservationController extends Controller
 
                     'watch' => [
                         'id' => $watch->id,
-
                         'name' => $watch->name,
-
                         'image' => $watch->image,
                     ],
                 ]
@@ -264,27 +286,41 @@ class ReservationController extends Controller
                 request()
             );
 
-        $response
-            ->headers
-            ->set(
-                'Cache-Control',
-                'no-store, private, max-age=0, must-revalidate'
-            );
+        $response->headers->set(
+            'Cache-Control',
+            'no-store, private, max-age=0, must-revalidate'
+        );
 
-        $response
-            ->headers
-            ->set(
-                'Pragma',
-                'no-cache'
-            );
+        $response->headers->set(
+            'Pragma',
+            'no-cache'
+        );
 
-        $response
-            ->headers
-            ->set(
-                'Expires',
-                '0'
-            );
+        $response->headers->set(
+            'Expires',
+            '0'
+        );
 
         return $response;
+    }
+
+    /**
+     * @param  array<mixed>  $attribution
+     */
+    private function attributionValue(
+        array $attribution,
+        string $key
+    ): ?string {
+        $value = $attribution[$key] ?? null;
+
+        if (! is_string($value)) {
+            return null;
+        }
+
+        $value = trim($value);
+
+        return $value !== ''
+            ? $value
+            : null;
     }
 }

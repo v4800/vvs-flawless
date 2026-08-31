@@ -435,19 +435,11 @@ onBeforeUnmount(() => {
                         <h1
                             class="hero-animate relative mt-6 max-w-3xl overflow-hidden text-[3.05rem] leading-[0.84] font-black tracking-[-0.055em] uppercase min-[380px]:text-[3.35rem] sm:text-[5.5rem] lg:text-[7rem]"
                         >
-                            <span
-                                class="bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent"
-                            >
-                                VVS
-                            </span>
+                            <span class="vvs-gradient-text"> VVS </span>
 
                             <br />
 
-                            <span
-                                class="bg-gradient-to-b from-white via-zinc-200 to-zinc-600 bg-clip-text text-transparent"
-                            >
-                                FLAWLESS
-                            </span>
+                            <span class="vvs-gradient-text"> FLAWLESS </span>
 
                             <span
                                 class="brand-shine pointer-events-none absolute top-0 -left-[30%] h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"

@@ -170,3 +170,37 @@
         @apply bg-background text-foreground;
     }
 }
+@keyframes vvs-gradient-text {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
+}
+
+.vvs-gradient-text {
+    color: transparent;
+    background-image: linear-gradient(
+        90deg,
+        #f59e0b,
+        #fde68a,
+        #ffffff,
+        #fcd34d,
+        #d97706,
+        #fde68a,
+        #f59e0b
+    );
+    background-size: 300% 300%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: vvs-gradient-text 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-gradient-text {
+        animation: none;
+        background-position: 50% 50%;
+    }
+}
