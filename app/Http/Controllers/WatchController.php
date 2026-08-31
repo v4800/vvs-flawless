@@ -162,6 +162,22 @@ class WatchController extends Controller
         ]);
     }
 
+    /**
+     * @return list<array{
+     *     '@type': string,
+     *     name: string,
+     *     url: string,
+     *     price: float,
+     *     priceCurrency: string,
+     *     itemCondition: string,
+     *     availability: string,
+     *     seller: array{
+     *         '@type': string,
+     *         name: string,
+     *         url: string
+     *     }
+     * }>
+     */
     private function offersForWatch(
         Watch $watch
     ): array {
