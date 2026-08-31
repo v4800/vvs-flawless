@@ -49,9 +49,7 @@ defineProps<{
     >
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="email">
-                    Adresse email
-                </Label>
+                <Label for="email"> Adresse email </Label>
 
                 <Input
                     id="email"
@@ -64,18 +62,12 @@ defineProps<{
                     placeholder="email@example.com"
                 />
 
-                <InputError
-                    :message="errors.email"
-                />
+                <InputError :message="errors.email" />
             </div>
 
             <div class="grid gap-2">
-                <div
-                    class="flex items-center justify-between"
-                >
-                    <Label for="password">
-                        Mot de passe
-                    </Label>
+                <div class="flex items-center justify-between">
+                    <Label for="password"> Mot de passe </Label>
 
                     <TextLink
                         v-if="canResetPassword"
@@ -96,27 +88,14 @@ defineProps<{
                     placeholder="Mot de passe"
                 />
 
-                <InputError
-                    :message="errors.password"
-                />
+                <InputError :message="errors.password" />
             </div>
 
-            <div
-                class="flex items-center justify-between"
-            >
-                <Label
-                    for="remember"
-                    class="flex items-center space-x-3"
-                >
-                    <Checkbox
-                        id="remember"
-                        name="remember"
-                        :tabindex="3"
-                    />
+            <div class="flex items-center justify-between">
+                <Label for="remember" class="flex items-center space-x-3">
+                    <Checkbox id="remember" name="remember" :tabindex="3" />
 
-                    <span>
-                        Se souvenir de moi
-                    </span>
+                    <span> Se souvenir de moi </span>
                 </Label>
             </div>
 
@@ -127,9 +106,7 @@ defineProps<{
                 :disabled="processing"
                 data-test="login-button"
             >
-                <Spinner
-                    v-if="processing"
-                />
+                <Spinner v-if="processing" />
 
                 Se connecter
             </Button>

@@ -98,21 +98,19 @@ return [
 
     'passkeys' => [
 
-        'relying_party_id' =>
-            parse_url(
-                config('app.url'),
-                PHP_URL_HOST
-            ),
+        'relying_party_id' => parse_url(
+            config('app.url'),
+            PHP_URL_HOST
+        ),
 
         'allowed_origins' => [
-            config('app.url'),
+        config('app.url'),
         ],
 
-        'user_handle_secret' =>
-            env(
-                'PASSKEYS_USER_HANDLE_SECRET',
-                config('app.key')
-            ),
+        'user_handle_secret' => env(
+            'PASSKEYS_USER_HANDLE_SECRET',
+            config('app.key')
+        ),
 
         'timeout' => 60000,
     ],
@@ -137,12 +135,12 @@ return [
         Features::emailVerification(),
 
         Features::twoFactorAuthentication([
-            'confirm' => true,
-            'confirmPassword' => true,
+        'confirm' => true,
+        'confirmPassword' => true,
         ]),
 
         Features::passkeys([
-            'confirmPassword' => true,
+        'confirmPassword' => true,
         ]),
     ],
 

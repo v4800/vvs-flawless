@@ -10,9 +10,9 @@ const props = defineProps({
 
 const stock = computed(() => {
     if (
-        props.quantity === null
-        || props.quantity === undefined
-        || props.quantity === ''
+        props.quantity === null ||
+        props.quantity === undefined ||
+        props.quantity === ''
     ) {
         return null;
     }
@@ -31,10 +31,8 @@ const badge = computed(() => {
         return {
             label: 'Disponible',
             icon: '●',
-            classes:
-                'border-amber-300/30 bg-black/85 text-amber-200',
-            iconClasses:
-                'text-amber-300',
+            classes: 'border-amber-300/30 bg-black/85 text-amber-200',
+            iconClasses: 'text-amber-300',
         };
     }
 
@@ -48,10 +46,8 @@ const badge = computed(() => {
         return {
             label: 'Sur commande',
             icon: '○',
-            classes:
-                'border-white/15 bg-black/85 text-zinc-400',
-            iconClasses:
-                'text-zinc-500',
+            classes: 'border-white/15 bg-black/85 text-zinc-400',
+            iconClasses: 'text-zinc-500',
         };
     }
 
@@ -67,8 +63,7 @@ const badge = computed(() => {
             icon: '●',
             classes:
                 'border-red-500/50 bg-red-950/80 text-red-300 shadow-[0_0_22px_rgba(239,68,68,0.18)]',
-            iconClasses:
-                'animate-pulse text-red-400',
+            iconClasses: 'animate-pulse text-red-400',
         };
     }
 
@@ -84,8 +79,7 @@ const badge = computed(() => {
             icon: '●',
             classes:
                 'border-orange-400/50 bg-orange-950/70 text-orange-200 shadow-[0_0_22px_rgba(251,146,60,0.14)]',
-            iconClasses:
-                'text-orange-400',
+            iconClasses: 'text-orange-400',
         };
     }
 
@@ -98,10 +92,8 @@ const badge = computed(() => {
     return {
         label: 'Disponible',
         icon: '●',
-        classes:
-            'border-amber-300/30 bg-black/85 text-amber-200',
-        iconClasses:
-            'text-amber-300',
+        classes: 'border-amber-300/30 bg-black/85 text-amber-200',
+        iconClasses: 'text-amber-300',
     };
 });
 </script>
@@ -109,7 +101,7 @@ const badge = computed(() => {
 <template>
     <div
         :class="[
-            'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] backdrop-blur-xl',
+            'inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-[10px] font-black tracking-[0.12em] uppercase backdrop-blur-xl',
             badge.classes,
         ]"
     >

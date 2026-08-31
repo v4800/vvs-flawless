@@ -19,35 +19,25 @@ class ReservationRateLimitTest extends TestCase
             'price' => 1500.00,
             'promo_price' => 950.00,
 
-            'description' =>
-                'Montre utilisée pour tester le rate limiting.',
+            'description' => 'Montre utilisée pour tester le rate limiting.',
 
-            'availability' =>
-                'Disponible',
+            'availability' => 'Disponible',
 
-            'image' =>
-                '/images/watches/test.png',
+            'image' => '/images/watches/test.png',
 
-            'japanese_price' =>
-                1390.00,
+            'japanese_price' => 1390.00,
 
-            'japanese_promo_price' =>
-                950.00,
+            'japanese_promo_price' => 950.00,
 
-            'swiss_price' =>
-                1950.00,
+            'swiss_price' => 1950.00,
 
-            'swiss_promo_price' =>
-                1350.00,
+            'swiss_promo_price' => 1350.00,
 
-            'stock_quantity' =>
-                3,
+            'stock_quantity' => 3,
 
-            'created_at' =>
-                now(),
+            'created_at' => now(),
 
-            'updated_at' =>
-                now(),
+            'updated_at' => now(),
         ]);
     }
 
@@ -59,29 +49,21 @@ class ReservationRateLimitTest extends TestCase
             $this->createWatch();
 
         $payload = [
-            'watch_id' =>
-                $watchId,
+            'watch_id' => $watchId,
 
-            'movement' =>
-                'Japonais',
+            'movement' => 'Japonais',
 
-            'customer_name' =>
-                'Rate Limit Test',
+            'customer_name' => 'Rate Limit Test',
 
-            'email' =>
-                'ratelimit@example.com',
+            'email' => 'ratelimit@example.com',
 
-            'phone' =>
-                '0470000000',
+            'phone' => '0470000000',
 
-            'city' =>
-                'Liège',
+            'city' => 'Liège',
 
-            'message' =>
-                null,
+            'message' => null,
 
-            'confirmation' =>
-                true,
+            'confirmation' => true,
         ];
 
         /*

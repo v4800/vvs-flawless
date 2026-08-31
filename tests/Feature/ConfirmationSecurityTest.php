@@ -52,14 +52,11 @@ class ConfirmationSecurityTest extends TestCase
             'phone' => '0470000000',
             'city' => 'Liège',
 
-            'delivery_method' =>
-                'Remise en main propre - point de rencontre',
+            'delivery_method' => 'Remise en main propre - point de rencontre',
 
-            'status' =>
-                'Nouvelle demande',
+            'status' => 'Nouvelle demande',
 
-            'reservation_number' =>
-                $reservationNumber,
+            'reservation_number' => $reservationNumber,
 
             'message' => null,
 
@@ -93,8 +90,7 @@ class ConfirmationSecurityTest extends TestCase
                 'reservations.confirmation',
                 now()->addMinutes(10),
                 [
-                    'reservationNumber' =>
-                        $reservationNumber,
+                    'reservationNumber' => $reservationNumber,
                 ]
             );
 
@@ -103,34 +99,34 @@ class ConfirmationSecurityTest extends TestCase
 
         $response->assertOk();
 
-       $cacheControl =
+        $cacheControl =
     $response->headers->get(
         'Cache-Control'
     );
 
-$this->assertNotNull(
-    $cacheControl
-);
+        $this->assertNotNull(
+            $cacheControl
+        );
 
-$this->assertStringContainsString(
-    'no-store',
-    $cacheControl
-);
+        $this->assertStringContainsString(
+            'no-store',
+            $cacheControl
+        );
 
-$this->assertStringContainsString(
-    'private',
-    $cacheControl
-);
+        $this->assertStringContainsString(
+            'private',
+            $cacheControl
+        );
 
-$this->assertStringContainsString(
-    'max-age=0',
-    $cacheControl
-);
+        $this->assertStringContainsString(
+            'max-age=0',
+            $cacheControl
+        );
 
-$this->assertStringContainsString(
-    'must-revalidate',
-    $cacheControl
-);
+        $this->assertStringContainsString(
+            'must-revalidate',
+            $cacheControl
+        );
 
         $response->assertHeader(
             'Pragma',
@@ -153,8 +149,7 @@ $this->assertStringContainsString(
                 'reservations.confirmation',
                 now()->subMinute(),
                 [
-                    'reservationNumber' =>
-                        $reservationNumber,
+                    'reservationNumber' => $reservationNumber,
                 ]
             );
 

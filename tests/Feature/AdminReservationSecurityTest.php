@@ -43,14 +43,11 @@ class AdminReservationSecurityTest extends TestCase
             'phone' => '0470000000',
             'city' => 'Liège',
 
-            'delivery_method' =>
-                'Remise en main propre - point de rencontre',
+            'delivery_method' => 'Remise en main propre - point de rencontre',
 
-            'status' =>
-                'Nouvelle demande',
+            'status' => 'Nouvelle demande',
 
-            'reservation_number' =>
-                'VVS-ADMINTEST123',
+            'reservation_number' => 'VVS-ADMINTEST123',
 
             'message' => null,
 

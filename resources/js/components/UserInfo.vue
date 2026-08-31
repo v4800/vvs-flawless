@@ -15,9 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { getInitials } = useInitials();
 
-const showAvatar = computed(
-    () => !!props.user?.avatar,
-);
+const showAvatar = computed(() => !!props.user?.avatar);
 </script>
 
 <template>

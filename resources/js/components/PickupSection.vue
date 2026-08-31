@@ -13,37 +13,29 @@
 
                 <div>
                     <p
-                        class="text-[10px] font-black uppercase tracking-[0.4em] text-amber-300"
+                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
                         Remise de votre montre
                     </p>
 
                     <h2
-                        class="mt-5 max-w-3xl text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] sm:text-5xl"
+                        class="mt-5 max-w-3xl text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl"
                     >
                         Remise exclusivement
 
-                        <span class="text-amber-300">
-                            en main propre.
-                        </span>
+                        <span class="text-amber-300"> en main propre. </span>
                     </h2>
 
-                    <p
-                        class="mt-7 max-w-2xl text-base leading-7 text-zinc-400"
-                    >
-                        Chez VVS FLAWLESS, la montre n'est pas
-                        envoyée par colis au client. La remise est
-                        organisée directement dans un point de
-                        rencontre convenu ensemble.
+                    <p class="mt-7 max-w-2xl text-base leading-7 text-zinc-400">
+                        Chez VVS FLAWLESS, la montre n'est pas envoyée par colis
+                        au client. La remise est organisée directement dans un
+                        point de rencontre convenu ensemble.
                     </p>
 
-                    <p
-                        class="mt-4 max-w-2xl text-sm leading-6 text-zinc-500"
-                    >
-                        Une fois votre réservation confirmée et
-                        votre montre disponible, nous vous
-                        contactons pour convenir du lieu et du
-                        moment de la remise.
+                    <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-500">
+                        Une fois votre réservation confirmée et votre montre
+                        disponible, nous vous contactons pour convenir du lieu
+                        et du moment de la remise.
                     </p>
                 </div>
 
@@ -60,15 +52,11 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">
-                                Réservation
-                            </p>
+                            <p class="font-bold">Réservation</p>
 
-                            <p
-                                class="mt-1 text-sm leading-6 text-zinc-500"
-                            >
-                                Vous sélectionnez votre montre
-                                et envoyez votre demande.
+                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                                Vous sélectionnez votre montre et envoyez votre
+                                demande.
                             </p>
                         </div>
                     </div>
@@ -83,15 +71,11 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">
-                                Confirmation
-                            </p>
+                            <p class="font-bold">Confirmation</p>
 
-                            <p
-                                class="mt-1 text-sm leading-6 text-zinc-500"
-                            >
-                                VVS FLAWLESS vous contacte pour
-                                confirmer les détails.
+                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                                VVS FLAWLESS vous contacte pour confirmer les
+                                détails.
                             </p>
                         </div>
                     </div>
@@ -106,15 +90,11 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">
-                                Point de rencontre
-                            </p>
+                            <p class="font-bold">Point de rencontre</p>
 
-                            <p
-                                class="mt-1 text-sm leading-6 text-zinc-500"
-                            >
-                                Un lieu est convenu pour effectuer
-                                la remise de la montre en main propre.
+                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                                Un lieu est convenu pour effectuer la remise de
+                                la montre en main propre.
                             </p>
                         </div>
                     </div>
@@ -122,15 +102,11 @@
                     <div
                         class="flex items-center justify-between rounded-xl border border-white/10 px-5 py-4"
                     >
-                        <span
-                            class="text-sm text-zinc-500"
-                        >
+                        <span class="text-sm text-zinc-500">
                             Disponibilité estimée
                         </span>
 
-                        <span
-                            class="text-sm font-bold text-zinc-200"
-                        >
+                        <span class="text-sm font-bold text-zinc-200">
                             5–6 jours ouvrables
                         </span>
                     </div>

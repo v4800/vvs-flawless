@@ -41,10 +41,7 @@ const steps = computed(() => {
         },
     ];
 
-    if (
-        props.current === 'watch'
-        || props.current === 'reservation'
-    ) {
+    if (props.current === 'watch' || props.current === 'reservation') {
         items.push({
             label: 'Modèle',
             href: props.watchHref,
@@ -100,7 +97,7 @@ onMounted(() => {
 
                 <div class="hidden sm:block">
                     <p
-                        class="text-[9px] font-bold uppercase tracking-[0.25em] text-zinc-600"
+                        class="text-[9px] font-bold tracking-[0.25em] text-zinc-600 uppercase"
                     >
                         Retour
                     </p>
@@ -113,17 +110,12 @@ onMounted(() => {
                 </div>
             </Link>
 
-            <div
-                v-else
-                class="flex items-center gap-3"
-            >
+            <div v-else class="flex items-center gap-3">
                 <div
                     class="h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.8)]"
                 ></div>
 
-                <span
-                    class="text-xs font-black tracking-[0.18em] text-white"
-                >
+                <span class="text-xs font-black tracking-[0.18em] text-white">
                     VVS FLAWLESS
                 </span>
             </div>
@@ -134,17 +126,11 @@ onMounted(() => {
                 class="flex min-w-0 items-center justify-end overflow-hidden"
                 aria-label="Navigation"
             >
-                <template
-                    v-for="(step, index) in steps"
-                    :key="step.key"
-                >
+                <template v-for="(step, index) in steps" :key="step.key">
                     <Link
-                        v-if="
-                            step.href
-                            && step.key !== current
-                        "
+                        v-if="step.href && step.key !== current"
                         :href="step.href"
-                        class="hidden whitespace-nowrap text-xs font-medium text-zinc-500 transition hover:text-amber-200 sm:inline"
+                        class="hidden text-xs font-medium whitespace-nowrap text-zinc-500 transition hover:text-amber-200 sm:inline"
                     >
                         {{ step.label }}
                     </Link>
@@ -152,11 +138,11 @@ onMounted(() => {
                     <span
                         v-else
                         :class="[
-                            'whitespace-nowrap text-xs font-semibold',
+                            'text-xs font-semibold whitespace-nowrap',
 
                             step.key === current
                                 ? 'text-amber-200'
-                                : 'hidden text-zinc-500 sm:inline'
+                                : 'hidden text-zinc-500 sm:inline',
                         ]"
                     >
                         {{ step.label }}

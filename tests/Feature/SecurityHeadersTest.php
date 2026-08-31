@@ -137,7 +137,7 @@ class SecurityHeadersTest extends TestCase
             fn () => response('OK')
         );
 
-       $response =
+        $response =
     $this->get(
         'https://localhost/security-header-test'
     );

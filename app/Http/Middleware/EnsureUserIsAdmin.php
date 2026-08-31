@@ -32,8 +32,8 @@ class EnsureUserIsAdmin
         */
 
         if (
-            !$user
-            || !(bool) $user->is_admin
+            ! $user
+            || ! (bool) $user->is_admin
         ) {
             abort(403);
         }

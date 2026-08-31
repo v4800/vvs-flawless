@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         abort_unless($request->user()?->is_admin, 403);
 
@@ -21,8 +23,10 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function updateStatus(Request $request, Reservation $reservation)
-    {
+    public function updateStatus(
+        Request $request,
+        Reservation $reservation
+    ): RedirectResponse {
         abort_unless($request->user()?->is_admin, 403);
 
         $validated = $request->validate([
@@ -43,6 +47,6 @@ class DashboardController extends Controller
             'status' => $validated['status'],
         ]);
 
-        return back();
+        return redirect()->back();
     }
 }

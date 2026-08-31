@@ -25,6 +25,9 @@ class Reservation extends Model
         'price' => 'decimal:2',
     ];
 
+    /**
+     * @return BelongsTo<Watch, $this>
+     */
     public function watch(): BelongsTo
     {
         return $this->belongsTo(Watch::class);

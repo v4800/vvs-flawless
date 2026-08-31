@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('watches', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->decimal('price', 8, 2);
-    $table->text('description')->nullable();
-    $table->string('availability');
-    $table->timestamps();
-});;
+            $table->id();
+            $table->string('name');
+            $table->decimal('price', 8, 2);
+            $table->text('description')->nullable();
+            $table->string('availability');
+            $table->timestamps();
+        });
     }
 
     /**

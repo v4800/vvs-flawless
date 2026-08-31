@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Watch;
 use Illuminate\Http\Request;
+use Inertia\Response;
 
 class WatchController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         $watches = Watch::latest()->get();
 
@@ -19,7 +20,7 @@ class WatchController extends Controller
     public function show(
         Request $request,
         Watch $watch
-    ) {
+    ): Response {
         $selectedMovement =
             $request->query('movement') === 'Suisse'
                 ? 'Suisse'

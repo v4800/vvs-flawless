@@ -4,7 +4,7 @@
         class="relative scroll-mt-24 overflow-hidden px-5 py-24 sm:px-6 lg:px-10"
     >
         <div
-            class="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.035] blur-[140px]"
+            class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[500px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.035] blur-[140px]"
         ></div>
 
         <div
@@ -13,27 +13,21 @@
             <!-- IDENTITÉ -->
 
             <div>
-                <div
-                    class="mb-5 flex items-center gap-3"
-                >
-                    <span
-                        class="h-px w-10 bg-amber-300"
-                    ></span>
+                <div class="mb-5 flex items-center gap-3">
+                    <span class="h-px w-10 bg-amber-300"></span>
 
                     <span
-                        class="text-[10px] font-black uppercase tracking-[0.4em] text-amber-300"
+                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
                         À propos
                     </span>
                 </div>
 
                 <h2
-                    class="text-4xl font-black uppercase leading-[0.95] tracking-[-0.04em] sm:text-5xl lg:text-6xl"
+                    class="text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl lg:text-6xl"
                 >
                     Une nouvelle
-                    <span class="text-amber-300">
-                        culture
-                    </span>
+                    <span class="text-amber-300"> culture </span>
 
                     <br />
 
@@ -54,48 +48,33 @@
             <div
                 class="rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-7 sm:p-9"
             >
-                <p
-                    class="text-lg leading-8 text-zinc-300"
-                >
-                    VVS FLAWLESS est un projet basé en Belgique,
-                    spécialisé dans les montres iced-out serties
-                    de moissanite.
+                <p class="text-lg leading-8 text-zinc-300">
+                    VVS FLAWLESS est un projet basé en Belgique, spécialisé dans
+                    les montres iced-out serties de moissanite.
                 </p>
 
-                <p
-                    class="mt-5 leading-7 text-zinc-500"
-                >
-                    Notre objectif est simple : rendre l'esthétique
-                    bustdown plus accessible en Belgique tout en
-                    proposant une expérience directe, du choix de
-                    la montre jusqu'à sa remise au client.
+                <p class="mt-5 leading-7 text-zinc-500">
+                    Notre objectif est simple : rendre l'esthétique bustdown
+                    plus accessible en Belgique tout en proposant une expérience
+                    directe, du choix de la montre jusqu'à sa remise au client.
                 </p>
 
-                <p
-                    class="mt-5 leading-7 text-zinc-500"
-                >
+                <p class="mt-5 leading-7 text-zinc-500">
                     Les modèles proposés sont sertis de
                     <strong class="font-semibold text-zinc-300">
-                        moissanite VVS, couleur D
-                    </strong>,
-                    sélectionnée pour offrir un rendu clair,
-                    lumineux et très brillant.
+                        moissanite VVS, couleur D </strong
+                    >, sélectionnée pour offrir un rendu clair, lumineux et très
+                    brillant.
                 </p>
 
-                <div
-                    class="mt-8 grid gap-3 sm:grid-cols-3"
-                >
+                <div class="mt-8 grid gap-3 sm:grid-cols-3">
                     <div
                         class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
                     >
-                        <p
-                            class="text-xl font-black text-amber-200"
-                        >
-                            VVS
-                        </p>
+                        <p class="text-xl font-black text-amber-200">VVS</p>
 
                         <p
-                            class="mt-1 text-[10px] uppercase tracking-wider text-zinc-500"
+                            class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
                             Pureté
                         </p>
@@ -104,14 +83,10 @@
                     <div
                         class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
                     >
-                        <p
-                            class="text-xl font-black text-amber-200"
-                        >
-                            D
-                        </p>
+                        <p class="text-xl font-black text-amber-200">D</p>
 
                         <p
-                            class="mt-1 text-[10px] uppercase tracking-wider text-zinc-500"
+                            class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
                             Couleur incolore
                         </p>
@@ -120,14 +95,10 @@
                     <div
                         class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
                     >
-                        <p
-                            class="text-xl font-black text-amber-200"
-                        >
-                            BE
-                        </p>
+                        <p class="text-xl font-black text-amber-200">BE</p>
 
                         <p
-                            class="mt-1 text-[10px] uppercase tracking-wider text-zinc-500"
+                            class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
                             Projet belge
                         </p>

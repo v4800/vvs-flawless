@@ -12,108 +12,66 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class ReservationController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | CRÉER UNE RÉSERVATION
-    |--------------------------------------------------------------------------
-    */
+    public function store(Request $request): SymfonyResponse
+    {
+        $validated = $request->validate([
+            'watch_id' => [
+                'required',
+                'integer',
+                'exists:watches,id',
+            ],
 
-    public function store(
-        Request $request
-    ) {
-        /*
-        |--------------------------------------------------------------------------
-        | VALIDATION SERVEUR
-        |--------------------------------------------------------------------------
-        |
-        | On ne fait jamais confiance aux valeurs envoyées par Vue.
-        |
-        */
+            'movement' => [
+                'required',
+                'string',
+                'in:Japonais,Suisse',
+            ],
 
-        $validated =
-            $request->validate([
+            'customer_name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
 
-                'watch_id' => [
-                    'required',
-                    'integer',
-                    'exists:watches,id',
-                ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+            ],
 
-                'movement' => [
-                    'required',
-                    'string',
-                    'in:Japonais,Suisse',
-                ],
+            'phone' => [
+                'required',
+                'string',
+                'max:50',
+            ],
 
-                'customer_name' => [
-                    'required',
-                    'string',
-                    'max:255',
-                ],
+            'city' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
 
-                'email' => [
-                    'required',
-                    'email',
-                    'max:255',
-                ],
+            'message' => [
+                'nullable',
+                'string',
+                'max:2000',
+            ],
 
-                'phone' => [
-                    'required',
-                    'string',
-                    'max:50',
-                ],
+            'confirmation' => [
+                'required',
+                'accepted',
+            ],
+        ]);
 
-                'city' => [
-                    'nullable',
-                    'string',
-                    'max:255',
-                ],
+        $watch = Watch::query()->findOrFail(
+            (int) $validated['watch_id']
+        );
 
-                'message' => [
-                    'nullable',
-                    'string',
-                    'max:2000',
-                ],
-
-                'confirmation' => [
-                    'required',
-                    'accepted',
-                ],
-            ]);
-
-        /*
-        |--------------------------------------------------------------------------
-        | RÉCUPÉRATION DE LA MONTRE
-        |--------------------------------------------------------------------------
-        */
-
-        $watch =
-            Watch::query()
-                ->findOrFail(
-                    $validated['watch_id']
-                );
-
-        /*
-        |--------------------------------------------------------------------------
-        | PRIX SERVEUR
-        |--------------------------------------------------------------------------
-        |
-        | TRÈS IMPORTANT :
-        |
-        | Le navigateur ne décide JAMAIS du prix.
-        |
-        | Même si quelqu'un modifie Vue ou la requête HTTP,
-        | Laravel recalcule lui-même le prix depuis la DB.
-        |
-        */
-
-        if (
-            $validated['movement']
-            === 'Suisse'
-        ) {
+        if ($validated['movement'] === 'Suisse') {
             $price =
                 $watch->swiss_promo_price
                 ?? $watch->swiss_price;
@@ -129,18 +87,9 @@ class ReservationController extends Controller
             'Prix indisponible.'
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | NUMÉRO DE RÉSERVATION
-        |--------------------------------------------------------------------------
-        */
-
         do {
             $reservationNumber =
-                'VVS-'
-                . strtoupper(
-                    Str::random(12)
-                );
+                'VVS-'.strtoupper(Str::random(12));
         } while (
             Reservation::query()
                 ->where(
@@ -150,65 +99,31 @@ class ReservationController extends Controller
                 ->exists()
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | CRÉATION
-        |--------------------------------------------------------------------------
-        |
-        | On construit explicitement les champs.
-        |
-        | Aucun $request->all().
-        |
-        */
+        $reservation = Reservation::create([
+            'watch_id' => $watch->id,
 
-        $reservation =
-            Reservation::create([
+            'movement' => $validated['movement'],
 
-                'watch_id' =>
-                    $watch->id,
+            'price' => $price,
 
-                'movement' =>
-                    $validated['movement'],
+            'customer_name' => $validated['customer_name'],
 
-                'price' =>
-                    $price,
+            'email' => $validated['email'],
 
-                'customer_name' =>
-                    $validated['customer_name'],
+            'phone' => $validated['phone'],
 
-                'email' =>
-                    $validated['email'],
+            'city' => $validated['city'] ?? null,
 
-                'phone' =>
-                    $validated['phone'],
+            'delivery_method' => 'Remise en main propre - point de rencontre',
 
-                'city' =>
-                    $validated['city']
-                    ?? null,
+            'status' => 'Nouvelle demande',
 
-                'delivery_method' =>
-                    'Remise en main propre - point de rencontre',
+            'reservation_number' => $reservationNumber,
 
-                'status' =>
-                    'Nouvelle demande',
+            'message' => $validated['message'] ?? null,
+        ]);
 
-                'reservation_number' =>
-                    $reservationNumber,
-
-                'message' =>
-                    $validated['message']
-                    ?? null,
-            ]);
-
-        $reservation->load(
-            'watch'
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | EMAIL CLIENT
-        |--------------------------------------------------------------------------
-        */
+        $reservation->load('watch');
 
         try {
             Mail::to(
@@ -219,70 +134,51 @@ class ReservationController extends Controller
                 )
             );
         } catch (\Throwable $exception) {
-
             Log::error(
                 'Erreur mail client VVS FLAWLESS',
                 [
-                    'reservation_id' =>
-                        $reservation->id,
+                    'reservation_id' => $reservation->id,
 
-                    'error' =>
-                        $exception->getMessage(),
+                    'error' => $exception->getMessage(),
                 ]
             );
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | EMAIL ADMIN
-        |--------------------------------------------------------------------------
-        */
+        $adminEmail = config(
+            'vvs.admin_email'
+        );
 
         if (
-            config('vvs.admin_email')
+            is_string($adminEmail)
+            && $adminEmail !== ''
         ) {
             try {
                 Mail::to(
-                    config(
-                        'vvs.admin_email'
-                    )
+                    $adminEmail
                 )->send(
                     new NewReservationMail(
                         $reservation
                     )
                 );
             } catch (\Throwable $exception) {
-
                 Log::error(
                     'Erreur mail admin VVS FLAWLESS',
                     [
-                        'reservation_id' =>
-                            $reservation->id,
+                        'reservation_id' => $reservation->id,
 
-                        'error' =>
-                            $exception->getMessage(),
+                        'error' => $exception->getMessage(),
                     ]
                 );
             }
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | URL DE CONFIRMATION SIGNÉE
-        |--------------------------------------------------------------------------
-        |
-        | Valable pendant 24 heures.
-        |
-        */
 
         $confirmationUrl =
             URL::temporarySignedRoute(
                 'reservations.confirmation',
                 now()->addHours(24),
                 [
-                    'reservationNumber' =>
-                        $reservation
-                            ->reservation_number,
+                    'reservationNumber' => $reservation
+                        ->reservation_number,
                 ]
             );
 
@@ -291,21 +187,9 @@ class ReservationController extends Controller
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CONFIRMATION
-    |--------------------------------------------------------------------------
-    */
-
     public function confirmation(
         string $reservationNumber
-    ) {
-        /*
-        |--------------------------------------------------------------------------
-        | RECHERCHE PARAMÉTRÉE VIA ELOQUENT
-        |--------------------------------------------------------------------------
-        */
-
+    ): SymfonyResponse {
         $reservation =
             Reservation::query()
                 ->with('watch')
@@ -315,100 +199,70 @@ class ReservationController extends Controller
                 )
                 ->firstOrFail();
 
-        $watch =
-            $reservation->watch;
+        $watch = $reservation->watch;
 
         abort_if(
-            !$watch,
+            $watch === null,
             404
         );
-
-        /*
-        |--------------------------------------------------------------------------
-        | DONNÉES AFFICHÉES
-        |--------------------------------------------------------------------------
-        */
 
         $response =
             Inertia::render(
                 'Reservations/Confirmation',
                 [
                     'reservation' => [
+                        'reservation_number' => $reservation
+                            ->reservation_number,
 
-                        'reservation_number' =>
-                            $reservation
-                                ->reservation_number,
+                        'customer_name' => $reservation
+                            ->customer_name,
 
-                        'customer_name' =>
-                            $reservation
-                                ->customer_name,
+                        'email' => $reservation
+                            ->email,
 
-                        'email' =>
-                            $reservation
-                                ->email,
+                        'phone' => $reservation
+                            ->phone,
 
-                        'phone' =>
-                            $reservation
-                                ->phone,
+                        'city' => $reservation
+                            ->city,
 
-                        'city' =>
-                            $reservation
-                                ->city,
+                        'movement' => $reservation
+                            ->movement,
 
-                        'movement' =>
-                            $reservation
-                                ->movement,
+                        'price' => (float) $reservation
+                            ->price,
 
-                        'price' =>
-                            (float)
-                            $reservation
-                                ->price,
+                        'delivery_method' => $reservation
+                            ->delivery_method,
 
-                        'delivery_method' =>
-                            $reservation
-                                ->delivery_method,
+                        'status' => $reservation
+                            ->status,
 
-                        'status' =>
-                            $reservation
-                                ->status,
+                        'message' => $reservation
+                            ->message,
 
-                        'message' =>
-                            $reservation
-                                ->message,
-
-                        'date' =>
-                            $reservation
-                                ->created_at
-                                ->copy()
-                                ->timezone(
-                                    'Europe/Brussels'
-                                )
-                                ->format(
-                                    'd/m/Y à H:i'
-                                ),
+                        'date' => $reservation
+                            ->created_at
+                            ->copy()
+                            ->timezone(
+                                'Europe/Brussels'
+                            )
+                            ->format(
+                                'd/m/Y à H:i'
+                            ),
                     ],
 
                     'watch' => [
+                        'id' => $watch->id,
 
-                        'id' =>
-                            $watch->id,
+                        'name' => $watch->name,
 
-                        'name' =>
-                            $watch->name,
-
-                        'image' =>
-                            $watch->image,
+                        'image' => $watch->image,
                     ],
                 ]
             )->toResponse(
                 request()
             );
-
-        /*
-        |--------------------------------------------------------------------------
-        | PAS DE CACHE POUR LES DONNÉES CLIENT
-        |--------------------------------------------------------------------------
-        */
 
         $response
             ->headers

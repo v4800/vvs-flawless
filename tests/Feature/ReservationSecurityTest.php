@@ -30,51 +30,38 @@ class ReservationSecurityTest extends TestCase
             ->insertGetId(
                 array_merge(
                     [
-                        'name' =>
-                            'Montre Test VVS',
+                        'name' => 'Montre Test VVS',
 
                         /*
                         | Ancien prix général.
                         | La réservation ne doit PAS utiliser ce prix.
                         */
-                        'price' =>
-                            1500.00,
+                        'price' => 1500.00,
 
-                        'promo_price' =>
-                            1000.00,
+                        'promo_price' => 1000.00,
 
-                        'description' =>
-                            'Montre utilisée pour les tests de sécurité.',
+                        'description' => 'Montre utilisée pour les tests de sécurité.',
 
-                        'availability' =>
-                            'Disponible',
+                        'availability' => 'Disponible',
 
-                        'image' =>
-                            '/images/watches/test.png',
+                        'image' => '/images/watches/test.png',
 
                         /*
                         | Prix réellement utilisés selon le mouvement.
                         */
-                        'japanese_price' =>
-                            1390.00,
+                        'japanese_price' => 1390.00,
 
-                        'japanese_promo_price' =>
-                            950.00,
+                        'japanese_promo_price' => 950.00,
 
-                        'swiss_price' =>
-                            1950.00,
+                        'swiss_price' => 1950.00,
 
-                        'swiss_promo_price' =>
-                            1350.00,
+                        'swiss_promo_price' => 1350.00,
 
-                        'stock_quantity' =>
-                            3,
+                        'stock_quantity' => 3,
 
-                        'created_at' =>
-                            now(),
+                        'created_at' => now(),
 
-                        'updated_at' =>
-                            now(),
+                        'updated_at' => now(),
                     ],
 
                     $overrides
@@ -107,29 +94,21 @@ class ReservationSecurityTest extends TestCase
                     'reservations.store'
                 ),
                 [
-                    'watch_id' =>
-                        $watchId,
+                    'watch_id' => $watchId,
 
-                    'movement' =>
-                        'Japonais',
+                    'movement' => 'Japonais',
 
-                    'customer_name' =>
-                        'Client Test',
+                    'customer_name' => 'Client Test',
 
-                    'email' =>
-                        'client@example.com',
+                    'email' => 'client@example.com',
 
-                    'phone' =>
-                        '0470000000',
+                    'phone' => '0470000000',
 
-                    'city' =>
-                        'Liège',
+                    'city' => 'Liège',
 
-                    'message' =>
-                        'Réservation de test',
+                    'message' => 'Réservation de test',
 
-                    'confirmation' =>
-                        true,
+                    'confirmation' => true,
                 ]
             );
 
@@ -144,17 +123,13 @@ class ReservationSecurityTest extends TestCase
         $this->assertDatabaseHas(
             'reservations',
             [
-                'watch_id' =>
-                    $watchId,
+                'watch_id' => $watchId,
 
-                'email' =>
-                    'client@example.com',
+                'email' => 'client@example.com',
 
-                'movement' =>
-                    'Japonais',
+                'movement' => 'Japonais',
 
-                'price' =>
-                    950.00,
+                'price' => 950.00,
             ]
         );
     }
@@ -188,37 +163,28 @@ class ReservationSecurityTest extends TestCase
                     'reservations.store'
                 ),
                 [
-                    'watch_id' =>
-                        $watchId,
+                    'watch_id' => $watchId,
 
-                    'movement' =>
-                        'Japonais',
+                    'movement' => 'Japonais',
 
                     /*
                     | VALEUR MALVEILLANTE.
                     |
                     | Le contrôleur doit complètement l'ignorer.
                     */
-                    'price' =>
-                        1.00,
+                    'price' => 1.00,
 
-                    'customer_name' =>
-                        'Price Hacker',
+                    'customer_name' => 'Price Hacker',
 
-                    'email' =>
-                        'price@example.com',
+                    'email' => 'price@example.com',
 
-                    'phone' =>
-                        '0470000001',
+                    'phone' => '0470000001',
 
-                    'city' =>
-                        'Liège',
+                    'city' => 'Liège',
 
-                    'message' =>
-                        null,
+                    'message' => null,
 
-                    'confirmation' =>
-                        true,
+                    'confirmation' => true,
                 ]
             );
 
@@ -269,29 +235,21 @@ class ReservationSecurityTest extends TestCase
                     'reservations.store'
                 ),
                 [
-                    'watch_id' =>
-                        $watchId,
+                    'watch_id' => $watchId,
 
-                    'movement' =>
-                        'Suisse',
+                    'movement' => 'Suisse',
 
-                    'price' =>
-                        1.00,
+                    'price' => 1.00,
 
-                    'customer_name' =>
-                        'Swiss Test',
+                    'customer_name' => 'Swiss Test',
 
-                    'email' =>
-                        'swiss@example.com',
+                    'email' => 'swiss@example.com',
 
-                    'phone' =>
-                        '0470000002',
+                    'phone' => '0470000002',
 
-                    'city' =>
-                        'Bruxelles',
+                    'city' => 'Bruxelles',
 
-                    'confirmation' =>
-                        true,
+                    'confirmation' => true,
                 ]
             );
 
@@ -340,26 +298,19 @@ class ReservationSecurityTest extends TestCase
                         'reservations.store'
                     ),
                     [
-                        'watch_id' =>
-                            $watchId,
+                        'watch_id' => $watchId,
 
-                        'movement' =>
-                            'HACKED',
+                        'movement' => 'HACKED',
 
-                        'customer_name' =>
-                            'Attacker',
+                        'customer_name' => 'Attacker',
 
-                        'email' =>
-                            'movement@example.com',
+                        'email' => 'movement@example.com',
 
-                        'phone' =>
-                            '0470000003',
+                        'phone' => '0470000003',
 
-                        'city' =>
-                            'Liège',
+                        'city' => 'Liège',
 
-                        'confirmation' =>
-                            true,
+                        'confirmation' => true,
                     ]
                 );
 
@@ -374,8 +325,7 @@ class ReservationSecurityTest extends TestCase
         $this->assertDatabaseMissing(
             'reservations',
             [
-                'email' =>
-                    'movement@example.com',
+                'email' => 'movement@example.com',
             ]
         );
     }
@@ -398,26 +348,19 @@ class ReservationSecurityTest extends TestCase
                         'reservations.store'
                     ),
                     [
-                        'watch_id' =>
-                            999999999,
+                        'watch_id' => 999999999,
 
-                        'movement' =>
-                            'Japonais',
+                        'movement' => 'Japonais',
 
-                        'customer_name' =>
-                            'Fake Watch',
+                        'customer_name' => 'Fake Watch',
 
-                        'email' =>
-                            'fakewatch@example.com',
+                        'email' => 'fakewatch@example.com',
 
-                        'phone' =>
-                            '0470000004',
+                        'phone' => '0470000004',
 
-                        'city' =>
-                            'Liège',
+                        'city' => 'Liège',
 
-                        'confirmation' =>
-                            true,
+                        'confirmation' => true,
                     ]
                 );
 
@@ -432,8 +375,7 @@ class ReservationSecurityTest extends TestCase
         $this->assertDatabaseMissing(
             'reservations',
             [
-                'email' =>
-                    'fakewatch@example.com',
+                'email' => 'fakewatch@example.com',
             ]
         );
     }
@@ -461,47 +403,37 @@ class ReservationSecurityTest extends TestCase
             $this->createWatch();
 
         $response =
-$this->withHeader('X-Inertia', 'true')->post(                route(
-                    'reservations.store'
-                ),
-                [
-                    'watch_id' =>
-                        $watchId,
+$this->withHeader('X-Inertia', 'true')->post(route(
+    'reservations.store'
+),
+    [
+        'watch_id' => $watchId,
 
-                    'movement' =>
-                        'Japonais',
+        'movement' => 'Japonais',
 
-                    'customer_name' =>
-                        'Internal Fields Attack',
+        'customer_name' => 'Internal Fields Attack',
 
-                    'email' =>
-                        'internal@example.com',
+        'email' => 'internal@example.com',
 
-                    'phone' =>
-                        '0470000005',
+        'phone' => '0470000005',
 
-                    'city' =>
-                        'Liège',
+        'city' => 'Liège',
 
-                    'confirmation' =>
-                        true,
+        'confirmation' => true,
 
-                    /*
-                    |--------------------------------------------------------------------------
-                    | FAUSSES VALEURS
-                    |--------------------------------------------------------------------------
-                    */
+        /*
+        |--------------------------------------------------------------------------
+        | FAUSSES VALEURS
+        |--------------------------------------------------------------------------
+        */
 
-                    'delivery_method' =>
-                        'Livraison gratuite',
+        'delivery_method' => 'Livraison gratuite',
 
-                    'status' =>
-                        'Payée',
+        'status' => 'Payée',
 
-                    'reservation_number' =>
-                        'HACKED-123',
-                ]
-            );
+        'reservation_number' => 'HACKED-123',
+    ]
+);
 
         $response->assertStatus(409);
 
@@ -558,32 +490,25 @@ $this->withHeader('X-Inertia', 'true')->post(                route(
             "Robert'); DROP TABLE watches;--";
 
         $response =
-$this->withHeader('X-Inertia', 'true')->post(                route(
-                    'reservations.store'
-                ),
-                [
-                    'watch_id' =>
-                        $watchId,
+$this->withHeader('X-Inertia', 'true')->post(route(
+    'reservations.store'
+),
+    [
+        'watch_id' => $watchId,
 
-                    'movement' =>
-                        'Japonais',
+        'movement' => 'Japonais',
 
-                    'customer_name' =>
-                        $payload,
+        'customer_name' => $payload,
 
-                    'email' =>
-                        'sql@example.com',
+        'email' => 'sql@example.com',
 
-                    'phone' =>
-                        '0470000006',
+        'phone' => '0470000006',
 
-                    'city' =>
-                        'Liège',
+        'city' => 'Liège',
 
-                    'confirmation' =>
-                        true,
-                ]
-            );
+        'confirmation' => true,
+    ]
+);
 
         $response->assertStatus(409);
 
@@ -600,8 +525,7 @@ $this->withHeader('X-Inertia', 'true')->post(                route(
         $this->assertDatabaseHas(
             'watches',
             [
-                'id' =>
-                    $watchId,
+                'id' => $watchId,
             ]
         );
 
@@ -611,11 +535,9 @@ $this->withHeader('X-Inertia', 'true')->post(                route(
         $this->assertDatabaseHas(
             'reservations',
             [
-                'customer_name' =>
-                    $payload,
+                'customer_name' => $payload,
 
-                'email' =>
-                    'sql@example.com',
+                'email' => 'sql@example.com',
             ]
         );
     }
