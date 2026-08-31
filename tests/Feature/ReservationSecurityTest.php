@@ -102,7 +102,7 @@ class ReservationSecurityTest extends TestCase
             $this->createWatch();
 
         $response =
-            $this->post(
+            $this->withHeader('X-Inertia', 'true')->post(
                 route(
                     'reservations.store'
                 ),
@@ -183,7 +183,7 @@ class ReservationSecurityTest extends TestCase
             $this->createWatch();
 
         $response =
-            $this->post(
+            $this->withHeader('X-Inertia', 'true')->post(
                 route(
                     'reservations.store'
                 ),
@@ -264,7 +264,7 @@ class ReservationSecurityTest extends TestCase
             $this->createWatch();
 
         $response =
-            $this->post(
+            $this->withHeader('X-Inertia', 'true')->post(
                 route(
                     'reservations.store'
                 ),
@@ -461,8 +461,7 @@ class ReservationSecurityTest extends TestCase
             $this->createWatch();
 
         $response =
-            $this->post(
-                route(
+$this->withHeader('X-Inertia', 'true')->post(                route(
                     'reservations.store'
                 ),
                 [
@@ -559,8 +558,7 @@ class ReservationSecurityTest extends TestCase
             "Robert'); DROP TABLE watches;--";
 
         $response =
-            $this->post(
-                route(
+$this->withHeader('X-Inertia', 'true')->post(                route(
                     'reservations.store'
                 ),
                 [

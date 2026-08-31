@@ -1,26 +1,25 @@
 <script setup lang="ts">
 import { Form, Head } from '@inertiajs/vue3';
+
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
 import TextLink from '@/components/TextLink.vue';
+
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-/* @chisel-registration */
-import { register } from '@/routes';
-/* @end-chisel-registration */
+
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
-/* @chisel-passkeys */
+
 import PasskeyVerify from '@/components/PasskeyVerify.vue';
-/* @end-chisel-passkeys */
 
 defineOptions({
     layout: {
-        title: 'Log in to your account',
-        description: 'Enter your email and password below to log in',
+        title: 'Connexion administrateur',
+        description: 'Accès réservé à VVS FLAWLESS',
     },
 });
 
@@ -31,7 +30,7 @@ defineProps<{
 </script>
 
 <template>
-    <Head title="Log in" />
+    <Head title="Connexion administrateur" />
 
     <div
         v-if="status"
@@ -40,9 +39,7 @@ defineProps<{
         {{ status }}
     </div>
 
-    <!-- @chisel-passkeys -->
     <PasskeyVerify />
-    <!-- @end-chisel-passkeys -->
 
     <Form
         v-bind="store.form()"
@@ -52,7 +49,10 @@ defineProps<{
     >
         <div class="grid gap-6">
             <div class="grid gap-2">
-                <Label for="email">Email address</Label>
+                <Label for="email">
+                    Adresse email
+                </Label>
+
                 <Input
                     id="email"
                     type="email"
@@ -63,36 +63,60 @@ defineProps<{
                     autocomplete="email"
                     placeholder="email@example.com"
                 />
-                <InputError :message="errors.email" />
+
+                <InputError
+                    :message="errors.email"
+                />
             </div>
 
             <div class="grid gap-2">
-                <div class="flex items-center justify-between">
-                    <Label for="password">Password</Label>
+                <div
+                    class="flex items-center justify-between"
+                >
+                    <Label for="password">
+                        Mot de passe
+                    </Label>
+
                     <TextLink
                         v-if="canResetPassword"
                         :href="request()"
                         class="text-sm"
                         :tabindex="5"
                     >
-                        Forgot your password?
+                        Mot de passe oublié ?
                     </TextLink>
                 </div>
+
                 <PasswordInput
                     id="password"
                     name="password"
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                    placeholder="Password"
+                    placeholder="Mot de passe"
                 />
-                <InputError :message="errors.password" />
+
+                <InputError
+                    :message="errors.password"
+                />
             </div>
 
-            <div class="flex items-center justify-between">
-                <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" name="remember" :tabindex="3" />
-                    <span>Remember me</span>
+            <div
+                class="flex items-center justify-between"
+            >
+                <Label
+                    for="remember"
+                    class="flex items-center space-x-3"
+                >
+                    <Checkbox
+                        id="remember"
+                        name="remember"
+                        :tabindex="3"
+                    />
+
+                    <span>
+                        Se souvenir de moi
+                    </span>
                 </Label>
             </div>
 
@@ -103,16 +127,12 @@ defineProps<{
                 :disabled="processing"
                 data-test="login-button"
             >
-                <Spinner v-if="processing" />
-                Log in
+                <Spinner
+                    v-if="processing"
+                />
+
+                Se connecter
             </Button>
         </div>
-
-        <!-- @chisel-registration -->
-        <div class="text-muted-foreground text-center text-sm">
-            Don't have an account?
-            <TextLink :href="register()" :tabindex="5">Sign up</TextLink>
-        </div>
-        <!-- @end-chisel-registration -->
     </Form>
 </template>
