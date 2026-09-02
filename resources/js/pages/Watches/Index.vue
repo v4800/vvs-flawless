@@ -1,15 +1,11 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
 
+import VvsNavigation from '@/components/VvsNavigation.vue';
 import StockBadge from '@/components/StockBadge.vue';
 import OrderSteps from '@/components/OrderSteps.vue';
-import AboutSection from '@/components/AboutSection.vue';
-import PickupSection from '@/components/PickupSection.vue';
-import FaqSection from '@/components/FaqSection.vue';
-import ContactSection from '@/components/ContactSection.vue';
 
 const props = defineProps({
     watches: {
@@ -18,13 +14,11 @@ const props = defineProps({
     },
 });
 
-const mobileMenuOpen = ref(false);
-
-const heroWatch = computed(() => {
-    return (
-        props.watches.find((watch) => watch.image) ?? props.watches[0] ?? null
-    );
-});
+/*
+|--------------------------------------------------------------------------
+| FORMATAGE DES PRIX
+|--------------------------------------------------------------------------
+*/
 
 const formatPrice = (price) => {
     if (!price) {
@@ -34,20 +28,253 @@ const formatPrice = (price) => {
     return `${Number(price).toFixed(0)} €`;
 };
 
-const closeMobileMenu = () => {
-    mobileMenuOpen.value = false;
+/*
+|--------------------------------------------------------------------------
+| SCROLL COLLECTION
+|--------------------------------------------------------------------------
+*/
+
+const scrollToCollection = () => {
+    document
+        .getElementById('collection')
+        ?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        });
 };
 
+/*
+|--------------------------------------------------------------------------
+| VIEWER 3D
+|--------------------------------------------------------------------------
+|
+| Le model-viewer est chargé uniquement côté navigateur.
+| Ça évite de casser le SSR / hydratation de Laravel + Inertia.
+|
+*/
+
+const viewerHost = ref(null);
+
+const modelProgress = ref(0);
+const modelLoaded = ref(false);
+const modelError = ref(false);
+
+let modelViewerElement = null;
 let revealObserver = null;
 
+const mountModelViewer = async () => {
+    try {
+        /*
+         * Chargement uniquement côté client
+         */
+        await import('@google/model-viewer');
+
+        if (!viewerHost.value) {
+            return;
+        }
+
+        const viewer = document.createElement('model-viewer');
+
+        modelViewerElement = viewer;
+
+        /*
+         * FICHIER 3D
+         */
+        viewer.setAttribute(
+            'src',
+            '/models/vvs-watch.glb',
+        );
+
+        viewer.setAttribute(
+            'alt',
+            'Montre VVS FLAWLESS 3D',
+        );
+
+        /*
+         * CONTRÔLES
+         */
+        viewer.setAttribute(
+            'camera-controls',
+            '',
+        );
+
+        viewer.setAttribute(
+            'auto-rotate',
+            '',
+        );
+
+        viewer.setAttribute(
+            'rotation-per-second',
+            '12deg',
+        );
+
+        viewer.setAttribute(
+            'interaction-prompt',
+            'none',
+        );
+
+        viewer.setAttribute(
+            'touch-action',
+            'pan-y',
+        );
+
+        /*
+         * CAMÉRA
+         */
+        viewer.setAttribute(
+            'camera-orbit',
+            '0deg 75deg 105%',
+        );
+
+        viewer.setAttribute(
+            'field-of-view',
+            '30deg',
+        );
+
+        viewer.setAttribute(
+            'min-field-of-view',
+            '18deg',
+        );
+
+        viewer.setAttribute(
+            'max-field-of-view',
+            '55deg',
+        );
+
+        viewer.setAttribute(
+            'min-camera-orbit',
+            'auto auto 60%',
+        );
+
+        viewer.setAttribute(
+            'max-camera-orbit',
+            'auto auto 200%',
+        );
+
+        /*
+         * ÉCLAIRAGE / RENDU
+         */
+        viewer.setAttribute(
+            'environment-image',
+            'neutral',
+        );
+
+        viewer.setAttribute(
+            'exposure',
+            '1.15',
+        );
+
+        viewer.setAttribute(
+            'shadow-intensity',
+            '1.25',
+        );
+
+        viewer.setAttribute(
+            'shadow-softness',
+            '0.8',
+        );
+
+        viewer.setAttribute(
+            'tone-mapping',
+            'commerce',
+        );
+
+        /*
+         * CHARGEMENT IMMÉDIAT
+         */
+        viewer.setAttribute(
+            'loading',
+            'eager',
+        );
+
+        viewer.setAttribute(
+            'reveal',
+            'auto',
+        );
+
+        /*
+         * DIMENSIONS
+         */
+        viewer.style.width = '100%';
+        viewer.style.height = '100%';
+        viewer.style.display = 'block';
+        viewer.style.background = 'transparent';
+
+        /*
+         * PROGRESSION DU GLB 64 MO
+         */
+        viewer.addEventListener(
+            'progress',
+            (event) => {
+                const progress =
+                    event.detail?.totalProgress ?? 0;
+
+                modelProgress.value =
+                    Math.round(
+                        progress * 100,
+                    );
+            },
+        );
+
+        /*
+         * MODÈLE CHARGÉ
+         */
+        viewer.addEventListener(
+            'load',
+            () => {
+                modelProgress.value = 100;
+                modelLoaded.value = true;
+                modelError.value = false;
+            },
+        );
+
+        /*
+         * ERREUR
+         */
+        viewer.addEventListener(
+            'error',
+            () => {
+                modelError.value = true;
+                modelLoaded.value = false;
+            },
+        );
+
+        viewerHost.value.replaceChildren(
+            viewer,
+        );
+    } catch (error) {
+        console.error(
+            'Erreur chargement montre 3D :',
+            error,
+        );
+
+        modelError.value = true;
+    }
+};
+
+/*
+|--------------------------------------------------------------------------
+| ANIMATIONS
+|--------------------------------------------------------------------------
+*/
+
 onMounted(() => {
-    const prefersReducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-    ).matches;
+    /*
+     * On lance immédiatement le chargement
+     * du GLB de 64 Mo.
+     */
+    mountModelViewer();
+
+    const prefersReducedMotion =
+        window.matchMedia(
+            '(prefers-reduced-motion: reduce)',
+        ).matches;
 
     if (prefersReducedMotion) {
         document
-            .querySelectorAll('.hero-animate, .hero-watch, .reveal-on-scroll')
+            .querySelectorAll(
+                '.hero-animate, .hero-watch, .reveal-on-scroll',
+            )
             .forEach((element) => {
                 element.style.opacity = '1';
                 element.style.transform = 'none';
@@ -58,73 +285,82 @@ onMounted(() => {
 
     /*
     |--------------------------------------------------------------------------
-    | HERO
+    | ENTRÉE CINÉMATIQUE DU HERO
     |--------------------------------------------------------------------------
     */
 
-    const heroTimeline = createTimeline({
-        defaults: {
-            ease: 'outExpo',
-        },
-    });
+    const heroTimeline =
+        createTimeline({
+            defaults: {
+                ease: 'outExpo',
+            },
+        });
 
     heroTimeline
-        .add('.site-header', {
-            opacity: [0, 1],
-            y: [-18, 0],
-            duration: 650,
-        })
+        .add(
+            '.site-header',
+            {
+                opacity: [0, 1],
+                y: [-18, 0],
+                duration: 700,
+            },
+        )
         .add(
             '.hero-animate',
             {
                 opacity: [0, 1],
-                y: [26, 0],
-                duration: 850,
-                delay: stagger(80),
+                y: [34, 0],
+                duration: 900,
+                delay: stagger(90),
             },
-            '-=350',
+            '-=420',
         )
         .add(
             '.hero-watch',
             {
                 opacity: [0, 1],
-                x: [55, 0],
-                scale: [0.92, 1],
-                duration: 1200,
+                x: [85, 0],
+                scale: [0.86, 1],
+                duration: 1450,
             },
-            '-=800',
+            '-=900',
+        )
+        .add(
+            '.hero-badge',
+            {
+                opacity: [0, 1],
+                x: [25, 0],
+                scale: [0.92, 1],
+                duration: 750,
+            },
+            '-=650',
         );
 
     /*
     |--------------------------------------------------------------------------
-    | MONTRE HERO
+    | REFLET TITRE
     |--------------------------------------------------------------------------
     */
 
-    animate('.hero-watch', {
-        y: [0, -9],
-        duration: 3400,
-        delay: 1400,
-        loop: true,
-        alternate: true,
-        ease: 'inOutQuad',
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | REFLET LOGO
-    |--------------------------------------------------------------------------
-    */
-
-    animate('.brand-shine', {
-        x: ['0%', '560%'],
-        opacity: [0, 0.75, 0],
-        duration: 1700,
-        delay: 1000,
-        loop: true,
-        loopDelay: 3200,
-        ease: 'inOutQuad',
-    });
+    animate(
+        '.brand-shine',
+        {
+            x: [
+                '0%',
+                '560%',
+            ],
+            opacity: [
+                0,
+                0.9,
+                0,
+            ],
+            duration: 1800,
+            delay: 900,
+            loop: true,
+            loopDelay: 2600,
+            ease: 'inOutQuad',
+        },
+    );
 
     /*
     |--------------------------------------------------------------------------
@@ -132,16 +368,72 @@ onMounted(() => {
     |--------------------------------------------------------------------------
     */
 
-    animate('.bling-sparkle', {
-        opacity: [0.08, 0.9, 0.08],
-        scale: [0.4, 1.4, 0.4],
-        rotate: [0, 45, 90],
-        duration: 1600,
-        delay: stagger(260),
-        loop: true,
-        loopDelay: 500,
-        ease: 'inOutQuad',
-    });
+    animate(
+        '.bling-sparkle',
+        {
+            opacity: [
+                0.08,
+                1,
+                0.08,
+            ],
+
+            scale: [
+                0.35,
+                1.55,
+                0.35,
+            ],
+
+            rotate: [
+                0,
+                45,
+                90,
+            ],
+
+            duration: 1450,
+
+            delay:
+                stagger(
+                    230,
+                ),
+
+            loop: true,
+
+            loopDelay: 350,
+
+            ease:
+                'inOutQuad',
+        },
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | HALOS
+    |--------------------------------------------------------------------------
+    */
+
+    animate(
+        '.hero-orb',
+        {
+            opacity: [
+                0.35,
+                0.75,
+            ],
+
+            scale: [
+                0.92,
+                1.08,
+            ],
+
+            duration: 3800,
+
+            loop: true,
+
+            alternate: true,
+
+            ease:
+                'inOutQuad',
+        },
+    );
 
     /*
     |--------------------------------------------------------------------------
@@ -149,86 +441,146 @@ onMounted(() => {
     |--------------------------------------------------------------------------
     */
 
-    const elements = document.querySelectorAll('.reveal-on-scroll');
+    const revealElements =
+        document.querySelectorAll(
+            '.reveal-on-scroll',
+        );
 
-    elements.forEach((element) => {
-        element.style.opacity = '0';
-    });
-
-    revealObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    return;
-                }
-
-                const element = entry.target;
-
-                animate(element, {
-                    opacity: [0, 1],
-                    y: [30, 0],
-                    scale: [0.98, 1],
-                    duration: 850,
-                    ease: 'outExpo',
-                });
-
-                revealObserver?.unobserve(element);
-            });
-        },
-        {
-            threshold: 0.1,
-            rootMargin: '0px 0px -30px 0px',
+    revealElements.forEach(
+        (element) => {
+            element.style.opacity = '0';
         },
     );
 
-    elements.forEach((element) => {
-        revealObserver.observe(element);
-    });
+    revealObserver =
+        new IntersectionObserver(
+            (entries) => {
+                entries.forEach(
+                    (entry) => {
+                        if (
+                            !entry.isIntersecting
+                        ) {
+                            return;
+                        }
+
+                        const element =
+                            entry.target;
+
+                        const isCard =
+                            element.classList.contains(
+                                'watch-card',
+                            );
+
+                        animate(
+                            element,
+                            {
+                                opacity: [
+                                    0,
+                                    1,
+                                ],
+
+                                y: [
+                                    isCard
+                                        ? 42
+                                        : 30,
+
+                                    0,
+                                ],
+
+                                scale: [
+                                    isCard
+                                        ? 0.96
+                                        : 0.985,
+
+                                    1,
+                                ],
+
+                                duration:
+                                    isCard
+                                        ? 850
+                                        : 950,
+
+                                ease:
+                                    'outExpo',
+                            },
+                        );
+
+                        revealObserver?.unobserve(
+                            element,
+                        );
+                    },
+                );
+            },
+
+            {
+                threshold: 0.12,
+
+                rootMargin:
+                    '0px 0px -40px 0px',
+            },
+        );
+
+    revealElements.forEach(
+        (element) => {
+            revealObserver.observe(
+                element,
+            );
+        },
+    );
 });
+
+/*
+|--------------------------------------------------------------------------
+| NETTOYAGE
+|--------------------------------------------------------------------------
+*/
 
 onBeforeUnmount(() => {
     revealObserver?.disconnect();
+
+    modelViewerElement?.remove();
+
+    modelViewerElement = null;
 });
 </script>
 
 <template>
-    <Head title="VVS FLAWLESS — Montres Iced-Out Belgique" />
+    <Head
+        title="VVS FLAWLESS — Montres Iced-Out Belgique"
+    />
 
-    <div class="min-h-screen overflow-x-hidden bg-black text-white">
+    <div
+        class="min-h-screen bg-black text-white"
+    >
         <!-- ========================================================= -->
         <!-- HEADER -->
         <!-- ========================================================= -->
 
         <header
-            class="site-header sticky top-0 z-50 border-b border-white/10 bg-black/95 backdrop-blur-xl"
+            class="site-header sticky top-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-xl"
         >
             <div
-                class="mx-auto flex h-[72px] max-w-[1500px] items-center justify-between px-5 md:h-20 md:px-8"
+                class="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-5 md:px-8"
             >
-                <!-- LOGO -->
-
                 <a
                     href="/watches"
-                    class="flex flex-col leading-none"
-                    @click="closeMobileMenu"
+                    class="group flex flex-col leading-none"
                 >
                     <span
-                        class="text-[19px] font-black tracking-[0.06em] text-white sm:text-xl md:text-2xl"
+                        class="text-xl font-black tracking-[0.08em] text-white md:text-2xl"
                     >
                         VVS FLAWLESS
                     </span>
 
                     <span
-                        class="mt-1.5 text-[8px] font-bold tracking-[0.4em] text-amber-300/90 uppercase"
+                        class="mt-1 text-[9px] uppercase tracking-[0.42em] text-amber-300/80"
                     >
                         Belgium
                     </span>
                 </a>
 
-                <!-- NAVIGATION DESKTOP -->
-
                 <nav
-                    class="hidden items-center gap-8 text-sm font-medium text-zinc-400 md:flex"
+                    class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
                     aria-label="Navigation principale"
                 >
                     <a
@@ -238,328 +590,458 @@ onBeforeUnmount(() => {
                         Montres
                     </a>
 
-                    <a href="#about" class="transition hover:text-amber-300">
+                    <a
+                        href="#concept"
+                        class="transition hover:text-amber-300"
+                    >
                         À propos
                     </a>
 
-                    <a href="#pickup" class="transition hover:text-amber-300">
-                        Remise
-                    </a>
-
-                    <a href="#faq" class="transition hover:text-amber-300">
-                        FAQ
-                    </a>
-
-                    <a href="#contact" class="transition hover:text-amber-300">
-                        Contact
+                    <a
+                        href="#services"
+                        class="transition hover:text-amber-300"
+                    >
+                        Livraison & Remise
                     </a>
                 </nav>
 
-                <!-- DROITE -->
-
-                <div class="flex items-center gap-3">
+                <div
+                    class="flex items-center gap-3"
+                >
                     <span
-                        class="hidden text-xs tracking-[0.2em] text-zinc-600 uppercase lg:block"
+                        class="hidden text-xs uppercase tracking-[0.2em] text-zinc-500 sm:block"
                     >
                         Belgique
                     </span>
 
-                    <!-- DRAPEAU -->
-
                     <div
-                        class="flex h-7 overflow-hidden rounded border border-white/20"
+                        class="flex h-7 overflow-hidden rounded-sm border border-white/20 shadow-[0_0_18px_rgba(251,191,36,0.15)]"
                         aria-label="Belgique"
                     >
-                        <span class="w-2.5 bg-black"></span>
+                        <span
+                            class="w-2.5 bg-black"
+                        ></span>
 
-                        <span class="w-2.5 bg-yellow-400"></span>
+                        <span
+                            class="w-2.5 bg-yellow-400"
+                        ></span>
 
-                        <span class="w-2.5 bg-red-600"></span>
+                        <span
+                            class="w-2.5 bg-red-600"
+                        ></span>
                     </div>
-
-                    <!-- MENU MOBILE -->
-
-                    <button
-                        type="button"
-                        class="ml-1 flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.025] md:hidden"
-                        :aria-expanded="mobileMenuOpen"
-                        aria-label="Ouvrir le menu"
-                        @click="mobileMenuOpen = !mobileMenuOpen"
-                    >
-                        <div class="flex w-4 flex-col gap-[4px]">
-                            <span
-                                :class="[
-                                    'h-px w-full bg-white transition duration-300',
-
-                                    mobileMenuOpen
-                                        ? 'translate-y-[5px] rotate-45'
-                                        : '',
-                                ]"
-                            ></span>
-
-                            <span
-                                :class="[
-                                    'h-px w-full bg-white transition duration-300',
-
-                                    mobileMenuOpen ? 'opacity-0' : '',
-                                ]"
-                            ></span>
-
-                            <span
-                                :class="[
-                                    'h-px w-full bg-white transition duration-300',
-
-                                    mobileMenuOpen
-                                        ? '-translate-y-[5px] -rotate-45'
-                                        : '',
-                                ]"
-                            ></span>
-                        </div>
-                    </button>
                 </div>
-            </div>
-
-            <!-- ===================================================== -->
-            <!-- MENU MOBILE -->
-            <!-- ===================================================== -->
-
-            <div
-                class="overflow-hidden border-white/10 bg-black transition-all duration-300 md:hidden"
-                :class="
-                    mobileMenuOpen
-                        ? 'max-h-[380px] border-t opacity-100'
-                        : 'max-h-0 border-t-0 opacity-0'
-                "
-            >
-                <nav class="px-5 py-5" aria-label="Navigation mobile">
-                    <div class="grid gap-1">
-                        <a
-                            href="#collection"
-                            class="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold text-zinc-300 transition hover:bg-white/[0.04] hover:text-amber-300"
-                            @click="closeMobileMenu"
-                        >
-                            Montres
-                            <span class="text-zinc-700"> ↓ </span>
-                        </a>
-
-                        <a
-                            href="#about"
-                            class="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold text-zinc-300 transition hover:bg-white/[0.04] hover:text-amber-300"
-                            @click="closeMobileMenu"
-                        >
-                            À propos
-                            <span class="text-zinc-700"> ↓ </span>
-                        </a>
-
-                        <a
-                            href="#pickup"
-                            class="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold text-zinc-300 transition hover:bg-white/[0.04] hover:text-amber-300"
-                            @click="closeMobileMenu"
-                        >
-                            Remise
-                            <span class="text-zinc-700"> ↓ </span>
-                        </a>
-
-                        <a
-                            href="#faq"
-                            class="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold text-zinc-300 transition hover:bg-white/[0.04] hover:text-amber-300"
-                            @click="closeMobileMenu"
-                        >
-                            FAQ
-                            <span class="text-zinc-700"> ↓ </span>
-                        </a>
-
-                        <a
-                            href="#contact"
-                            class="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-bold text-zinc-300 transition hover:bg-white/[0.04] hover:text-amber-300"
-                            @click="closeMobileMenu"
-                        >
-                            Contact
-                            <span class="text-zinc-700"> ↓ </span>
-                        </a>
-                    </div>
-                </nav>
             </div>
         </header>
 
         <main>
             <!-- ========================================================= -->
+            <!-- NAVIGATION VVS -->
+            <!-- ========================================================= -->
+
+            <VvsNavigation
+                current="collection"
+                :show-back="false"
+                class="!top-24"
+            />
+
+            <!-- ========================================================= -->
             <!-- HERO -->
             <!-- ========================================================= -->
 
             <section
-                class="relative isolate overflow-hidden border-b border-white/10"
+                class="relative isolate overflow-hidden border-b border-amber-400/20"
             >
-                <div class="absolute inset-0 -z-30 bg-black"></div>
-
                 <div
-                    class="absolute top-10 -left-48 -z-20 h-[420px] w-[420px] rounded-full bg-amber-500/[0.07] blur-[140px] sm:h-[500px] sm:w-[500px]"
+                    class="absolute inset-0 -z-30 bg-black"
                 ></div>
 
                 <div
-                    class="absolute top-0 right-0 -z-20 h-[500px] w-[500px] rounded-full bg-white/[0.025] blur-[150px] lg:h-[650px] lg:w-[650px]"
+                    class="hero-orb absolute -left-40 top-10 -z-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]"
+                ></div>
+
+                <div
+                    class="hero-orb absolute right-0 top-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.04] blur-[160px]"
                 ></div>
 
                 <!-- ÉCLATS -->
 
                 <span
-                    class="bling-sparkle absolute top-[19%] left-[8%] hidden text-xl text-amber-200 sm:block"
+                    class="bling-sparkle absolute left-[5%] top-[19%] text-3xl text-amber-200"
                 >
                     ✦
                 </span>
 
                 <span
-                    class="bling-sparkle absolute top-[18%] right-[9%] text-lg text-white/60 sm:text-2xl"
+                    class="bling-sparkle absolute left-[35%] top-[29%] text-xl text-white"
                 >
                     ✦
                 </span>
 
+                <span
+                    class="bling-sparkle absolute right-[10%] top-[14%] text-3xl text-white"
+                >
+                    ✦
+                </span>
+
+                <span
+                    class="bling-sparkle absolute bottom-[20%] right-[42%] text-xl text-amber-300"
+                >
+                    ✦
+                </span>
+
+                <!-- LIGNE BELGIQUE -->
+
                 <div
-                    class="mx-auto grid max-w-[1500px] gap-4 px-6 pt-14 pb-16 sm:px-7 sm:pt-16 sm:pb-20 lg:min-h-[680px] lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-10 lg:px-10 lg:py-16"
+                    class="absolute right-0 top-0 hidden h-full w-1.5 lg:flex"
+                >
+                    <div
+                        class="h-full flex-1 bg-black"
+                    ></div>
+
+                    <div
+                        class="h-full flex-1 bg-yellow-400"
+                    ></div>
+
+                    <div
+                        class="h-full flex-1 bg-red-600"
+                    ></div>
+                </div>
+
+                <div
+                    class="mx-auto grid min-h-[690px] max-w-[1500px] items-center gap-12 px-6 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:px-10 lg:py-20"
                 >
                     <!-- HERO TEXTE -->
 
-                    <div class="relative z-10">
-                        <p
-                            class="hero-animate text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase sm:text-xs"
+                    <div
+                        class="relative z-10"
+                    >
+                        <div
+                            class="hero-animate mb-7 flex flex-wrap items-center gap-3"
                         >
-                            Moissanite VVS
+                            <span
+                                class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300"
+                            >
+                                Moissanite VVS
+                            </span>
 
-                            <span class="mx-1 text-amber-500/60"> • </span>
+                            <span
+                                class="text-amber-500"
+                            >
+                                •
+                            </span>
 
-                            Couleur D
-                        </p>
+                            <span
+                                class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300"
+                            >
+                                Iced Out
+                            </span>
 
-                        <!-- TITRE -->
+                            <span
+                                class="text-amber-500"
+                            >
+                                •
+                            </span>
+
+                            <span
+                                class="text-xs font-semibold uppercase tracking-[0.25em] text-amber-300"
+                            >
+                                Bustdown
+                            </span>
+                        </div>
 
                         <h1
-                            class="hero-animate relative mt-6 max-w-3xl overflow-hidden text-[3.05rem] leading-[0.84] font-black tracking-[-0.055em] uppercase min-[380px]:text-[3.35rem] sm:text-[5.5rem] lg:text-[7rem]"
+                            class="hero-animate relative max-w-3xl overflow-hidden text-[4rem] font-black uppercase leading-[0.8] tracking-[-0.06em] sm:text-[5.5rem] lg:text-[7rem]"
                         >
-                            <span class="vvs-gradient-text"> VVS </span>
+                            <span
+                                class="bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent"
+                            >
+                                VVS
+                            </span>
 
                             <br />
 
-                            <span class="vvs-gradient-text"> FLAWLESS </span>
+                            <span
+                                class="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent"
+                            >
+                                FLAWLESS
+                            </span>
 
                             <span
-                                class="brand-shine pointer-events-none absolute top-0 -left-[30%] h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"
+                                class="absolute -right-2 top-2 hidden text-3xl text-amber-200 sm:block"
+                            >
+                                ✦
+                            </span>
+
+                            <span
+                                class="brand-shine pointer-events-none absolute -left-[30%] top-0 h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"
                             ></span>
                         </h1>
 
-                        <!-- SIGNATURE -->
-
-                        <p
-                            class="hero-animate mt-8 max-w-xl text-[1.45rem] leading-[1.2] font-medium text-amber-200 italic sm:text-3xl"
-                        >
-                            La culture bustdown arrive en Belgique
-
-                            <span class="not-italic"> 🇧🇪 </span>
-                        </p>
-
-                        <!-- DESCRIPTION -->
-
-                        <p
-                            class="hero-animate mt-7 max-w-xl text-sm leading-7 text-zinc-400 sm:text-base"
-                        >
-                            Montres iced-out serties de moissanite VVS couleur
-                            D, proposées avec plusieurs configurations de
-                            mouvement.
-                        </p>
-
-                        <!-- CTA -->
-
                         <div
-                            class="hero-animate mt-8 grid gap-3 sm:flex sm:flex-wrap sm:gap-4"
+                            class="hero-animate mt-8 flex max-w-xl items-center gap-4"
                         >
-                            <a
-                                href="#collection"
-                                class="flex w-full items-center justify-center rounded-xl bg-amber-300 px-7 py-4 text-xs font-black tracking-[0.1em] text-black uppercase transition hover:-translate-y-1 hover:bg-amber-200 sm:w-auto"
-                            >
-                                Voir la collection
-                            </a>
+                            <div
+                                class="hidden h-px w-12 bg-gradient-to-r from-transparent to-amber-400 sm:block"
+                            ></div>
 
-                            <a
-                                href="#commander"
-                                class="flex w-full items-center justify-center rounded-xl border border-white/15 bg-white/[0.025] px-7 py-4 text-xs font-black tracking-[0.1em] text-white uppercase transition hover:-translate-y-1 hover:border-amber-300/50 hover:text-amber-200 sm:w-auto"
+                            <p
+                                class="text-2xl font-medium italic leading-tight text-amber-200 sm:text-3xl"
                             >
-                                Comment commander
-                            </a>
+                                La culture bustdown arrive en Belgique 🇧🇪
+                            </p>
                         </div>
 
-                        <!-- QUALITÉ -->
+                        <p
+                            class="hero-animate mt-7 max-w-xl text-sm font-medium uppercase leading-7 tracking-[0.08em] text-zinc-300 sm:text-base"
+                        >
+                            Des montres d'exception.
+                            Un style unique.
+                            Faites pour briller.
+                        </p>
+
+                        <!-- FEATURES -->
 
                         <div
-                            class="hero-animate mt-8 grid grid-cols-3 gap-2 sm:max-w-xl sm:gap-3"
+                            class="hero-animate mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4"
                         >
                             <div
-                                class="rounded-xl border border-white/[0.08] bg-white/[0.018] px-2 py-3 text-center"
+                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <p class="text-xs font-black text-amber-200">
+                                <div
+                                    class="text-xl text-amber-300"
+                                >
+                                    ◇
+                                </div>
+
+                                <p
+                                    class="mt-2 text-[10px] font-bold uppercase tracking-wider"
+                                >
+                                    Moissanite
+                                </p>
+
+                                <p
+                                    class="text-[10px] text-zinc-500"
+                                >
                                     VVS
                                 </p>
+                            </div>
+
+                            <div
+                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
+                            >
+                                <div
+                                    class="text-lg text-amber-300"
+                                >
+                                    ♢
+                                </div>
 
                                 <p
-                                    class="mt-1 text-[7px] font-bold tracking-[0.12em] text-zinc-600 uppercase sm:text-[8px]"
+                                    class="mt-2 text-[10px] font-bold uppercase tracking-wider"
                                 >
-                                    Pureté
+                                    Japonais
+                                </p>
+
+                                <p
+                                    class="text-[10px] text-zinc-500"
+                                >
+                                    Sélectionné
                                 </p>
                             </div>
 
                             <div
-                                class="rounded-xl border border-white/[0.08] bg-white/[0.018] px-2 py-3 text-center"
+                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <p class="text-xs font-black text-amber-200">
-                                    D
+                                <div
+                                    class="text-lg text-amber-300"
+                                >
+                                    ✦
+                                </div>
+
+                                <p
+                                    class="mt-2 text-[10px] font-bold uppercase tracking-wider"
+                                >
+                                    Suisse
                                 </p>
 
                                 <p
-                                    class="mt-1 text-[7px] font-bold tracking-[0.12em] text-zinc-600 uppercase sm:text-[8px]"
+                                    class="text-[10px] text-zinc-500"
                                 >
-                                    Couleur
+                                    Premium
                                 </p>
                             </div>
 
                             <div
-                                class="rounded-xl border border-white/[0.08] bg-white/[0.018] px-2 py-3 text-center"
+                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <p class="text-xs font-black text-amber-200">
-                                    BE
+                                <div
+                                    class="text-lg text-amber-300"
+                                >
+                                    ↗
+                                </div>
+
+                                <p
+                                    class="mt-2 text-[10px] font-bold uppercase tracking-wider"
+                                >
+                                    Belgique
                                 </p>
 
                                 <p
-                                    class="mt-1 text-[7px] font-bold tracking-[0.12em] text-zinc-600 uppercase sm:text-[8px]"
+                                    class="text-[10px] text-zinc-500"
                                 >
-                                    Main propre
+                                    Remise possible
                                 </p>
                             </div>
+                        </div>
+
+                        <div
+                            class="hero-animate mt-9 flex flex-wrap gap-4"
+                        >
+                            <a
+                                href="#concept"
+                                class="rounded-lg border border-amber-300/50 bg-amber-300/[0.04] px-7 py-4 text-sm font-bold uppercase tracking-[0.1em] text-amber-200 shadow-[0_0_25px_rgba(251,191,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-300 hover:text-black"
+                            >
+                                Notre concept
+                            </a>
                         </div>
                     </div>
 
-                    <!-- HERO IMAGE -->
+                    <!-- ================================================= -->
+                    <!-- MONTRE 3D -->
+                    <!-- ================================================= -->
 
                     <div
-                        class="relative mt-8 flex min-h-[320px] items-center justify-center sm:min-h-[430px] lg:mt-0 lg:min-h-[590px]"
+                        class="relative flex min-h-[470px] items-center justify-center lg:min-h-[620px]"
                     >
                         <div
-                            class="absolute h-[280px] w-[280px] rounded-full bg-amber-300/[0.07] blur-[80px] sm:h-[450px] sm:w-[450px] sm:blur-[100px]"
+                            class="absolute h-[65%] w-[65%] rounded-full border border-amber-400/10 bg-amber-400/[0.025]"
                         ></div>
 
                         <div
-                            class="absolute h-[85%] w-[85%] rounded-full border border-white/[0.04] sm:h-[80%] sm:w-[80%]"
+                            class="absolute h-[85%] w-[85%] rounded-full border border-white/[0.04]"
                         ></div>
 
-                        <img
-                            v-if="heroWatch?.image"
-                            :src="heroWatch.image"
-                            :alt="heroWatch.name"
-                            class="hero-watch relative z-10 max-h-[360px] w-full max-w-[390px] object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)] sm:max-h-[500px] sm:max-w-[520px] lg:max-h-[620px] lg:max-w-[650px]"
-                        />
+                        <div
+                            class="absolute h-[420px] w-[420px] rounded-full bg-amber-300/10 blur-[90px]"
+                        ></div>
 
                         <div
-                            v-else
-                            class="relative z-10 flex h-72 w-full items-center justify-center rounded-3xl border border-white/10 bg-zinc-950 text-zinc-600"
+                            class="hero-watch relative z-10 h-[470px] w-full max-w-[720px] sm:h-[550px] lg:h-[640px]"
                         >
-                            VVS FLAWLESS
+                            <!-- MODEL VIEWER EST CRÉÉ ICI EN JS -->
+
+                            <div
+                                ref="viewerHost"
+                                class="absolute inset-0"
+                            ></div>
+
+                            <!-- CHARGEMENT -->
+
+                            <div
+                                v-if="!modelLoaded && !modelError"
+                                class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
+                            >
+                                <div
+                                    class="rounded-xl border border-white/10 bg-black/70 px-6 py-4 text-center backdrop-blur-md"
+                                >
+                                    <p
+                                        class="text-[10px] font-black uppercase tracking-[0.25em] text-amber-300"
+                                    >
+                                        Chargement 3D
+                                    </p>
+
+                                    <p
+                                        class="mt-2 text-lg font-black text-white"
+                                    >
+                                        {{ modelProgress }}%
+                                    </p>
+
+                                    <div
+                                        class="mt-3 h-[2px] w-40 overflow-hidden rounded-full bg-white/10"
+                                    >
+                                        <div
+                                            class="h-full bg-amber-300 transition-all duration-300"
+                                            :style="{
+                                                width: `${modelProgress}%`,
+                                            }"
+                                        ></div>
+                                    </div>
+
+                                    <p
+                                        class="mt-3 text-[9px] uppercase tracking-wider text-zinc-600"
+                                    >
+                                        Modèle haute qualité
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- ERREUR -->
+
+                            <div
+                                v-if="modelError"
+                                class="absolute inset-0 z-20 flex items-center justify-center"
+                            >
+                                <div
+                                    class="rounded-xl border border-red-500/20 bg-black/80 px-6 py-5 text-center"
+                                >
+                                    <p
+                                        class="text-xs font-black uppercase tracking-wider text-red-300"
+                                    >
+                                        Impossible de charger la montre 3D
+                                    </p>
+
+                                    <p
+                                        class="mt-2 text-[10px] text-zinc-500"
+                                    >
+                                        /models/vvs-watch.glb
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- TEXTE 360 -->
+
+                            <div
+                                v-if="modelLoaded"
+                                class="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-black/60 px-4 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-zinc-400 backdrop-blur-md"
+                            >
+                                Glissez pour voir la montre en 360°
+                            </div>
+                        </div>
+
+                        <!-- BADGE -->
+
+                        <div
+                            class="hero-badge absolute bottom-[8%] right-0 z-20 hidden border border-amber-300/50 bg-black/80 px-6 py-5 text-center shadow-[0_0_35px_rgba(251,191,36,0.12)] backdrop-blur md:block"
+                        >
+                            <p
+                                class="text-[9px] font-bold uppercase tracking-[0.3em] text-amber-300"
+                            >
+                                360°
+                            </p>
+
+                            <p
+                                class="mt-2 text-sm font-bold uppercase leading-5"
+                            >
+                                Vue
+                                <br />
+                                Interactive
+                            </p>
+
+                            <div
+                                class="mx-auto mt-3 flex h-5 w-9 overflow-hidden"
+                            >
+                                <span
+                                    class="flex-1 bg-black"
+                                ></span>
+
+                                <span
+                                    class="flex-1 bg-yellow-400"
+                                ></span>
+
+                                <span
+                                    class="flex-1 bg-red-600"
+                                ></span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -571,75 +1053,91 @@ onBeforeUnmount(() => {
 
             <section
                 id="collection"
-                class="relative scroll-mt-20 overflow-hidden px-4 py-20 sm:px-6 sm:py-24 lg:px-10"
+                class="relative scroll-mt-24 overflow-hidden px-5 py-20 sm:px-6 lg:px-10"
             >
                 <div
-                    class="absolute top-20 left-1/2 -z-10 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-amber-400/[0.025] blur-[150px]"
+                    class="absolute left-1/2 top-0 -z-10 h-[400px] w-[900px] -translate-x-1/2 rounded-full bg-amber-500/[0.035] blur-[120px]"
                 ></div>
 
-                <div class="mx-auto max-w-[1500px]">
-                    <!-- TITRE -->
-
-                    <header class="reveal-on-scroll mb-10 text-center sm:mb-12">
-                        <p
-                            class="text-[9px] font-black tracking-[0.4em] text-amber-300 uppercase sm:text-[10px]"
+                <div
+                    class="mx-auto max-w-[1500px]"
+                >
+                    <header
+                        class="reveal-on-scroll mb-12 text-center"
+                    >
+                        <div
+                            class="mb-4 flex items-center justify-center gap-3"
                         >
-                            Notre collection
-                        </p>
+                            <span
+                                class="h-px w-12 bg-gradient-to-r from-transparent to-amber-400"
+                            ></span>
+
+                            <span
+                                class="text-[11px] font-bold uppercase tracking-[0.4em] text-amber-300"
+                            >
+                                Notre collection
+                            </span>
+
+                            <span
+                                class="h-px w-12 bg-gradient-to-l from-transparent to-amber-400"
+                            ></span>
+                        </div>
 
                         <h2
-                            class="mt-4 text-3xl font-black tracking-[-0.04em] uppercase sm:text-5xl"
+                            class="text-4xl font-black uppercase tracking-[-0.03em] sm:text-5xl"
                         >
                             Choisis ta
 
-                            <span class="text-amber-300"> pièce </span>
+                            <span
+                                class="text-amber-300"
+                            >
+                                pièce
+                            </span>
                         </h2>
 
                         <p
-                            class="mx-auto mt-5 max-w-2xl text-sm leading-6 text-zinc-500"
+                            class="mx-auto mt-4 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base"
                         >
-                            Moissanite VVS • Couleur D. Sélectionne ton modèle
-                            puis ton mouvement.
+                            Moissanite VVS, mouvement japonais ou suisse.
+                            Sélectionne la version qui te correspond.
                         </p>
                     </header>
 
-                    <!-- PRODUITS -->
-
                     <div
-                        class="grid gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3"
+                        class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
                     >
                         <article
-                            v-for="watch in watches"
+                            v-for="watch in props.watches"
                             :key="watch.id"
-                            class="reveal-on-scroll group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black transition duration-500 hover:-translate-y-2 hover:border-amber-300/40 hover:shadow-[0_20px_70px_rgba(251,191,36,0.08)]"
+                            class="watch-card reveal-on-scroll group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black transition duration-500 hover:-translate-y-2 hover:border-amber-300/40 hover:shadow-[0_20px_70px_rgba(251,191,36,0.08)]"
                         >
-                            <!-- ================================================= -->
-                            <!-- IMAGE CLIQUABLE PC + MOBILE -->
-                            <!-- ================================================= -->
+                            <div
+                                class="absolute left-1/2 top-0 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
+                            ></div>
 
-                            <Link
-                                :href="`/watches/${watch.id}`"
-                                class="group/image relative block h-[310px] cursor-pointer overflow-hidden bg-zinc-950 sm:h-[350px] lg:h-[390px]"
-                                :aria-label="`Voir ${watch.name}`"
+                            <!-- IMAGE -->
+
+                            <div
+                                class="relative h-[390px] overflow-hidden bg-zinc-950"
                             >
-                                <!-- STOCK -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
+                                ></div>
 
                                 <div
-                                    class="pointer-events-none absolute top-3 left-3 z-20 sm:top-4 sm:left-4"
-                                >
-                                    <StockBadge
-                                        :quantity="watch.stock_quantity"
-                                    />
-                                </div>
+                                    class="absolute left-1/2 top-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.04] blur-[70px]"
+                                ></div>
 
-                                <!-- IMAGE -->
+                                <div
+                                    class="pointer-events-none absolute -left-1/2 top-0 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
+                                ></div>
 
                                 <img
                                     v-if="watch.image"
                                     :src="watch.image"
                                     :alt="watch.name"
                                     loading="lazy"
-                                    class="h-full w-full object-cover transition duration-700 group-hover/image:scale-[1.055]"
+                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]"
                                 />
 
                                 <div
@@ -649,90 +1147,64 @@ onBeforeUnmount(() => {
                                     Image bientôt
                                 </div>
 
-                                <!-- LÉGER ASSOMBRISSEMENT AU SURVOL -->
-
                                 <div
-                                    class="pointer-events-none absolute inset-0 bg-black/0 transition duration-500 group-hover/image:bg-black/10"
-                                ></div>
-
-                                <!-- REFLET -->
-
-                                <div
-                                    class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 transition-all duration-700 group-hover/image:left-[120%] group-hover/image:opacity-100"
-                                ></div>
-
-                                <!-- INDICATION PC -->
-
-                                <div
-                                    class="pointer-events-none absolute inset-x-0 bottom-0 z-20 hidden translate-y-full bg-gradient-to-t from-black/95 via-black/60 to-transparent px-5 pt-16 pb-5 transition-transform duration-300 group-hover/image:translate-y-0 md:block"
+                                    class="absolute left-4 top-4 z-20"
                                 >
-                                    <div
-                                        class="flex items-center justify-between"
-                                    >
-                                        <span
-                                            class="text-[10px] font-black tracking-[0.18em] text-white uppercase"
-                                        >
-                                            Voir la montre
-                                        </span>
-
-                                        <span
-                                            class="text-xl text-amber-300 transition duration-300 group-hover/image:translate-x-1"
-                                        >
-                                            →
-                                        </span>
-                                    </div>
+                                    <StockBadge
+                                        :quantity="watch.stock_quantity"
+                                    />
                                 </div>
 
-                                <!-- PETITE INDICATION MOBILE -->
-
-                                <div
-                                    class="pointer-events-none absolute right-3 bottom-3 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/70 text-sm text-amber-300 backdrop-blur-md md:hidden"
+                                <span
+                                    class="bling-sparkle absolute right-[13%] top-[21%] text-2xl text-white"
                                 >
-                                    →
-                                </div>
-                            </Link>
+                                    ✦
+                                </span>
 
-                            <!-- ================================================= -->
+                                <span
+                                    class="bling-sparkle absolute bottom-[22%] left-[13%] text-lg text-amber-200"
+                                >
+                                    ✦
+                                </span>
+                            </div>
+
                             <!-- CONTENU -->
-                            <!-- ================================================= -->
 
-                            <div class="p-5 sm:p-6">
-                                <!-- NOM -->
-
+                            <div
+                                class="relative p-6"
+                            >
                                 <h3
-                                    class="min-h-[50px] text-center text-base leading-snug font-black uppercase sm:min-h-[58px] sm:text-lg"
+                                    class="min-h-[58px] text-center text-lg font-black uppercase leading-snug tracking-[0.02em] text-white"
                                 >
                                     {{ watch.name }}
                                 </h3>
 
-                                <!-- QUALITÉ -->
-
                                 <p
-                                    class="mt-2 text-center text-[9px] font-black tracking-[0.18em] text-amber-300 uppercase sm:text-[10px]"
+                                    class="mt-2 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-amber-300"
                                 >
-                                    Moissanite VVS • D
+                                    Moissanite VVS
                                 </p>
 
                                 <!-- MOUVEMENTS -->
 
                                 <div
-                                    class="mt-5 grid grid-cols-2 gap-2.5 sm:mt-6 sm:gap-3"
+                                    class="mt-6 grid grid-cols-2 gap-3"
                                 >
-                                    <!-- JAPONAIS -->
+                                    <!-- JAPON -->
 
                                     <Link
                                         :href="`/watches/${watch.id}?movement=Japonais`"
-                                        class="rounded-xl border border-white/10 bg-white/[0.025] p-3.5 transition hover:border-amber-300/40 sm:p-4"
+                                        class="group/version rounded-xl border border-white/10 bg-white/[0.025] p-4 transition duration-300 hover:border-amber-300/50 hover:bg-amber-300/[0.04]"
                                     >
                                         <p
-                                            class="text-[8px] font-bold tracking-wider text-zinc-500 uppercase sm:text-[9px]"
+                                            class="text-[9px] font-bold uppercase tracking-[0.16em] text-zinc-500 transition group-hover/version:text-amber-200"
                                         >
                                             Japonais
                                         </p>
 
                                         <p
                                             v-if="watch.japanese_price"
-                                            class="mt-3 text-[10px] text-zinc-600 line-through sm:text-xs"
+                                            class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{
                                                 formatPrice(
@@ -742,14 +1214,20 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            class="mt-1 text-lg font-black text-amber-200 sm:text-xl"
+                                            class="mt-1 text-xl font-black text-amber-200"
                                         >
                                             {{
                                                 formatPrice(
-                                                    watch.japanese_promo_price ??
-                                                        watch.japanese_price,
+                                                    watch.japanese_promo_price
+                                                    ?? watch.japanese_price
                                                 )
                                             }}
+                                        </p>
+
+                                        <p
+                                            class="mt-3 text-[9px] uppercase tracking-wider text-zinc-600"
+                                        >
+                                            Choisir →
                                         </p>
                                     </Link>
 
@@ -757,67 +1235,81 @@ onBeforeUnmount(() => {
 
                                     <Link
                                         :href="`/watches/${watch.id}?movement=Suisse`"
-                                        class="rounded-xl border border-amber-300/20 bg-amber-300/[0.03] p-3.5 transition hover:border-amber-300/50 sm:p-4"
+                                        class="group/version relative overflow-hidden rounded-xl border border-amber-300/20 bg-amber-300/[0.035] p-4 transition duration-300 hover:border-amber-300/60 hover:bg-amber-300/[0.07]"
                                     >
+                                        <span
+                                            class="absolute right-2 top-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black uppercase tracking-wider text-black"
+                                        >
+                                            Premium
+                                        </span>
+
                                         <p
-                                            class="text-[8px] font-bold tracking-wider text-zinc-500 uppercase sm:text-[9px]"
+                                            class="text-[9px] font-bold uppercase tracking-[0.16em] text-zinc-500 transition group-hover/version:text-amber-200"
                                         >
                                             Suisse
                                         </p>
 
                                         <p
                                             v-if="watch.swiss_price"
-                                            class="mt-3 text-[10px] text-zinc-600 line-through sm:text-xs"
-                                        >
-                                            {{ formatPrice(watch.swiss_price) }}
-                                        </p>
-
-                                        <p
-                                            class="mt-1 text-lg font-black text-amber-200 sm:text-xl"
+                                            class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{
                                                 formatPrice(
-                                                    watch.swiss_promo_price ??
-                                                        watch.swiss_price,
+                                                    watch.swiss_price,
                                                 )
                                             }}
+                                        </p>
+
+                                        <p
+                                            class="mt-1 text-xl font-black text-amber-200"
+                                        >
+                                            {{
+                                                formatPrice(
+                                                    watch.swiss_promo_price
+                                                    ?? watch.swiss_price
+                                                )
+                                            }}
+                                        </p>
+
+                                        <p
+                                            class="mt-3 text-[9px] uppercase tracking-wider text-zinc-600"
+                                        >
+                                            Choisir →
                                         </p>
                                     </Link>
                                 </div>
 
-                                <!-- DESCRIPTION -->
-
                                 <p
-                                    class="mt-5 line-clamp-2 text-center text-xs leading-5 text-zinc-500 sm:text-sm sm:leading-6"
+                                    class="mt-5 line-clamp-2 text-center text-sm leading-6 text-zinc-500"
                                 >
                                     {{ watch.description }}
                                 </p>
 
-                                <!-- DISPONIBILITÉ -->
-
                                 <div
-                                    class="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4 text-[10px] sm:text-xs"
+                                    class="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs"
                                 >
-                                    <span class="text-zinc-600">
-                                        Disponibilité
+                                    <span
+                                        class="text-zinc-600"
+                                    >
+                                        Livraison estimée
                                     </span>
 
                                     <span
-                                        class="text-right font-semibold text-zinc-300"
+                                        class="font-semibold text-zinc-300"
                                     >
                                         5–6 jours ouvrables
                                     </span>
                                 </div>
 
-                                <!-- BOUTON -->
-
                                 <Link
                                     :href="`/watches/${watch.id}`"
-                                    class="mt-5 flex w-full items-center justify-center gap-3 rounded-xl border border-amber-300/40 px-4 py-4 text-[10px] font-black tracking-[0.1em] uppercase transition hover:bg-amber-300 hover:text-black sm:mt-6 sm:text-xs"
+                                    class="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-amber-300/50 bg-black px-4 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-[0_0_20px_rgba(251,191,36,0.05)] transition duration-300 hover:border-amber-300 hover:bg-amber-300 hover:text-black hover:shadow-[0_0_30px_rgba(251,191,36,0.16)]"
                                 >
                                     Voir la montre
 
-                                    <span> → </span>
+                                    <span>
+                                        →
+                                    </span>
                                 </Link>
                             </div>
                         </article>
@@ -832,28 +1324,168 @@ onBeforeUnmount(() => {
             <OrderSteps />
 
             <!-- ========================================================= -->
-            <!-- À PROPOS -->
+            <!-- CONCEPT -->
             <!-- ========================================================= -->
 
-            <AboutSection />
+            <section
+                id="concept"
+                class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10"
+            >
+                <div
+                    class="reveal-on-scroll mx-auto max-w-[1500px] overflow-hidden rounded-2xl border border-amber-300/30 bg-gradient-to-r from-amber-300/[0.06] via-zinc-950 to-black shadow-[0_0_60px_rgba(251,191,36,0.05)]"
+                >
+                    <div
+                        class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
+                    >
+                        <div
+                            class="flex h-20 w-28 overflow-hidden rounded-lg border border-white/10 shadow-[0_0_30px_rgba(251,191,36,0.15)]"
+                        >
+                            <span
+                                class="flex-1 bg-black"
+                            ></span>
+
+                            <span
+                                class="flex-1 bg-yellow-400"
+                            ></span>
+
+                            <span
+                                class="flex-1 bg-red-600"
+                            ></span>
+                        </div>
+
+                        <div>
+                            <p
+                                class="text-xs font-black uppercase tracking-[0.3em] text-amber-300"
+                            >
+                                Nouveau concept en Belgique
+                            </p>
+
+                            <h2
+                                class="mt-3 text-2xl font-black uppercase sm:text-3xl"
+                            >
+                                La culture bustdown arrive en Belgique 🇧🇪
+                            </h2>
+
+                            <p
+                                class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400"
+                            >
+                                VVS FLAWLESS propose une sélection de montres
+                                iced-out en moissanite VVS, disponibles avec
+                                mouvement japonais ou suisse.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            @click="scrollToCollection"
+                            class="rounded-lg border border-amber-300/50 px-6 py-4 text-xs font-black uppercase tracking-[0.15em] text-amber-200 transition hover:bg-amber-300 hover:text-black"
+                        >
+                            Voir la collection
+                        </button>
+                    </div>
+                </div>
+            </section>
 
             <!-- ========================================================= -->
-            <!-- REMISE -->
+            <!-- SERVICES -->
             <!-- ========================================================= -->
 
-            <PickupSection />
+            <section
+                id="services"
+                class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10"
+            >
+                <div
+                    class="reveal-on-scroll mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/70 sm:grid-cols-2 lg:grid-cols-4"
+                >
+                    <div
+                        class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
+                    >
+                        <div
+                            class="text-2xl text-amber-300"
+                        >
+                            ◇
+                        </div>
 
-            <!-- ========================================================= -->
-            <!-- FAQ -->
-            <!-- ========================================================= -->
+                        <h3
+                            class="mt-4 text-sm font-black uppercase tracking-wider"
+                        >
+                            Qualité premium
+                        </h3>
 
-            <FaqSection />
+                        <p
+                            class="mt-2 text-xs leading-5 text-zinc-500"
+                        >
+                            Pierres en moissanite VVS sélectionnées pour leur éclat.
+                        </p>
+                    </div>
 
-            <!-- ========================================================= -->
-            <!-- CONTACT -->
-            <!-- ========================================================= -->
+                    <div
+                        class="border-b border-white/10 p-7 lg:border-b-0 lg:border-r"
+                    >
+                        <div
+                            class="text-2xl text-amber-300"
+                        >
+                            ⚙
+                        </div>
 
-            <ContactSection />
+                        <h3
+                            class="mt-4 text-sm font-black uppercase tracking-wider"
+                        >
+                            Deux mouvements
+                        </h3>
+
+                        <p
+                            class="mt-2 text-xs leading-5 text-zinc-500"
+                        >
+                            Version japonaise ou version suisse premium.
+                        </p>
+                    </div>
+
+                    <div
+                        class="border-b border-white/10 p-7 sm:border-b-0 sm:border-r"
+                    >
+                        <div
+                            class="text-2xl text-amber-300"
+                        >
+                            ↗
+                        </div>
+
+                        <h3
+                            class="mt-4 text-sm font-black uppercase tracking-wider"
+                        >
+                            Remise en main propre
+                        </h3>
+
+                        <p
+                            class="mt-2 text-xs leading-5 text-zinc-500"
+                        >
+                            Remise possible en Belgique et aux alentours.
+                        </p>
+                    </div>
+
+                    <div
+                        class="p-7"
+                    >
+                        <div
+                            class="text-2xl text-amber-300"
+                        >
+                            ◷
+                        </div>
+
+                        <h3
+                            class="mt-4 text-sm font-black uppercase tracking-wider"
+                        >
+                            Délai estimé
+                        </h3>
+
+                        <p
+                            class="mt-2 text-xs leading-5 text-zinc-500"
+                        >
+                            Environ 5 à 6 jours ouvrables selon la commande.
+                        </p>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- ========================================================= -->
@@ -861,55 +1493,30 @@ onBeforeUnmount(() => {
         <!-- ========================================================= -->
 
         <footer
-            class="border-t border-white/10 bg-black px-5 py-10 sm:px-6 sm:py-12"
+            class="border-t border-white/10 bg-black px-6 py-10"
         >
             <div
-                class="mx-auto grid max-w-[1500px] gap-7 text-center md:grid-cols-3 md:items-center md:text-left"
+                class="mx-auto flex max-w-[1500px] flex-col gap-5 text-center md:flex-row md:items-center md:justify-between md:text-left"
             >
-                <!-- LOGO -->
-
                 <div>
                     <p
-                        class="font-black tracking-[0.12em] text-white uppercase"
+                        class="font-black uppercase tracking-[0.12em]"
                     >
                         VVS FLAWLESS
                     </p>
-                </div>
 
-                <!-- NAVIGATION -->
-
-                <div
-                    class="flex flex-wrap justify-center gap-x-5 gap-y-3 text-xs text-zinc-600"
-                >
-                    <a
-                        href="#collection"
-                        class="transition hover:text-amber-300"
+                    <p
+                        class="mt-1 text-xs text-zinc-600"
                     >
-                        Montres
-                    </a>
-
-                    <a href="#about" class="transition hover:text-amber-300">
-                        À propos
-                    </a>
-
-                    <a href="#pickup" class="transition hover:text-amber-300">
-                        Remise
-                    </a>
-
-                    <a href="#faq" class="transition hover:text-amber-300">
-                        FAQ
-                    </a>
-
-                    <a href="#contact" class="transition hover:text-amber-300">
-                        Contact
-                    </a>
+                        La culture bustdown arrive en Belgique 🇧🇪
+                    </p>
                 </div>
 
-                <!-- COPYRIGHT -->
-
-                <div class="md:text-right">
-                    <p class="text-xs text-zinc-700">© 2026 VVS FLAWLESS</p>
-                </div>
+                <p
+                    class="text-xs text-zinc-700"
+                >
+                    © 2026 VVS FLAWLESS
+                </p>
             </div>
         </footer>
     </div>
