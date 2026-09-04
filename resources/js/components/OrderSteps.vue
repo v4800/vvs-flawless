@@ -1,11 +1,6 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
 import { animate, stagger } from 'animejs';
-import { computed, onMounted, ref } from 'vue';
-
-const page = usePage();
-
-const translations = computed(() => page.props.translations);
+import { onMounted, ref } from 'vue';
 
 const section = ref(null);
 
@@ -77,7 +72,7 @@ onMounted(() => {
                     <span
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        {{ translations.order.eyebrow }}
+                        Simple & rapide
                     </span>
 
                     <span
@@ -88,16 +83,14 @@ onMounted(() => {
                 <h2
                     class="text-4xl font-black tracking-[-0.04em] uppercase sm:text-5xl"
                 >
-                    {{ translations.order.title_before }}
-                    <span class="text-amber-300">
-                        {{ translations.order.title_highlight }}
-                    </span>
+                    Comment
+                    <span class="text-amber-300"> commander ? </span>
                 </h2>
 
                 <p
                     class="mx-auto mt-5 max-w-xl text-sm leading-6 text-zinc-500 sm:text-base"
                 >
-                    De la sÃ©lection de votre montre jusqu'Ã  sa remise en main
+                    De la sélection de votre montre jusqu'à sa remise en main
                     propre.
                 </p>
             </header>
@@ -127,12 +120,12 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                {{ translations.order.step_1_title }}
+                                Choisis ta montre
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
-                                Parcours la collection et sÃ©lectionne la piÃ¨ce
-                                qui correspond Ã  ton style.
+                                Parcours la collection et sélectionne la pièce
+                                qui correspond à ton style.
                             </p>
                         </div>
                     </div>
@@ -150,11 +143,11 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                {{ translations.order.step_2_title }}
+                                Choisis ton mouvement
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
-                                SÃ©lectionne le mouvement japonais ou la version
+                                Sélectionne le mouvement japonais ou la version
                                 suisse premium.
                             </p>
                         </div>
@@ -173,11 +166,11 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                Envoie ta rÃ©servation
+                                Envoie ta réservation
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
-                                Renseigne tes coordonnÃ©es et envoie ta demande
+                                Renseigne tes coordonnées et envoie ta demande
                                 directement depuis le site.
                             </p>
                         </div>
@@ -196,12 +189,12 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                {{ translations.order.step_4_title }}
+                                On te contacte
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
                                 VVS FLAWLESS te contacte afin de confirmer la
-                                rÃ©servation et le mode de rÃ©ception choisi.
+                                réservation et le mode de réception choisi.
                             </p>
                         </div>
                     </div>
@@ -219,12 +212,12 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                ReÃ§ois ta montre
+                                Reçois ta montre
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
                                 La remise en main propre ou la livraison est
-                                organisÃ©e selon le choix confirmÃ© avec VVS
+                                organisée selon le choix confirmé avec VVS
                                 FLAWLESS.
                             </p>
                         </div>
@@ -236,9 +229,8 @@ onMounted(() => {
                 class="mx-auto mt-10 max-w-3xl rounded-xl border border-amber-300/15 bg-amber-300/[0.025] px-5 py-4 text-center"
             >
                 <p class="text-xs leading-5 text-zinc-500">
-                    Une rÃ©servation confirme votre intÃ©rÃªt pour la piÃ¨ce. La
-                    commande est finalisÃ©e aprÃ¨s confirmation avec VVS
-                    FLAWLESS.
+                    Une réservation confirme votre intérêt pour la pièce. La
+                    commande est finalisée après confirmation avec VVS FLAWLESS.
                 </p>
             </div>
         </div>
