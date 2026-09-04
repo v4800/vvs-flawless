@@ -140,8 +140,7 @@ class ReservationSecurityTest extends TestCase
 
         Mail::assertSent(
             CustomerReservationMail::class,
-            fn (CustomerReservationMail $mail): bool =>
-                $mail->confirmationUrl
+            fn (CustomerReservationMail $mail): bool => $mail->confirmationUrl
                 === $response->headers->get('X-Inertia-Location')
                 && str_contains(
                     $mail->confirmationUrl,
@@ -566,11 +565,11 @@ $this->withHeader('X-Inertia', 'true')->post(route(
 
         'phone' => '0470000006',
 
-            'city' => 'Liège',
+        'city' => 'Liège',
 
-            'delivery_method' => 'Remise en main propre',
+        'delivery_method' => 'Remise en main propre',
 
-            'confirmation' => true,
+        'confirmation' => true,
     ]
 );
 
