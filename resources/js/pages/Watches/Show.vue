@@ -117,7 +117,10 @@ const submit = () => {
                     <div>
                         <div class="relative">
                             <div class="absolute top-5 left-5 z-20">
-                                <StockBadge :quantity="watch.stock_quantity" />
+                                <StockBadge
+                                    :quantity="watch.stock_quantity"
+                                    :availability="watch.availability"
+                                />
                             </div>
 
                             <div

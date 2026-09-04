@@ -27,6 +27,7 @@ onMounted(async () => {
 
         viewer.setAttribute('src', '/models/vvs-watch.glb');
         viewer.setAttribute('alt', 'Montre VVS FLAWLESS 3D');
+        viewer.setAttribute('poster', '/images/vvs-watch-hero.webp');
 
         /*
         |--------------------------------------------------------------------------
@@ -139,22 +140,19 @@ onBeforeUnmount(() => {
         ></div>
 
         <div
-            class="hero-orb pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/[0.09] blur-[100px]"
+            class="hero-orb pointer-events-none absolute top-1/2 left-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/[0.09] blur-[100px]"
         ></div>
 
         <div
-            class="pointer-events-none absolute left-1/2 top-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/[0.08]"
+            class="pointer-events-none absolute top-1/2 left-1/2 h-[72%] w-[72%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-300/[0.08]"
         ></div>
 
         <div
-            class="pointer-events-none absolute left-1/2 top-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035]"
+            class="pointer-events-none absolute top-1/2 left-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035]"
         ></div>
 
         <!-- viewer -->
-        <div
-            ref="viewerHost"
-            class="absolute inset-0 z-10"
-        ></div>
+        <div ref="viewerHost" class="absolute inset-0 z-10"></div>
 
         <!-- reflet animé pour donner plus de brillance -->
         <div
@@ -165,21 +163,21 @@ onBeforeUnmount(() => {
         <!-- petites etincelles -->
         <span
             v-if="!loading && !error"
-            class="sparkle sparkle-1 pointer-events-none absolute right-[19%] top-[24%] z-20 text-4xl text-white"
+            class="sparkle sparkle-1 pointer-events-none absolute top-[24%] right-[19%] z-20 text-4xl text-white"
         >
             ✦
         </span>
 
         <span
             v-if="!loading && !error"
-            class="sparkle sparkle-2 pointer-events-none absolute right-[26%] top-[58%] z-20 text-3xl text-amber-200"
+            class="sparkle sparkle-2 pointer-events-none absolute top-[58%] right-[26%] z-20 text-3xl text-amber-200"
         >
             ✦
         </span>
 
         <span
             v-if="!loading && !error"
-            class="sparkle sparkle-3 pointer-events-none absolute left-[18%] bottom-[20%] z-20 text-3xl text-white"
+            class="sparkle sparkle-3 pointer-events-none absolute bottom-[20%] left-[18%] z-20 text-3xl text-white"
         >
             ✦
         </span>
@@ -193,14 +191,12 @@ onBeforeUnmount(() => {
                 class="w-[220px] rounded-2xl border border-white/10 bg-black/75 px-6 py-5 text-center shadow-2xl backdrop-blur-xl"
             >
                 <p
-                    class="text-[9px] font-black uppercase tracking-[0.28em] text-amber-300"
+                    class="text-[9px] font-black tracking-[0.28em] text-amber-300 uppercase"
                 >
                     VVS FLAWLESS
                 </p>
 
-                <p
-                    class="mt-3 text-2xl font-black text-white"
-                >
+                <p class="mt-3 text-2xl font-black text-white">
                     {{ progress }}%
                 </p>
 
@@ -214,7 +210,7 @@ onBeforeUnmount(() => {
                 </div>
 
                 <p
-                    class="mt-3 text-[8px] font-semibold uppercase tracking-[0.15em] text-zinc-600"
+                    class="mt-3 text-[8px] font-semibold tracking-[0.15em] text-zinc-600 uppercase"
                 >
                     Chargement de la montre 3D
                 </p>
@@ -230,14 +226,12 @@ onBeforeUnmount(() => {
                 class="rounded-2xl border border-red-500/20 bg-black/80 px-7 py-6 text-center"
             >
                 <p
-                    class="text-xs font-black uppercase tracking-[0.15em] text-red-300"
+                    class="text-xs font-black tracking-[0.15em] text-red-300 uppercase"
                 >
                     Modèle 3D introuvable
                 </p>
 
-                <p
-                    class="mt-3 text-[10px] text-zinc-500"
-                >
+                <p class="mt-3 text-[10px] text-zinc-500">
                     public/models/vvs-watch.glb
                 </p>
             </div>
@@ -245,47 +239,33 @@ onBeforeUnmount(() => {
 
         <!-- badges -->
         <div
-            class="absolute left-5 top-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
+            class="absolute top-5 left-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
         >
-            <p class="text-xs font-black text-white">
-                Moissanite VVS
-            </p>
+            <p class="text-xs font-black text-white">Moissanite VVS</p>
 
-            <p class="mt-1 text-xs text-zinc-500">
-                Finition iced-out
-            </p>
+            <p class="mt-1 text-xs text-zinc-500">Finition iced-out</p>
         </div>
 
         <div
-            class="absolute right-5 top-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
+            class="absolute top-5 right-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
         >
-            <p class="text-xs font-black text-white">
-                Modèle 3D
-            </p>
+            <p class="text-xs font-black text-white">Modèle 3D</p>
 
-            <p class="mt-1 text-xs text-zinc-500">
-                Statique
-            </p>
+            <p class="mt-1 text-xs text-zinc-500">Statique</p>
         </div>
 
         <div
             class="absolute bottom-5 left-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
         >
-            <p class="text-xs font-black text-white">
-                Couleur D
-            </p>
+            <p class="text-xs font-black text-white">Couleur D</p>
 
-            <p class="mt-1 text-xs text-zinc-500">
-                Éclat clair et lumineux
-            </p>
+            <p class="mt-1 text-xs text-zinc-500">Éclat clair et lumineux</p>
         </div>
 
         <div
-            class="absolute bottom-5 right-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
+            class="absolute right-5 bottom-5 z-20 rounded-2xl border border-white/10 bg-black/55 px-5 py-4 backdrop-blur-xl"
         >
-            <p class="text-xs font-black text-white">
-                AP look alike
-            </p>
+            <p class="text-xs font-black text-white">AP look alike</p>
 
             <p class="mt-1 text-xs text-zinc-500">
                 Sans marquage sur la montre
@@ -321,7 +301,7 @@ onBeforeUnmount(() => {
 @keyframes glowPulse {
     0%,
     100% {
-        opacity: 0.70;
+        opacity: 0.7;
         transform: translate(-50%, -50%) scale(0.98);
     }
     50% {

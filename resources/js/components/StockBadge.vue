@@ -6,6 +6,10 @@ const props = defineProps({
         type: [Number, String],
         default: null,
     },
+    availability: {
+        type: String,
+        default: '',
+    },
 });
 
 const stock = computed(() => {
@@ -20,6 +24,19 @@ const stock = computed(() => {
     return Number(props.quantity);
 });
 
+const availabilityLabel = computed(() => props.availability.trim());
+
+const isMadeToOrder = computed(() => {
+    const availability = availabilityLabel.value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase();
+
+    return ['sur commande', 'sur reservation', 'precommande'].some((label) =>
+        availability.includes(label),
+    );
+});
+
 const badge = computed(() => {
     /*
     |--------------------------------------------------------------------------
@@ -28,8 +45,17 @@ const badge = computed(() => {
     */
 
     if (stock.value === null) {
+        if (isMadeToOrder.value) {
+            return {
+                label: 'Sur commande',
+                icon: '○',
+                classes: 'border-white/15 bg-black/85 text-zinc-400',
+                iconClasses: 'text-zinc-500',
+            };
+        }
+
         return {
-            label: 'Disponible',
+            label: availabilityLabel.value || 'Disponible',
             icon: '●',
             classes: 'border-amber-300/30 bg-black/85 text-amber-200',
             iconClasses: 'text-amber-300',
@@ -44,7 +70,7 @@ const badge = computed(() => {
 
     if (stock.value <= 0) {
         return {
-            label: 'Sur commande',
+            label: isMadeToOrder.value ? 'Sur commande' : 'Indisponible',
             icon: '○',
             classes: 'border-white/15 bg-black/85 text-zinc-400',
             iconClasses: 'text-zinc-500',
