@@ -1,58 +1,11 @@
 <script setup>
-import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
 const openIndex = ref(null);
-
-const faqs = [
-    {
-        question: 'Quelle qualité de moissanite utilisez-vous ?',
-
-        answer: 'Les modèles VVS FLAWLESS sont proposés avec de la moissanite de pureté VVS et de couleur D. La couleur D correspond à un rendu incolore, tandis que VVS désigne le niveau de pureté de la pierre.',
-    },
-
-    {
-        question: 'La moissanite passe-t-elle au testeur diamant ?',
-
-        answer: 'La moissanite peut réagir positivement sur certains testeurs thermiques utilisés pour le diamant. Un testeur capable de différencier diamant et moissanite pourra cependant identifier les deux pierres séparément.',
-    },
-
-    {
-        question: 'Quelle différence entre mouvement japonais et suisse ?',
-
-        answer: 'Deux versions peuvent être proposées selon le modèle. Le mouvement japonais correspond à la version standard et la version suisse à l’option supérieure disponible sur la montre concernée.',
-    },
-
-    {
-        question: 'Comment fonctionne une réservation ?',
-
-        answer: 'Choisissez votre montre et votre mouvement, puis remplissez le formulaire. Votre demande est enregistrée et vous recevez un récapitulatif. VVS FLAWLESS vous contacte ensuite afin de finaliser les détails.',
-    },
-
-    {
-        question: 'Quand ma montre sera-t-elle disponible ?',
-
-        answer: 'Le délai estimé est généralement de 5 à 6 jours ouvrables. Dès que votre montre est disponible, VVS FLAWLESS vous contacte afin d’organiser la remise.',
-    },
-
-    {
-        question: 'Comment recevoir ma montre ?',
-
-        answer: 'Vous pouvez choisir une remise en main propre ou une livraison. Les modalités précises sont confirmées avec vous avant la finalisation de la commande.',
-    },
-
-    {
-        question: 'Comment se passe la remise en main propre ?',
-
-        answer: 'Le lieu exact est convenu directement avec vous après confirmation de votre réservation afin de choisir un point de rencontre adapté.',
-    },
-
-    {
-        question:
-            'Ma réservation est-elle directement une commande définitive ?',
-
-        answer: 'Non. La réservation permet d’enregistrer votre demande et la pièce sélectionnée. La commande est finalisée après confirmation des détails avec VVS FLAWLESS.',
-    },
-];
+const page = usePage();
+const translations = computed(() => page.props.translations);
+const faqs = computed(() => translations.value.faq.items);
 
 const toggleFaq = (index) => {
     openIndex.value = openIndex.value === index ? null : index;
@@ -78,7 +31,7 @@ const toggleFaq = (index) => {
                     <span
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        Besoin d'informations ?
+                        {{ translations.faq.eyebrow }}
                     </span>
 
                     <span
@@ -89,15 +42,17 @@ const toggleFaq = (index) => {
                 <h2
                     class="text-4xl font-black tracking-[-0.04em] uppercase sm:text-5xl"
                 >
-                    Questions
+                    {{ translations.faq.title_before }}
 
-                    <span class="text-amber-300"> fréquentes </span>
+                    <span class="text-amber-300">
+                        {{ translations.faq.title_highlight }}
+                    </span>
                 </h2>
 
                 <p
                     class="mx-auto mt-5 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base"
                 >
-                    Tout ce qu'il faut savoir avant de réserver votre montre.
+                    {{ translations.faq.description }}
                 </p>
             </header>
 

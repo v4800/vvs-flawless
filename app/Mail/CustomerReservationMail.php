@@ -24,8 +24,13 @@ class CustomerReservationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Récapitulatif de votre réservation VVS FLAWLESS — '
-                .$this->reservation->reservation_number
+            subject: (string) trans(
+                'site.mail.subject',
+                [
+                    'number' => $this->reservation
+                        ->reservation_number,
+                ]
+            )
         );
     }
 

@@ -1,7 +1,9 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import VvsNavigation from '@/components/VvsNavigation.vue';
 
-defineProps({
+const props = defineProps({
     reservation: {
         type: Object,
         required: true,
@@ -13,19 +15,38 @@ defineProps({
     },
 });
 
+const page = usePage();
+const localizedRoutes = page.props.localizedRoutes;
+const translations = computed(() => page.props.translations);
+const locale = computed(() =>
+    page.props.locale === 'nl_BE' ? 'nl-BE' : 'fr-BE',
+);
+
+const localizedMovement = computed(() =>
+    props.reservation.movement === 'Suisse'
+        ? translations.value.movements.suisse
+        : translations.value.movements.japonais,
+);
+
+const localizedDeliveryMethod = computed(() =>
+    props.reservation.delivery_method === 'Livraison'
+        ? translations.value.product.delivery
+        : translations.value.product.handover,
+);
+
 const formatPrice = (price) => {
-    return `${Number(price).toLocaleString('fr-BE')} €`;
+    return `${Number(price).toLocaleString(locale.value)} €`;
 };
 </script>
 
 <template>
     <VvsNavigation
         current="reservation"
-        :back-href="`/watches/${watch.id}`"
-        back-label="Voir la montre"
-        :watch-href="`/watches/${watch.id}`"
+        :back-href="`${localizedRoutes.watches}/${watch.id}`"
+        :back-label="translations.confirmation.view_watch"
+        :watch-href="`${localizedRoutes.watches}/${watch.id}`"
     />
-    <Head title="Récapitulatif de réservation — VVS FLAWLESS" />
+    <Head :title="translations.confirmation.title" />
 
     <main
         class="relative min-h-screen overflow-hidden bg-black px-5 py-12 text-white sm:px-6"
@@ -51,14 +72,13 @@ const formatPrice = (price) => {
                 </p>
 
                 <h1 class="mt-3 text-3xl font-black uppercase sm:text-4xl">
-                    Réservation enregistrée
+                    {{ translations.confirmation.recorded }}
                 </h1>
 
                 <p
                     class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400"
                 >
-                    Voici le récapitulatif complet de votre demande. Une
-                    confirmation est également envoyée par e-mail.
+                    {{ translations.confirmation.intro }}
                 </p>
             </div>
 
@@ -78,7 +98,7 @@ const formatPrice = (price) => {
                         </p>
 
                         <p class="mt-1 text-xs text-amber-300">
-                            La culture bustdown arrive en Belgique 🇧🇪
+                            {{ translations.footer.tagline }}
                         </p>
                     </div>
 
@@ -86,7 +106,7 @@ const formatPrice = (price) => {
                         <p
                             class="text-[10px] font-bold tracking-[0.25em] text-zinc-500 uppercase"
                         >
-                            Récapitulatif
+                            {{ translations.confirmation.summary }}
                         </p>
 
                         <p class="mt-1 text-lg font-black text-amber-200">
@@ -115,7 +135,7 @@ const formatPrice = (price) => {
                         <p
                             class="text-[10px] font-black tracking-[0.25em] text-amber-300 uppercase"
                         >
-                            Votre montre
+                            {{ translations.confirmation.your_watch }}
                         </p>
 
                         <h2 class="mt-3 text-2xl leading-tight font-black">
@@ -124,16 +144,20 @@ const formatPrice = (price) => {
 
                         <div class="mt-7 grid gap-6 sm:grid-cols-2">
                             <div>
-                                <p class="text-xs text-zinc-600">Mouvement</p>
+                                <p class="text-xs text-zinc-600">
+                                    {{ translations.product.movement }}
+                                </p>
 
                                 <p class="mt-1 font-semibold">
-                                    {{ reservation.movement }}
+                                    {{ localizedMovement }}
                                 </p>
                             </div>
 
                             <div>
                                 <p class="text-xs text-zinc-600">
-                                    Prix réservé
+                                    {{
+                                        translations.confirmation.reserved_price
+                                    }}
                                 </p>
 
                                 <p
@@ -151,12 +175,14 @@ const formatPrice = (price) => {
                     <h3
                         class="text-xs font-black tracking-[0.25em] text-zinc-500 uppercase"
                     >
-                        Informations client
+                        {{ translations.confirmation.customer_information }}
                     </h3>
 
                     <div class="mt-5 grid gap-x-12 gap-y-5 sm:grid-cols-2">
                         <div>
-                            <p class="text-xs text-zinc-600">Nom complet</p>
+                            <p class="text-xs text-zinc-600">
+                                {{ translations.product.full_name }}
+                            </p>
 
                             <p class="mt-1 font-semibold">
                                 {{ reservation.customer_name }}
@@ -164,7 +190,9 @@ const formatPrice = (price) => {
                         </div>
 
                         <div>
-                            <p class="text-xs text-zinc-600">E-mail</p>
+                            <p class="text-xs text-zinc-600">
+                                {{ translations.product.email }}
+                            </p>
 
                             <p class="mt-1 font-semibold">
                                 {{ reservation.email }}
@@ -172,7 +200,9 @@ const formatPrice = (price) => {
                         </div>
 
                         <div>
-                            <p class="text-xs text-zinc-600">Téléphone</p>
+                            <p class="text-xs text-zinc-600">
+                                {{ translations.product.phone }}
+                            </p>
 
                             <p class="mt-1 font-semibold">
                                 {{ reservation.phone }}
@@ -180,10 +210,15 @@ const formatPrice = (price) => {
                         </div>
 
                         <div>
-                            <p class="text-xs text-zinc-600">Ville</p>
+                            <p class="text-xs text-zinc-600">
+                                {{ translations.product.city }}
+                            </p>
 
                             <p class="mt-1 font-semibold">
-                                {{ reservation.city || 'Non renseignée' }}
+                                {{
+                                    reservation.city ||
+                                    translations.confirmation.not_provided
+                                }}
                             </p>
                         </div>
                     </div>
@@ -194,21 +229,23 @@ const formatPrice = (price) => {
                     <div class="grid gap-6 sm:grid-cols-2">
                         <div>
                             <p class="text-xs text-zinc-600">
-                                Mode de réception
+                                {{ translations.product.reception_method }}
                             </p>
 
                             <p class="mt-1 font-semibold">
-                                {{ reservation.delivery_method }}
+                                {{ localizedDeliveryMethod }}
                             </p>
                         </div>
 
                         <div>
-                            <p class="text-xs text-zinc-600">Statut</p>
+                            <p class="text-xs text-zinc-600">
+                                {{ translations.confirmation.status }}
+                            </p>
 
                             <span
                                 class="mt-1 inline-flex rounded-full border border-amber-300/20 bg-amber-300/[0.05] px-3 py-1 text-xs font-bold text-amber-200"
                             >
-                                {{ reservation.status }}
+                                {{ translations.confirmation.new_request }}
                             </span>
                         </div>
                     </div>
@@ -221,7 +258,7 @@ const formatPrice = (price) => {
                         <p
                             class="text-xs font-bold tracking-[0.18em] text-zinc-500 uppercase"
                         >
-                            Message
+                            {{ translations.product.message }}
                         </p>
 
                         <p class="mt-3 text-sm leading-6 text-zinc-300">
@@ -233,35 +270,33 @@ const formatPrice = (price) => {
                     <div
                         class="mt-7 rounded-2xl border border-amber-300/20 bg-amber-300/[0.04] p-5"
                     >
-                        <p class="font-bold text-amber-200">Et maintenant ?</p>
+                        <p class="font-bold text-amber-200">
+                            {{ translations.confirmation.next_title }}
+                        </p>
 
                         <p class="mt-2 text-sm leading-6 text-zinc-400">
-                            Votre demande est bien enregistrée. VVS FLAWLESS
-                            vous contactera pour confirmer la disponibilité, le
-                            délai et finaliser votre commande.
+                            {{ translations.confirmation.next_text }}
                         </p>
 
                         <p class="mt-3 text-xs text-zinc-600">
-                            Ce récapitulatif confirme votre réservation. La
-                            commande devient définitive après confirmation avec
-                            VVS FLAWLESS.
+                            {{ translations.confirmation.legal_note }}
                         </p>
                     </div>
 
                     <!-- BOUTONS -->
                     <div class="mt-8 grid gap-3 sm:grid-cols-2">
                         <Link
-                            href="/watches"
+                            :href="localizedRoutes.watches"
                             class="flex items-center justify-center rounded-xl bg-amber-300 px-5 py-4 text-xs font-black tracking-[0.12em] text-black uppercase transition hover:bg-amber-200"
                         >
-                            Retour à la collection
+                            {{ translations.confirmation.back_collection }}
                         </Link>
 
                         <Link
-                            :href="`/watches/${watch.id}?movement=${reservation.movement}`"
+                            :href="`${localizedRoutes.watches}/${watch.id}?movement=${reservation.movement}`"
                             class="flex items-center justify-center rounded-xl border border-amber-300/30 px-5 py-4 text-xs font-black tracking-[0.12em] text-amber-200 uppercase transition hover:bg-amber-300/[0.05]"
                         >
-                            Revoir la montre
+                            {{ translations.confirmation.review_watch }}
                         </Link>
                     </div>
                 </div>

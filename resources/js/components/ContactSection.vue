@@ -1,3 +1,18 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+defineProps({
+    collectionHref: {
+        type: String,
+        default: '#collection',
+    },
+});
+
+const page = usePage();
+const translations = computed(() => page.props.translations);
+</script>
+
 <template>
     <section
         id="contact"
@@ -23,7 +38,7 @@
                     <span
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        Contact
+                        {{ translations.contact.eyebrow }}
                     </span>
 
                     <span
@@ -36,9 +51,11 @@
                 <h2
                     class="text-4xl font-black tracking-[-0.04em] uppercase sm:text-5xl"
                 >
-                    Une question avant de
+                    {{ translations.contact.title_before }}
 
-                    <span class="text-amber-300"> réserver ? </span>
+                    <span class="text-amber-300">
+                        {{ translations.contact.title_highlight }}
+                    </span>
                 </h2>
 
                 <!-- TEXTE -->
@@ -46,15 +63,13 @@
                 <p
                     class="mx-auto mt-6 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base"
                 >
-                    Besoin d'informations sur une montre, un mouvement ou le
-                    mode de réception ? Contactez directement VVS FLAWLESS sur
-                    TikTok.
+                    {{ translations.contact.description }}
                 </p>
 
-                <!-- PROFIL TIKTOK -->
+                <!-- PROFIL INSTAGRAM -->
 
                 <a
-                    href="https://www.tiktok.com/@vvsflawless43"
+                    href="https://www.instagram.com/vvsflawless43/"
                     target="_blank"
                     rel="noopener noreferrer"
                     class="group mx-auto mt-9 flex max-w-md items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/70 p-4 text-left transition duration-300 hover:-translate-y-1 hover:border-amber-300/30 hover:bg-white/[0.025]"
@@ -91,7 +106,7 @@
                                 <span
                                     class="hidden rounded-full border border-white/10 px-2 py-0.5 text-[7px] font-black tracking-[0.15em] text-zinc-500 uppercase sm:inline-flex"
                                 >
-                                    TikTok
+                                    Instagram
                                 </span>
                             </div>
 
@@ -102,7 +117,7 @@
                             <p
                                 class="mt-2 hidden text-[10px] tracking-[0.12em] text-zinc-700 uppercase sm:block"
                             >
-                                Profil officiel VVS FLAWLESS
+                                {{ translations.contact.official_profile }}
                             </p>
                         </div>
                     </div>
@@ -122,12 +137,12 @@
                     class="mt-8 flex flex-col justify-center gap-3 sm:flex-row"
                 >
                     <a
-                        href="https://www.tiktok.com/@vvsflawless43"
+                        href="https://www.instagram.com/vvsflawless43/"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="group flex items-center justify-center gap-3 rounded-xl bg-amber-300 px-7 py-4 text-xs font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:-translate-y-1 hover:bg-amber-200"
                     >
-                        Nous contacter sur TikTok
+                        {{ translations.contact.instagram_cta }}
 
                         <span
                             class="transition duration-300 group-hover:translate-x-1"
@@ -137,10 +152,19 @@
                     </a>
 
                     <a
-                        href="#collection"
+                        href="https://www.tiktok.com/@vvsflawless43"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         class="flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.025] px-7 py-4 text-xs font-black tracking-[0.1em] text-white uppercase transition duration-300 hover:-translate-y-1 hover:border-amber-300/50 hover:text-amber-200"
                     >
-                        Voir la collection
+                        {{ translations.contact.tiktok_cta }}
+                    </a>
+
+                    <a
+                        :href="collectionHref"
+                        class="flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.025] px-7 py-4 text-xs font-black tracking-[0.1em] text-white uppercase transition duration-300 hover:-translate-y-1 hover:border-amber-300/50 hover:text-amber-200"
+                    >
+                        {{ translations.contact.collection_cta }}
                     </a>
                 </div>
 
@@ -150,9 +174,7 @@
                     class="mx-auto mt-8 max-w-2xl border-t border-white/10 pt-6"
                 >
                     <p class="text-xs leading-6 text-zinc-600">
-                        Les réservations se font directement depuis le site.
-                        TikTok reste disponible pour vos questions et demandes
-                        d'informations.
+                        {{ translations.contact.note }}
                     </p>
                 </div>
             </div>

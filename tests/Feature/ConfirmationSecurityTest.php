@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class ConfirmationSecurityTest extends TestCase
@@ -157,5 +158,27 @@ class ConfirmationSecurityTest extends TestCase
             $this->get($expiredUrl);
 
         $response->assertForbidden();
+    }
+
+    public function test_dutch_signed_confirmation_uses_dutch_locale(): void
+    {
+        $reservationNumber = $this->createReservation();
+
+        $signedUrl = URL::temporarySignedRoute(
+            'nl.reservations.confirmation',
+            now()->addMinutes(10),
+            [
+                'reservationNumber' => $reservationNumber,
+            ]
+        );
+
+        $this->get($signedUrl)
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Reservations/Confirmation')
+                    ->where('locale', 'nl_BE')
+                    ->etc()
+            );
     }
 }

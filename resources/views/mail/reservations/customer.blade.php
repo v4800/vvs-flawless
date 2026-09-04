@@ -1,66 +1,83 @@
+@php
+    $watchName = $reservation->watch->name;
+
+    if (app()->getLocale() === 'nl_BE') {
+        $translatedWatch = trans('watches.'.$reservation->watch->id);
+
+        if (is_array($translatedWatch) && is_string($translatedWatch['name'] ?? null)) {
+            $watchName = $translatedWatch['name'];
+        }
+    }
+
+    $movement = $reservation->movement === 'Suisse'
+        ? trans('site.movements.suisse')
+        : trans('site.movements.japonais');
+
+    $deliveryMethod = $reservation->delivery_method === 'Livraison'
+        ? trans('site.product.delivery')
+        : trans('site.product.handover');
+@endphp
+
 <x-mail::message>
 
-# Votre réservation VVS FLAWLESS
+# {{ trans('site.mail.title') }}
 
-Bonjour {{ $reservation->customer_name }},
+{{ trans('site.mail.hello', ['name' => $reservation->customer_name]) }}
 
-Votre demande de réservation a bien été enregistrée.
+{{ trans('site.mail.recorded') }}
 
-## Récapitulatif
+## {{ trans('site.mail.summary') }}
 
-**Numéro :**  
+**{{ trans('site.mail.number') }} :**
 {{ $reservation->reservation_number }}
 
-**Montre :**  
-{{ $reservation->watch->name }}
+**{{ trans('site.mail.watch') }} :**
+{{ $watchName }}
 
-**Mouvement :**  
-{{ $reservation->movement }}
+**{{ trans('site.mail.movement') }} :**
+{{ $movement }}
 
-**Prix réservé :**  
+**{{ trans('site.mail.reserved_price') }} :**
 {{ number_format($reservation->price, 0, ',', ' ') }} €
 
-**Nom :**  
+**{{ trans('site.mail.name') }} :**
 {{ $reservation->customer_name }}
 
-**E-mail :**  
+**{{ trans('site.mail.email') }} :**
 {{ $reservation->email }}
 
-**Téléphone :**  
+**{{ trans('site.mail.phone') }} :**
 {{ $reservation->phone }}
 
-**Ville :**  
-{{ $reservation->city ?: 'Non renseignée' }}
+**{{ trans('site.mail.city') }} :**
+{{ $reservation->city ?: trans('site.mail.not_provided') }}
 
-**Mode de réception :**
+**{{ trans('site.mail.reception_method') }} :**
 
-{{ $reservation->delivery_method }}
+{{ $deliveryMethod }}
 
-**Statut :**  
-{{ $reservation->status }}
+**{{ trans('site.mail.status') }} :**
+{{ trans('site.confirmation.new_request') }}
 
 @if ($reservation->message)
 
-**Votre message :**
+**{{ trans('site.mail.your_message') }} :**
 
 {{ $reservation->message }}
 
 @endif
 
-<x-mail::button
-    :url="$confirmationUrl"
->
-Voir mon récapitulatif
+<x-mail::button :url="$confirmationUrl">
+{{ trans('site.mail.button') }}
 </x-mail::button>
 
-VVS FLAWLESS vous contactera afin de finaliser votre commande.
+{{ trans('site.mail.next') }}
 
-Ce message confirme votre demande de réservation.  
-La commande devient définitive après confirmation avec VVS FLAWLESS.
+{{ trans('site.mail.legal_note') }}
 
-Merci,
+{{ trans('site.mail.thanks') }}
 
-**VVS FLAWLESS**  
-La culture bustdown arrive en Belgique 🇧🇪
+**VVS FLAWLESS**
+{{ trans('site.footer.tagline') }}
 
 </x-mail::message>

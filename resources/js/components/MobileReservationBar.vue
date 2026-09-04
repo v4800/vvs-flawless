@@ -1,5 +1,8 @@
 <script setup>
-defineProps({
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const props = defineProps({
     movement: {
         type: String,
         required: true,
@@ -10,6 +13,14 @@ defineProps({
         required: true,
     },
 });
+
+const page = usePage();
+const translations = computed(() => page.props.translations);
+const localizedMovement = computed(() =>
+    props.movement === 'Suisse'
+        ? translations.value.collection.swiss
+        : translations.value.collection.japanese,
+);
 
 const formatPrice = (price) => {
     return `${Number(price).toFixed(0)} €`;
@@ -25,7 +36,12 @@ const formatPrice = (price) => {
                 <p
                     class="truncate text-[9px] font-black tracking-[0.16em] text-zinc-600 uppercase"
                 >
-                    Mouvement {{ movement }}
+                    {{
+                        translations.mobile_reservation.movement.replace(
+                            ':movement',
+                            localizedMovement,
+                        )
+                    }}
                 </p>
 
                 <p class="mt-1 text-xl font-black text-amber-200">
@@ -37,7 +53,7 @@ const formatPrice = (price) => {
                 href="#reservation"
                 class="flex shrink-0 items-center gap-3 rounded-xl bg-amber-300 px-5 py-3.5 text-xs font-black tracking-[0.08em] text-black uppercase transition active:scale-[0.98]"
             >
-                Réserver
+                {{ translations.mobile_reservation.cta }}
 
                 <span>↓</span>
             </a>

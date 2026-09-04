@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, watch as vueWatch } from 'vue';
 import ReservationTrust from '@/components/ReservationTrust.vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
@@ -23,7 +23,16 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+
+    seo: {
+        type: Object,
+        required: true,
+    },
 });
+
+const page = usePage();
+const localizedRoutes = page.props.localizedRoutes;
+const translations = computed(() => page.props.translations);
 
 const form = useForm({
     watch_id: props.watch.id,
@@ -37,16 +46,24 @@ const form = useForm({
     confirmation: false,
 });
 
-const deliveryOptions = [
+const deliveryOptions = computed(() => [
     {
         value: 'Remise en main propre',
-        description: 'Le point de rencontre est confirmé avec vous.',
+        label: translations.value.product.handover,
+        description: translations.value.product.handover_description,
     },
     {
         value: 'Livraison',
-        description: 'Les modalités de livraison sont confirmées avec vous.',
+        label: translations.value.product.delivery,
+        description: translations.value.product.delivery_description,
     },
-];
+]);
+
+const localizedMovement = computed(() =>
+    form.movement === 'Suisse'
+        ? translations.value.movements.suisse
+        : translations.value.movements.japonais,
+);
 
 vueWatch(
     () => props.selectedMovement,
@@ -90,28 +107,27 @@ const formatPrice = (price) => {
 };
 
 const submit = () => {
-    form.post('/reservations', {
+    form.post(localizedRoutes.reservationStore, {
         preserveScroll: false,
     });
 };
 </script>
 
 <template>
-    <Head :title="`${watch.name} — VVS FLAWLESS`" />
+    <Head :title="seo.title" />
 
     <div class="min-h-screen bg-black pb-24 text-white lg:pb-0">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
-            Aller au contenu
+            {{ translations.accessibility.skip_content }}
         </a>
 
         <VvsNavigation
             current="watch"
-            back-href="/watches"
-            back-label="Collection"
-            :watch-href="`/watches/${watch.id}`"
+            :back-label="translations.vvs_navigation.collection"
+            :watch-href="`${localizedRoutes.watches}/${watch.id}`"
         />
 
         <main id="main-content" tabindex="-1">
@@ -162,7 +178,7 @@ const submit = () => {
                                     <p
                                         class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
                                     >
-                                        Pierre
+                                        {{ translations.product.stone }}
                                     </p>
 
                                     <p
@@ -178,7 +194,7 @@ const submit = () => {
                                     <p
                                         class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
                                     >
-                                        Couleur
+                                        {{ translations.product.color }}
                                     </p>
 
                                     <p
@@ -197,7 +213,7 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Pureté
+                                    {{ translations.product.purity }}
                                 </p>
 
                                 <p class="mt-2 font-black text-amber-200">
@@ -211,7 +227,7 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Couleur
+                                    {{ translations.product.color }}
                                 </p>
 
                                 <p class="mt-2 font-black text-amber-200">D</p>
@@ -223,13 +239,13 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Réception
+                                    {{ translations.product.reception }}
                                 </p>
 
                                 <p
                                     class="mt-2 text-xs font-black text-amber-200"
                                 >
-                                    Au choix
+                                    {{ translations.product.customer_choice }}
                                 </p>
                             </div>
                         </div>
@@ -261,7 +277,7 @@ const submit = () => {
 
                             <span class="mx-2 text-amber-400"> • </span>
 
-                            Couleur D
+                            {{ translations.product.color }} D
                         </p>
 
                         <p
@@ -282,24 +298,26 @@ const submit = () => {
                                     <p
                                         class="text-[10px] font-black tracking-[0.3em] text-zinc-600 uppercase"
                                     >
-                                        Configuration
+                                        {{ translations.product.configuration }}
                                     </p>
 
                                     <h2 class="mt-2 text-xl font-black">
-                                        Choisissez votre mouvement
+                                        {{
+                                            translations.product.choose_movement
+                                        }}
                                     </h2>
                                 </div>
 
                                 <p
                                     class="hidden text-xs text-zinc-600 sm:block"
                                 >
-                                    2 versions disponibles
+                                    {{ translations.product.two_versions }}
                                 </p>
                             </div>
 
                             <div class="mt-5 grid gap-4 sm:grid-cols-2">
                                 <Link
-                                    :href="`/watches/${watch.id}?movement=Japonais`"
+                                    :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
                                     preserve-scroll
                                     :class="[
                                         'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
@@ -315,11 +333,16 @@ const submit = () => {
                                             <p
                                                 class="text-[9px] font-black tracking-[0.22em] text-zinc-500 uppercase"
                                             >
-                                                Version
+                                                {{
+                                                    translations.product.version
+                                                }}
                                             </p>
 
                                             <p class="mt-2 text-lg font-black">
-                                                Japonais
+                                                {{
+                                                    translations.movements
+                                                        .japonais
+                                                }}
                                             </p>
                                         </div>
 
@@ -362,12 +385,12 @@ const submit = () => {
                                     <p
                                         class="mt-4 text-[10px] tracking-[0.15em] text-zinc-600 uppercase"
                                     >
-                                        Sélectionner →
+                                        {{ translations.product.select }}
                                     </p>
                                 </Link>
 
                                 <Link
-                                    :href="`/watches/${watch.id}?movement=Suisse`"
+                                    :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
                                     preserve-scroll
                                     :class="[
                                         'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
@@ -383,11 +406,16 @@ const submit = () => {
                                             <p
                                                 class="text-[9px] font-black tracking-[0.22em] text-zinc-500 uppercase"
                                             >
-                                                Version
+                                                {{
+                                                    translations.product.version
+                                                }}
                                             </p>
 
                                             <p class="mt-2 text-lg font-black">
-                                                Suisse
+                                                {{
+                                                    translations.movements
+                                                        .suisse
+                                                }}
                                             </p>
                                         </div>
 
@@ -426,7 +454,7 @@ const submit = () => {
                                     <p
                                         class="mt-4 text-[10px] tracking-[0.15em] text-zinc-600 uppercase"
                                     >
-                                        Sélectionner →
+                                        {{ translations.product.select }}
                                     </p>
                                 </Link>
                             </div>
@@ -441,11 +469,12 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
                                 >
-                                    Votre sélection
+                                    {{ translations.product.your_selection }}
                                 </p>
 
                                 <p class="mt-2 font-bold text-zinc-200">
-                                    Mouvement {{ form.movement }}
+                                    {{ translations.product.movement }}
+                                    {{ localizedMovement }}
                                 </p>
                             </div>
 
@@ -472,11 +501,14 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Disponibilité estimée
+                                    {{
+                                        translations.product
+                                            .estimated_availability
+                                    }}
                                 </p>
 
                                 <p class="mt-2 font-bold text-zinc-200">
-                                    5–6 jours ouvrables
+                                    {{ translations.product.estimated_delay }}
                                 </p>
                             </div>
 
@@ -486,11 +518,14 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Réception
+                                    {{ translations.product.reception }}
                                 </p>
 
                                 <p class="mt-2 font-bold text-zinc-200">
-                                    Remise ou livraison
+                                    {{
+                                        translations.product
+                                            .handover_or_delivery
+                                    }}
                                 </p>
                             </div>
                         </div>
@@ -499,7 +534,9 @@ const submit = () => {
                             href="#reservation"
                             class="mt-6 flex w-full items-center justify-between rounded-2xl bg-amber-300 px-6 py-5 font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:-translate-y-1 hover:bg-amber-200"
                         >
-                            <span> Réserver cette montre </span>
+                            <span>{{
+                                translations.product.reserve_watch
+                            }}</span>
 
                             <span class="text-xl"> ↓ </span>
                         </a>
@@ -523,7 +560,7 @@ const submit = () => {
                         </p>
 
                         <p class="mt-2 text-xs text-zinc-600">
-                            Sélectionnée pour son éclat
+                            {{ translations.product.sparkle_text }}
                         </p>
                     </div>
 
@@ -531,11 +568,11 @@ const submit = () => {
                         <p
                             class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
                         >
-                            Couleur D
+                            {{ translations.product.color }} D
                         </p>
 
                         <p class="mt-2 text-xs text-zinc-600">
-                            Rendu clair et incolore
+                            {{ translations.product.color_render }}
                         </p>
                     </div>
 
@@ -543,11 +580,11 @@ const submit = () => {
                         <p
                             class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
                         >
-                            Réception au choix
+                            {{ translations.product.reception_choice }}
                         </p>
 
                         <p class="mt-2 text-xs text-zinc-600">
-                            Remise ou livraison
+                            {{ translations.product.handover_or_delivery }}
                         </p>
                     </div>
                 </div>
@@ -576,19 +613,17 @@ const submit = () => {
                         <p
                             class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
                         >
-                            Votre sélection
+                            {{ translations.product.your_selection }}
                         </p>
 
                         <h2
                             class="mt-4 text-3xl font-black tracking-[-0.03em] uppercase"
                         >
-                            Réserver votre pièce
+                            {{ translations.product.reserve_piece }}
                         </h2>
 
                         <p class="mt-4 text-sm leading-7 text-zinc-500">
-                            Envoyez votre demande. VVS FLAWLESS vous contactera
-                            ensuite afin de confirmer les détails et le mode de
-                            réception choisi.
+                            {{ translations.product.reservation_intro }}
                         </p>
 
                         <div
@@ -615,7 +650,7 @@ const submit = () => {
                                     <p
                                         class="mt-2 text-[10px] tracking-[0.15em] text-zinc-500 uppercase"
                                     >
-                                        {{ form.movement }}
+                                        {{ localizedMovement }}
                                     </p>
 
                                     <p
@@ -635,8 +670,7 @@ const submit = () => {
                             </p>
 
                             <p class="mt-2 text-xs leading-5 text-zinc-600">
-                                Les modalités sont confirmées avec vous après
-                                l'envoi de la demande.
+                                {{ translations.product.reception_note }}
                             </p>
                         </div>
                     </div>
@@ -654,18 +688,18 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.3em] text-zinc-600 uppercase"
                                 >
-                                    Réservation
+                                    {{ translations.product.reservation }}
                                 </p>
 
                                 <h3 class="mt-2 text-2xl font-black">
-                                    Vos informations
+                                    {{ translations.product.your_information }}
                                 </h3>
                             </div>
 
                             <div
                                 class="rounded-full border border-amber-300/20 bg-amber-300/[0.04] px-4 py-2 text-xs font-bold text-amber-200"
                             >
-                                {{ form.movement }}
+                                {{ localizedMovement }}
                             </div>
                         </div>
 
@@ -677,7 +711,7 @@ const submit = () => {
                                     for="reservation-customer-name"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Nom complet
+                                    {{ translations.product.full_name }}
                                 </label>
 
                                 <input
@@ -695,7 +729,9 @@ const submit = () => {
                                             : undefined
                                     "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                                    placeholder="Votre nom"
+                                    :placeholder="
+                                        translations.product.name_placeholder
+                                    "
                                 />
 
                                 <p
@@ -715,7 +751,7 @@ const submit = () => {
                                     for="reservation-email"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    E-mail
+                                    {{ translations.product.email }}
                                 </label>
 
                                 <input
@@ -731,7 +767,9 @@ const submit = () => {
                                             : undefined
                                     "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                                    placeholder="email@exemple.com"
+                                    :placeholder="
+                                        translations.product.email_placeholder
+                                    "
                                 />
 
                                 <p
@@ -751,7 +789,7 @@ const submit = () => {
                                     for="reservation-phone"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Téléphone
+                                    {{ translations.product.phone }}
                                 </label>
 
                                 <input
@@ -787,7 +825,7 @@ const submit = () => {
                                     for="reservation-city"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Ville
+                                    {{ translations.product.city }}
                                 </label>
 
                                 <input
@@ -802,7 +840,9 @@ const submit = () => {
                                             : undefined
                                     "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                                    placeholder="Ex. Liège"
+                                    :placeholder="
+                                        translations.product.city_placeholder
+                                    "
                                 />
 
                                 <p
@@ -831,7 +871,7 @@ const submit = () => {
                                 <legend
                                     class="mb-2 text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Mode de réception
+                                    {{ translations.product.reception_method }}
                                 </legend>
 
                                 <div class="grid gap-3 sm:grid-cols-2">
@@ -864,7 +904,7 @@ const submit = () => {
                                                 <span
                                                     class="block font-bold text-white"
                                                 >
-                                                    {{ option.value }}
+                                                    {{ option.label }}
                                                 </span>
 
                                                 <span
@@ -894,12 +934,12 @@ const submit = () => {
                                     for="reservation-message"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Message
+                                    {{ translations.product.message }}
 
                                     <span
                                         class="tracking-normal text-zinc-700 normal-case"
                                     >
-                                        — facultatif
+                                        {{ translations.product.optional }}
                                     </span>
                                 </label>
 
@@ -914,7 +954,9 @@ const submit = () => {
                                             : undefined
                                     "
                                     class="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                                    placeholder="Une question ou une précision concernant votre réservation ?"
+                                    :placeholder="
+                                        translations.product.message_placeholder
+                                    "
                                 ></textarea>
 
                                 <p
@@ -933,15 +975,16 @@ const submit = () => {
                             >
                                 <div>
                                     <p class="font-black text-white">
-                                        Une question avant de réserver ?
+                                        {{
+                                            translations.product
+                                                .contact_question
+                                        }}
                                     </p>
 
                                     <p
                                         class="mt-1 text-xs leading-5 text-zinc-600"
                                     >
-                                        Contactez directement VVS FLAWLESS pour
-                                        une précision sur la montre ou le
-                                        mouvement.
+                                        {{ translations.product.contact_text }}
                                     </p>
                                 </div>
 
@@ -981,10 +1024,10 @@ const submit = () => {
                                     <span
                                         class="text-xs leading-6 text-zinc-500"
                                     >
-                                        Je confirme souhaiter réserver cette
-                                        montre et être contacté par VVS FLAWLESS
-                                        afin de finaliser ma demande et
-                                        confirmer le mode de réception choisi.
+                                        {{
+                                            translations.product
+                                                .confirmation_text
+                                        }}
                                     </span>
                                 </label>
 
@@ -994,7 +1037,9 @@ const submit = () => {
                                     role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
-                                    Vous devez confirmer votre demande.
+                                    {{
+                                        translations.product.confirmation_error
+                                    }}
                                 </p>
                             </div>
 
@@ -1008,11 +1053,15 @@ const submit = () => {
                                         <p
                                             class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
                                         >
-                                            Montant de la pièce
+                                            {{
+                                                translations.product
+                                                    .piece_amount
+                                            }}
                                         </p>
 
                                         <p class="mt-2 text-sm text-zinc-400">
-                                            Mouvement {{ form.movement }}
+                                            {{ translations.product.movement }}
+                                            {{ localizedMovement }}
                                         </p>
                                     </div>
 
@@ -1035,8 +1084,8 @@ const submit = () => {
                                     <span>
                                         {{
                                             form.processing
-                                                ? 'Envoi en cours...'
-                                                : 'Envoyer ma réservation'
+                                                ? translations.product.sending
+                                                : translations.product.submit
                                         }}
                                     </span>
 
@@ -1050,9 +1099,7 @@ const submit = () => {
                                 <p
                                     class="mt-4 text-center text-[11px] leading-5 text-zinc-700"
                                 >
-                                    La réservation enregistre votre demande.
-                                    Elle est finalisée après confirmation avec
-                                    VVS FLAWLESS.
+                                    {{ translations.product.reservation_note }}
                                 </p>
                             </div>
                         </div>
@@ -1077,7 +1124,7 @@ const submit = () => {
                     </p>
 
                     <p class="mt-1 text-xs text-zinc-700">
-                        Moissanite VVS • Couleur D
+                        {{ translations.product.footer_material }}
                     </p>
                 </div>
 
@@ -1085,24 +1132,24 @@ const submit = () => {
                     class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end"
                 >
                     <Link
-                        href="/confidentialite"
+                        :href="localizedRoutes.privacy"
                         class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
                     >
-                        Confidentialité
+                        {{ translations.footer.privacy }}
                     </Link>
 
                     <Link
-                        href="/conditions-reservation"
+                        :href="localizedRoutes.reservationTerms"
                         class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
                     >
-                        Conditions de réservation
+                        {{ translations.footer.terms }}
                     </Link>
 
                     <Link
-                        href="/watches"
+                        :href="localizedRoutes.watches"
                         class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
                     >
-                        ← Collection
+                        {{ translations.footer.collection }}
                     </Link>
                 </div>
             </div>

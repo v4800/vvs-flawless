@@ -93,6 +93,8 @@ class SecurityHeadersTest extends TestCase
                 '/user/confirm-password',
                 '/dashboard',
                 '/settings/profile',
+                '/reservation-confirmed/test',
+                '/nl/reservation-confirmed/test',
             ] as $path
         ) {
             $response = $this->get($path);
@@ -118,6 +120,16 @@ class SecurityHeadersTest extends TestCase
                 'X-Robots-Tag'
             )
         );
+    }
+
+    public function test_not_found_pages_are_not_indexable(): void
+    {
+        $this->get('/page-that-does-not-exist')
+            ->assertNotFound()
+            ->assertHeader(
+                'X-Robots-Tag',
+                'noindex, nofollow, noarchive'
+            );
     }
 
     public function test_production_https_has_csp_and_hsts(): void

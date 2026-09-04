@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SeoController;
 use App\Http\Controllers\WatchController;
@@ -14,8 +15,11 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::inertia('/conditions-reservation', 'Legal/ReservationTerms')
+Route::get('/conditions-reservation', [PublicPageController::class, 'reservationTerms'])
     ->name('reservation-terms');
+
+Route::get('/a-propos', [PublicPageController::class, 'about'])
+    ->name('about');
 
 Route::get(
     '/',
@@ -33,7 +37,7 @@ Route::get(
 |--------------------------------------------------------------------------
 */
 
-Route::inertia('/confidentialite', 'Legal/Privacy')
+Route::get('/confidentialite', [PublicPageController::class, 'privacy'])
     ->name('privacy');
 
 Route::get(
@@ -127,6 +131,84 @@ Route::get(
     ->name(
         'reservations.confirmation'
     );
+
+/*
+|--------------------------------------------------------------------------
+| NEDERLANDSTALIGE OPENBARE ROUTES
+|--------------------------------------------------------------------------
+|
+| De Franse URL's blijven ongewijzigd. Zo behouden bestaande links hun
+| waarde en krijgt de Nederlandse versie eigen, indexeerbare URL's.
+|
+*/
+
+Route::prefix('nl')
+    ->name('nl.')
+    ->group(function () {
+        Route::get(
+            '/reservatievoorwaarden',
+            [PublicPageController::class, 'reservationTerms']
+        )->name('reservation-terms');
+
+        Route::get(
+            '/privacy',
+            [PublicPageController::class, 'privacy']
+        )->name('privacy');
+
+        Route::get(
+            '/over-ons',
+            [PublicPageController::class, 'about']
+        )->name('about');
+
+        Route::get(
+            '/',
+            function (Request $request) {
+                return redirect()->route(
+                    'nl.watches.index',
+                    $request->query()
+                );
+            }
+        )->name('home');
+
+        Route::get(
+            '/watches',
+            [
+                WatchController::class,
+                'index',
+            ]
+        )->name('watches.index');
+
+        Route::get(
+            '/watches/{watch}',
+            [
+                WatchController::class,
+                'show',
+            ]
+        )->name('watches.show');
+
+        Route::post(
+            '/reservations',
+            [
+                ReservationController::class,
+                'store',
+            ]
+        )
+            ->middleware('throttle:5,1')
+            ->name('reservations.store');
+
+        Route::get(
+            '/reservation-confirmed/{reservationNumber}',
+            [
+                ReservationController::class,
+                'confirmation',
+            ]
+        )
+            ->middleware([
+                'signed',
+                'throttle:30,1',
+            ])
+            ->name('reservations.confirmation');
+    });
 
 /*
 |--------------------------------------------------------------------------

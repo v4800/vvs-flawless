@@ -143,7 +143,8 @@ class SecurityHeaders
         */
 
         if (
-            $request->is('dashboard*')
+            $response->getStatusCode() === 404
+            || $request->is('dashboard*')
             || $request->is('login*')
             || $request->is('forgot-password*')
             || $request->is('reset-password*')
@@ -152,6 +153,7 @@ class SecurityHeaders
             || $request->is('register*')
             || $request->is('two-factor-challenge*')
             || $request->is('reservation-confirmed/*')
+            || $request->is('nl/reservation-confirmed/*')
             || $request->is('settings*')
         ) {
             $response->headers->set(

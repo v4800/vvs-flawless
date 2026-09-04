@@ -11,7 +11,7 @@ const props = defineProps({
 
     backHref: {
         type: String,
-        default: '/watches',
+        default: null,
     },
 
     backLabel: {
@@ -33,6 +33,21 @@ const props = defineProps({
 const page = usePage();
 
 const translations = computed(() => page.props.translations);
+const localizedRoutes = computed(() => page.props.localizedRoutes);
+const languageLinks = computed(() => {
+    const alternates = page.props.seo?.alternates ?? [];
+
+    return {
+        fr: alternates.find((alternate) => alternate.hreflang === 'fr-BE')
+            ?.href,
+        nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
+            ?.href,
+    };
+});
+
+const resolvedBackHref = computed(
+    () => props.backHref ?? localizedRoutes.value.watches,
+);
 
 const resolvedBackLabel = computed(
     () => props.backLabel ?? translations.value.vvs_navigation.collection,
@@ -44,7 +59,7 @@ const steps = computed(() => {
     const items = [
         {
             label: translations.value.vvs_navigation.collection,
-            href: '/watches',
+            href: localizedRoutes.value.watches,
             key: 'collection',
         },
     ];
@@ -94,7 +109,7 @@ onMounted(() => {
 
             <Link
                 v-if="showBack"
-                :href="backHref"
+                :href="resolvedBackHref"
                 class="group flex shrink-0 items-center gap-3"
             >
                 <span
@@ -130,44 +145,77 @@ onMounted(() => {
 
             <!-- BREADCRUMB -->
 
-            <nav
-                class="flex min-w-0 items-center justify-end overflow-hidden"
-                :aria-label="translations.vvs_navigation.label"
-            >
-                <template v-for="(step, index) in steps" :key="step.key">
+            <div class="flex min-w-0 items-center justify-end gap-3">
+                <nav
+                    v-if="languageLinks.fr || languageLinks.nl"
+                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-black"
+                    :aria-label="translations.language.label"
+                >
                     <Link
-                        v-if="step.href && step.key !== current"
-                        :href="step.href"
-                        class="hidden text-xs font-medium whitespace-nowrap text-zinc-500 transition hover:text-amber-200 sm:inline"
-                    >
-                        {{ step.label }}
-                    </Link>
-
-                    <span
-                        v-else
+                        v-if="languageLinks.fr"
+                        :href="languageLinks.fr"
                         :class="[
-                            'text-xs font-semibold whitespace-nowrap',
-
-                            step.key === current
-                                ? 'text-amber-200'
-                                : 'hidden text-zinc-500 sm:inline',
+                            'rounded-full px-2 py-1 transition',
+                            page.props.locale === 'fr_BE'
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-500 hover:text-white',
                         ]"
                     >
-                        {{ step.label }}
-                    </span>
-
-                    <span
-                        v-if="index < steps.length - 1"
-                        class="mx-2 hidden text-zinc-700 sm:inline"
+                        {{ translations.language.fr }}
+                    </Link>
+                    <Link
+                        v-if="languageLinks.nl"
+                        :href="languageLinks.nl"
+                        :class="[
+                            'rounded-full px-2 py-1 transition',
+                            page.props.locale === 'nl_BE'
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-500 hover:text-white',
+                        ]"
                     >
-                        ›
-                    </span>
-                </template>
+                        {{ translations.language.nl }}
+                    </Link>
+                </nav>
 
-                <div
-                    class="ml-3 hidden h-px w-8 bg-gradient-to-r from-amber-300/70 to-transparent md:block"
-                ></div>
-            </nav>
+                <nav
+                    class="hidden min-w-0 items-center justify-end overflow-hidden sm:flex"
+                    :aria-label="translations.vvs_navigation.label"
+                >
+                    <template v-for="(step, index) in steps" :key="step.key">
+                        <Link
+                            v-if="step.href && step.key !== current"
+                            :href="step.href"
+                            class="hidden text-xs font-medium whitespace-nowrap text-zinc-500 transition hover:text-amber-200 sm:inline"
+                        >
+                            {{ step.label }}
+                        </Link>
+
+                        <span
+                            v-else
+                            :class="[
+                                'text-xs font-semibold whitespace-nowrap',
+
+                                step.key === current
+                                    ? 'text-amber-200'
+                                    : 'hidden text-zinc-500 sm:inline',
+                            ]"
+                        >
+                            {{ step.label }}
+                        </span>
+
+                        <span
+                            v-if="index < steps.length - 1"
+                            class="mx-2 hidden text-zinc-700 sm:inline"
+                        >
+                            ›
+                        </span>
+                    </template>
+
+                    <div
+                        class="ml-3 hidden h-px w-8 bg-gradient-to-r from-amber-300/70 to-transparent md:block"
+                    ></div>
+                </nav>
+            </div>
         </div>
     </div>
 </template>

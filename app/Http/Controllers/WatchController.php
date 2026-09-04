@@ -13,17 +13,33 @@ class WatchController extends Controller
     {
         $this->captureMarketingAttribution($request);
 
-        $watches = Watch::latest()->get();
+        $watches = Watch::latest()
+            ->get()
+            ->map(
+                fn (Watch $watch) => $this->localizedWatch(
+                    $watch
+                )
+            );
+
+        $collectionUrl = route(
+            $this->localizedRouteName('watches.index')
+        );
 
         return inertia('Watches/Index', [
             'watches' => $watches,
 
             'seo' => [
-                'title' => 'VVS FLAWLESS — Montres Iced-Out en Belgique',
+                'title' => trans('site.seo.collection_title'),
 
-                'description' => 'Découvrez la collection VVS FLAWLESS : montres iced-out en moissanite VVS couleur D, mouvements Japonais ou Suisse, disponibles sur réservation en Belgique.',
+                'description' => trans(
+                    'site.seo.collection_description'
+                ),
 
-                'canonical' => route('watches.index'),
+                'canonical' => $collectionUrl,
+
+                'alternates' => $this->collectionAlternates(),
+
+                'locale' => app()->getLocale(),
 
                 'image' => url(
                     '/images/vvs-flawless-profile.webp'
@@ -38,9 +54,13 @@ class WatchController extends Controller
 
                     'name' => 'VVS FLAWLESS',
 
-                    'url' => url('/'),
+                    'url' => $collectionUrl,
 
-                    'inLanguage' => 'fr-BE',
+                    'inLanguage' => str_replace(
+                        '_',
+                        '-',
+                        app()->getLocale()
+                    ),
 
                     'publisher' => [
                         '@type' => 'Organization',
@@ -54,6 +74,7 @@ class WatchController extends Controller
                         ),
 
                         'sameAs' => [
+                            'https://www.instagram.com/vvsflawless43/',
                             'https://www.tiktok.com/@vvsflawless43',
                         ],
                     ],
@@ -68,6 +89,8 @@ class WatchController extends Controller
     ): Response {
         $this->captureMarketingAttribution($request);
 
+        $watch = $this->localizedWatch($watch);
+
         $selectedMovement =
             $request->query('movement') === 'Suisse'
                 ? 'Suisse'
@@ -78,7 +101,8 @@ class WatchController extends Controller
                 $watch->name
                 .'. '
                 .$watch->description
-                .' Moissanite VVS couleur D, mouvements Japonais ou Suisse, réservation avec remise en main propre ou livraison.'
+                .' '
+                .trans('site.seo.product_description_suffix')
             ),
             160,
             '…'
@@ -98,10 +122,15 @@ class WatchController extends Controller
             ])
             ->latest('updated_at')
             ->limit(3)
-            ->get();
+            ->get()
+            ->map(
+                fn (Watch $relatedWatch) => $this->localizedWatch(
+                    $relatedWatch
+                )
+            );
 
         $watchUrl = route(
-            'watches.show',
+            $this->localizedRouteName('watches.show'),
             $watch
         );
 
@@ -120,7 +149,7 @@ class WatchController extends Controller
 
                     'sku' => 'VVS-'.$watch->id,
 
-                    'category' => 'Montre iced-out en moissanite',
+                    'category' => trans('site.seo.product_category'),
 
                     'image' => [
                         $watch->image
@@ -141,8 +170,12 @@ class WatchController extends Controller
                         [
                             '@type' => 'ListItem',
                             'position' => 1,
-                            'name' => 'Montres',
-                            'item' => route('watches.index'),
+                            'name' => trans('site.navigation.watches'),
+                            'item' => route(
+                                $this->localizedRouteName(
+                                    'watches.index'
+                                )
+                            ),
                         ],
                         [
                             '@type' => 'ListItem',
@@ -169,6 +202,10 @@ class WatchController extends Controller
                 'description' => $description,
 
                 'canonical' => $watchUrl,
+
+                'alternates' => $this->watchAlternates($watch),
+
+                'locale' => app()->getLocale(),
 
                 'image' => $watch->image
                     ? url($watch->image)
@@ -224,10 +261,17 @@ class WatchController extends Controller
             $offers[] = [
                 '@type' => 'Offer',
 
-                'name' => 'Mouvement '.$movement,
+                'name' => trans(
+                    'site.seo.offer_name',
+                    [
+                        'movement' => trans(
+                            'site.movements.'.strtolower($movement)
+                        ),
+                    ]
+                ),
 
                 'url' => route(
-                    'watches.show',
+                    $this->localizedRouteName('watches.show'),
                     [
                         'watch' => $watch,
                         'movement' => $movement,
@@ -293,6 +337,80 @@ class WatchController extends Controller
         return 'https://schema.org/InStock';
     }
 
+    private function localizedRouteName(string $name): string
+    {
+        return app()->getLocale() === 'nl_BE'
+            ? 'nl.'.$name
+            : $name;
+    }
+
+    private function localizedWatch(Watch $watch): Watch
+    {
+        if (app()->getLocale() !== 'nl_BE') {
+            return $watch;
+        }
+
+        $translation = trans('watches.'.$watch->id);
+
+        if (! is_array($translation)) {
+            return $watch;
+        }
+
+        $localizedWatch = clone $watch;
+
+        if (is_string($translation['name'] ?? null)) {
+            $localizedWatch->name = $translation['name'];
+        }
+
+        if (is_string($translation['description'] ?? null)) {
+            $localizedWatch->description = $translation['description'];
+        }
+
+        return $localizedWatch;
+    }
+
+    /**
+     * @return list<array{hreflang: string, href: string}>
+     */
+    private function collectionAlternates(): array
+    {
+        return [
+            [
+                'hreflang' => 'fr-BE',
+                'href' => route('watches.index'),
+            ],
+            [
+                'hreflang' => 'nl-BE',
+                'href' => route('nl.watches.index'),
+            ],
+            [
+                'hreflang' => 'x-default',
+                'href' => route('watches.index'),
+            ],
+        ];
+    }
+
+    /**
+     * @return list<array{hreflang: string, href: string}>
+     */
+    private function watchAlternates(Watch $watch): array
+    {
+        return [
+            [
+                'hreflang' => 'fr-BE',
+                'href' => route('watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'nl-BE',
+                'href' => route('nl.watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'x-default',
+                'href' => route('watches.show', $watch),
+            ],
+        ];
+    }
+
     private function captureMarketingAttribution(
         Request $request
     ): void {
@@ -300,6 +418,8 @@ class WatchController extends Controller
             'utm_source',
             'utm_medium',
             'utm_campaign',
+            'utm_term',
+            'utm_content',
         ];
 
         $attribution = [];
@@ -324,13 +444,54 @@ class WatchController extends Controller
             );
         }
 
-        if ($attribution !== []) {
-            $request
-                ->session()
-                ->put(
-                    'marketing_attribution',
-                    $attribution
-                );
+        if ($attribution === []) {
+            return;
         }
+
+        $referrer = $request->headers->get('referer');
+
+        if (is_string($referrer) && trim($referrer) !== '') {
+            $safeReferrer = $this->trackingUrl($referrer);
+
+            if ($safeReferrer !== null) {
+                $attribution['referrer'] = $safeReferrer;
+            }
+        }
+
+        $attribution['landing_page'] = Str::limit(
+            $request->url(),
+            2048,
+            ''
+        );
+
+        $request
+            ->session()
+            ->put(
+                'marketing_attribution',
+                $attribution
+            );
+    }
+
+    private function trackingUrl(string $value): ?string
+    {
+        $parts = parse_url(trim($value));
+
+        if (! is_array($parts)
+            || ! in_array($parts['scheme'] ?? null, ['http', 'https'], true)
+            || ! is_string($parts['host'] ?? null)) {
+            return null;
+        }
+
+        $url = $parts['scheme'].'://'.$parts['host'];
+
+        if (is_int($parts['port'] ?? null)) {
+            $url .= ':'.$parts['port'];
+        }
+
+        if (is_string($parts['path'] ?? null)) {
+            $url .= $parts['path'];
+        }
+
+        return Str::limit($url, 2048, '');
     }
 }

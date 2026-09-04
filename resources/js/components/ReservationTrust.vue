@@ -1,3 +1,11 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const translations = computed(() => page.props.translations);
+</script>
+
 <template>
     <div
         class="rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5"
@@ -11,14 +19,11 @@
 
             <div>
                 <p class="font-black text-white">
-                    Une demande de réservation, pas un paiement en ligne
+                    {{ translations.reservation_trust.title }}
                 </p>
 
                 <p class="mt-2 text-sm leading-6 text-zinc-500">
-                    L'envoi du formulaire n'effectue aucun paiement. Votre
-                    demande est d'abord transmise à VVS FLAWLESS afin de
-                    confirmer la montre, le mouvement et les modalités avec
-                    vous.
+                    {{ translations.reservation_trust.description }}
                 </p>
             </div>
         </div>
@@ -34,7 +39,7 @@
                 </p>
 
                 <p class="mt-1 text-xs font-bold text-zinc-300">
-                    Demande envoyée
+                    {{ translations.reservation_trust.sent }}
                 </p>
             </div>
 
@@ -46,7 +51,7 @@
                 </p>
 
                 <p class="mt-1 text-xs font-bold text-zinc-300">
-                    Contact et confirmation
+                    {{ translations.reservation_trust.confirmed }}
                 </p>
             </div>
 
@@ -58,7 +63,7 @@
                 </p>
 
                 <p class="mt-1 text-xs font-bold text-zinc-300">
-                    Réception organisée
+                    {{ translations.reservation_trust.organized }}
                 </p>
             </div>
         </div>

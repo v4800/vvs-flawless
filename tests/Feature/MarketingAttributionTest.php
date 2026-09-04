@@ -91,6 +91,7 @@ class MarketingAttributionTest extends TestCase
                 'utm_source' => 'tiktok',
                 'utm_medium' => 'organic_social',
                 'utm_campaign' => 'ap',
+                'landing_page' => route('watches.index'),
             ]
         );
     }
@@ -195,8 +196,37 @@ class MarketingAttributionTest extends TestCase
                 'utm_source' => 'tiktok',
                 'utm_medium' => 'organic_social',
                 'utm_campaign' => 'nouvelle',
+                'landing_page' => route('watches.index'),
             ]
         );
+    }
+
+    public function test_optional_campaign_context_is_captured_and_limited(): void
+    {
+        $response = $this
+            ->withHeader(
+                'referer',
+                'https://www.tiktok.com/@vvsflawless43?secret=not-stored'
+            )
+            ->get(route('watches.index', [
+                'utm_source' => 'tiktok',
+                'utm_medium' => 'organic_social',
+                'utm_campaign' => 'lancement',
+                'utm_term' => 'montre iced out belgique',
+                'utm_content' => 'video-01',
+            ]));
+
+        $response->assertOk();
+
+        $response->assertSessionHas('marketing_attribution', [
+            'utm_source' => 'tiktok',
+            'utm_medium' => 'organic_social',
+            'utm_campaign' => 'lancement',
+            'utm_term' => 'montre iced out belgique',
+            'utm_content' => 'video-01',
+            'referrer' => 'https://www.tiktok.com/@vvsflawless43',
+            'landing_page' => route('watches.index'),
+        ]);
     }
 
     public function test_client_cannot_fake_attribution_in_reservation_post(): void

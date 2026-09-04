@@ -67,8 +67,26 @@ const hasMarketingAttribution = (reservation) => {
     return Boolean(
         reservation.utm_source ||
         reservation.utm_medium ||
-        reservation.utm_campaign,
+        reservation.utm_campaign ||
+        reservation.utm_term ||
+        reservation.utm_content ||
+        reservation.referrer ||
+        reservation.landing_page,
     );
+};
+
+const safeHttpUrl = (value) => {
+    if (!value) {
+        return null;
+    }
+
+    try {
+        const url = new URL(value);
+
+        return ['http:', 'https:'].includes(url.protocol) ? url.href : null;
+    } catch {
+        return null;
+    }
 };
 </script>
 
@@ -336,6 +354,86 @@ const hasMarketingAttribution = (reservation) => {
                                                 reservation.utm_campaign ||
                                                 'Non renseignée'
                                             }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div
+                                    v-if="
+                                        reservation.utm_term ||
+                                        reservation.utm_content ||
+                                        reservation.referrer ||
+                                        reservation.landing_page
+                                    "
+                                    class="mt-5 grid gap-5 border-t border-amber-400/10 pt-5 md:grid-cols-2"
+                                >
+                                    <div v-if="reservation.utm_term">
+                                        <p class="text-xs text-zinc-500">
+                                            Terme
+                                        </p>
+                                        <p class="mt-1 font-medium break-words">
+                                            {{ reservation.utm_term }}
+                                        </p>
+                                    </div>
+
+                                    <div v-if="reservation.utm_content">
+                                        <p class="text-xs text-zinc-500">
+                                            Contenu
+                                        </p>
+                                        <p class="mt-1 font-medium break-words">
+                                            {{ reservation.utm_content }}
+                                        </p>
+                                    </div>
+
+                                    <div v-if="reservation.referrer">
+                                        <p class="text-xs text-zinc-500">
+                                            Site référent
+                                        </p>
+                                        <a
+                                            v-if="
+                                                safeHttpUrl(
+                                                    reservation.referrer,
+                                                )
+                                            "
+                                            :href="
+                                                safeHttpUrl(
+                                                    reservation.referrer,
+                                                )
+                                            "
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="mt-1 block break-all text-amber-200 hover:underline"
+                                        >
+                                            {{ reservation.referrer }}
+                                        </a>
+                                        <p v-else class="mt-1 break-all">
+                                            {{ reservation.referrer }}
+                                        </p>
+                                    </div>
+
+                                    <div v-if="reservation.landing_page">
+                                        <p class="text-xs text-zinc-500">
+                                            Page d’arrivée
+                                        </p>
+                                        <a
+                                            v-if="
+                                                safeHttpUrl(
+                                                    reservation.landing_page,
+                                                )
+                                            "
+                                            :href="
+                                                safeHttpUrl(
+                                                    reservation.landing_page,
+                                                )
+                                            "
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="mt-1 block break-all text-amber-200 hover:underline"
+                                        >
+                                            {{ reservation.landing_page }}
+                                        </a>
+                                        <p v-else class="mt-1 break-all">
+                                            {{ reservation.landing_page }}
                                         </p>
                                     </div>
                                 </div>

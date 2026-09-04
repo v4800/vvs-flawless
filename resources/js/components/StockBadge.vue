@@ -56,7 +56,7 @@ const badge = computed(() => {
         if (isMadeToOrder.value) {
             return {
                 label: translations.value.stock.made_to_order,
-                icon: 'Ã¢â€”â€¹',
+                icon: '○',
                 classes: 'border-white/15 bg-black/85 text-zinc-400',
                 iconClasses: 'text-zinc-500',
             };
@@ -65,7 +65,7 @@ const badge = computed(() => {
         if (isUnavailable.value) {
             return {
                 label: translations.value.stock.unavailable,
-                icon: 'Ã¢â€”â€¹',
+                icon: '○',
                 classes: 'border-white/15 bg-black/85 text-zinc-400',
                 iconClasses: 'text-zinc-500',
             };
@@ -73,7 +73,7 @@ const badge = computed(() => {
 
         return {
             label: translations.value.stock.available,
-            icon: 'Ã¢â€”Â',
+            icon: '●',
             classes: 'border-amber-300/30 bg-black/85 text-amber-200',
             iconClasses: 'text-amber-300',
         };
@@ -84,7 +84,7 @@ const badge = computed(() => {
             label: isMadeToOrder.value
                 ? translations.value.stock.made_to_order
                 : translations.value.stock.unavailable,
-            icon: 'Ã¢â€”â€¹',
+            icon: '○',
             classes: 'border-white/15 bg-black/85 text-zinc-400',
             iconClasses: 'text-zinc-500',
         };
@@ -93,7 +93,7 @@ const badge = computed(() => {
     if (stock.value === 1) {
         return {
             label: translations.value.stock.last_piece,
-            icon: 'Ã¢â€”Â',
+            icon: '●',
             classes:
                 'border-red-500/50 bg-red-950/80 text-red-300 shadow-[0_0_22px_rgba(239,68,68,0.18)]',
             iconClasses: 'animate-pulse text-red-400',
@@ -103,7 +103,7 @@ const badge = computed(() => {
     if (stock.value === 2) {
         return {
             label: translations.value.stock.two_left,
-            icon: 'Ã¢â€”Â',
+            icon: '●',
             classes:
                 'border-orange-400/50 bg-orange-950/70 text-orange-200 shadow-[0_0_22px_rgba(251,146,60,0.14)]',
             iconClasses: 'text-orange-400',
@@ -112,7 +112,7 @@ const badge = computed(() => {
 
     return {
         label: translations.value.stock.available,
-        icon: 'Ã¢â€”Â',
+        icon: '●',
         classes: 'border-amber-300/30 bg-black/85 text-amber-200',
         iconClasses: 'text-amber-300',
     };

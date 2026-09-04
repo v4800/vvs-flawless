@@ -21,6 +21,16 @@
                 ? $seo['canonical']
                 : request()->url();
 
+            $seoAlternates = is_array($seo['alternates'] ?? null)
+                ? $seo['alternates']
+                : [];
+
+            $seoLocale = is_string($seo['locale'] ?? null)
+                ? $seo['locale']
+                : app()->getLocale();
+
+            $openGraphLocale = str_replace('-', '_', $seoLocale);
+
             $seoImage = is_string($seo['image'] ?? null)
                 ? $seo['image']
                 : url('/images/vvs-flawless-profile.webp');
@@ -60,12 +70,39 @@
             href="{{ $seoCanonical }}"
         >
 
+        @foreach ($seoAlternates as $alternate)
+            @if (
+                is_array($alternate)
+                && is_string($alternate['hreflang'] ?? null)
+                && is_string($alternate['href'] ?? null)
+            )
+                <link
+                    rel="alternate"
+                    hreflang="{{ $alternate['hreflang'] }}"
+                    href="{{ $alternate['href'] }}"
+                >
+            @endif
+        @endforeach
+
         {{-- Open Graph --}}
 
         <meta
             property="og:locale"
-            content="fr_BE"
+            content="{{ $openGraphLocale }}"
         >
+
+        @foreach ($seoAlternates as $alternate)
+            @if (
+                is_array($alternate)
+                && ($alternate['hreflang'] ?? null) !== 'x-default'
+                && str_replace('-', '_', (string) ($alternate['hreflang'] ?? '')) !== $openGraphLocale
+            )
+                <meta
+                    property="og:locale:alternate"
+                    content="{{ str_replace('-', '_', $alternate['hreflang']) }}"
+                >
+            @endif
+        @endforeach
 
         <meta
             property="og:site_name"

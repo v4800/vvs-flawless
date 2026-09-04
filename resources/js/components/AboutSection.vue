@@ -1,3 +1,11 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const translations = computed(() => page.props.translations);
+</script>
+
 <template>
     <section
         id="about"
@@ -19,19 +27,21 @@
                     <span
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        À propos
+                        {{ translations.about.eyebrow }}
                     </span>
                 </div>
 
                 <h2
                     class="text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl lg:text-6xl"
                 >
-                    Une nouvelle
-                    <span class="text-amber-300"> culture </span>
+                    {{ translations.about.title_before }}
+                    <span class="text-amber-300">
+                        {{ translations.about.title_highlight }}
+                    </span>
 
                     <br />
 
-                    en Belgique.
+                    {{ translations.about.title_after }}
                 </h2>
 
                 <div
@@ -49,22 +59,18 @@
                 class="rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-7 sm:p-9"
             >
                 <p class="text-lg leading-8 text-zinc-300">
-                    VVS FLAWLESS est un projet basé en Belgique, spécialisé dans
-                    les montres iced-out serties de moissanite.
+                    {{ translations.about.paragraph_1 }}
                 </p>
 
                 <p class="mt-5 leading-7 text-zinc-500">
-                    Notre objectif est simple : rendre l'esthétique bustdown
-                    plus accessible en Belgique tout en proposant une expérience
-                    directe, du choix de la montre jusqu'à sa remise au client.
+                    {{ translations.about.paragraph_2 }}
                 </p>
 
                 <p class="mt-5 leading-7 text-zinc-500">
-                    Les modèles proposés sont sertis de
+                    {{ translations.about.paragraph_3_before }}
                     <strong class="font-semibold text-zinc-300">
-                        moissanite VVS, couleur D </strong
-                    >, sélectionnée pour offrir un rendu clair, lumineux et très
-                    brillant.
+                        {{ translations.about.paragraph_3_strong }} </strong
+                    >{{ translations.about.paragraph_3_after }}
                 </p>
 
                 <div class="mt-8 grid gap-3 sm:grid-cols-3">
@@ -76,7 +82,7 @@
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
-                            Pureté
+                            {{ translations.about.purity }}
                         </p>
                     </div>
 
@@ -88,7 +94,7 @@
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
-                            Couleur incolore
+                            {{ translations.about.color }}
                         </p>
                     </div>
 
@@ -100,7 +106,7 @@
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
                         >
-                            Projet belge
+                            {{ translations.about.belgian_project }}
                         </p>
                     </div>
                 </div>

@@ -1,3 +1,11 @@
+<script setup>
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const page = usePage();
+const translations = computed(() => page.props.translations);
+</script>
+
 <template>
     <section
         id="pickup"
@@ -15,27 +23,25 @@
                     <p
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        Réception de votre montre
+                        {{ translations.pickup.eyebrow }}
                     </p>
 
                     <h2
                         class="mt-5 max-w-3xl text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl"
                     >
-                        Remise en main propre
+                        {{ translations.pickup.title_before }}
 
-                        <span class="text-amber-300"> ou livraison. </span>
+                        <span class="text-amber-300">
+                            {{ translations.pickup.title_highlight }}
+                        </span>
                     </h2>
 
                     <p class="mt-7 max-w-2xl text-base leading-7 text-zinc-400">
-                        Choisissez le mode de réception qui vous convient lors
-                        de la réservation. Les modalités sont confirmées avec
-                        vous avant la finalisation de la commande.
+                        {{ translations.pickup.description_1 }}
                     </p>
 
                     <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-500">
-                        Pour une remise en main propre, nous convenons ensemble
-                        du lieu et du moment. Pour une livraison, ses modalités
-                        sont précisées lors de la confirmation.
+                        {{ translations.pickup.description_2 }}
                     </p>
                 </div>
 
@@ -52,11 +58,12 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">Réservation</p>
+                            <p class="font-bold">
+                                {{ translations.pickup.step_1_title }}
+                            </p>
 
                             <p class="mt-1 text-sm leading-6 text-zinc-500">
-                                Vous sélectionnez votre montre et envoyez votre
-                                demande.
+                                {{ translations.pickup.step_1_text }}
                             </p>
                         </div>
                     </div>
@@ -71,11 +78,12 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">Confirmation</p>
+                            <p class="font-bold">
+                                {{ translations.pickup.step_2_title }}
+                            </p>
 
                             <p class="mt-1 text-sm leading-6 text-zinc-500">
-                                VVS FLAWLESS vous contacte pour confirmer les
-                                détails.
+                                {{ translations.pickup.step_2_text }}
                             </p>
                         </div>
                     </div>
@@ -90,11 +98,12 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">Réception</p>
+                            <p class="font-bold">
+                                {{ translations.pickup.step_3_title }}
+                            </p>
 
                             <p class="mt-1 text-sm leading-6 text-zinc-500">
-                                La remise en main propre ou la livraison est
-                                organisée selon votre choix.
+                                {{ translations.pickup.step_3_text }}
                             </p>
                         </div>
                     </div>
@@ -103,11 +112,11 @@
                         class="flex items-center justify-between rounded-xl border border-white/10 px-5 py-4"
                     >
                         <span class="text-sm text-zinc-500">
-                            Disponibilité estimée
+                            {{ translations.pickup.delay_label }}
                         </span>
 
                         <span class="text-sm font-bold text-zinc-200">
-                            5–6 jours ouvrables
+                            {{ translations.pickup.delay }}
                         </span>
                     </div>
                 </div>

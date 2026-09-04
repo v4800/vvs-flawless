@@ -153,13 +153,37 @@ class ReservationController extends Controller
                 $attribution,
                 'utm_campaign'
             ),
+
+            'utm_term' => $this->attributionValue(
+                $attribution,
+                'utm_term'
+            ),
+
+            'utm_content' => $this->attributionValue(
+                $attribution,
+                'utm_content'
+            ),
+
+            'referrer' => $this->attributionValue(
+                $attribution,
+                'referrer'
+            ),
+
+            'landing_page' => $this->attributionValue(
+                $attribution,
+                'landing_page'
+            ),
         ]);
 
         $reservation->load('watch');
 
+        $confirmationRoute = app()->getLocale() === 'nl_BE'
+            ? 'nl.reservations.confirmation'
+            : 'reservations.confirmation';
+
         $confirmationUrl =
             URL::temporarySignedRoute(
-                'reservations.confirmation',
+                $confirmationRoute,
                 now()->addHours(24),
                 [
                     'reservationNumber' => $reservation
@@ -170,6 +194,8 @@ class ReservationController extends Controller
         try {
             Mail::to(
                 $reservation->email
+            )->locale(
+                app()->getLocale()
             )->send(
                 new CustomerReservationMail(
                     $reservation,
@@ -237,6 +263,21 @@ class ReservationController extends Controller
             404
         );
 
+        $watchName = $watch->name;
+
+        if (app()->getLocale() === 'nl_BE') {
+            $translatedWatch = trans('watches.'.$watch->id);
+
+            if (is_array($translatedWatch)
+                && is_string($translatedWatch['name'] ?? null)) {
+                $watchName = $translatedWatch['name'];
+            }
+        }
+
+        $dateFormat = app()->getLocale() === 'nl_BE'
+            ? 'd/m/Y \\o\\m H:i'
+            : 'd/m/Y à H:i';
+
         $response =
             Inertia::render(
                 'Reservations/Confirmation',
@@ -279,13 +320,13 @@ class ReservationController extends Controller
                                 'Europe/Brussels'
                             )
                             ->format(
-                                'd/m/Y à H:i'
+                                $dateFormat
                             ),
                     ],
 
                     'watch' => [
                         'id' => $watch->id,
-                        'name' => $watch->name,
+                        'name' => $watchName,
                         'image' => $watch->image,
                     ],
                 ]

@@ -54,9 +54,6 @@ return new class extends Migration
     public function down(): void
     {
         $columns = [
-            'utm_source',
-            'utm_medium',
-            'utm_campaign',
             'utm_term',
             'utm_content',
             'referrer',

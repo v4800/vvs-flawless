@@ -35,11 +35,37 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $routePrefix = app()->getLocale() === 'nl_BE'
+            ? 'nl.'
+            : '';
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
             'translations' => fn () => trans('site'),
+            'localizedRoutes' => [
+                'watches' => route(
+                    $routePrefix.'watches.index',
+                    absolute: false
+                ),
+                'reservationStore' => route(
+                    $routePrefix.'reservations.store',
+                    absolute: false
+                ),
+                'privacy' => route(
+                    $routePrefix.'privacy',
+                    absolute: false
+                ),
+                'reservationTerms' => route(
+                    $routePrefix.'reservation-terms',
+                    absolute: false
+                ),
+                'about' => route(
+                    $routePrefix.'about',
+                    absolute: false
+                ),
+            ],
             'auth' => [
                 'user' => $request->user(),
             ],

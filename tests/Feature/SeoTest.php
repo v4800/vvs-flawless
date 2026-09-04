@@ -40,6 +40,21 @@ class SeoTest extends TestCase
         );
 
         $response->assertSee(
+            route('nl.watches.index'),
+            false
+        );
+
+        $response->assertSee(
+            route('nl.watches.show', $watch),
+            false
+        );
+
+        $response->assertSee(route('about'), false);
+        $response->assertSee(route('nl.about'), false);
+
+        $response->assertSee('hreflang="nl-BE"', false);
+
+        $response->assertSee(
             $watch->updated_at->toAtomString(),
             false
         );
@@ -109,5 +124,31 @@ class SeoTest extends TestCase
         $response->assertSee(
             '/sitemap.xml'
         );
+
+        $response->assertSee('Disallow: /dashboard');
+        $response->assertSee('Disallow: /reservation-confirmed/');
+    }
+
+    public function test_public_collection_uses_the_requested_locale_and_alternates(): void
+    {
+        $this->get(route('watches.index'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where('locale', 'fr_BE')
+                    ->where('seo.locale', 'fr_BE')
+                    ->where('seo.alternates.1.hreflang', 'nl-BE')
+                    ->etc()
+            );
+
+        $this->get(route('nl.watches.index'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where('locale', 'nl_BE')
+                    ->where('seo.locale', 'nl_BE')
+                    ->where('seo.alternates.0.hreflang', 'fr-BE')
+                    ->etc()
+            );
     }
 }

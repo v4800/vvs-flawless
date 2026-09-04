@@ -1,5 +1,6 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 defineProps({
     watches: {
@@ -7,6 +8,10 @@ defineProps({
         default: () => [],
     },
 });
+
+const page = usePage();
+const localizedRoutes = page.props.localizedRoutes;
+const translations = computed(() => page.props.translations);
 
 const startingPrice = (watch) => {
     const prices = [
@@ -38,21 +43,22 @@ const formatPrice = (price) => {
                 <p
                     class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
                 >
-                    Collection
+                    {{ translations.related.eyebrow }}
                 </p>
 
                 <h2
                     class="mt-4 text-3xl font-black tracking-[-0.035em] uppercase sm:text-4xl"
                 >
-                    Découvrir d'autres
-                    <span class="text-amber-300">pièces</span>
+                    {{ translations.related.title_before }}
+                    <span class="text-amber-300">
+                        {{ translations.related.title_highlight }}
+                    </span>
                 </h2>
 
                 <p
                     class="mx-auto mt-4 max-w-xl text-sm leading-6 text-zinc-500"
                 >
-                    Explorez d'autres modèles VVS FLAWLESS disponibles dans la
-                    collection.
+                    {{ translations.related.description }}
                 </p>
             </div>
 
@@ -60,7 +66,7 @@ const formatPrice = (price) => {
                 <Link
                     v-for="watch in watches"
                     :key="watch.id"
-                    :href="`/watches/${watch.id}`"
+                    :href="`${localizedRoutes.watches}/${watch.id}`"
                     class="group overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 transition duration-300 hover:-translate-y-1 hover:border-amber-300/35"
                 >
                     <div class="h-[280px] overflow-hidden bg-zinc-400">
@@ -77,7 +83,7 @@ const formatPrice = (price) => {
                             v-else
                             class="flex h-full items-center justify-center text-sm text-zinc-700"
                         >
-                            Image bientôt
+                            {{ translations.related.image_soon }}
                         </div>
                     </div>
 
@@ -101,7 +107,7 @@ const formatPrice = (price) => {
                                 <p
                                     class="text-[9px] tracking-[0.15em] text-zinc-600 uppercase"
                                 >
-                                    À partir de
+                                    {{ translations.related.from }}
                                 </p>
 
                                 <p
@@ -124,10 +130,10 @@ const formatPrice = (price) => {
 
             <div class="mt-8 text-center">
                 <Link
-                    href="/watches#collection"
+                    :href="`${localizedRoutes.watches}#collection`"
                     class="inline-flex rounded-xl border border-white/15 px-6 py-3.5 text-xs font-black tracking-[0.1em] uppercase transition hover:border-amber-300/40 hover:text-amber-300"
                 >
-                    Voir toute la collection
+                    {{ translations.related.all }}
                 </Link>
             </div>
         </div>
