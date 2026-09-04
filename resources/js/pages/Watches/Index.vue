@@ -394,6 +394,13 @@ onBeforeUnmount(() => {
     <Head title="VVS FLAWLESS — Montres Iced-Out Belgique" />
 
     <div class="min-h-screen bg-black text-white">
+        <a
+            href="#main-content"
+            class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        >
+            Aller au contenu
+        </a>
+
         <!-- ========================================================= -->
         <!-- HEADER -->
         <!-- ========================================================= -->
@@ -459,7 +466,7 @@ onBeforeUnmount(() => {
             </div>
         </header>
 
-        <main>
+        <main id="main-content" tabindex="-1">
             <!-- ========================================================= -->
             <!-- NAVIGATION VVS -->
             <!-- ========================================================= -->
@@ -556,7 +563,7 @@ onBeforeUnmount(() => {
                         </div>
 
                         <h1
-                            class="hero-animate relative max-w-3xl overflow-hidden text-[4rem] leading-[0.8] font-black tracking-[-0.06em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
+                            class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.8] font-black tracking-[-0.06em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
                         >
                             <span
                                 class="bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent"
@@ -931,6 +938,7 @@ onBeforeUnmount(() => {
                                     :src="watch.image"
                                     :alt="watch.name"
                                     loading="lazy"
+                                    decoding="async"
                                     class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]"
                                 />
 

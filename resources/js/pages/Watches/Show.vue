@@ -100,6 +100,13 @@ const submit = () => {
     <Head :title="`${watch.name} — VVS FLAWLESS`" />
 
     <div class="min-h-screen bg-black pb-24 text-white lg:pb-0">
+        <a
+            href="#main-content"
+            class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
+        >
+            Aller au contenu
+        </a>
+
         <VvsNavigation
             current="watch"
             back-href="/watches"
@@ -107,7 +114,7 @@ const submit = () => {
             :watch-href="`/watches/${watch.id}`"
         />
 
-        <main>
+        <main id="main-content" tabindex="-1">
             <!-- PRODUIT -->
 
             <section
@@ -136,13 +143,15 @@ const submit = () => {
                             </div>
 
                             <div
-                                class="self-start overflow-hidden rounded-3xl bg-zinc-400"
+                                class="aspect-square self-start overflow-hidden rounded-3xl bg-zinc-400"
                             >
                                 <img
                                     :src="watch.image"
                                     :alt="watch.name"
+                                    loading="eager"
+                                    fetchpriority="high"
                                     decoding="async"
-                                    class="block h-auto w-full object-contain"
+                                    class="block h-full w-full object-contain"
                                 />
                             </div>
 
@@ -665,22 +674,34 @@ const submit = () => {
 
                             <div>
                                 <label
+                                    for="reservation-customer-name"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Nom complet
                                 </label>
 
                                 <input
+                                    id="reservation-customer-name"
                                     v-model="form.customer_name"
                                     type="text"
                                     required
                                     autocomplete="name"
+                                    :aria-invalid="
+                                        Boolean(form.errors.customer_name)
+                                    "
+                                    :aria-describedby="
+                                        form.errors.customer_name
+                                            ? 'reservation-customer-name-error'
+                                            : undefined
+                                    "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
                                     placeholder="Votre nom"
                                 />
 
                                 <p
                                     v-if="form.errors.customer_name"
+                                    id="reservation-customer-name-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.customer_name }}
@@ -691,22 +712,32 @@ const submit = () => {
 
                             <div>
                                 <label
+                                    for="reservation-email"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     E-mail
                                 </label>
 
                                 <input
+                                    id="reservation-email"
                                     v-model="form.email"
                                     type="email"
                                     required
                                     autocomplete="email"
+                                    :aria-invalid="Boolean(form.errors.email)"
+                                    :aria-describedby="
+                                        form.errors.email
+                                            ? 'reservation-email-error'
+                                            : undefined
+                                    "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
                                     placeholder="email@exemple.com"
                                 />
 
                                 <p
                                     v-if="form.errors.email"
+                                    id="reservation-email-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.email }}
@@ -717,22 +748,32 @@ const submit = () => {
 
                             <div>
                                 <label
+                                    for="reservation-phone"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Téléphone
                                 </label>
 
                                 <input
+                                    id="reservation-phone"
                                     v-model="form.phone"
                                     type="tel"
                                     required
                                     autocomplete="tel"
+                                    :aria-invalid="Boolean(form.errors.phone)"
+                                    :aria-describedby="
+                                        form.errors.phone
+                                            ? 'reservation-phone-error'
+                                            : undefined
+                                    "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
                                     placeholder="+32..."
                                 />
 
                                 <p
                                     v-if="form.errors.phone"
+                                    id="reservation-phone-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.phone }}
@@ -743,21 +784,31 @@ const submit = () => {
 
                             <div>
                                 <label
+                                    for="reservation-city"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Ville
                                 </label>
 
                                 <input
+                                    id="reservation-city"
                                     v-model="form.city"
                                     type="text"
                                     autocomplete="address-level2"
+                                    :aria-invalid="Boolean(form.errors.city)"
+                                    :aria-describedby="
+                                        form.errors.city
+                                            ? 'reservation-city-error'
+                                            : undefined
+                                    "
                                     class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
                                     placeholder="Ex. Liège"
                                 />
 
                                 <p
                                     v-if="form.errors.city"
+                                    id="reservation-city-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.city }}
@@ -766,17 +817,30 @@ const submit = () => {
 
                             <!-- MODE DE RÉCEPTION -->
 
-                            <div class="md:col-span-2">
-                                <p
+                            <fieldset
+                                class="md:col-span-2"
+                                :aria-invalid="
+                                    Boolean(form.errors.delivery_method)
+                                "
+                                :aria-describedby="
+                                    form.errors.delivery_method
+                                        ? 'reservation-delivery-method-error'
+                                        : undefined
+                                "
+                            >
+                                <legend
                                     class="mb-2 text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Mode de réception
-                                </p>
+                                </legend>
 
                                 <div class="grid gap-3 sm:grid-cols-2">
                                     <label
-                                        v-for="option in deliveryOptions"
+                                        v-for="(
+                                            option, index
+                                        ) in deliveryOptions"
                                         :key="option.value"
+                                        :for="`reservation-delivery-method-${index}`"
                                         :class="[
                                             'cursor-pointer rounded-xl border p-5 transition',
                                             form.delivery_method ===
@@ -787,6 +851,7 @@ const submit = () => {
                                     >
                                         <div class="flex items-start gap-3">
                                             <input
+                                                :id="`reservation-delivery-method-${index}`"
                                                 v-model="form.delivery_method"
                                                 type="radio"
                                                 name="delivery_method"
@@ -814,16 +879,19 @@ const submit = () => {
 
                                 <p
                                     v-if="form.errors.delivery_method"
+                                    id="reservation-delivery-method-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.delivery_method }}
                                 </p>
-                            </div>
+                            </fieldset>
 
                             <!-- MESSAGE -->
 
                             <div class="md:col-span-2">
                                 <label
+                                    for="reservation-message"
                                     class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
                                     Message
@@ -836,14 +904,23 @@ const submit = () => {
                                 </label>
 
                                 <textarea
+                                    id="reservation-message"
                                     v-model="form.message"
                                     rows="4"
+                                    :aria-invalid="Boolean(form.errors.message)"
+                                    :aria-describedby="
+                                        form.errors.message
+                                            ? 'reservation-message-error'
+                                            : undefined
+                                    "
                                     class="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
                                     placeholder="Une question ou une précision concernant votre réservation ?"
                                 ></textarea>
 
                                 <p
                                     v-if="form.errors.message"
+                                    id="reservation-message-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     {{ form.errors.message }}
@@ -882,12 +959,22 @@ const submit = () => {
 
                             <div class="md:col-span-2">
                                 <label
+                                    for="reservation-confirmation"
                                     class="flex cursor-pointer items-start gap-4 rounded-xl border border-white/10 bg-black/60 p-4"
                                 >
                                     <input
+                                        id="reservation-confirmation"
                                         v-model="form.confirmation"
                                         type="checkbox"
                                         required
+                                        :aria-invalid="
+                                            Boolean(form.errors.confirmation)
+                                        "
+                                        :aria-describedby="
+                                            form.errors.confirmation
+                                                ? 'reservation-confirmation-error'
+                                                : undefined
+                                        "
                                         class="mt-1 h-4 w-4 accent-amber-300"
                                     />
 
@@ -903,6 +990,8 @@ const submit = () => {
 
                                 <p
                                     v-if="form.errors.confirmation"
+                                    id="reservation-confirmation-error"
+                                    role="alert"
                                     class="mt-2 text-xs text-red-400"
                                 >
                                     Vous devez confirmer votre demande.
