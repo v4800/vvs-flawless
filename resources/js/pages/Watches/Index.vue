@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
 
@@ -13,7 +13,10 @@ const props = defineProps({
         default: () => [],
     },
 });
+const page = usePage();
 
+const translations = page.props.translations;
+const locale = page.props.locale;
 /*
 |--------------------------------------------------------------------------
 | FORMATAGE DES PRIX
@@ -22,10 +25,10 @@ const props = defineProps({
 
 const formatPrice = (price) => {
     if (!price) {
-        return '—';
+        return 'â€”';
     }
 
-    return `${Number(price).toFixed(0)} €`;
+    return `${Number(price).toFixed(0)} â‚¬`;
 };
 
 /*
@@ -46,8 +49,8 @@ const scrollToCollection = () => {
 | VIEWER 3D
 |--------------------------------------------------------------------------
 |
-| Le model-viewer est chargé uniquement côté navigateur.
-| Ça évite de casser le SSR / hydratation de Laravel + Inertia.
+| Le model-viewer est chargÃ© uniquement cÃ´tÃ© navigateur.
+| Ã‡a Ã©vite de casser le SSR / hydratation de Laravel + Inertia.
 |
 */
 
@@ -64,7 +67,7 @@ let revealObserver = null;
 const mountModelViewer = async () => {
     try {
         /*
-         * Chargement uniquement côté client
+         * Chargement uniquement cÃ´tÃ© client
          */
         await import('@google/model-viewer');
 
@@ -86,7 +89,7 @@ const mountModelViewer = async () => {
         viewer.setAttribute('poster', '/images/vvs-watch-hero.webp');
 
         /*
-         * CONTRÔLES
+         * CONTRÃ”LES
          */
         viewer.setAttribute('camera-controls', '');
 
@@ -99,7 +102,7 @@ const mountModelViewer = async () => {
         viewer.setAttribute('touch-action', 'pan-y');
 
         /*
-         * CAMÉRA
+         * CAMÃ‰RA
          */
         viewer.setAttribute('camera-orbit', '0deg 75deg 105%');
 
@@ -114,7 +117,7 @@ const mountModelViewer = async () => {
         viewer.setAttribute('max-camera-orbit', 'auto auto 200%');
 
         /*
-         * ÉCLAIRAGE / RENDU
+         * Ã‰CLAIRAGE / RENDU
          */
         viewer.setAttribute('environment-image', 'neutral');
 
@@ -127,8 +130,8 @@ const mountModelViewer = async () => {
         viewer.setAttribute('tone-mapping', 'commerce');
 
         /*
-         * Le viewer n'est créé qu'après le clic.
-         * Une fois demandé, le modèle peut démarrer immédiatement.
+         * Le viewer n'est crÃ©Ã© qu'aprÃ¨s le clic.
+         * Une fois demandÃ©, le modÃ¨le peut dÃ©marrer immÃ©diatement.
          */
         viewer.setAttribute('loading', 'eager');
 
@@ -152,7 +155,7 @@ const mountModelViewer = async () => {
         });
 
         /*
-         * MODÈLE CHARGÉ
+         * MODÃˆLE CHARGÃ‰
          */
         viewer.addEventListener('load', () => {
             modelProgress.value = 100;
@@ -209,7 +212,7 @@ onMounted(() => {
 
     /*
     |--------------------------------------------------------------------------
-    | ENTRÉE CINÉMATIQUE DU HERO
+    | ENTRÃ‰E CINÃ‰MATIQUE DU HERO
     |--------------------------------------------------------------------------
     */
 
@@ -274,7 +277,7 @@ onMounted(() => {
 
     /*
     |--------------------------------------------------------------------------
-    | ÉCLATS
+    | Ã‰CLATS
     |--------------------------------------------------------------------------
     */
 
@@ -391,14 +394,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <Head title="VVS FLAWLESS — Montres Iced-Out Belgique" />
+    <Head title="VVS FLAWLESS â€” Montres Iced-Out Belgique" />
 
     <div class="min-h-screen bg-black text-white">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
-            Aller au contenu
+            {{ translations.accessibility.skip_content }}
         </a>
 
         <!-- ========================================================= -->
@@ -427,21 +430,21 @@ onBeforeUnmount(() => {
 
                 <nav
                     class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
-                    aria-label="Navigation principale"
+                    :aria-label="translations.navigation.main_label"
                 >
                     <a
                         href="#collection"
                         class="transition hover:text-amber-300"
                     >
-                        Montres
+                        {{ translations.navigation.watches }}
                     </a>
 
                     <a href="#concept" class="transition hover:text-amber-300">
-                        À propos
+                        {{ translations.navigation.about }}
                     </a>
 
                     <a href="#services" class="transition hover:text-amber-300">
-                        Livraison & Remise
+                        {{ translations.navigation.delivery }}
                     </a>
                 </nav>
 
@@ -449,7 +452,7 @@ onBeforeUnmount(() => {
                     <span
                         class="hidden text-xs tracking-[0.2em] text-zinc-500 uppercase sm:block"
                     >
-                        Belgique
+                        {{ translations.navigation.country }}
                     </span>
 
                     <div
@@ -494,30 +497,30 @@ onBeforeUnmount(() => {
                     class="hero-orb absolute top-0 right-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.04] blur-[160px]"
                 ></div>
 
-                <!-- ÉCLATS -->
+                <!-- Ã‰CLATS -->
 
                 <span
                     class="bling-sparkle absolute top-[19%] left-[5%] text-3xl text-amber-200"
                 >
-                    ✦
+                    âœ¦
                 </span>
 
                 <span
                     class="bling-sparkle absolute top-[29%] left-[35%] text-xl text-white"
                 >
-                    ✦
+                    âœ¦
                 </span>
 
                 <span
                     class="bling-sparkle absolute top-[14%] right-[10%] text-3xl text-white"
                 >
-                    ✦
+                    âœ¦
                 </span>
 
                 <span
                     class="bling-sparkle absolute right-[42%] bottom-[20%] text-xl text-amber-300"
                 >
-                    ✦
+                    âœ¦
                 </span>
 
                 <!-- LIGNE BELGIQUE -->
@@ -545,7 +548,7 @@ onBeforeUnmount(() => {
                                 Moissanite VVS
                             </span>
 
-                            <span class="text-amber-500"> • </span>
+                            <span class="text-amber-500"> â€¢ </span>
 
                             <span
                                 class="text-xs font-semibold tracking-[0.25em] text-amber-300 uppercase"
@@ -553,7 +556,7 @@ onBeforeUnmount(() => {
                                 Iced Out
                             </span>
 
-                            <span class="text-amber-500"> • </span>
+                            <span class="text-amber-500"> â€¢ </span>
 
                             <span
                                 class="text-xs font-semibold tracking-[0.25em] text-amber-300 uppercase"
@@ -582,7 +585,7 @@ onBeforeUnmount(() => {
                             <span
                                 class="absolute top-2 -right-2 hidden text-3xl text-amber-200 sm:block"
                             >
-                                ✦
+                                âœ¦
                             </span>
 
                             <span
@@ -600,15 +603,14 @@ onBeforeUnmount(() => {
                             <p
                                 class="text-2xl leading-tight font-medium text-amber-200 italic sm:text-3xl"
                             >
-                                La culture bustdown arrive en Belgique 🇧🇪
+                                {{ translations.hero.tagline }}
                             </p>
                         </div>
 
                         <p
                             class="hero-animate mt-7 max-w-xl text-sm leading-7 font-medium tracking-[0.08em] text-zinc-300 uppercase sm:text-base"
                         >
-                            Des montres d'exception. Un style unique. Faites
-                            pour briller.
+                            {{ translations.hero.description }}
                         </p>
 
                         <!-- FEATURES -->
@@ -619,7 +621,7 @@ onBeforeUnmount(() => {
                             <div
                                 class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <div class="text-xl text-amber-300">◇</div>
+                                <div class="text-xl text-amber-300">â—‡</div>
 
                                 <p
                                     class="mt-2 text-[10px] font-bold tracking-wider uppercase"
@@ -633,28 +635,28 @@ onBeforeUnmount(() => {
                             <div
                                 class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <div class="text-lg text-amber-300">♢</div>
+                                <div class="text-lg text-amber-300">â™¢</div>
 
                                 <p
                                     class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                                 >
-                                    Japonais
+                                    {{ translations.collection.japanese }}
                                 </p>
 
                                 <p class="text-[10px] text-zinc-500">
-                                    Sélectionné
+                                    SÃ©lectionnÃ©
                                 </p>
                             </div>
 
                             <div
                                 class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <div class="text-lg text-amber-300">✦</div>
+                                <div class="text-lg text-amber-300">âœ¦</div>
 
                                 <p
                                     class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                                 >
-                                    Suisse
+                                    {{ translations.collection.swiss }}
                                 </p>
 
                                 <p class="text-[10px] text-zinc-500">Premium</p>
@@ -663,7 +665,7 @@ onBeforeUnmount(() => {
                             <div
                                 class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
                             >
-                                <div class="text-lg text-amber-300">↗</div>
+                                <div class="text-lg text-amber-300">â†—</div>
 
                                 <p
                                     class="mt-2 text-[10px] font-bold tracking-wider uppercase"
@@ -682,7 +684,7 @@ onBeforeUnmount(() => {
                                 href="#concept"
                                 class="rounded-lg border border-amber-300/50 bg-amber-300/[0.04] px-7 py-4 text-sm font-bold tracking-[0.1em] text-amber-200 uppercase shadow-[0_0_25px_rgba(251,191,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-300 hover:text-black"
                             >
-                                Notre concept
+                                {{ translations.hero.concept }}
                             </a>
                         </div>
                     </div>
@@ -720,7 +722,7 @@ onBeforeUnmount(() => {
                                 class="absolute inset-0 h-full w-full object-contain"
                             />
 
-                            <!-- MODEL VIEWER EST CRÉÉ ICI EN JS -->
+                            <!-- MODEL VIEWER EST CRÃ‰Ã‰ ICI EN JS -->
 
                             <div
                                 ref="viewerHost"
@@ -745,13 +747,13 @@ onBeforeUnmount(() => {
                                     <span
                                         class="block text-[10px] font-black tracking-[0.25em] text-amber-300 uppercase"
                                     >
-                                        Voir la montre en 3D
+                                        {{ translations.hero.view_3d }}
                                     </span>
 
                                     <span
                                         class="mt-2 block text-[9px] tracking-wider text-zinc-400 uppercase"
                                     >
-                                        Cliquer pour charger
+                                        {{ translations.hero.click_to_load }}
                                     </span>
                                 </button>
                             </div>
@@ -766,7 +768,7 @@ onBeforeUnmount(() => {
                                     <p
                                         class="text-[10px] font-black tracking-[0.25em] text-amber-300 uppercase"
                                     >
-                                        Chargement 3D
+                                        {{ translations.hero.loading_3d }}
                                     </p>
 
                                     <p
@@ -789,7 +791,9 @@ onBeforeUnmount(() => {
                                     <p
                                         class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
                                     >
-                                        Modèle haute qualité
+                                        {{
+                                            translations.hero.high_quality_model
+                                        }}
                                     </p>
                                 </div>
                             </div>
@@ -806,7 +810,7 @@ onBeforeUnmount(() => {
                                     <p
                                         class="text-xs font-black tracking-wider text-red-300 uppercase"
                                     >
-                                        Impossible de charger la montre 3D
+                                        {{ translations.hero.load_error }}
                                     </p>
 
                                     <p class="mt-2 text-[10px] text-zinc-500">
@@ -821,7 +825,7 @@ onBeforeUnmount(() => {
                                 v-if="modelLoaded"
                                 class="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-[9px] font-bold tracking-[0.18em] whitespace-nowrap text-zinc-400 uppercase backdrop-blur-md"
                             >
-                                Glissez pour voir la montre en 360°
+                                {{ translations.hero.drag_360 }}
                             </div>
                         </div>
 
@@ -833,7 +837,7 @@ onBeforeUnmount(() => {
                             <p
                                 class="text-[9px] font-bold tracking-[0.3em] text-amber-300 uppercase"
                             >
-                                360°
+                                360Â°
                             </p>
 
                             <p
@@ -882,7 +886,7 @@ onBeforeUnmount(() => {
                             <span
                                 class="text-[11px] font-bold tracking-[0.4em] text-amber-300 uppercase"
                             >
-                                Notre collection
+                                {{ translations.collection.eyebrow }}
                             </span>
 
                             <span
@@ -893,16 +897,16 @@ onBeforeUnmount(() => {
                         <h2
                             class="text-4xl font-black tracking-[-0.03em] uppercase sm:text-5xl"
                         >
-                            Choisis ta
+                            {{ translations.collection.title_before }}
 
-                            <span class="text-amber-300"> pièce </span>
+                            <span class="text-amber-300"> piÃ¨ce </span>
                         </h2>
 
                         <p
                             class="mx-auto mt-4 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base"
                         >
                             Moissanite VVS, mouvement japonais ou suisse.
-                            Sélectionne la version qui te correspond.
+                            SÃ©lectionne la version qui te correspond.
                         </p>
                     </header>
 
@@ -946,7 +950,7 @@ onBeforeUnmount(() => {
                                     v-else
                                     class="flex h-full items-center justify-center text-zinc-600"
                                 >
-                                    Image bientôt
+                                    Image bientÃ´t
                                 </div>
 
                                 <div class="absolute top-4 left-4 z-20">
@@ -959,13 +963,13 @@ onBeforeUnmount(() => {
                                 <span
                                     class="bling-sparkle absolute top-[21%] right-[13%] text-2xl text-white"
                                 >
-                                    ✦
+                                    âœ¦
                                 </span>
 
                                 <span
                                     class="bling-sparkle absolute bottom-[22%] left-[13%] text-lg text-amber-200"
                                 >
-                                    ✦
+                                    âœ¦
                                 </span>
                             </div>
 
@@ -996,7 +1000,9 @@ onBeforeUnmount(() => {
                                         <p
                                             class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
                                         >
-                                            Japonais
+                                            {{
+                                                translations.collection.japanese
+                                            }}
                                         </p>
 
                                         <p
@@ -1024,7 +1030,7 @@ onBeforeUnmount(() => {
                                         <p
                                             class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
                                         >
-                                            Choisir →
+                                            Choisir â†’
                                         </p>
                                     </Link>
 
@@ -1036,14 +1042,15 @@ onBeforeUnmount(() => {
                                     >
                                         <span
                                             class="absolute top-2 right-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black tracking-wider text-black uppercase"
+                                            >{{
+                                                translations.collection.premium
+                                            }}</span
                                         >
-                                            Premium
-                                        </span>
 
                                         <p
                                             class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
                                         >
-                                            Suisse
+                                            {{ translations.collection.swiss }}
                                         </p>
 
                                         <p
@@ -1067,7 +1074,7 @@ onBeforeUnmount(() => {
                                         <p
                                             class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
                                         >
-                                            Choisir →
+                                            Choisir â†’
                                         </p>
                                     </Link>
                                 </div>
@@ -1082,11 +1089,11 @@ onBeforeUnmount(() => {
                                     class="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs"
                                 >
                                     <span class="text-zinc-600">
-                                        Livraison estimée
+                                        Livraison estimÃ©e
                                     </span>
 
                                     <span class="font-semibold text-zinc-300">
-                                        5–6 jours ouvrables
+                                        5â€“6 jours ouvrables
                                     </span>
                                 </div>
 
@@ -1096,7 +1103,7 @@ onBeforeUnmount(() => {
                                 >
                                     Voir la montre
 
-                                    <span> → </span>
+                                    <span> â†’ </span>
                                 </Link>
                             </div>
                         </article>
@@ -1144,13 +1151,13 @@ onBeforeUnmount(() => {
                             <h2
                                 class="mt-3 text-2xl font-black uppercase sm:text-3xl"
                             >
-                                La culture bustdown arrive en Belgique 🇧🇪
+                                La culture bustdown arrive en Belgique ðŸ‡§ðŸ‡ª
                             </h2>
 
                             <p
                                 class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400"
                             >
-                                VVS FLAWLESS propose une sélection de montres
+                                VVS FLAWLESS propose une sÃ©lection de montres
                                 iced-out en moissanite VVS, disponibles avec
                                 mouvement japonais ou suisse.
                             </p>
@@ -1181,24 +1188,24 @@ onBeforeUnmount(() => {
                     <div
                         class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
                     >
-                        <div class="text-2xl text-amber-300">◇</div>
+                        <div class="text-2xl text-amber-300">â—‡</div>
 
                         <h3
                             class="mt-4 text-sm font-black tracking-wider uppercase"
                         >
-                            Qualité premium
+                            QualitÃ© premium
                         </h3>
 
                         <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            Pierres en moissanite VVS sélectionnées pour leur
-                            éclat.
+                            Pierres en moissanite VVS sÃ©lectionnÃ©es pour leur
+                            Ã©clat.
                         </p>
                     </div>
 
                     <div
                         class="border-b border-white/10 p-7 lg:border-r lg:border-b-0"
                     >
-                        <div class="text-2xl text-amber-300">⚙</div>
+                        <div class="text-2xl text-amber-300">âš™</div>
 
                         <h3
                             class="mt-4 text-sm font-black tracking-wider uppercase"
@@ -1214,7 +1221,7 @@ onBeforeUnmount(() => {
                     <div
                         class="border-b border-white/10 p-7 sm:border-r sm:border-b-0"
                     >
-                        <div class="text-2xl text-amber-300">↗</div>
+                        <div class="text-2xl text-amber-300">â†—</div>
 
                         <h3
                             class="mt-4 text-sm font-black tracking-wider uppercase"
@@ -1223,21 +1230,21 @@ onBeforeUnmount(() => {
                         </h3>
 
                         <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            Mode de réception confirmé avec chaque client.
+                            Mode de rÃ©ception confirmÃ© avec chaque client.
                         </p>
                     </div>
 
                     <div class="p-7">
-                        <div class="text-2xl text-amber-300">◷</div>
+                        <div class="text-2xl text-amber-300">â—·</div>
 
                         <h3
                             class="mt-4 text-sm font-black tracking-wider uppercase"
                         >
-                            Délai estimé
+                            DÃ©lai estimÃ©
                         </h3>
 
                         <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            Environ 5 à 6 jours ouvrables selon la commande.
+                            Environ 5 Ã  6 jours ouvrables selon la commande.
                         </p>
                     </div>
                 </div>
@@ -1258,11 +1265,11 @@ onBeforeUnmount(() => {
                     </p>
 
                     <p class="mt-1 text-xs text-zinc-600">
-                        La culture bustdown arrive en Belgique 🇧🇪
+                        La culture bustdown arrive en Belgique ðŸ‡§ðŸ‡ª
                     </p>
                 </div>
 
-                <p class="text-xs text-zinc-700">© 2026 VVS FLAWLESS</p>
+                <p class="text-xs text-zinc-700">Â© 2026 VVS FLAWLESS</p>
             </div>
         </footer>
     </div>

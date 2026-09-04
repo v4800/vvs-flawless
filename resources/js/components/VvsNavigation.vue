@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { animate } from 'animejs';
 import { computed, onMounted, ref } from 'vue';
 
@@ -16,7 +16,7 @@ const props = defineProps({
 
     backLabel: {
         type: String,
-        default: 'Collection',
+        default: null,
     },
 
     watchHref: {
@@ -30,12 +30,20 @@ const props = defineProps({
     },
 });
 
+const page = usePage();
+
+const translations = computed(() => page.props.translations);
+
+const resolvedBackLabel = computed(
+    () => props.backLabel ?? translations.value.vvs_navigation.collection,
+);
+
 const navigation = ref(null);
 
 const steps = computed(() => {
     const items = [
         {
-            label: 'Collection',
+            label: translations.value.vvs_navigation.collection,
             href: '/watches',
             key: 'collection',
         },
@@ -43,7 +51,7 @@ const steps = computed(() => {
 
     if (props.current === 'watch' || props.current === 'reservation') {
         items.push({
-            label: 'Modèle',
+            label: translations.value.vvs_navigation.model,
             href: props.watchHref,
             key: 'watch',
         });
@@ -51,7 +59,7 @@ const steps = computed(() => {
 
     if (props.current === 'reservation') {
         items.push({
-            label: 'Réservation',
+            label: translations.value.vvs_navigation.reservation,
             href: null,
             key: 'reservation',
         });
@@ -99,13 +107,13 @@ onMounted(() => {
                     <p
                         class="text-[9px] font-bold tracking-[0.25em] text-zinc-600 uppercase"
                     >
-                        Retour
+                        {{ translations.vvs_navigation.back }}
                     </p>
 
                     <p
                         class="text-sm font-semibold text-zinc-200 transition group-hover:text-amber-200"
                     >
-                        {{ backLabel }}
+                        {{ resolvedBackLabel }}
                     </p>
                 </div>
             </Link>
@@ -124,7 +132,7 @@ onMounted(() => {
 
             <nav
                 class="flex min-w-0 items-center justify-end overflow-hidden"
-                aria-label="Navigation"
+                :aria-label="translations.vvs_navigation.label"
             >
                 <template v-for="(step, index) in steps" :key="step.key">
                     <Link
