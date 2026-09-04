@@ -2,7 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Watch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class SeoTest extends TestCase
@@ -11,6 +13,13 @@ class SeoTest extends TestCase
 
     public function test_sitemap_is_public_and_contains_collection(): void
     {
+        $watch = Watch::query()->create([
+            'name' => 'Montre test SEO',
+            'price' => 950,
+            'description' => 'Description de test.',
+            'availability' => 'Sur commande',
+        ]);
+
         $response = $this->get('/sitemap.xml');
 
         $response->assertOk();
@@ -25,9 +34,56 @@ class SeoTest extends TestCase
             false
         );
 
+        $response->assertSee(
+            route('watches.show', $watch),
+            false
+        );
+
+        $response->assertSee(
+            $watch->updated_at->toAtomString(),
+            false
+        );
+
         $response->assertDontSee(
             '/dashboard',
             false
+        );
+    }
+
+    public function test_made_to_order_watch_uses_preorder_structured_data(): void
+    {
+        $watch = Watch::query()->create([
+            'name' => 'Montre test sur commande',
+            'price' => 950,
+            'description' => 'Description de test.',
+            'availability' => 'Sur commande',
+            'stock_quantity' => null,
+            'japanese_price' => 950,
+            'swiss_price' => 1250,
+        ]);
+
+        $response = $this->get(
+            route('watches.show', $watch)
+        );
+
+        $response->assertOk();
+
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Watches/Show')
+                ->where(
+                    'seo.structuredData.@graph.0.offers.0.availability',
+                    'https://schema.org/PreOrder'
+                )
+                ->where(
+                    'seo.structuredData.@graph.0.offers.1.availability',
+                    'https://schema.org/PreOrder'
+                )
+                ->where(
+                    'seo.structuredData.@graph.1.@type',
+                    'BreadcrumbList'
+                )
+                ->etc()
         );
     }
 

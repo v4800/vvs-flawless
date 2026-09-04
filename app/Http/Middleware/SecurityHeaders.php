@@ -145,6 +145,11 @@ class SecurityHeaders
         if (
             $request->is('dashboard*')
             || $request->is('login*')
+            || $request->is('forgot-password*')
+            || $request->is('reset-password*')
+            || $request->is('email/verify*')
+            || $request->is('user/confirm-password*')
+            || $request->is('register*')
             || $request->is('two-factor-challenge*')
             || $request->is('reservation-confirmed/*')
             || $request->is('settings*')

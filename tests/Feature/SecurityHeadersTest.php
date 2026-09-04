@@ -84,15 +84,24 @@ class SecurityHeadersTest extends TestCase
 
     public function test_private_pages_are_not_indexable(): void
     {
-        $response =
-            $this->get('/login');
+        foreach (
+            [
+                '/login',
+                '/forgot-password',
+                '/reset-password/test-token',
+                '/email/verify',
+                '/user/confirm-password',
+                '/dashboard',
+                '/settings/profile',
+            ] as $path
+        ) {
+            $response = $this->get($path);
 
-        $response->assertOk();
-
-        $response->assertHeader(
-            'X-Robots-Tag',
-            'noindex, nofollow, noarchive'
-        );
+            $response->assertHeader(
+                'X-Robots-Tag',
+                'noindex, nofollow, noarchive'
+            );
+        }
     }
 
     public function test_public_watches_page_is_not_marked_noindex(): void
@@ -193,6 +202,42 @@ class SecurityHeadersTest extends TestCase
         $response->assertHeader(
             'Strict-Transport-Security',
             'max-age=31536000; includeSubDomains'
+        );
+    }
+
+    public function test_production_inline_scripts_use_the_csp_nonce(): void
+    {
+        $this->app['env'] = 'production';
+
+        $response = $this->get(
+            'https://localhost/watches'
+        );
+
+        $response->assertOk();
+
+        $contentSecurityPolicy = $response->headers->get(
+            'Content-Security-Policy'
+        );
+
+        $this->assertNotNull(
+            $contentSecurityPolicy
+        );
+
+        $this->assertSame(
+            1,
+            preg_match(
+                "/script-src 'self' 'nonce-([^']+)'/",
+                $contentSecurityPolicy,
+                $matches
+            )
+        );
+
+        $this->assertGreaterThanOrEqual(
+            2,
+            substr_count(
+                $response->getContent(),
+                'nonce="'.$matches[1].'"'
+            )
         );
     }
 }

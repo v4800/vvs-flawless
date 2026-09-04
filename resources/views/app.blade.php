@@ -32,6 +32,10 @@
             $structuredData = is_array($seo['structuredData'] ?? null)
                 ? $seo['structuredData']
                 : null;
+
+            $cspNonce = app()->isProduction()
+                ? \Illuminate\Support\Facades\Vite::cspNonce()
+                : null;
         @endphp
 
         <meta charset="utf-8">
@@ -118,7 +122,12 @@
         {{-- Données structurées SEO --}}
 
         @if ($structuredData)
-            <script type="application/ld+json">{!! json_encode(
+            <script
+                @if ($cspNonce)
+                    nonce="{{ $cspNonce }}"
+                @endif
+                type="application/ld+json"
+            >{!! json_encode(
                 $structuredData,
                 JSON_UNESCAPED_SLASHES
                 | JSON_UNESCAPED_UNICODE
@@ -131,7 +140,11 @@
 
         {{-- Détection immédiate du thème --}}
 
-        <script>
+        <script
+            @if ($cspNonce)
+                nonce="{{ $cspNonce }}"
+            @endif
+        >
             (function() {
                 const appearance = '{{ $appearance ?? "system" }}';
 

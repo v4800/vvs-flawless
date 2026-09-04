@@ -21,7 +21,7 @@ class WatchController extends Controller
             'seo' => [
                 'title' => 'VVS FLAWLESS — Montres Iced-Out en Belgique',
 
-                'description' => 'Découvrez la collection VVS FLAWLESS : montres iced-out en moissanite VVS couleur D, mouvements Japonais ou Suisse et remise en main propre en Belgique.',
+                'description' => 'Découvrez la collection VVS FLAWLESS : montres iced-out en moissanite VVS couleur D, mouvements Japonais ou Suisse, disponibles sur réservation en Belgique.',
 
                 'canonical' => route('watches.index'),
 
@@ -78,7 +78,7 @@ class WatchController extends Controller
                 $watch->name
                 .'. '
                 .$watch->description
-                .' Moissanite VVS couleur D, mouvements Japonais ou Suisse et remise en main propre en Belgique.'
+                .' Moissanite VVS couleur D, mouvements Japonais ou Suisse, réservation avec remise en main propre ou livraison.'
             ),
             160,
             '…'
@@ -100,35 +100,59 @@ class WatchController extends Controller
             ->limit(3)
             ->get();
 
+        $watchUrl = route(
+            'watches.show',
+            $watch
+        );
+
         $structuredData = [
             '@context' => 'https://schema.org',
 
-            '@type' => 'Product',
+            '@graph' => [
+                [
+                    '@type' => 'Product',
 
-            'name' => $watch->name,
+                    'name' => $watch->name,
 
-            'description' => $description,
+                    'description' => $description,
 
-            'url' => route(
-                'watches.show',
-                $watch
-            ),
+                    'url' => $watchUrl,
 
-            'sku' => 'VVS-'.$watch->id,
+                    'sku' => 'VVS-'.$watch->id,
 
-            'category' => 'Montre iced-out en moissanite',
+                    'category' => 'Montre iced-out en moissanite',
 
-            'image' => [
-                $watch->image
-                    ? url($watch->image)
-                    : url(
-                        '/images/vvs-flawless-profile.webp'
+                    'image' => [
+                        $watch->image
+                            ? url($watch->image)
+                            : url(
+                                '/images/vvs-flawless-profile.webp'
+                            ),
+                    ],
+
+                    'offers' => $this->offersForWatch(
+                        $watch
                     ),
-            ],
+                ],
+                [
+                    '@type' => 'BreadcrumbList',
 
-            'offers' => $this->offersForWatch(
-                $watch
-            ),
+                    'itemListElement' => [
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 1,
+                            'name' => 'Montres',
+                            'item' => route('watches.index'),
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 2,
+                            'name' => $watch->name,
+                            'item' => $watchUrl,
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         return inertia('Watches/Show', [
@@ -144,10 +168,7 @@ class WatchController extends Controller
 
                 'description' => $description,
 
-                'canonical' => route(
-                    'watches.show',
-                    $watch
-                ),
+                'canonical' => $watchUrl,
 
                 'image' => $watch->image
                     ? url($watch->image)
@@ -183,11 +204,9 @@ class WatchController extends Controller
     ): array {
         $offers = [];
 
-        $availability =
-            $watch->stock_quantity !== null
-            && (int) $watch->stock_quantity <= 0
-                ? 'https://schema.org/BackOrder'
-                : 'https://schema.org/InStock';
+        $availability = $this->structuredDataAvailability(
+            $watch
+        );
 
         $movements = [
             'Japonais' => $watch->japanese_promo_price
@@ -234,6 +253,44 @@ class WatchController extends Controller
         }
 
         return $offers;
+    }
+
+    private function structuredDataAvailability(
+        Watch $watch
+    ): string {
+        $availability = Str::lower(
+            Str::ascii($watch->availability)
+        );
+
+        if (
+            Str::contains(
+                $availability,
+                [
+                    'sur commande',
+                    'sur reservation',
+                    'precommande',
+                ]
+            )
+        ) {
+            return 'https://schema.org/PreOrder';
+        }
+
+        if (
+            ($watch->stock_quantity !== null
+                && (int) $watch->stock_quantity <= 0)
+            || Str::contains(
+                $availability,
+                [
+                    'indisponible',
+                    'rupture',
+                    'epuise',
+                ]
+            )
+        ) {
+            return 'https://schema.org/OutOfStock';
+        }
+
+        return 'https://schema.org/InStock';
     }
 
     private function captureMarketingAttribution(
