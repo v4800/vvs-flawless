@@ -194,7 +194,7 @@ onMounted(() => {
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
                                 VVS FLAWLESS te contacte afin de confirmer la
-                                réservation et organiser la remise.
+                                réservation et le mode de réception choisi.
                             </p>
                         </div>
                     </div>
@@ -212,13 +212,13 @@ onMounted(() => {
                             </div>
 
                             <p class="mt-7 text-lg font-black">
-                                Récupère ta montre
+                                Reçois ta montre
                             </p>
 
                             <p class="mt-3 text-sm leading-6 text-zinc-500">
-                                Un point de rencontre est convenu avec VVS
-                                FLAWLESS pour effectuer la remise en main
-                                propre.
+                                La remise en main propre ou la livraison est
+                                organisée selon le choix confirmé avec VVS
+                                FLAWLESS.
                             </p>
                         </div>
                     </div>

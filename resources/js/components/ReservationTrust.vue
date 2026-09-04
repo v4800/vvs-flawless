@@ -58,7 +58,7 @@
                 </p>
 
                 <p class="mt-1 text-xs font-bold text-zinc-300">
-                    Point de rencontre convenu
+                    Réception organisée
                 </p>
             </div>
         </div>

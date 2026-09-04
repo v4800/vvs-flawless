@@ -32,9 +32,21 @@ const form = useForm({
     email: '',
     phone: '',
     city: '',
+    delivery_method: 'Remise en main propre',
     message: '',
     confirmation: false,
 });
+
+const deliveryOptions = [
+    {
+        value: 'Remise en main propre',
+        description: 'Le point de rencontre est confirmé avec vous.',
+    },
+    {
+        value: 'Livraison',
+        description: 'Les modalités de livraison sont confirmées avec vous.',
+    },
+];
 
 vueWatch(
     () => props.selectedMovement,
@@ -202,13 +214,13 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Remise
+                                    Réception
                                 </p>
 
                                 <p
                                     class="mt-2 text-xs font-black text-amber-200"
                                 >
-                                    Main propre
+                                    Au choix
                                 </p>
                             </div>
                         </div>
@@ -465,11 +477,11 @@ const submit = () => {
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
-                                    Remise
+                                    Réception
                                 </p>
 
                                 <p class="mt-2 font-bold text-zinc-200">
-                                    Point de rencontre
+                                    Remise ou livraison
                                 </p>
                             </div>
                         </div>
@@ -522,11 +534,11 @@ const submit = () => {
                         <p
                             class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
                         >
-                            Remise physique
+                            Réception au choix
                         </p>
 
                         <p class="mt-2 text-xs text-zinc-600">
-                            Point de rencontre convenu
+                            Remise ou livraison
                         </p>
                     </div>
                 </div>
@@ -566,8 +578,8 @@ const submit = () => {
 
                         <p class="mt-4 text-sm leading-7 text-zinc-500">
                             Envoyez votre demande. VVS FLAWLESS vous contactera
-                            ensuite afin de confirmer les détails et organiser
-                            la remise en main propre.
+                            ensuite afin de confirmer les détails et le mode de
+                            réception choisi.
                         </p>
 
                         <div
@@ -610,12 +622,12 @@ const submit = () => {
                             class="mt-4 rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5"
                         >
                             <p class="text-xs font-bold text-zinc-300">
-                                ◆ Remise en main propre
+                                ◆ {{ form.delivery_method }}
                             </p>
 
                             <p class="mt-2 text-xs leading-5 text-zinc-600">
-                                Le point de rencontre est convenu après
-                                confirmation de votre demande.
+                                Les modalités sont confirmées avec vous après
+                                l'envoi de la demande.
                             </p>
                         </div>
                     </div>
@@ -752,38 +764,60 @@ const submit = () => {
                                 </p>
                             </div>
 
-                            <!-- REMISE -->
+                            <!-- MODE DE RÉCEPTION -->
 
                             <div class="md:col-span-2">
                                 <p
                                     class="mb-2 text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
                                 >
-                                    Mode de remise
+                                    Mode de réception
                                 </p>
 
-                                <div
-                                    class="flex items-start gap-4 rounded-xl border border-amber-300/20 bg-amber-300/[0.03] p-5"
-                                >
-                                    <div
-                                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-amber-300 text-xs font-black text-black"
+                                <div class="grid gap-3 sm:grid-cols-2">
+                                    <label
+                                        v-for="option in deliveryOptions"
+                                        :key="option.value"
+                                        :class="[
+                                            'cursor-pointer rounded-xl border p-5 transition',
+                                            form.delivery_method ===
+                                            option.value
+                                                ? 'border-amber-300/50 bg-amber-300/[0.05]'
+                                                : 'border-white/10 bg-black hover:border-white/20',
+                                        ]"
                                     >
-                                        ✓
-                                    </div>
+                                        <div class="flex items-start gap-3">
+                                            <input
+                                                v-model="form.delivery_method"
+                                                type="radio"
+                                                name="delivery_method"
+                                                :value="option.value"
+                                                required
+                                                class="mt-1 h-4 w-4 accent-amber-300"
+                                            />
 
-                                    <div>
-                                        <p class="font-bold text-white">
-                                            Remise en main propre
-                                        </p>
+                                            <span>
+                                                <span
+                                                    class="block font-bold text-white"
+                                                >
+                                                    {{ option.value }}
+                                                </span>
 
-                                        <p
-                                            class="mt-1 text-sm leading-6 text-zinc-500"
-                                        >
-                                            Un point de rencontre est convenu
-                                            avec vous après confirmation de la
-                                            réservation.
-                                        </p>
-                                    </div>
+                                                <span
+                                                    class="mt-1 block text-sm leading-6 text-zinc-500"
+                                                >
+                                                    {{ option.description }}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </label>
                                 </div>
+
+                                <p
+                                    v-if="form.errors.delivery_method"
+                                    class="mt-2 text-xs text-red-400"
+                                >
+                                    {{ form.errors.delivery_method }}
+                                </p>
                             </div>
 
                             <!-- MESSAGE -->
@@ -862,8 +896,8 @@ const submit = () => {
                                     >
                                         Je confirme souhaiter réserver cette
                                         montre et être contacté par VVS FLAWLESS
-                                        afin de finaliser ma demande et convenir
-                                        du point de rencontre.
+                                        afin de finaliser ma demande et
+                                        confirmer le mode de réception choisi.
                                     </span>
                                 </label>
 

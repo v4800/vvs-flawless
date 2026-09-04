@@ -61,6 +61,8 @@ class ReservationRateLimitTest extends TestCase
 
             'city' => 'Liège',
 
+            'delivery_method' => 'Remise en main propre',
+
             'message' => null,
 
             'confirmation' => true,

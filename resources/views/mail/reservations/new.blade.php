@@ -35,7 +35,8 @@ Une nouvelle réservation vient d'être enregistrée.
 **Ville :**  
 {{ $reservation->city ?: 'Non renseignée' }}
 
-**Mode de remise :**  
+**Mode de réception :**
+
 {{ $reservation->delivery_method }}
 
 @if ($reservation->message)

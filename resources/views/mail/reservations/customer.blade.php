@@ -32,7 +32,8 @@ Votre demande de réservation a bien été enregistrée.
 **Ville :**  
 {{ $reservation->city ?: 'Non renseignée' }}
 
-**Mode de remise :**  
+**Mode de réception :**
+
 {{ $reservation->delivery_method }}
 
 **Statut :**  
@@ -47,13 +48,7 @@ Votre demande de réservation a bien été enregistrée.
 @endif
 
 <x-mail::button
-    :url="route(
-        'reservations.confirmation',
-        [
-            'reservationNumber' =>
-                $reservation->reservation_number
-        ]
-    )"
+    :url="$confirmationUrl"
 >
 Voir mon récapitulatif
 </x-mail::button>

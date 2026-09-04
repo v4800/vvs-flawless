@@ -1211,11 +1211,11 @@ onBeforeUnmount(() => {
                         <h3
                             class="mt-4 text-sm font-black tracking-wider uppercase"
                         >
-                            Remise en main propre
+                            Remise ou livraison
                         </h3>
 
                         <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            Remise possible en Belgique et aux alentours.
+                            Mode de réception confirmé avec chaque client.
                         </p>
                     </div>
 

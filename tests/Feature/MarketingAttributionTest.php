@@ -44,6 +44,7 @@ class MarketingAttributionTest extends TestCase
             'email' => 'marketing@example.com',
             'phone' => '0470000010',
             'city' => 'Liège',
+            'delivery_method' => 'Remise en main propre',
             'message' => 'Test attribution TikTok',
             'confirmation' => true,
         ];

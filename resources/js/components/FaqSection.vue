@@ -35,13 +35,13 @@ const faqs = [
     },
 
     {
-        question: 'Comment se déroule la remise de la montre ?',
+        question: 'Comment recevoir ma montre ?',
 
-        answer: 'Toutes les commandes sont remises en main propre. Après confirmation, un point de rencontre est convenu directement avec vous pour effectuer la remise de la montre.',
+        answer: 'Vous pouvez choisir une remise en main propre ou une livraison. Les modalités précises sont confirmées avec vous avant la finalisation de la commande.',
     },
 
     {
-        question: 'Où se fait le point de rencontre ?',
+        question: 'Comment se passe la remise en main propre ?',
 
         answer: 'Le lieu exact est convenu directement avec vous après confirmation de votre réservation afin de choisir un point de rencontre adapté.',
     },

@@ -259,7 +259,7 @@ const hasMarketingAttribution = (reservation) => {
                             <div class="mt-6 grid gap-5 md:grid-cols-3">
                                 <div>
                                     <p class="text-xs text-zinc-500">
-                                        Mode de remise
+                                        Mode de réception
                                     </p>
 
                                     <p class="mt-1 font-medium">

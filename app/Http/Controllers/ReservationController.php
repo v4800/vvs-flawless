@@ -55,6 +55,12 @@ class ReservationController extends Controller
                 'max:255',
             ],
 
+            'delivery_method' => [
+                'required',
+                'string',
+                'in:Remise en main propre,Livraison',
+            ],
+
             'message' => [
                 'nullable',
                 'string',
@@ -125,7 +131,7 @@ class ReservationController extends Controller
 
             'city' => $validated['city'] ?? null,
 
-            'delivery_method' => 'Remise en main propre - point de rencontre',
+            'delivery_method' => $validated['delivery_method'],
 
             'status' => 'Nouvelle demande',
 
@@ -151,12 +157,23 @@ class ReservationController extends Controller
 
         $reservation->load('watch');
 
+        $confirmationUrl =
+            URL::temporarySignedRoute(
+                'reservations.confirmation',
+                now()->addHours(24),
+                [
+                    'reservationNumber' => $reservation
+                        ->reservation_number,
+                ]
+            );
+
         try {
             Mail::to(
                 $reservation->email
             )->send(
                 new CustomerReservationMail(
-                    $reservation
+                    $reservation,
+                    $confirmationUrl
                 )
             );
         } catch (\Throwable $exception) {
@@ -195,16 +212,6 @@ class ReservationController extends Controller
                 );
             }
         }
-
-        $confirmationUrl =
-            URL::temporarySignedRoute(
-                'reservations.confirmation',
-                now()->addHours(24),
-                [
-                    'reservationNumber' => $reservation
-                        ->reservation_number,
-                ]
-            );
 
         return Inertia::location(
             $confirmationUrl

@@ -15,7 +15,8 @@ class CustomerReservationMail extends Mailable
     use Queueable, SerializesModels;
 
     public function __construct(
-        public Reservation $reservation
+        public Reservation $reservation,
+        public string $confirmationUrl
     ) {
         $this->reservation->loadMissing('watch');
     }

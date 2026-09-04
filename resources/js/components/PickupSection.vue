@@ -15,27 +15,27 @@
                     <p
                         class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
                     >
-                        Remise de votre montre
+                        Réception de votre montre
                     </p>
 
                     <h2
                         class="mt-5 max-w-3xl text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl"
                     >
-                        Remise exclusivement
+                        Remise en main propre
 
-                        <span class="text-amber-300"> en main propre. </span>
+                        <span class="text-amber-300"> ou livraison. </span>
                     </h2>
 
                     <p class="mt-7 max-w-2xl text-base leading-7 text-zinc-400">
-                        Chez VVS FLAWLESS, la montre n'est pas envoyée par colis
-                        au client. La remise est organisée directement dans un
-                        point de rencontre convenu ensemble.
+                        Choisissez le mode de réception qui vous convient lors
+                        de la réservation. Les modalités sont confirmées avec
+                        vous avant la finalisation de la commande.
                     </p>
 
                     <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-500">
-                        Une fois votre réservation confirmée et votre montre
-                        disponible, nous vous contactons pour convenir du lieu
-                        et du moment de la remise.
+                        Pour une remise en main propre, nous convenons ensemble
+                        du lieu et du moment. Pour une livraison, ses modalités
+                        sont précisées lors de la confirmation.
                     </p>
                 </div>
 
@@ -90,11 +90,11 @@
                         </div>
 
                         <div>
-                            <p class="font-bold">Point de rencontre</p>
+                            <p class="font-bold">Réception</p>
 
                             <p class="mt-1 text-sm leading-6 text-zinc-500">
-                                Un lieu est convenu pour effectuer la remise de
-                                la montre en main propre.
+                                La remise en main propre ou la livraison est
+                                organisée selon votre choix.
                             </p>
                         </div>
                     </div>

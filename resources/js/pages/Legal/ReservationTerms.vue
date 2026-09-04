@@ -79,7 +79,7 @@ import { Head, Link } from '@inertiajs/vue3';
                     <p class="mt-3">
                         Aucun paiement n'est effectué directement sur le site.
                         Les modalités de paiement sont confirmées avec le client
-                        avant la remise.
+                        avant la remise ou la livraison.
                     </p>
 
                     <p class="mt-3">
@@ -92,13 +92,14 @@ import { Head, Link } from '@inertiajs/vue3';
 
                 <section>
                     <h2 class="text-xl font-black text-white">
-                        6. Remise en main propre
+                        6. Remise en main propre ou livraison
                     </h2>
 
                     <p class="mt-3">
-                        Les commandes sont remises en main propre. Le point de
-                        rencontre est convenu avec le client après confirmation
-                        de la réservation.
+                        Le client choisit la remise en main propre ou la
+                        livraison lors de sa demande. Les modalités précises
+                        sont convenues avec le client avant la finalisation de
+                        la commande.
                     </p>
                 </section>
 

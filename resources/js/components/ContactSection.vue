@@ -46,9 +46,9 @@
                 <p
                     class="mx-auto mt-6 max-w-2xl text-sm leading-7 text-zinc-500 sm:text-base"
                 >
-                    Besoin d'informations sur une montre, un mouvement ou la
-                    remise en main propre ? Contactez directement VVS FLAWLESS
-                    sur TikTok.
+                    Besoin d'informations sur une montre, un mouvement ou le
+                    mode de réception ? Contactez directement VVS FLAWLESS sur
+                    TikTok.
                 </p>
 
                 <!-- PROFIL TIKTOK -->

@@ -52,7 +52,7 @@ class ConfirmationSecurityTest extends TestCase
             'phone' => '0470000000',
             'city' => 'Liège',
 
-            'delivery_method' => 'Remise en main propre - point de rencontre',
+            'delivery_method' => 'Remise en main propre',
 
             'status' => 'Nouvelle demande',
 

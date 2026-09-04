@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Mail\CustomerReservationMail;
 use App\Models\Reservation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -106,6 +107,8 @@ class ReservationSecurityTest extends TestCase
 
                     'city' => 'Liège',
 
+                    'delivery_method' => 'Remise en main propre',
+
                     'message' => 'Réservation de test',
 
                     'confirmation' => true,
@@ -130,7 +133,20 @@ class ReservationSecurityTest extends TestCase
                 'movement' => 'Japonais',
 
                 'price' => 950.00,
+
+                'delivery_method' => 'Remise en main propre',
             ]
+        );
+
+        Mail::assertSent(
+            CustomerReservationMail::class,
+            fn (CustomerReservationMail $mail): bool =>
+                $mail->confirmationUrl
+                === $response->headers->get('X-Inertia-Location')
+                && str_contains(
+                    $mail->confirmationUrl,
+                    'signature='
+                )
         );
     }
 
@@ -181,6 +197,8 @@ class ReservationSecurityTest extends TestCase
                     'phone' => '0470000001',
 
                     'city' => 'Liège',
+
+                    'delivery_method' => 'Remise en main propre',
 
                     'message' => null,
 
@@ -249,6 +267,8 @@ class ReservationSecurityTest extends TestCase
 
                     'city' => 'Bruxelles',
 
+                    'delivery_method' => 'Livraison',
+
                     'confirmation' => true,
                 ]
             );
@@ -266,6 +286,11 @@ class ReservationSecurityTest extends TestCase
         $this->assertSame(
             1350.0,
             (float) $reservation->price
+        );
+
+        $this->assertSame(
+            'Livraison',
+            $reservation->delivery_method
         );
     }
 
@@ -310,6 +335,8 @@ class ReservationSecurityTest extends TestCase
 
                         'city' => 'Liège',
 
+                        'delivery_method' => 'Remise en main propre',
+
                         'confirmation' => true,
                     ]
                 );
@@ -326,6 +353,40 @@ class ReservationSecurityTest extends TestCase
             'reservations',
             [
                 'email' => 'movement@example.com',
+            ]
+        );
+    }
+
+    public function test_invalid_delivery_method_is_rejected(): void
+    {
+        Mail::fake();
+
+        $watchId = $this->createWatch();
+
+        $response = $this
+            ->from("/watches/{$watchId}")
+            ->post(
+                route('reservations.store'),
+                [
+                    'watch_id' => $watchId,
+                    'movement' => 'Japonais',
+                    'customer_name' => 'Delivery Test',
+                    'email' => 'delivery@example.com',
+                    'phone' => '0470000011',
+                    'city' => 'Liège',
+                    'delivery_method' => 'Livraison gratuite',
+                    'confirmation' => true,
+                ]
+            );
+
+        $response
+            ->assertRedirect("/watches/{$watchId}")
+            ->assertSessionHasErrors('delivery_method');
+
+        $this->assertDatabaseMissing(
+            'reservations',
+            [
+                'email' => 'delivery@example.com',
             ]
         );
     }
@@ -360,6 +421,8 @@ class ReservationSecurityTest extends TestCase
 
                         'city' => 'Liège',
 
+                        'delivery_method' => 'Remise en main propre',
+
                         'confirmation' => true,
                     ]
                 );
@@ -387,7 +450,6 @@ class ReservationSecurityTest extends TestCase
     |
     | Le client essaie ici de modifier :
     |
-    | - delivery_method
     | - status
     | - reservation_number
     |
@@ -419,6 +481,8 @@ $this->withHeader('X-Inertia', 'true')->post(route(
 
         'city' => 'Liège',
 
+        'delivery_method' => 'Livraison',
+
         'confirmation' => true,
 
         /*
@@ -426,8 +490,6 @@ $this->withHeader('X-Inertia', 'true')->post(route(
         | FAUSSES VALEURS
         |--------------------------------------------------------------------------
         */
-
-        'delivery_method' => 'Livraison gratuite',
 
         'status' => 'Payée',
 
@@ -446,7 +508,7 @@ $this->withHeader('X-Inertia', 'true')->post(route(
                 ->firstOrFail();
 
         $this->assertSame(
-            'Remise en main propre - point de rencontre',
+            'Livraison',
             $reservation->delivery_method
         );
 
@@ -504,9 +566,11 @@ $this->withHeader('X-Inertia', 'true')->post(route(
 
         'phone' => '0470000006',
 
-        'city' => 'Liège',
+            'city' => 'Liège',
 
-        'confirmation' => true,
+            'delivery_method' => 'Remise en main propre',
+
+            'confirmation' => true,
     ]
 );
 

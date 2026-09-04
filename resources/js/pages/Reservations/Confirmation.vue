@@ -193,7 +193,9 @@ const formatPrice = (price) => {
                     <!-- LIVRAISON -->
                     <div class="grid gap-6 sm:grid-cols-2">
                         <div>
-                            <p class="text-xs text-zinc-600">Mode de remise</p>
+                            <p class="text-xs text-zinc-600">
+                                Mode de réception
+                            </p>
 
                             <p class="mt-1 font-semibold">
                                 {{ reservation.delivery_method }}

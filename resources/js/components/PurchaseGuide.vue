@@ -122,11 +122,11 @@
                     <div>
                         <p class="text-3xl font-black text-amber-300">04</p>
 
-                        <p class="mt-3 font-black">Remise</p>
+                        <p class="mt-3 font-black">Réception</p>
 
                         <p class="mt-2 text-xs leading-6 text-zinc-600">
-                            Le point de rencontre est ensuite convenu pour la
-                            remise en main propre.
+                            La remise en main propre ou la livraison est ensuite
+                            organisée selon votre choix.
                         </p>
                     </div>
                 </div>
@@ -154,11 +154,11 @@
                         <p
                             class="text-[9px] font-black tracking-[0.18em] text-zinc-600 uppercase"
                         >
-                            Mode de remise
+                            Mode de réception
                         </p>
 
                         <p class="mt-2 font-bold text-zinc-200">
-                            Remise en main propre uniquement
+                            Remise en main propre ou livraison
                         </p>
                     </div>
                 </div>
