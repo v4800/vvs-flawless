@@ -29,10 +29,10 @@ class WatchController extends Controller
             'watches' => $watches,
 
             'seo' => [
-                'title' => trans('site.seo.collection_title'),
+                'title' => trans('seo_intents.collection_seo.title'),
 
                 'description' => trans(
-                    'site.seo.collection_description'
+                    'seo_intents.collection_seo.description'
                 ),
 
                 'canonical' => $collectionUrl,
@@ -50,32 +50,62 @@ class WatchController extends Controller
                 'structuredData' => [
                     '@context' => 'https://schema.org',
 
-                    '@type' => 'WebSite',
-
-                    'name' => 'VVS FLAWLESS',
-
-                    'url' => $collectionUrl,
-
-                    'inLanguage' => str_replace(
-                        '_',
-                        '-',
-                        app()->getLocale()
-                    ),
-
-                    'publisher' => [
-                        '@type' => 'Organization',
-
-                        'name' => 'VVS FLAWLESS',
-
-                        'url' => url('/'),
-
-                        'logo' => url(
-                            '/images/vvs-flawless-profile.webp'
-                        ),
-
-                        'sameAs' => [
-                            'https://www.instagram.com/vvsflawless43/',
-                            'https://www.tiktok.com/@vvsflawless43',
+                    '@graph' => [
+                        [
+                            '@type' => 'WebSite',
+                            'name' => 'VVS FLAWLESS',
+                            'url' => $collectionUrl,
+                            'inLanguage' => str_replace(
+                                '_',
+                                '-',
+                                app()->getLocale()
+                            ),
+                            'publisher' => [
+                                '@type' => 'Organization',
+                                'name' => 'VVS FLAWLESS',
+                                'url' => url('/'),
+                                'logo' => url(
+                                    '/images/vvs-flawless-profile.webp'
+                                ),
+                                'sameAs' => [
+                                    'https://www.instagram.com/vvsflawless43/',
+                                    'https://www.tiktok.com/@vvsflawless43',
+                                ],
+                            ],
+                        ],
+                        [
+                            '@type' => 'CollectionPage',
+                            'name' => trans(
+                                'seo_intents.collection_seo.title'
+                            ),
+                            'description' => trans(
+                                'seo_intents.collection_seo.description'
+                            ),
+                            'url' => $collectionUrl,
+                            'inLanguage' => str_replace(
+                                '_',
+                                '-',
+                                app()->getLocale()
+                            ),
+                            'mainEntity' => [
+                                '@type' => 'ItemList',
+                                'itemListElement' => $watches
+                                    ->values()
+                                    ->map(
+                                        fn (Watch $watch, int $index) => [
+                                            '@type' => 'ListItem',
+                                            'position' => $index + 1,
+                                            'name' => $watch->name,
+                                            'url' => route(
+                                                $this->localizedRouteName(
+                                                    'watches.show'
+                                                ),
+                                                $watch
+                                            ),
+                                        ]
+                                    )
+                                    ->all(),
+                            ],
                         ],
                     ],
                 ],
@@ -102,7 +132,7 @@ class WatchController extends Controller
                 .'. '
                 .$watch->description
                 .' '
-                .trans('site.seo.product_description_suffix')
+                .trans('seo_intents.collection_seo.product_suffix')
             ),
             160,
             '…'
@@ -197,7 +227,7 @@ class WatchController extends Controller
 
             'seo' => [
                 'title' => $watch->name
-                    .' — VVS FLAWLESS',
+                    .' | Moissanite VVS | VVS FLAWLESS',
 
                 'description' => $description,
 
@@ -339,9 +369,11 @@ class WatchController extends Controller
 
     private function localizedRouteName(string $name): string
     {
-        return app()->getLocale() === 'nl_BE'
-            ? 'nl.'.$name
-            : $name;
+        return match (app()->getLocale()) {
+            'nl_BE' => 'nl.'.$name,
+            'en_BE' => 'en.'.$name,
+            default => $name,
+        };
     }
 
     private function localizedWatch(Watch $watch): Watch
@@ -380,6 +412,10 @@ class WatchController extends Controller
                 'href' => route('nl.watches.index'),
             ],
             [
+                'hreflang' => 'en-BE',
+                'href' => route('en.watches.index'),
+            ],
+            [
                 'hreflang' => 'x-default',
                 'href' => route('watches.index'),
             ],
@@ -399,6 +435,10 @@ class WatchController extends Controller
             [
                 'hreflang' => 'nl-BE',
                 'href' => route('nl.watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'en-BE',
+                'href' => route('en.watches.show', $watch),
             ],
             [
                 'hreflang' => 'x-default',
