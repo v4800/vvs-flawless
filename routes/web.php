@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| HOME
+| FRENCH PUBLIC ROUTES
 |--------------------------------------------------------------------------
 */
 
@@ -31,12 +31,6 @@ Route::get(
     }
 )->name('home');
 
-/*
-|--------------------------------------------------------------------------
-| SEO
-|--------------------------------------------------------------------------
-*/
-
 Route::get('/confidentialite', [PublicPageController::class, 'privacy'])
     ->name('privacy');
 
@@ -46,105 +40,54 @@ Route::get(
 )->name('guides.diamond-vs-moissanite');
 
 Route::get(
+    '/guide/montre-vvs-diamant-moissanite',
+    [PublicPageController::class, 'vvsWatch']
+)->name('guides.vvs-watch');
+
+Route::get(
+    '/guide/montre-diamant-moissanite-homme-femme',
+    [PublicPageController::class, 'menWomen']
+)->name('guides.men-women');
+
+Route::get(
+    '/belgique/montre-diamant-moissanite-vvs',
+    [PublicPageController::class, 'belgiumWatchGuide']
+)->name('guides.belgium');
+
+Route::get(
     '/sitemap.xml',
-    [
-        SeoController::class,
-        'sitemap',
-    ]
+    [SeoController::class, 'sitemap']
 )->name('sitemap');
 
 Route::get(
     '/robots.txt',
-    [
-        SeoController::class,
-        'robots',
-    ]
+    [SeoController::class, 'robots']
 )->name('robots');
 
-/*
-|--------------------------------------------------------------------------
-| COLLECTION
-|--------------------------------------------------------------------------
-*/
+Route::get('/watches', [WatchController::class, 'index'])
+    ->name('watches.index');
 
-Route::get(
-    '/watches',
-    [
-        WatchController::class,
-        'index',
-    ]
-)->name('watches.index');
+Route::get('/watches/{watch}', [WatchController::class, 'show'])
+    ->name('watches.show');
 
-/*
-|--------------------------------------------------------------------------
-| FICHE MONTRE
-|--------------------------------------------------------------------------
-*/
-
-Route::get(
-    '/watches/{watch}',
-    [
-        WatchController::class,
-        'show',
-    ]
-)->name('watches.show');
-
-/*
-|--------------------------------------------------------------------------
-| RÉSERVATION
-|--------------------------------------------------------------------------
-|
-| Maximum 5 requêtes par minute.
-|
-*/
-
-Route::post(
-    '/reservations',
-    [
-        ReservationController::class,
-        'store',
-    ]
-)
-    ->middleware(
-        'throttle:5,1'
-    )
-    ->name(
-        'reservations.store'
-    );
-
-/*
-|--------------------------------------------------------------------------
-| CONFIRMATION
-|--------------------------------------------------------------------------
-|
-| URL signée obligatoire.
-| Une personne ne peut donc pas simplement inventer un numéro VVS.
-|
-*/
+Route::post('/reservations', [ReservationController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('reservations.store');
 
 Route::get(
     '/reservation-confirmed/{reservationNumber}',
-    [
-        ReservationController::class,
-        'confirmation',
-    ]
+    [ReservationController::class, 'confirmation']
 )
     ->middleware([
         'signed',
         'throttle:30,1',
     ])
-    ->name(
-        'reservations.confirmation'
-    );
+    ->name('reservations.confirmation');
 
 /*
 |--------------------------------------------------------------------------
-| NEDERLANDSTALIGE OPENBARE ROUTES
+| DUTCH PUBLIC ROUTES
 |--------------------------------------------------------------------------
-|
-| De Franse URL's blijven ongewijzigd. Zo behouden bestaande links hun
-| waarde en krijgt de Nederlandse versie eigen, indexeerbare URL's.
-|
 */
 
 Route::prefix('nl')
@@ -155,20 +98,31 @@ Route::prefix('nl')
             [PublicPageController::class, 'reservationTerms']
         )->name('reservation-terms');
 
-        Route::get(
-            '/privacy',
-            [PublicPageController::class, 'privacy']
-        )->name('privacy');
+        Route::get('/privacy', [PublicPageController::class, 'privacy'])
+            ->name('privacy');
 
-        Route::get(
-            '/over-ons',
-            [PublicPageController::class, 'about']
-        )->name('about');
+        Route::get('/over-ons', [PublicPageController::class, 'about'])
+            ->name('about');
 
         Route::get(
             '/gids/diamanten-horloge-of-moissanite',
             [PublicPageController::class, 'diamondVsMoissanite']
         )->name('guides.diamond-vs-moissanite');
+
+        Route::get(
+            '/gids/vvs-horloge-diamant-moissanite',
+            [PublicPageController::class, 'vvsWatch']
+        )->name('guides.vvs-watch');
+
+        Route::get(
+            '/gids/diamanten-moissanite-horloge-heren-dames',
+            [PublicPageController::class, 'menWomen']
+        )->name('guides.men-women');
+
+        Route::get(
+            '/belgie/diamanten-moissanite-vvs-horloge',
+            [PublicPageController::class, 'belgiumWatchGuide']
+        )->name('guides.belgium');
 
         Route::get(
             '/',
@@ -180,38 +134,90 @@ Route::prefix('nl')
             }
         )->name('home');
 
-        Route::get(
-            '/watches',
-            [
-                WatchController::class,
-                'index',
-            ]
-        )->name('watches.index');
+        Route::get('/watches', [WatchController::class, 'index'])
+            ->name('watches.index');
 
-        Route::get(
-            '/watches/{watch}',
-            [
-                WatchController::class,
-                'show',
-            ]
-        )->name('watches.show');
+        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+            ->name('watches.show');
 
-        Route::post(
-            '/reservations',
-            [
-                ReservationController::class,
-                'store',
-            ]
-        )
+        Route::post('/reservations', [ReservationController::class, 'store'])
             ->middleware('throttle:5,1')
             ->name('reservations.store');
 
         Route::get(
             '/reservation-confirmed/{reservationNumber}',
-            [
-                ReservationController::class,
-                'confirmation',
-            ]
+            [ReservationController::class, 'confirmation']
+        )
+            ->middleware([
+                'signed',
+                'throttle:30,1',
+            ])
+            ->name('reservations.confirmation');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| ENGLISH PUBLIC ROUTES
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('en')
+    ->name('en.')
+    ->group(function () {
+        Route::get(
+            '/reservation-terms',
+            [PublicPageController::class, 'reservationTerms']
+        )->name('reservation-terms');
+
+        Route::get('/privacy', [PublicPageController::class, 'privacy'])
+            ->name('privacy');
+
+        Route::get('/about', [PublicPageController::class, 'about'])
+            ->name('about');
+
+        Route::get(
+            '/guide/diamond-watch-or-moissanite',
+            [PublicPageController::class, 'diamondVsMoissanite']
+        )->name('guides.diamond-vs-moissanite');
+
+        Route::get(
+            '/guide/vvs-diamond-moissanite-watch',
+            [PublicPageController::class, 'vvsWatch']
+        )->name('guides.vvs-watch');
+
+        Route::get(
+            '/guide/diamond-moissanite-watches-men-women',
+            [PublicPageController::class, 'menWomen']
+        )->name('guides.men-women');
+
+        Route::get(
+            '/belgium/diamond-moissanite-vvs-watches',
+            [PublicPageController::class, 'belgiumWatchGuide']
+        )->name('guides.belgium');
+
+        Route::get(
+            '/',
+            function (Request $request) {
+                return redirect()->route(
+                    'en.watches.index',
+                    $request->query()
+                );
+            }
+        )->name('home');
+
+        Route::get('/watches', [WatchController::class, 'index'])
+            ->name('watches.index');
+
+        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+            ->name('watches.show');
+
+        Route::post('/reservations', [ReservationController::class, 'store'])
+            ->middleware('throttle:5,1')
+            ->name('reservations.store');
+
+        Route::get(
+            '/reservation-confirmed/{reservationNumber}',
+            [ReservationController::class, 'confirmation']
         )
             ->middleware([
                 'signed',
@@ -224,43 +230,19 @@ Route::prefix('nl')
 |--------------------------------------------------------------------------
 | ADMIN
 |--------------------------------------------------------------------------
-|
-| Double protection :
-|
-| 1. auth
-| 2. is_admin
-|
 */
 
 Route::middleware([
     'auth',
     EnsureUserIsAdmin::class,
 ])->group(function () {
-    Route::get(
-        '/dashboard',
-        [
-            DashboardController::class,
-            'index',
-        ]
-    )->name(
-        'dashboard'
-    );
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
     Route::patch(
         '/dashboard/reservations/{reservation}/status',
-        [
-            DashboardController::class,
-            'updateStatus',
-        ]
-    )->name(
-        'dashboard.reservations.status'
-    );
+        [DashboardController::class, 'updateStatus']
+    )->name('dashboard.reservations.status');
 });
-
-/*
-|--------------------------------------------------------------------------
-| SETTINGS
-|--------------------------------------------------------------------------
-*/
 
 require __DIR__.'/settings.php';
