@@ -33,6 +33,7 @@ const props = defineProps({
 const page = usePage();
 
 const translations = computed(() => page.props.translations);
+const guideLinks = computed(() => page.props.guideLinks);
 const localizedRoutes = computed(() => page.props.localizedRoutes);
 const languageLinks = computed(() => {
     const alternates = page.props.seo?.alternates ?? [];
@@ -151,9 +152,30 @@ onMounted(() => {
                 </span>
             </div>
 
-            <!-- BREADCRUMB -->
+            <!-- LIENS / LANGUE / BREADCRUMB -->
 
             <div class="flex min-w-0 items-center justify-end gap-3">
+                <nav
+                    class="hidden shrink-0 items-center gap-3 lg:flex"
+                    :aria-label="translations.navigation.main_label"
+                >
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <span class="text-zinc-800" aria-hidden="true">•</span>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                    >
+                        {{ guideLinks.eyebrow }}
+                    </Link>
+                </nav>
+
                 <nav
                     v-if="languageLinks.fr || languageLinks.nl"
                     class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
