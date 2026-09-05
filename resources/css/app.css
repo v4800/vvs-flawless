@@ -510,6 +510,15 @@
         background-color: rgb(253 230 138 / 0.025);
     }
 
+    .guide-comparison-card {
+        background:
+            linear-gradient(145deg, rgb(255 255 255 / 0.035), transparent 52%),
+            rgb(9 9 11 / 0.78);
+        box-shadow:
+            0 20px 55px rgb(0 0 0 / 0.22),
+            inset 0 1px 0 rgb(255 255 255 / 0.025);
+    }
+
     .guide-info-card,
     .guide-choice-card {
         background:

@@ -83,12 +83,52 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                             </p>
                         </header>
 
-                        <div
-                            class="guide-table mt-10 overflow-x-auto rounded-3xl border border-white/10"
-                        >
-                            <table
-                                class="w-full min-w-[760px] border-collapse text-left"
+                        <div class="mt-10 grid gap-4 md:hidden">
+                            <article
+                                v-for="row in guide.rows"
+                                :key="`mobile-${row.label}`"
+                                class="guide-comparison-card overflow-hidden rounded-2xl border border-white/10"
                             >
+                                <h3
+                                    class="border-b border-white/10 px-5 py-4 text-base font-semibold text-white"
+                                >
+                                    {{ row.label }}
+                                </h3>
+
+                                <dl class="divide-y divide-white/10">
+                                    <div class="px-5 py-5">
+                                        <dt
+                                            class="text-[10px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
+                                        >
+                                            {{ guide.columns.diamond }}
+                                        </dt>
+                                        <dd
+                                            class="mt-2 text-[15px] leading-7 text-zinc-300"
+                                        >
+                                            {{ row.diamond }}
+                                        </dd>
+                                    </div>
+
+                                    <div class="px-5 py-5">
+                                        <dt
+                                            class="text-[10px] font-bold tracking-[0.16em] text-amber-300 uppercase"
+                                        >
+                                            {{ guide.columns.moissanite }}
+                                        </dt>
+                                        <dd
+                                            class="mt-2 text-[15px] leading-7 text-zinc-100"
+                                        >
+                                            {{ row.moissanite }}
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </article>
+                        </div>
+
+                        <div
+                            class="guide-table mt-10 hidden overflow-hidden rounded-3xl border border-white/10 md:block"
+                        >
+                            <table class="w-full border-collapse text-left">
                                 <thead>
                                     <tr>
                                         <th
