@@ -14,8 +14,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'De bustdown-cultuur komt naar België 🇧🇪',
-        'description' => 'Horloges die het licht vangen, op reservatie verkrijgbaar in België.',
+        'tagline' => 'De bustdown-cultuur komt naar België',
+        'description' => 'Op zoek naar de uitstraling van een diamanten horloge? Ontdek onze iced-out modellen bezet met VVS-moissanite, op reservatie verkrijgbaar in België.',
         'concept' => 'Ontdek VVS FLAWLESS',
 
         'view_3d' => 'Bekijk het horloge in 3D',
@@ -84,8 +84,8 @@ return [
     ],
 
     'seo' => [
-        'collection_title' => 'VVS FLAWLESS — Iced-out horloges in België',
-        'collection_description' => 'Ontdek de VVS FLAWLESS-collectie: iced-out horloges bezet met VVS-moissanite, met Japans of Zwitsers uurwerk, op reservatie verkrijgbaar in België.',
+        'collection_title' => 'Horloges met diamantlook in moissanite | VVS FLAWLESS',
+        'collection_description' => 'Op zoek naar een diamanten of iced-out horloge in België? Ontdek onze modellen met VVS-moissanite en een Japans of Zwitsers uurwerk.',
         'product_description_suffix' => 'Horloge bezet met VVS-moissanite, met Japans of Zwitsers uurwerk, op reservatie verkrijgbaar met persoonlijke overhandiging of levering.',
         'product_category' => 'Iced-out horloge bezet met moissanite',
         'offer_name' => ':movement uurwerk',
@@ -236,7 +236,7 @@ return [
 
     'concept' => [
         'eyebrow' => 'VVS FLAWLESS België',
-        'title' => 'De bustdown-cultuur komt naar België 🇧🇪',
+        'title' => 'De bustdown-cultuur komt naar België',
         'description' => 'Een selectie iced-out horloges bezet met VVS-moissanite, met Japans of Zwitsers uurwerk.',
         'cta' => 'Bekijk de collectie',
     ],
@@ -253,7 +253,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'De bustdown-cultuur komt naar België 🇧🇪',
+        'tagline' => 'De bustdown-cultuur komt naar België',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Privacy',
         'terms' => 'Reservatievoorwaarden',
@@ -295,6 +295,7 @@ return [
         'description' => 'De antwoorden die je nodig hebt voordat je een aanvraag verstuurt.',
         'items' => [
             ['question' => 'Welke kwaliteit moissanite gebruiken jullie?', 'answer' => 'We bieden VVS-moissanite aan, in kleur D wanneer dit op de productfiche staat. Het gaat om moissanite, niet om diamant.'],
+            ['question' => 'Zijn jullie horloges met diamant bezet?', 'answer' => 'Nee. De modellen op de website zijn bezet met VVS-moissanite. Die steen biedt de uitstraling die veel mensen zoeken in een diamanten of iced-out horloge, maar is geen diamant.'],
             ['question' => 'Reageert moissanite op een diamanttester?', 'answer' => 'Moissanite kan positief reageren op bepaalde thermische diamanttesters. Een tester die diamant en moissanite van elkaar onderscheidt, kan beide stenen afzonderlijk herkennen.'],
             ['question' => 'Wat is het verschil tussen een Japans en Zwitsers uurwerk?', 'answer' => 'De Japanse uitvoering is de meest toegankelijke versie. De Zwitserse uitvoering is de premiumoptie wanneer die voor het model beschikbaar is. Beide prijzen staan vóór de reservatie op de pagina.'],
             ['question' => 'Hoe werkt een reservatie?', 'answer' => 'Kies het horloge en uurwerk en verstuur het formulier. Je betaalt niets via de website. We nemen contact op om de details en, als je bestelt, het voorschot van 25% te bevestigen.'],

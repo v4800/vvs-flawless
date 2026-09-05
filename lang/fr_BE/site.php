@@ -14,8 +14,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'La culture bustdown arrive en Belgique 🇧🇪',
-        'description' => 'Des montres faites pour attirer la lumière, disponibles sur réservation en Belgique.',
+        'tagline' => 'La culture bustdown arrive en Belgique',
+        'description' => 'Vous recherchez l’éclat d’une montre diamant ? Découvrez nos modèles iced-out sertis de moissanite VVS, disponibles sur réservation en Belgique.',
         'concept' => 'Découvrir VVS FLAWLESS',
 
         'view_3d' => 'Voir la montre en 3D',
@@ -85,8 +85,8 @@ return [
     ],
 
     'seo' => [
-        'collection_title' => 'VVS FLAWLESS — Montres iced-out en Belgique',
-        'collection_description' => 'Découvrez la collection VVS FLAWLESS : montres iced-out serties de moissanite VVS, avec mouvement japonais ou suisse, disponibles sur réservation en Belgique.',
+        'collection_title' => 'Montres effet diamant en moissanite | VVS FLAWLESS',
+        'collection_description' => 'Vous recherchez une montre diamant ou iced-out en Belgique ? Découvrez nos modèles sertis de moissanite VVS, avec mouvement japonais ou suisse.',
         'product_description_suffix' => 'Montre sertie de moissanite VVS, avec mouvement japonais ou suisse, disponible sur réservation avec remise en main propre ou livraison.',
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
@@ -237,7 +237,7 @@ return [
 
     'concept' => [
         'eyebrow' => 'VVS FLAWLESS Belgique',
-        'title' => 'La culture bustdown arrive en Belgique 🇧🇪',
+        'title' => 'La culture bustdown arrive en Belgique',
         'description' => 'Une sélection de montres iced-out serties de moissanite VVS, proposées avec mouvement japonais ou suisse.',
         'cta' => 'Voir la collection',
     ],
@@ -254,7 +254,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'La culture bustdown arrive en Belgique 🇧🇪',
+        'tagline' => 'La culture bustdown arrive en Belgique',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Confidentialité',
         'terms' => 'Conditions de réservation',
@@ -296,6 +296,7 @@ return [
         'description' => 'Les réponses utiles avant d’envoyer votre demande.',
         'items' => [
             ['question' => 'Quelle qualité de moissanite utilisez-vous ?', 'answer' => 'Nous proposons de la moissanite VVS, couleur D lorsque cette caractéristique figure sur la fiche. Il s’agit bien de moissanite, pas de diamant.'],
+            ['question' => 'Vos montres sont-elles serties de diamants ?', 'answer' => 'Non. Les modèles présentés sur le site sont sertis de moissanite VVS. Cette pierre offre l’éclat recherché sur une montre diamant ou iced-out, mais elle reste différente du diamant.'],
             ['question' => 'La moissanite passe-t-elle au testeur diamant ?', 'answer' => 'La moissanite peut réagir positivement sur certains testeurs thermiques utilisés pour le diamant. Un testeur capable de différencier diamant et moissanite pourra cependant identifier les deux pierres séparément.'],
             ['question' => 'Quelle différence entre mouvement japonais et suisse ?', 'answer' => 'Le mouvement japonais est la configuration la plus accessible. La version suisse est l’option premium lorsqu’elle est proposée sur le modèle. Les deux prix sont affichés avant la réservation.'],
             ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons pour confirmer les détails et, si vous validez la commande, l’acompte de 25 %.'],
