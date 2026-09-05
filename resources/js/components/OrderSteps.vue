@@ -1,11 +1,13 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { animate, stagger } from 'animejs';
 import { computed, onMounted, ref } from 'vue';
 
 const page = usePage();
 
 const translations = computed(() => page.props.translations);
+const guideLinks = computed(() => page.props.guideLinks);
+const localizedRoutes = computed(() => page.props.localizedRoutes);
 
 const section = ref(null);
 
@@ -68,6 +70,33 @@ onMounted(() => {
         ></div>
 
         <div class="mx-auto max-w-[1500px]">
+            <div
+                class="mx-auto mb-16 max-w-3xl rounded-3xl border border-amber-300/20 bg-amber-300/[0.025] p-6 text-center sm:p-8"
+            >
+                <p
+                    class="text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase"
+                >
+                    {{ guideLinks.eyebrow }}
+                </p>
+
+                <h2 class="vvs-display-title mt-3 text-3xl sm:text-4xl">
+                    {{ guideLinks.title }}
+                </h2>
+
+                <p
+                    class="mx-auto mt-4 max-w-xl text-sm leading-7 text-zinc-500"
+                >
+                    {{ guideLinks.description }}
+                </p>
+
+                <Link
+                    :href="localizedRoutes.diamondGuide"
+                    class="mt-6 inline-flex rounded-full bg-amber-300 px-6 py-3 text-xs font-black tracking-[0.12em] text-black uppercase transition hover:bg-amber-200"
+                >
+                    {{ guideLinks.cta }}
+                </Link>
+            </div>
+
             <header class="mb-16 text-center">
                 <div class="mb-4 flex items-center justify-center gap-3">
                     <span
