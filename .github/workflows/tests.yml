@@ -45,5 +45,8 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      - name: Run CI Checks
-        run: composer ci:check
+      - name: Capture formatter output
+        run: |
+          npm run check:fix
+          git diff --no-ext-diff --unified=3 -- resources/js/components/PurchaseGuide.vue resources/js/pages/Guides/DiamondVsMoissanite.vue
+          exit 1
