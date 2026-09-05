@@ -4,20 +4,6 @@ import { onBeforeUnmount, onMounted, ref } from 'vue';
 const cursor = ref(null);
 const dot = ref(null);
 
-let mouseX = 0;
-let mouseY = 0;
-
-let cursorX = 0;
-let cursorY = 0;
-
-let animationFrame = null;
-
-let trailEffect = null;
-let rippleEffect = null;
-let effectsLoading = false;
-let isMounted = false;
-let hasPointerPosition = false;
-
 const interactiveSelector = [
     'a',
     'button',
@@ -27,80 +13,15 @@ const interactiveSelector = [
     '[role="button"]',
 ].join(',');
 
-const animateCursor = () => {
-    cursorX += (mouseX - cursorX) * 0.13;
-
-    cursorY += (mouseY - cursorY) * 0.13;
-
-    if (cursor.value) {
-        cursor.value.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0) translate(-50%, -50%)`;
-    }
-
-    if (dot.value) {
-        dot.value.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-    }
-
-    animationFrame = requestAnimationFrame(animateCursor);
-};
-
-const startCursorAnimation = () => {
-    if (animationFrame !== null) {
-        return;
-    }
-
-    animationFrame = requestAnimationFrame(animateCursor);
-};
-
-const loadPointerEffects = async () => {
-    if (effectsLoading || trailEffect || rippleEffect) {
-        return;
-    }
-
-    effectsLoading = true;
-
-    try {
-        const { Trail, Ripple } = await import('mouse-animations');
-
-        if (!isMounted) {
-            return;
-        }
-
-        trailEffect = new Trail({
-            color: '#fcd34d',
-            size: 6,
-            length: 18,
-            decay: 0.055,
-            blur: 1.2,
-        });
-
-        rippleEffect = new Ripple({
-            color: 'rgba(252, 211, 77, 0.20)',
-            duration: 480,
-            maxSize: 70,
-        });
-    } catch (error) {
-        console.error('Impossible de charger les effets du curseur :', error);
-    } finally {
-        effectsLoading = false;
-    }
-};
-
 const handlePointerMove = (event) => {
-    mouseX = event.clientX;
-    mouseY = event.clientY;
-
-    if (!hasPointerPosition) {
-        cursorX = mouseX;
-        cursorY = mouseY;
-        hasPointerPosition = true;
-    }
-
-    startCursorAnimation();
-    void loadPointerEffects();
-
     if (!cursor.value || !dot.value) {
         return;
     }
+
+    const transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
+
+    cursor.value.style.transform = transform;
+    dot.value.style.transform = transform;
 
     cursor.value.style.opacity = '1';
     dot.value.style.opacity = '1';
@@ -124,11 +45,6 @@ const handlePointerLeave = () => {
     if (dot.value) {
         dot.value.style.opacity = '0';
     }
-
-    if (animationFrame !== null) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-    }
 };
 
 const handlePointerDown = () => {
@@ -150,8 +66,6 @@ onMounted(() => {
         return;
     }
 
-    isMounted = true;
-
     /*
     |--------------------------------------------------------------------------
     | CURSEUR VVS
@@ -168,8 +82,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-    isMounted = false;
-
     window.removeEventListener('pointermove', handlePointerMove);
 
     document.removeEventListener('mouseleave', handlePointerLeave);
@@ -177,14 +89,6 @@ onBeforeUnmount(() => {
     window.removeEventListener('pointerdown', handlePointerDown);
 
     window.removeEventListener('pointerup', handlePointerUp);
-
-    if (animationFrame !== null) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-    }
-
-    trailEffect?.destroy();
-    rippleEffect?.destroy();
 });
 </script>
 
@@ -194,12 +98,12 @@ onBeforeUnmount(() => {
     <div
         ref="cursor"
         aria-hidden="true"
-        class="vvs-cursor pointer-events-none fixed top-0 left-0 z-[9999] hidden h-10 w-10 rounded-full border border-amber-300/50 opacity-0 shadow-[0_0_25px_rgba(251,191,36,0.18)] backdrop-blur-[1px] transition-[width,height,border-color,background-color,opacity] duration-200 md:block"
+        class="vvs-cursor pointer-events-none fixed top-0 left-0 z-[9999] hidden h-8 w-8 rounded-full border border-amber-200/55 opacity-0 shadow-[0_0_18px_rgba(251,191,36,0.16)] transition-[width,height,border-color,background-color,opacity] duration-150 md:block"
     >
         <!-- DIAMANT -->
 
         <span
-            class="vvs-spark absolute -top-1.5 -right-1.5 text-[9px] text-amber-200"
+            class="vvs-spark absolute -top-1 -right-1 text-[8px] text-amber-200"
         >
             ✦
         </span>
@@ -217,22 +121,23 @@ onBeforeUnmount(() => {
 <style scoped>
 .vvs-cursor {
     will-change: transform;
+    contain: layout paint style;
 }
 
 .vvs-cursor-active {
-    width: 58px;
-    height: 58px;
+    width: 44px;
+    height: 44px;
 
     border-color: rgba(252, 211, 77, 0.85);
 
     background: rgba(252, 211, 77, 0.055);
 
-    box-shadow: 0 0 35px rgba(251, 191, 36, 0.2);
+    box-shadow: 0 0 24px rgba(251, 191, 36, 0.18);
 }
 
 .vvs-cursor-click {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
 }
 
 .vvs-spark {

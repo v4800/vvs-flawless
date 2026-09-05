@@ -12,37 +12,37 @@ class UpdateWatchDescriptionsSeeder extends Seeder
         $descriptions = [
 
             // 42
-            42 => 'Chronographe sportif au cadran camouflage et à la présence affirmée. Son sertissage en moissanite VVS couleur D apporte un éclat intense à une silhouette moderne et audacieuse.',
+            42 => 'Un chronographe sportif au cadran camouflage, pensé pour un look affirmé. La moissanite VVS couleur D ajoute un éclat franc sans masquer les détails du cadran.',
 
             // 43
-            43 => 'Une finition bicolore associée à un cadran turquoise lumineux. La moissanite VVS couleur D vient renforcer son contraste et lui donner un style iced-out élégant et remarquable.',
+            43 => 'Le cadran turquoise apporte la couleur, tandis que la finition bicolore garde l’ensemble équilibré. Le sertissage en moissanite VVS couleur D accentue le contraste.',
 
             // 44
-            44 => "Un modèle bicolore au cadran travaillé et à l'esthétique inspirée du voyage. Son sertissage en moissanite VVS couleur D lui apporte une allure technique, lumineuse et sophistiquée.",
+            44 => 'Un modèle bicolore à double fuseau, avec un cadran riche en détails. La moissanite VVS couleur D lui donne une présence lumineuse et technique.',
 
             // 45
-            45 => "Un cadran bleu roi profond entouré d'un sertissage éclatant. La moissanite VVS couleur D crée un contraste net entre élégance classique et esthétique iced-out contemporaine.",
+            45 => 'Le bleu roi contraste nettement avec le sertissage en moissanite VVS couleur D. Une option plus classique, avec une finition iced-out bien visible.',
 
             // 46
-            46 => 'Une silhouette géométrique bicolore avec bracelet intégré et lignes marquées. La moissanite VVS couleur D accentue son architecture et son caractère sport-luxe.',
+            46 => 'Sa carrure géométrique et son bracelet intégré lui donnent une ligne sportive. Le sertissage en moissanite VVS couleur D souligne cette silhouette.',
 
             // 47
-            47 => 'Une carrure géométrique associée à un cadran texturé de style tapisserie. Le sertissage en moissanite VVS couleur D donne à cette pièce une présence sport-luxe particulièrement forte.',
+            47 => 'Le cadran texturé apporte du relief à cette silhouette géométrique. La moissanite VVS couleur D renforce son caractère sport et habillé.',
 
             // 48
-            48 => 'Une silhouette présidentielle bicolore sublimée par un cadran solaire lumineux. La moissanite VVS couleur D apporte une touche iced-out tout en conservant une allure raffinée.',
+            48 => 'Une finition bicolore associée à un cadran solaire lumineux. La moissanite VVS couleur D ajoute l’éclat bustdown tout en gardant une allure soignée.',
 
             // 49
-            49 => 'Une finition or jaune assumée associée à une silhouette présidentielle. Son sertissage en moissanite VVS couleur D crée un rendu riche, lumineux et immédiatement visible au poignet.',
+            49 => 'Une finition couleur or jaune pour un rendu assumé au poignet. Le sertissage en moissanite VVS couleur D apporte une brillance nette sur l’ensemble.',
 
             // 50
-            50 => 'Une finition or jaune associée à une lunette travaillée au relief cannelé. La moissanite VVS couleur D apporte une forte brillance tout en conservant une esthétique classique.',
+            50 => 'La lunette cannelée donne du relief à cette finition couleur or jaune. La moissanite VVS couleur D complète le modèle avec un éclat plus marqué.',
 
             // 51
-            51 => "L'association de l'or rose et du cadran vert olive donne à cette pièce une identité distinctive. La moissanite VVS couleur D apporte un contraste lumineux et raffiné.",
+            51 => 'Le cadran vert olive contraste avec la finition couleur or rose. La moissanite VVS couleur D apporte de la lumière sans effacer cette association de couleurs.',
 
             // 52
-            52 => "Un cadran bleu profond accompagné de chiffres romains pour une allure plus habillée. Le sertissage en moissanite VVS couleur D apporte l'éclat iced-out sans perdre son caractère classique.",
+            52 => 'Le cadran bleu et les chiffres romains donnent au modèle une allure plus habillée. Le sertissage en moissanite VVS couleur D y ajoute une finition iced-out.',
         ];
 
         foreach ($descriptions as $watchId => $description) {

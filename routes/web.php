@@ -41,6 +41,11 @@ Route::get('/confidentialite', [PublicPageController::class, 'privacy'])
     ->name('privacy');
 
 Route::get(
+    '/guide/montre-diamant-ou-moissanite',
+    [PublicPageController::class, 'diamondVsMoissanite']
+)->name('guides.diamond-vs-moissanite');
+
+Route::get(
     '/sitemap.xml',
     [
         SeoController::class,
@@ -159,6 +164,11 @@ Route::prefix('nl')
             '/over-ons',
             [PublicPageController::class, 'about']
         )->name('about');
+
+        Route::get(
+            '/gids/diamanten-horloge-of-moissanite',
+            [PublicPageController::class, 'diamondVsMoissanite']
+        )->name('guides.diamond-vs-moissanite');
 
         Route::get(
             '/',

@@ -26,6 +26,7 @@ const props = defineProps({
 const page = usePage();
 
 const translations = page.props.translations;
+const guideLinks = page.props.guideLinks;
 const localizedRoutes = page.props.localizedRoutes;
 const languageLinks = computed(() => {
     const alternates = props.seo.alternates ?? [];
@@ -439,7 +440,7 @@ onBeforeUnmount(() => {
                     class="group flex flex-col leading-none"
                 >
                     <span
-                        class="text-xl font-black tracking-[0.08em] text-white md:text-2xl"
+                        class="text-xl font-semibold tracking-[0.08em] text-white md:text-2xl"
                     >
                         VVS FLAWLESS
                     </span>
@@ -455,25 +456,22 @@ onBeforeUnmount(() => {
                     class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
                     :aria-label="translations.navigation.main_label"
                 >
-                    <a
-                        href="#collection"
-                        class="transition hover:text-amber-300"
-                    >
+                    <a href="#collection" class="vvs-nav-link">
                         {{ translations.navigation.watches }}
                     </a>
 
-                    <a href="#concept" class="transition hover:text-amber-300">
+                    <a href="#concept" class="vvs-nav-link">
                         {{ translations.navigation.about }}
                     </a>
 
-                    <a href="#services" class="transition hover:text-amber-300">
+                    <a href="#services" class="vvs-nav-link">
                         {{ translations.navigation.delivery }}
                     </a>
                 </nav>
 
                 <div class="flex items-center gap-3">
                     <nav
-                        class="flex items-center rounded-full border border-white/10 p-1 text-[10px] font-black tracking-wider"
+                        class="flex items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
                         :aria-label="translations.language.label"
                     >
                         <Link
@@ -619,10 +617,10 @@ onBeforeUnmount(() => {
                         </div>
 
                         <h1
-                            class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.8] font-black tracking-[-0.06em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
+                            class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.82] font-semibold tracking-[-0.055em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
                         >
                             <span
-                                class="bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent"
+                                class="vvs-gradient-text vvs-gradient-text--hero"
                             >
                                 VVS
                             </span>
@@ -630,7 +628,7 @@ onBeforeUnmount(() => {
                             <br />
 
                             <span
-                                class="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent"
+                                class="vvs-gradient-text vvs-gradient-text--hero"
                             >
                                 FLAWLESS
                             </span>
@@ -654,14 +652,14 @@ onBeforeUnmount(() => {
                             ></div>
 
                             <p
-                                class="text-2xl leading-tight font-medium text-amber-200 italic sm:text-3xl"
+                                class="vvs-display-title text-3xl leading-tight text-amber-200 sm:text-4xl"
                             >
                                 {{ translations.hero.tagline }}
                             </p>
                         </div>
 
                         <p
-                            class="hero-animate mt-7 max-w-xl text-sm leading-7 font-medium tracking-[0.08em] text-zinc-300 uppercase sm:text-base"
+                            class="hero-animate vvs-body-copy mt-7 max-w-xl text-base text-zinc-300 sm:text-lg"
                         >
                             {{ translations.hero.description }}
                         </p>
@@ -671,9 +669,7 @@ onBeforeUnmount(() => {
                         <div
                             class="hero-animate mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4"
                         >
-                            <div
-                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-xl text-amber-300">◇</div>
 
                                 <p
@@ -685,9 +681,7 @@ onBeforeUnmount(() => {
                                 <p class="text-[10px] text-zinc-500">VVS</p>
                             </div>
 
-                            <div
-                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">♢</div>
 
                                 <p
@@ -701,9 +695,7 @@ onBeforeUnmount(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">✦</div>
 
                                 <p
@@ -717,9 +709,7 @@ onBeforeUnmount(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="rounded-xl border border-white/10 bg-white/[0.03] p-3 backdrop-blur"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">↗</div>
 
                                 <p
@@ -735,9 +725,17 @@ onBeforeUnmount(() => {
                         </div>
 
                         <div class="hero-animate mt-9 flex flex-wrap gap-4">
+                            <button
+                                type="button"
+                                class="vvs-button-primary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
+                                @click="scrollToCollection"
+                            >
+                                {{ translations.concept.cta }}
+                            </button>
+
                             <a
                                 href="#concept"
-                                class="rounded-lg border border-amber-300/50 bg-amber-300/[0.04] px-7 py-4 text-sm font-bold tracking-[0.1em] text-amber-200 uppercase shadow-[0_0_25px_rgba(251,191,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-300 hover:text-black"
+                                class="vvs-button-secondary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
                             >
                                 {{ translations.hero.concept }}
                             </a>
@@ -767,7 +765,7 @@ onBeforeUnmount(() => {
                             class="hero-watch relative z-10 h-[470px] w-full max-w-[720px] sm:h-[550px] lg:h-[640px]"
                         >
                             <img
-                                v-if="!modelRequested"
+                                v-if="!modelLoaded"
                                 src="/images/vvs-watch-hero.webp"
                                 alt="Montre iced-out VVS FLAWLESS"
                                 width="1536"
@@ -796,7 +794,7 @@ onBeforeUnmount(() => {
                             >
                                 <button
                                     type="button"
-                                    class="rounded-xl border border-amber-300/40 bg-black/75 px-6 py-4 text-center backdrop-blur-md transition hover:border-amber-300 hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                                    class="vvs-button-secondary rounded-xl px-6 py-4 text-center backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
                                     @click="requestModelViewer"
                                 >
                                     <span
@@ -949,12 +947,10 @@ onBeforeUnmount(() => {
                             ></span>
                         </div>
 
-                        <h2
-                            class="text-4xl font-black tracking-[-0.03em] uppercase sm:text-5xl"
-                        >
+                        <h2 class="vvs-display-title text-5xl sm:text-6xl">
                             {{ translations.collection.title_before }}
 
-                            <span class="text-amber-300">
+                            <span class="vvs-gradient-text">
                                 {{ translations.collection.title_highlight }}
                             </span>
                         </h2>
@@ -970,7 +966,7 @@ onBeforeUnmount(() => {
                         <article
                             v-for="watch in props.watches"
                             :key="watch.id"
-                            class="watch-card reveal-on-scroll group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black transition duration-500 hover:-translate-y-2 hover:border-amber-300/40 hover:shadow-[0_20px_70px_rgba(251,191,36,0.08)]"
+                            class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative overflow-hidden rounded-2xl border"
                         >
                             <div
                                 class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
@@ -1033,7 +1029,7 @@ onBeforeUnmount(() => {
 
                             <div class="relative p-6">
                                 <h3
-                                    class="min-h-[58px] text-center text-lg leading-snug font-black tracking-[0.02em] text-white uppercase"
+                                    class="vvs-display-title min-h-[58px] text-center text-2xl leading-[1.05] text-white"
                                 >
                                     {{ watch.name }}
                                 </h3>
@@ -1051,7 +1047,7 @@ onBeforeUnmount(() => {
 
                                     <Link
                                         :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
-                                        class="group/version rounded-xl border border-white/10 bg-white/[0.025] p-4 transition duration-300 hover:border-amber-300/50 hover:bg-amber-300/[0.04]"
+                                        class="vvs-choice-card group/version rounded-xl border p-4"
                                     >
                                         <p
                                             class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
@@ -1062,7 +1058,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            v-if="watch.japanese_price"
+                                            v-if="watch.japanese_promo_price"
                                             class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{
@@ -1073,7 +1069,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            class="mt-1 text-xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -1094,7 +1090,7 @@ onBeforeUnmount(() => {
 
                                     <Link
                                         :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
-                                        class="group/version relative overflow-hidden rounded-xl border border-amber-300/20 bg-amber-300/[0.035] p-4 transition duration-300 hover:border-amber-300/60 hover:bg-amber-300/[0.07]"
+                                        class="vvs-choice-card vvs-choice-card--featured group/version relative overflow-hidden rounded-xl border p-4"
                                     >
                                         <span
                                             class="absolute top-2 right-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black tracking-wider text-black uppercase"
@@ -1110,14 +1106,14 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            v-if="watch.swiss_price"
+                                            v-if="watch.swiss_promo_price"
                                             class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{ formatPrice(watch.swiss_price) }}
                                         </p>
 
                                         <p
-                                            class="mt-1 text-xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -1155,7 +1151,7 @@ onBeforeUnmount(() => {
 
                                 <Link
                                     :href="`${localizedRoutes.watches}/${watch.id}`"
-                                    class="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-amber-300/50 bg-black px-4 py-4 text-xs font-black tracking-[0.12em] text-white uppercase shadow-[0_0_20px_rgba(251,191,36,0.05)] transition duration-300 hover:border-amber-300 hover:bg-amber-300 hover:text-black hover:shadow-[0_0_30px_rgba(251,191,36,0.16)]"
+                                    class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
                                 >
                                     {{ translations.collection.view_watch }}
 
@@ -1182,7 +1178,7 @@ onBeforeUnmount(() => {
                 class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10"
             >
                 <div
-                    class="reveal-on-scroll mx-auto max-w-[1500px] overflow-hidden rounded-2xl border border-amber-300/30 bg-gradient-to-r from-amber-300/[0.06] via-zinc-950 to-black shadow-[0_0_60px_rgba(251,191,36,0.05)]"
+                    class="reveal-on-scroll vvs-luxury-card mx-auto max-w-[1500px] overflow-hidden rounded-2xl border"
                 >
                     <div
                         class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
@@ -1205,7 +1201,7 @@ onBeforeUnmount(() => {
                             </p>
 
                             <h2
-                                class="mt-3 text-2xl font-black uppercase sm:text-3xl"
+                                class="vvs-display-title mt-3 text-3xl sm:text-4xl"
                             >
                                 {{ translations.concept.title }}
                             </h2>
@@ -1220,7 +1216,7 @@ onBeforeUnmount(() => {
                         <button
                             type="button"
                             @click="scrollToCollection"
-                            class="rounded-lg border border-amber-300/50 px-6 py-4 text-xs font-black tracking-[0.15em] text-amber-200 uppercase transition hover:bg-amber-300 hover:text-black"
+                            class="vvs-button-primary rounded-xl px-6 py-4 text-xs font-bold tracking-[0.15em] uppercase"
                         >
                             {{ translations.concept.cta }}
                         </button>
@@ -1237,16 +1233,14 @@ onBeforeUnmount(() => {
                 class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10"
             >
                 <div
-                    class="reveal-on-scroll mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border border-white/10 bg-zinc-950/70 sm:grid-cols-2 lg:grid-cols-4"
+                    class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
                 >
                     <div
                         class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
                     >
                         <div class="text-2xl text-amber-300">◇</div>
 
-                        <h3
-                            class="mt-4 text-sm font-black tracking-wider uppercase"
-                        >
+                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
                             {{ translations.services.quality_title }}
                         </h3>
 
@@ -1260,9 +1254,7 @@ onBeforeUnmount(() => {
                     >
                         <div class="text-2xl text-amber-300">⚙</div>
 
-                        <h3
-                            class="mt-4 text-sm font-black tracking-wider uppercase"
-                        >
+                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
                             {{ translations.services.movements_title }}
                         </h3>
 
@@ -1276,9 +1268,7 @@ onBeforeUnmount(() => {
                     >
                         <div class="text-2xl text-amber-300">↗</div>
 
-                        <h3
-                            class="mt-4 text-sm font-black tracking-wider uppercase"
-                        >
+                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
                             {{ translations.services.delivery_title }}
                         </h3>
 
@@ -1290,9 +1280,7 @@ onBeforeUnmount(() => {
                     <div class="p-7">
                         <div class="text-2xl text-amber-300">◷</div>
 
-                        <h3
-                            class="mt-4 text-sm font-black tracking-wider uppercase"
-                        >
+                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
                             {{ translations.services.delay_title }}
                         </h3>
 
@@ -1327,7 +1315,40 @@ onBeforeUnmount(() => {
                     </p>
                 </div>
 
-                <p class="text-xs text-zinc-700">
+                <nav
+                    class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
+                    :aria-label="translations.navigation.main_label"
+                >
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ guideLinks.eyebrow }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.privacy"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.footer.privacy }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.reservationTerms"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.footer.terms }}
+                    </Link>
+                </nav>
+
+                <p class="text-xs text-zinc-500">
                     {{ translations.footer.copyright }}
                 </p>
             </div>

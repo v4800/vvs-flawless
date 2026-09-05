@@ -23,6 +23,11 @@ class PublicPageController extends Controller
             'name' => 'VVS FLAWLESS',
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
+            'description' => (string) trans('site.seo.about_description'),
+            'areaServed' => [
+                '@type' => 'Country',
+                'name' => 'Belgium',
+            ],
             'sameAs' => [
                 'https://www.instagram.com/vvsflawless43/',
                 'https://www.tiktok.com/@vvsflawless43',
@@ -31,6 +36,68 @@ class PublicPageController extends Controller
 
         return inertia('About', [
             'seo' => $seo,
+        ]);
+    }
+
+    public function diamondVsMoissanite(): Response
+    {
+        $page = 'guides.diamond-vs-moissanite';
+        $routeName = $this->localizedRouteName($page);
+        $guide = (array) trans('guides.diamond_vs_moissanite');
+        $collectionRoute = $this->localizedRouteName('watches.index');
+
+        $seo = $this->seo(
+            (string) $guide['seo_title'],
+            (string) $guide['seo_description'],
+            route($routeName),
+            $page
+        );
+
+        $seo['type'] = 'article';
+        $seo['structuredData'] = [
+            '@context' => 'https://schema.org',
+            '@graph' => [
+                [
+                    '@type' => 'Article',
+                    'headline' => (string) $guide['title'],
+                    'description' => (string) $guide['seo_description'],
+                    'mainEntityOfPage' => route($routeName),
+                    'author' => [
+                        '@type' => 'Organization',
+                        'name' => 'VVS FLAWLESS',
+                    ],
+                    'publisher' => [
+                        '@type' => 'Organization',
+                        'name' => 'VVS FLAWLESS',
+                        'logo' => [
+                            '@type' => 'ImageObject',
+                            'url' => url('/images/vvs-flawless-profile.webp'),
+                        ],
+                    ],
+                ],
+                [
+                    '@type' => 'BreadcrumbList',
+                    'itemListElement' => [
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 1,
+                            'name' => 'VVS FLAWLESS',
+                            'item' => route($collectionRoute),
+                        ],
+                        [
+                            '@type' => 'ListItem',
+                            'position' => 2,
+                            'name' => (string) $guide['title'],
+                            'item' => route($routeName),
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        return inertia('Guides/DiamondVsMoissanite', [
+            'seo' => $seo,
+            'guide' => $guide,
         ]);
     }
 

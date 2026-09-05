@@ -44,6 +44,7 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
             'translations' => fn () => trans('site'),
+            'guideLinks' => fn () => trans('guides.links'),
             'localizedRoutes' => [
                 'watches' => route(
                     $routePrefix.'watches.index',
@@ -63,6 +64,10 @@ class HandleInertiaRequests extends Middleware
                 ),
                 'about' => route(
                     $routePrefix.'about',
+                    absolute: false
+                ),
+                'diamondGuide' => route(
+                    $routePrefix.'guides.diamond-vs-moissanite',
                     absolute: false
                 ),
             ],

@@ -207,35 +207,27 @@ const submit = () => {
                         </div>
 
                         <div class="mt-4 grid grid-cols-3 gap-3">
-                            <div
-                                class="rounded-2xl border border-white/10 bg-zinc-950/70 p-4"
-                            >
+                            <div class="vvs-choice-card rounded-2xl border p-4">
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
                                     {{ translations.product.purity }}
                                 </p>
 
-                                <p class="mt-2 font-black text-amber-200">
-                                    VVS
-                                </p>
+                                <p class="vvs-price mt-2 font-black">VVS</p>
                             </div>
 
-                            <div
-                                class="rounded-2xl border border-white/10 bg-zinc-950/70 p-4"
-                            >
+                            <div class="vvs-choice-card rounded-2xl border p-4">
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
                                     {{ translations.product.color }}
                                 </p>
 
-                                <p class="mt-2 font-black text-amber-200">D</p>
+                                <p class="vvs-price mt-2 font-black">D</p>
                             </div>
 
-                            <div
-                                class="rounded-2xl border border-white/10 bg-zinc-950/70 p-4"
-                            >
+                            <div class="vvs-choice-card rounded-2xl border p-4">
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
@@ -257,15 +249,11 @@ const submit = () => {
                         <div class="flex items-center gap-3">
                             <span class="h-px w-8 bg-amber-300"></span>
 
-                            <p
-                                class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                            >
-                                VVS FLAWLESS
-                            </p>
+                            <p class="vvs-eyebrow">VVS FLAWLESS</p>
                         </div>
 
                         <h1
-                            class="mt-6 max-w-2xl text-4xl leading-[1.03] font-black tracking-[-0.035em] uppercase sm:text-5xl"
+                            class="vvs-display-title mt-6 max-w-2xl text-5xl sm:text-6xl"
                         >
                             {{ watch.name }}
                         </h1>
@@ -301,7 +289,7 @@ const submit = () => {
                                         {{ translations.product.configuration }}
                                     </p>
 
-                                    <h2 class="mt-2 text-xl font-black">
+                                    <h2 class="vvs-display-title mt-2 text-3xl">
                                         {{
                                             translations.product.choose_movement
                                         }}
@@ -320,10 +308,10 @@ const submit = () => {
                                     :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
                                     preserve-scroll
                                     :class="[
-                                        'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
+                                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5',
                                         form.movement === 'Japonais'
-                                            ? 'border-amber-300/70 bg-amber-300/[0.06] shadow-[0_0_35px_rgba(251,191,36,0.08)]'
-                                            : 'border-white/10 bg-zinc-950 hover:-translate-y-1 hover:border-white/20',
+                                            ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
+                                            : '',
                                     ]"
                                 >
                                     <div
@@ -360,7 +348,7 @@ const submit = () => {
 
                                     <div class="mt-7">
                                         <p
-                                            v-if="watch.japanese_price"
+                                            v-if="watch.japanese_promo_price"
                                             class="text-xs text-zinc-600 line-through"
                                         >
                                             {{
@@ -371,7 +359,7 @@ const submit = () => {
                                         </p>
 
                                         <p
-                                            class="mt-1 text-3xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-3xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -393,10 +381,10 @@ const submit = () => {
                                     :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
                                     preserve-scroll
                                     :class="[
-                                        'group relative overflow-hidden rounded-2xl border p-5 transition duration-300',
+                                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5',
                                         form.movement === 'Suisse'
-                                            ? 'border-amber-300/70 bg-amber-300/[0.06] shadow-[0_0_35px_rgba(251,191,36,0.08)]'
-                                            : 'border-white/10 bg-zinc-950 hover:-translate-y-1 hover:border-white/20',
+                                            ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
+                                            : '',
                                     ]"
                                 >
                                     <div
@@ -433,14 +421,14 @@ const submit = () => {
 
                                     <div class="mt-7">
                                         <p
-                                            v-if="watch.swiss_price"
+                                            v-if="watch.swiss_promo_price"
                                             class="text-xs text-zinc-600 line-through"
                                         >
                                             {{ formatPrice(watch.swiss_price) }}
                                         </p>
 
                                         <p
-                                            class="mt-1 text-3xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-3xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -463,7 +451,7 @@ const submit = () => {
                         <!-- PRIX -->
 
                         <div
-                            class="mt-5 flex items-center justify-between gap-5 rounded-2xl border border-amber-300/20 bg-gradient-to-r from-amber-300/[0.055] to-transparent p-5"
+                            class="vvs-choice-card vvs-choice-card--featured mt-5 flex items-center justify-between gap-5 rounded-2xl border p-5"
                         >
                             <div>
                                 <p
@@ -486,7 +474,7 @@ const submit = () => {
                                     {{ formatPrice(selectedOldPrice) }}
                                 </p>
 
-                                <p class="text-3xl font-black text-amber-200">
+                                <p class="vvs-price text-3xl font-black">
                                     {{ formatPrice(selectedPrice) }}
                                 </p>
                             </div>
@@ -495,9 +483,7 @@ const submit = () => {
                         <!-- DISPONIBILITÉ -->
 
                         <div class="mt-5 grid gap-3 sm:grid-cols-2">
-                            <div
-                                class="rounded-2xl border border-white/10 bg-zinc-950/70 p-5"
-                            >
+                            <div class="vvs-choice-card rounded-2xl border p-5">
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
@@ -512,9 +498,7 @@ const submit = () => {
                                 </p>
                             </div>
 
-                            <div
-                                class="rounded-2xl border border-white/10 bg-zinc-950/70 p-5"
-                            >
+                            <div class="vvs-choice-card rounded-2xl border p-5">
                                 <p
                                     class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
                                 >
@@ -532,7 +516,7 @@ const submit = () => {
 
                         <a
                             href="#reservation"
-                            class="mt-6 flex w-full items-center justify-between rounded-2xl bg-amber-300 px-6 py-5 font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:-translate-y-1 hover:bg-amber-200"
+                            class="vvs-button-primary mt-6 flex w-full items-center justify-between rounded-2xl px-6 py-5 font-bold tracking-[0.1em] uppercase"
                         >
                             <span>{{
                                 translations.product.reserve_watch
@@ -610,15 +594,11 @@ const submit = () => {
                     <!-- RÉCAP -->
 
                     <div class="lg:sticky lg:top-28 lg:self-start">
-                        <p
-                            class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                        >
+                        <p class="vvs-eyebrow">
                             {{ translations.product.your_selection }}
                         </p>
 
-                        <h2
-                            class="mt-4 text-3xl font-black tracking-[-0.03em] uppercase"
-                        >
+                        <h2 class="vvs-display-title mt-4 text-4xl">
                             {{ translations.product.reserve_piece }}
                         </h2>
 
@@ -627,7 +607,7 @@ const submit = () => {
                         </p>
 
                         <div
-                            class="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-zinc-950"
+                            class="vvs-luxury-card mt-7 overflow-hidden rounded-2xl border"
                         >
                             <div class="grid grid-cols-[105px_1fr]">
                                 <div class="bg-zinc-400">
@@ -642,7 +622,7 @@ const submit = () => {
 
                                 <div class="p-4">
                                     <p
-                                        class="line-clamp-2 text-sm leading-5 font-black uppercase"
+                                        class="vvs-display-title line-clamp-2 text-xl leading-5"
                                     >
                                         {{ watch.name }}
                                     </p>
@@ -654,7 +634,7 @@ const submit = () => {
                                     </p>
 
                                     <p
-                                        class="mt-3 text-xl font-black text-amber-200"
+                                        class="vvs-price mt-3 text-xl font-black"
                                     >
                                         {{ formatPrice(selectedPrice) }}
                                     </p>
@@ -663,7 +643,7 @@ const submit = () => {
                         </div>
 
                         <div
-                            class="mt-4 rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5"
+                            class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-2xl border p-5"
                         >
                             <p class="text-xs font-bold text-zinc-300">
                                 ◆ {{ form.delivery_method }}
@@ -678,7 +658,7 @@ const submit = () => {
                     <!-- FORMULAIRE -->
 
                     <form
-                        class="rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-6 shadow-[0_30px_100px_rgba(0,0,0,0.35)] sm:p-8"
+                        class="vvs-form vvs-luxury-card rounded-3xl border p-6 sm:p-8"
                         @submit.prevent="submit"
                     >
                         <div
@@ -691,7 +671,7 @@ const submit = () => {
                                     {{ translations.product.reservation }}
                                 </p>
 
-                                <h3 class="mt-2 text-2xl font-black">
+                                <h3 class="vvs-display-title mt-2 text-3xl">
                                     {{ translations.product.your_information }}
                                 </h3>
                             </div>
@@ -971,7 +951,7 @@ const submit = () => {
 
                             <ReservationTrust />
                             <div
-                                class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-zinc-950/70 p-5 sm:flex-row sm:items-center sm:justify-between md:col-span-2"
+                                class="vvs-choice-card flex flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between md:col-span-2"
                             >
                                 <div>
                                     <p class="font-black text-white">
@@ -992,7 +972,7 @@ const submit = () => {
                                     href="https://www.tiktok.com/@vvsflawless43"
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    class="shrink-0 rounded-xl border border-amber-300/25 px-5 py-3 text-center text-xs font-black tracking-[0.1em] text-amber-200 uppercase transition hover:border-amber-300 hover:bg-amber-300 hover:text-black"
+                                    class="vvs-button-secondary shrink-0 rounded-xl px-5 py-3 text-center text-xs font-bold tracking-[0.1em] uppercase"
                                 >
                                     @vvsflawless43 →
                                 </a>
@@ -1065,9 +1045,7 @@ const submit = () => {
                                         </p>
                                     </div>
 
-                                    <p
-                                        class="text-3xl font-black text-amber-200"
-                                    >
+                                    <p class="vvs-price text-3xl font-black">
                                         {{ formatPrice(selectedPrice) }}
                                     </p>
                                 </div>
@@ -1079,7 +1057,7 @@ const submit = () => {
                                 <button
                                     type="submit"
                                     :disabled="form.processing"
-                                    class="group flex w-full items-center justify-between rounded-xl bg-amber-300 px-6 py-5 text-sm font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:bg-amber-200 disabled:cursor-not-allowed disabled:opacity-50"
+                                    class="vvs-button-primary group flex w-full items-center justify-between rounded-xl px-6 py-5 text-sm font-bold tracking-[0.1em] uppercase disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     <span>
                                         {{
@@ -1133,16 +1111,30 @@ const submit = () => {
                 >
                     <Link
                         :href="localizedRoutes.privacy"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
                     >
                         {{ translations.footer.privacy }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.reservationTerms"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
                     >
                         {{ translations.footer.terms }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ page.props.guideLinks.eyebrow }}
                     </Link>
 
                     <Link
