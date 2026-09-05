@@ -114,7 +114,7 @@ class PublicPageController extends Controller
         string $page
     ): Response {
         $routeName = $this->localizedRouteName($page);
-        $guide = (array) trans('guides.'.$translationKey);
+        $guide = (array) trans('seo_intents.'.$translationKey);
 
         return inertia('Guides/SeoIntent', [
             'seo' => $this->articleSeo(
