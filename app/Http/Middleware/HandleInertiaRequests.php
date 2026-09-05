@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
             'locale' => app()->getLocale(),
             'translations' => fn () => trans('site'),
             'guideLinks' => fn () => trans('guides.links'),
+            'seoIntentContent' => fn () => trans('seo_intents'),
             'localizedRoutes' => [
                 'watches' => route(
                     $routePrefix.'watches.index',
