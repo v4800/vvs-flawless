@@ -45,13 +45,5 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      - name: Capture formatted files
-        run: |
-          npm run check:fix
-          echo 'PURCHASE_GUIDE_BEGIN'
-          cat resources/js/components/PurchaseGuide.vue
-          echo 'PURCHASE_GUIDE_END'
-          echo 'DIAMOND_GUIDE_BEGIN'
-          cat resources/js/pages/Guides/DiamondVsMoissanite.vue
-          echo 'DIAMOND_GUIDE_END'
-          exit 1
+      - name: Run CI Checks
+        run: composer ci:check
