@@ -40,15 +40,13 @@ const formatPrice = (price) => {
     >
         <div class="mx-auto max-w-[1400px]">
             <div class="mb-10 text-center">
-                <p
-                    class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                >
+                <p class="vvs-eyebrow">
                     {{ translations.related.eyebrow }}
                 </p>
 
                 <h2 class="vvs-display-title mt-4 text-4xl sm:text-5xl">
                     {{ translations.related.title_before }}
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.related.title_highlight }}
                     </span>
                 </h2>
@@ -65,7 +63,7 @@ const formatPrice = (price) => {
                     v-for="watch in watches"
                     :key="watch.id"
                     :href="`${localizedRoutes.watches}/${watch.id}`"
-                    class="group overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 transition duration-300 hover:-translate-y-1 hover:border-amber-300/35"
+                    class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
                 >
                     <div class="h-[280px] overflow-hidden bg-zinc-400">
                         <img
@@ -110,7 +108,7 @@ const formatPrice = (price) => {
 
                                 <p
                                     v-if="startingPrice(watch)"
-                                    class="mt-1 text-xl font-black text-amber-200"
+                                    class="vvs-price mt-1 text-xl font-black"
                                 >
                                     {{ formatPrice(startingPrice(watch)) }}
                                 </p>
@@ -129,7 +127,7 @@ const formatPrice = (price) => {
             <div class="mt-8 text-center">
                 <Link
                     :href="`${localizedRoutes.watches}#collection`"
-                    class="inline-flex rounded-xl border border-white/15 px-6 py-3.5 text-xs font-black tracking-[0.1em] uppercase transition hover:border-amber-300/40 hover:text-amber-300"
+                    class="vvs-button-secondary inline-flex rounded-xl px-6 py-3.5 text-xs font-bold tracking-[0.1em] uppercase"
                 >
                     {{ translations.related.all }}
                 </Link>

@@ -26,7 +26,7 @@ const translations = computed(() => page.props.translations);
 
         <div class="mx-auto max-w-5xl">
             <div
-                class="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 via-black to-zinc-950 p-7 text-center shadow-[0_30px_100px_rgba(0,0,0,0.35)] sm:p-10 lg:p-14"
+                class="vvs-luxury-card overflow-hidden rounded-3xl border p-7 text-center sm:p-10 lg:p-14"
             >
                 <!-- CONTACT -->
 
@@ -35,9 +35,7 @@ const translations = computed(() => page.props.translations);
                         class="h-px w-10 bg-gradient-to-r from-transparent to-amber-300"
                     ></span>
 
-                    <span
-                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
-                    >
+                    <span class="vvs-eyebrow">
                         {{ translations.contact.eyebrow }}
                     </span>
 
@@ -51,7 +49,7 @@ const translations = computed(() => page.props.translations);
                 <h2 class="vvs-display-title text-5xl sm:text-6xl">
                     {{ translations.contact.title_before }}
 
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.contact.title_highlight }}
                     </span>
                 </h2>
@@ -70,7 +68,7 @@ const translations = computed(() => page.props.translations);
                     href="https://www.instagram.com/vvsflawless43/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="group mx-auto mt-9 flex max-w-md items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/70 p-4 text-left transition duration-300 hover:-translate-y-1 hover:border-amber-300/30 hover:bg-white/[0.025]"
+                    class="vvs-choice-card group mx-auto mt-9 flex max-w-md items-center justify-between gap-4 rounded-2xl border p-4 text-left"
                 >
                     <div class="flex min-w-0 items-center gap-4">
                         <!-- PHOTO DE PROFIL -->
@@ -138,7 +136,7 @@ const translations = computed(() => page.props.translations);
                         href="https://www.instagram.com/vvsflawless43/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="group flex items-center justify-center gap-3 rounded-xl bg-amber-300 px-7 py-4 text-xs font-black tracking-[0.1em] text-black uppercase transition duration-300 hover:-translate-y-1 hover:bg-amber-200"
+                        class="vvs-button-primary group flex items-center justify-center gap-3 rounded-xl px-7 py-4 text-xs font-bold tracking-[0.1em] uppercase"
                     >
                         {{ translations.contact.instagram_cta }}
 
@@ -153,14 +151,14 @@ const translations = computed(() => page.props.translations);
                         href="https://www.tiktok.com/@vvsflawless43"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.025] px-7 py-4 text-xs font-black tracking-[0.1em] text-white uppercase transition duration-300 hover:-translate-y-1 hover:border-amber-300/50 hover:text-amber-200"
+                        class="vvs-button-secondary flex items-center justify-center rounded-xl px-7 py-4 text-xs font-bold tracking-[0.1em] uppercase"
                     >
                         {{ translations.contact.tiktok_cta }}
                     </a>
 
                     <a
                         :href="collectionHref"
-                        class="flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.025] px-7 py-4 text-xs font-black tracking-[0.1em] text-white uppercase transition duration-300 hover:-translate-y-1 hover:border-amber-300/50 hover:text-amber-200"
+                        class="vvs-button-secondary flex items-center justify-center rounded-xl px-7 py-4 text-xs font-bold tracking-[0.1em] uppercase"
                     >
                         {{ translations.contact.collection_cta }}
                     </a>

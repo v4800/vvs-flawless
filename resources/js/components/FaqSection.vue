@@ -28,9 +28,7 @@ const toggleFaq = (index) => {
                         class="h-px w-10 bg-gradient-to-r from-transparent to-amber-300"
                     ></span>
 
-                    <span
-                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
-                    >
+                    <span class="vvs-eyebrow">
                         {{ translations.faq.eyebrow }}
                     </span>
 
@@ -42,7 +40,7 @@ const toggleFaq = (index) => {
                 <h2 class="vvs-display-title text-5xl sm:text-6xl">
                     {{ translations.faq.title_before }}
 
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.faq.title_highlight }}
                     </span>
                 </h2>
@@ -59,11 +57,11 @@ const toggleFaq = (index) => {
                     v-for="(faq, index) in faqs"
                     :key="faq.question"
                     :class="[
-                        'overflow-hidden rounded-2xl border transition-all duration-300',
+                        'vvs-choice-card overflow-hidden rounded-2xl border transition-all duration-300',
 
                         openIndex === index
-                            ? 'border-amber-300/40 bg-amber-300/[0.035] shadow-[0_0_35px_rgba(251,191,36,0.05)]'
-                            : 'border-white/10 bg-zinc-950/70 hover:border-white/20',
+                            ? 'border-amber-300/40 shadow-[0_0_35px_rgba(251,191,36,0.06)]'
+                            : '',
                     ]"
                 >
                     <button

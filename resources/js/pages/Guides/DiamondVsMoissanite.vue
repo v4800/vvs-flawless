@@ -43,7 +43,7 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                         </p>
 
                         <h1
-                            class="vvs-display-title mt-7 max-w-5xl text-5xl text-white sm:text-7xl lg:text-[5.6rem]"
+                            class="vvs-gradient-text vvs-gradient-text--hero vvs-display-title mt-7 max-w-5xl text-5xl sm:text-7xl lg:text-[5.6rem]"
                         >
                             {{ guide.title }}
                         </h1>
@@ -329,7 +329,9 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                     <div
                         class="guide-cta mx-auto max-w-4xl rounded-[2rem] border border-amber-200/20 p-8 text-center sm:p-12"
                     >
-                        <h2 class="vvs-display-title text-4xl sm:text-6xl">
+                        <h2
+                            class="vvs-gradient-text vvs-display-title text-4xl sm:text-6xl"
+                        >
                             {{ guide.cta_title }}
                         </h2>
                         <p
@@ -339,7 +341,7 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                         </p>
                         <Link
                             :href="localizedRoutes.watches"
-                            class="mt-8 inline-flex rounded-full bg-amber-300 px-7 py-3.5 text-xs font-bold tracking-[0.12em] text-black uppercase transition hover:-translate-y-0.5 hover:bg-amber-200"
+                            class="vvs-button-primary mt-8 inline-flex rounded-full px-7 py-3.5 text-xs font-bold tracking-[0.12em] uppercase"
                         >
                             {{ guide.cta_label }}
                         </Link>

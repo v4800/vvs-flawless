@@ -12,7 +12,7 @@ const translations = computed(() => page.props.translations);
         class="relative scroll-mt-24 px-5 py-20 sm:px-6 lg:px-10"
     >
         <div
-            class="mx-auto max-w-[1350px] overflow-hidden rounded-3xl border border-amber-300/25 bg-gradient-to-br from-amber-300/[0.055] via-zinc-950 to-black"
+            class="vvs-luxury-card mx-auto max-w-[1350px] overflow-hidden rounded-3xl border"
         >
             <div
                 class="grid gap-10 p-7 sm:p-10 lg:grid-cols-[1.05fr_0.95fr] lg:p-14"
@@ -20,9 +20,7 @@ const translations = computed(() => page.props.translations);
                 <!-- TEXTE -->
 
                 <div>
-                    <p
-                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
-                    >
+                    <p class="vvs-eyebrow">
                         {{ translations.pickup.eyebrow }}
                     </p>
 
@@ -31,7 +29,7 @@ const translations = computed(() => page.props.translations);
                     >
                         {{ translations.pickup.title_before }}
 
-                        <span class="text-amber-300">
+                        <span class="vvs-gradient-text">
                             {{ translations.pickup.title_highlight }}
                         </span>
                     </h2>
@@ -49,7 +47,7 @@ const translations = computed(() => page.props.translations);
 
                 <div class="grid gap-4">
                     <div
-                        class="flex gap-5 rounded-2xl border border-white/10 bg-black/60 p-5"
+                        class="vvs-choice-card flex gap-5 rounded-2xl border p-5"
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-300/30 font-black text-amber-200"
@@ -69,7 +67,7 @@ const translations = computed(() => page.props.translations);
                     </div>
 
                     <div
-                        class="flex gap-5 rounded-2xl border border-white/10 bg-black/60 p-5"
+                        class="vvs-choice-card flex gap-5 rounded-2xl border p-5"
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-300/30 font-black text-amber-200"
@@ -89,7 +87,7 @@ const translations = computed(() => page.props.translations);
                     </div>
 
                     <div
-                        class="flex gap-5 rounded-2xl border border-amber-300/25 bg-amber-300/[0.035] p-5"
+                        class="vvs-choice-card vvs-choice-card--featured flex gap-5 rounded-2xl border p-5"
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-300 font-black text-black"

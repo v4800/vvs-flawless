@@ -88,6 +88,12 @@ onMounted(() => {
         return;
     }
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        navigation.value.style.opacity = '1';
+
+        return;
+    }
+
     animate(navigation.value, {
         opacity: [0, 1],
         y: [-12, 0],
@@ -103,7 +109,7 @@ onMounted(() => {
         class="sticky top-4 z-40 mx-auto mb-8 max-w-6xl px-4 opacity-0 sm:px-0"
     >
         <div
-            class="flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/75 px-4 py-3 shadow-[0_15px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-5"
+            class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
         >
             <!-- RETOUR -->
 

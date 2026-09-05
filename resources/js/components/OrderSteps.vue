@@ -71,7 +71,7 @@ onMounted(() => {
 
         <div class="mx-auto max-w-[1500px]">
             <div
-                class="mx-auto mb-16 max-w-3xl rounded-3xl border border-amber-300/20 bg-amber-300/[0.025] p-6 text-center sm:p-8"
+                class="vvs-luxury-card mx-auto mb-16 max-w-3xl rounded-3xl border p-6 text-center sm:p-8"
             >
                 <p
                     class="text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase"
@@ -91,7 +91,7 @@ onMounted(() => {
 
                 <Link
                     :href="localizedRoutes.diamondGuide"
-                    class="mt-6 inline-flex rounded-full bg-amber-300 px-6 py-3 text-xs font-black tracking-[0.12em] text-black uppercase transition hover:bg-amber-200"
+                    class="vvs-button-primary mt-6 inline-flex rounded-full px-6 py-3 text-xs font-bold tracking-[0.12em] uppercase"
                 >
                     {{ guideLinks.cta }}
                 </Link>
@@ -103,9 +103,7 @@ onMounted(() => {
                         class="h-px w-10 bg-gradient-to-r from-transparent to-amber-300"
                     ></span>
 
-                    <span
-                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
-                    >
+                    <span class="vvs-eyebrow">
                         {{ translations.order.eyebrow }}
                     </span>
 
@@ -116,7 +114,7 @@ onMounted(() => {
 
                 <h2 class="vvs-display-title text-5xl sm:text-6xl">
                     {{ translations.order.title_before }}
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.order.title_highlight }}
                     </span>
                 </h2>
@@ -144,7 +142,7 @@ onMounted(() => {
 
                     <div class="order-step opacity-0">
                         <div
-                            class="h-full rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black p-6 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40"
+                            class="vvs-choice-card h-full rounded-2xl border p-6"
                         >
                             <div
                                 class="flex h-14 w-14 items-center justify-center rounded-full border border-amber-300/40 bg-black text-sm font-black text-amber-200"
@@ -166,7 +164,7 @@ onMounted(() => {
 
                     <div class="order-step opacity-0">
                         <div
-                            class="h-full rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black p-6 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40"
+                            class="vvs-choice-card h-full rounded-2xl border p-6"
                         >
                             <div
                                 class="flex h-14 w-14 items-center justify-center rounded-full border border-amber-300/40 bg-black text-sm font-black text-amber-200"
@@ -188,7 +186,7 @@ onMounted(() => {
 
                     <div class="order-step opacity-0">
                         <div
-                            class="h-full rounded-2xl border border-amber-300/20 bg-amber-300/[0.025] p-6 transition duration-300 hover:-translate-y-1 hover:border-amber-300/50"
+                            class="vvs-choice-card vvs-choice-card--featured h-full rounded-2xl border p-6"
                         >
                             <div
                                 class="flex h-14 w-14 items-center justify-center rounded-full bg-amber-300 text-sm font-black text-black shadow-[0_0_30px_rgba(251,191,36,0.18)]"
@@ -210,7 +208,7 @@ onMounted(() => {
 
                     <div class="order-step opacity-0">
                         <div
-                            class="h-full rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black p-6 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40"
+                            class="vvs-choice-card h-full rounded-2xl border p-6"
                         >
                             <div
                                 class="flex h-14 w-14 items-center justify-center rounded-full border border-amber-300/40 bg-black text-sm font-black text-amber-200"
@@ -232,7 +230,7 @@ onMounted(() => {
 
                     <div class="order-step opacity-0">
                         <div
-                            class="h-full rounded-2xl border border-white/10 bg-gradient-to-b from-zinc-950 to-black p-6 transition duration-300 hover:-translate-y-1 hover:border-amber-300/40"
+                            class="vvs-choice-card h-full rounded-2xl border p-6"
                         >
                             <div
                                 class="flex h-14 w-14 items-center justify-center rounded-full border border-amber-300/40 bg-black text-sm font-black text-amber-200"

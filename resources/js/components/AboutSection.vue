@@ -24,16 +24,14 @@ const translations = computed(() => page.props.translations);
                 <div class="mb-5 flex items-center gap-3">
                     <span class="h-px w-10 bg-amber-300"></span>
 
-                    <span
-                        class="text-[10px] font-black tracking-[0.4em] text-amber-300 uppercase"
-                    >
+                    <span class="vvs-eyebrow">
                         {{ translations.about.eyebrow }}
                     </span>
                 </div>
 
                 <h2 class="vvs-display-title text-5xl sm:text-6xl lg:text-7xl">
                     {{ translations.about.title_before }}
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.about.title_highlight }}
                     </span>
 
@@ -53,9 +51,7 @@ const translations = computed(() => page.props.translations);
 
             <!-- TEXTE -->
 
-            <div
-                class="rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-7 sm:p-9"
-            >
+            <div class="vvs-luxury-card rounded-3xl border p-7 sm:p-9">
                 <p class="text-lg leading-8 text-zinc-300">
                     {{ translations.about.paragraph_1 }}
                 </p>
@@ -72,10 +68,8 @@ const translations = computed(() => page.props.translations);
                 </p>
 
                 <div class="mt-8 grid gap-3 sm:grid-cols-3">
-                    <div
-                        class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
-                    >
-                        <p class="text-xl font-black text-amber-200">VVS</p>
+                    <div class="vvs-choice-card rounded-xl border p-4">
+                        <p class="vvs-price text-xl font-black">VVS</p>
 
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
@@ -84,10 +78,8 @@ const translations = computed(() => page.props.translations);
                         </p>
                     </div>
 
-                    <div
-                        class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
-                    >
-                        <p class="text-xl font-black text-amber-200">D</p>
+                    <div class="vvs-choice-card rounded-xl border p-4">
+                        <p class="vvs-price text-xl font-black">D</p>
 
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"
@@ -96,10 +88,8 @@ const translations = computed(() => page.props.translations);
                         </p>
                     </div>
 
-                    <div
-                        class="rounded-xl border border-white/10 bg-white/[0.025] p-4"
-                    >
-                        <p class="text-xl font-black text-amber-200">BE</p>
+                    <div class="vvs-choice-card rounded-xl border p-4">
+                        <p class="vvs-price text-xl font-black">BE</p>
 
                         <p
                             class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase"

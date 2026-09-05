@@ -12,15 +12,13 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
     <section class="border-b border-white/10 px-5 py-20 sm:px-6 lg:px-10">
         <div class="mx-auto max-w-[1200px]">
             <header class="mx-auto max-w-2xl text-center">
-                <p
-                    class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                >
+                <p class="vvs-eyebrow">
                     {{ translations.purchase_guide.eyebrow }}
                 </p>
 
                 <h2 class="vvs-display-title mt-4 text-4xl sm:text-5xl">
                     {{ translations.purchase_guide.title_before }}
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.purchase_guide.title_highlight }}
                     </span>
                 </h2>
@@ -33,9 +31,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
             <div class="mt-10 grid gap-5 md:grid-cols-2">
                 <!-- JAPONAIS -->
 
-                <div
-                    class="rounded-3xl border border-white/10 bg-zinc-950/70 p-6 sm:p-7"
-                >
+                <div class="vvs-choice-card rounded-3xl border p-6 sm:p-7">
                     <p
                         class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
                     >
@@ -54,7 +50,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
                 <!-- SUISSE -->
 
                 <div
-                    class="rounded-3xl border border-amber-300/20 bg-amber-300/[0.025] p-6 sm:p-7"
+                    class="vvs-choice-card vvs-choice-card--featured rounded-3xl border p-6 sm:p-7"
                 >
                     <p
                         class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
@@ -79,7 +75,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
             </p>
 
             <div
-                class="mx-auto mt-8 max-w-3xl rounded-3xl border border-amber-300/15 bg-amber-300/[0.025] p-5 text-center sm:p-6"
+                class="vvs-luxury-card mx-auto mt-8 max-w-3xl rounded-3xl border p-5 text-center sm:p-6"
             >
                 <p
                     class="text-[9px] font-black tracking-[0.24em] text-amber-300 uppercase"
@@ -104,9 +100,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
 
             <!-- PROCESSUS -->
 
-            <div
-                class="mt-14 rounded-3xl border border-white/10 bg-gradient-to-br from-zinc-950 to-black p-6 sm:p-8"
-            >
+            <div class="vvs-luxury-card mt-14 rounded-3xl border p-6 sm:p-8">
                 <div class="mb-8">
                     <p
                         class="text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase"

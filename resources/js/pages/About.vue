@@ -26,12 +26,10 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
 
         <main id="main-content">
             <header class="mx-auto max-w-4xl px-6 pt-12 text-center sm:pt-20">
-                <p
-                    class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
+                <p class="vvs-eyebrow">VVS FLAWLESS</p>
+                <h1
+                    class="vvs-gradient-text vvs-display-title mt-5 text-5xl sm:text-7xl"
                 >
-                    VVS FLAWLESS
-                </p>
-                <h1 class="vvs-display-title mt-5 text-5xl sm:text-7xl">
                     {{ translations.navigation.about }}
                 </h1>
                 <p

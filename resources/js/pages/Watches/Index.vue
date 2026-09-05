@@ -455,18 +455,15 @@ onBeforeUnmount(() => {
                     class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
                     :aria-label="translations.navigation.main_label"
                 >
-                    <a
-                        href="#collection"
-                        class="transition hover:text-amber-300"
-                    >
+                    <a href="#collection" class="vvs-nav-link">
                         {{ translations.navigation.watches }}
                     </a>
 
-                    <a href="#concept" class="transition hover:text-amber-300">
+                    <a href="#concept" class="vvs-nav-link">
                         {{ translations.navigation.about }}
                     </a>
 
-                    <a href="#services" class="transition hover:text-amber-300">
+                    <a href="#services" class="vvs-nav-link">
                         {{ translations.navigation.delivery }}
                     </a>
                 </nav>
@@ -622,7 +619,7 @@ onBeforeUnmount(() => {
                             class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.82] font-semibold tracking-[-0.055em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
                         >
                             <span
-                                class="bg-gradient-to-b from-white via-zinc-100 to-zinc-500 bg-clip-text text-transparent"
+                                class="vvs-gradient-text vvs-gradient-text--hero"
                             >
                                 VVS
                             </span>
@@ -630,7 +627,7 @@ onBeforeUnmount(() => {
                             <br />
 
                             <span
-                                class="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent"
+                                class="vvs-gradient-text vvs-gradient-text--hero"
                             >
                                 FLAWLESS
                             </span>
@@ -671,9 +668,7 @@ onBeforeUnmount(() => {
                         <div
                             class="hero-animate mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4"
                         >
-                            <div
-                                class="vvs-premium-panel rounded-xl border p-3"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-xl text-amber-300">◇</div>
 
                                 <p
@@ -685,9 +680,7 @@ onBeforeUnmount(() => {
                                 <p class="text-[10px] text-zinc-500">VVS</p>
                             </div>
 
-                            <div
-                                class="vvs-premium-panel rounded-xl border p-3"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">♢</div>
 
                                 <p
@@ -701,9 +694,7 @@ onBeforeUnmount(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="vvs-premium-panel rounded-xl border p-3"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">✦</div>
 
                                 <p
@@ -717,9 +708,7 @@ onBeforeUnmount(() => {
                                 </p>
                             </div>
 
-                            <div
-                                class="vvs-premium-panel rounded-xl border p-3"
-                            >
+                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">↗</div>
 
                                 <p
@@ -737,7 +726,7 @@ onBeforeUnmount(() => {
                         <div class="hero-animate mt-9 flex flex-wrap gap-4">
                             <a
                                 href="#concept"
-                                class="rounded-lg border border-amber-300/50 bg-amber-300/[0.04] px-7 py-4 text-sm font-bold tracking-[0.1em] text-amber-200 uppercase shadow-[0_0_25px_rgba(251,191,36,0.08)] transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:bg-amber-300 hover:text-black"
+                                class="vvs-button-secondary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
                             >
                                 {{ translations.hero.concept }}
                             </a>
@@ -796,7 +785,7 @@ onBeforeUnmount(() => {
                             >
                                 <button
                                     type="button"
-                                    class="rounded-xl border border-amber-300/40 bg-black/75 px-6 py-4 text-center backdrop-blur-md transition hover:border-amber-300 hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                                    class="vvs-button-secondary rounded-xl px-6 py-4 text-center backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
                                     @click="requestModelViewer"
                                 >
                                     <span
@@ -952,7 +941,7 @@ onBeforeUnmount(() => {
                         <h2 class="vvs-display-title text-5xl sm:text-6xl">
                             {{ translations.collection.title_before }}
 
-                            <span class="text-amber-300">
+                            <span class="vvs-gradient-text">
                                 {{ translations.collection.title_highlight }}
                             </span>
                         </h2>
@@ -968,7 +957,7 @@ onBeforeUnmount(() => {
                         <article
                             v-for="watch in props.watches"
                             :key="watch.id"
-                            class="watch-card reveal-on-scroll vvs-premium-panel group relative overflow-hidden rounded-2xl border transition duration-500 hover:-translate-y-2 hover:border-amber-300/40 hover:shadow-[0_20px_70px_rgba(251,191,36,0.08)]"
+                            class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative overflow-hidden rounded-2xl border"
                         >
                             <div
                                 class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
@@ -1049,7 +1038,7 @@ onBeforeUnmount(() => {
 
                                     <Link
                                         :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
-                                        class="group/version rounded-xl border border-white/10 bg-white/[0.025] p-4 transition duration-300 hover:border-amber-300/50 hover:bg-amber-300/[0.04]"
+                                        class="vvs-choice-card group/version rounded-xl border p-4"
                                     >
                                         <p
                                             class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
@@ -1071,7 +1060,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            class="mt-1 text-xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -1092,7 +1081,7 @@ onBeforeUnmount(() => {
 
                                     <Link
                                         :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
-                                        class="group/version relative overflow-hidden rounded-xl border border-amber-300/20 bg-amber-300/[0.035] p-4 transition duration-300 hover:border-amber-300/60 hover:bg-amber-300/[0.07]"
+                                        class="vvs-choice-card vvs-choice-card--featured group/version relative overflow-hidden rounded-xl border p-4"
                                     >
                                         <span
                                             class="absolute top-2 right-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black tracking-wider text-black uppercase"
@@ -1115,7 +1104,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            class="mt-1 text-xl font-black text-amber-200"
+                                            class="vvs-price mt-1 text-xl font-black"
                                         >
                                             {{
                                                 formatPrice(
@@ -1153,7 +1142,7 @@ onBeforeUnmount(() => {
 
                                 <Link
                                     :href="`${localizedRoutes.watches}/${watch.id}`"
-                                    class="mt-6 flex w-full items-center justify-center gap-3 rounded-lg border border-amber-300/50 bg-black px-4 py-4 text-xs font-black tracking-[0.12em] text-white uppercase shadow-[0_0_20px_rgba(251,191,36,0.05)] transition duration-300 hover:border-amber-300 hover:bg-amber-300 hover:text-black hover:shadow-[0_0_30px_rgba(251,191,36,0.16)]"
+                                    class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
                                 >
                                     {{ translations.collection.view_watch }}
 
@@ -1180,7 +1169,7 @@ onBeforeUnmount(() => {
                 class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10"
             >
                 <div
-                    class="reveal-on-scroll mx-auto max-w-[1500px] overflow-hidden rounded-2xl border border-amber-300/30 bg-gradient-to-r from-amber-300/[0.06] via-zinc-950 to-black shadow-[0_0_60px_rgba(251,191,36,0.05)]"
+                    class="reveal-on-scroll vvs-luxury-card mx-auto max-w-[1500px] overflow-hidden rounded-2xl border"
                 >
                     <div
                         class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
@@ -1218,7 +1207,7 @@ onBeforeUnmount(() => {
                         <button
                             type="button"
                             @click="scrollToCollection"
-                            class="rounded-lg border border-amber-300/50 px-6 py-4 text-xs font-black tracking-[0.15em] text-amber-200 uppercase transition hover:bg-amber-300 hover:text-black"
+                            class="vvs-button-primary rounded-xl px-6 py-4 text-xs font-bold tracking-[0.15em] uppercase"
                         >
                             {{ translations.concept.cta }}
                         </button>
@@ -1235,7 +1224,7 @@ onBeforeUnmount(() => {
                 class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10"
             >
                 <div
-                    class="reveal-on-scroll vvs-premium-panel mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
+                    class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
                 >
                     <div
                         class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
