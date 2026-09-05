@@ -34,7 +34,9 @@ const guide = computed(() => props.guide);
                     {{ guide.eyebrow }}
                 </p>
 
-                <h1 class="vvs-display-title mt-5 text-4xl sm:text-6xl lg:text-7xl">
+                <h1
+                    class="vvs-display-title mt-5 text-4xl sm:text-6xl lg:text-7xl"
+                >
                     {{ guide.title }}
                 </h1>
 
@@ -55,13 +57,17 @@ const guide = computed(() => props.guide);
                         {{ guide.answer_title }}
                     </p>
 
-                    <p class="mt-4 text-base leading-8 text-zinc-200 sm:text-lg">
+                    <p
+                        class="mt-4 text-base leading-8 text-zinc-200 sm:text-lg"
+                    >
                         {{ guide.answer }}
                     </p>
                 </div>
             </section>
 
-            <section class="border-y border-white/10 px-5 py-16 sm:px-6 lg:px-10">
+            <section
+                class="border-y border-white/10 px-5 py-16 sm:px-6 lg:px-10"
+            >
                 <div class="mx-auto max-w-[1100px]">
                     <header class="max-w-2xl">
                         <h2 class="vvs-display-title text-4xl sm:text-5xl">
@@ -72,17 +78,27 @@ const guide = computed(() => props.guide);
                         </p>
                     </header>
 
-                    <div class="mt-9 overflow-x-auto rounded-3xl border border-white/10">
-                        <table class="min-w-[760px] w-full border-collapse text-left">
+                    <div
+                        class="mt-9 overflow-x-auto rounded-3xl border border-white/10"
+                    >
+                        <table
+                            class="w-full min-w-[760px] border-collapse text-left"
+                        >
                             <thead class="bg-zinc-950">
                                 <tr>
-                                    <th class="px-5 py-4 text-xs font-black tracking-[0.16em] text-zinc-500 uppercase">
+                                    <th
+                                        class="px-5 py-4 text-xs font-black tracking-[0.16em] text-zinc-500 uppercase"
+                                    >
                                         {{ guide.columns.criterion }}
                                     </th>
-                                    <th class="px-5 py-4 text-xs font-black tracking-[0.16em] text-zinc-300 uppercase">
+                                    <th
+                                        class="px-5 py-4 text-xs font-black tracking-[0.16em] text-zinc-300 uppercase"
+                                    >
                                         {{ guide.columns.diamond }}
                                     </th>
-                                    <th class="px-5 py-4 text-xs font-black tracking-[0.16em] text-amber-300 uppercase">
+                                    <th
+                                        class="px-5 py-4 text-xs font-black tracking-[0.16em] text-amber-300 uppercase"
+                                    >
                                         {{ guide.columns.moissanite }}
                                     </th>
                                 </tr>
@@ -93,13 +109,19 @@ const guide = computed(() => props.guide);
                                     :key="row.label"
                                     class="border-t border-white/10"
                                 >
-                                    <th class="px-5 py-5 text-sm font-black text-white">
+                                    <th
+                                        class="px-5 py-5 text-sm font-black text-white"
+                                    >
                                         {{ row.label }}
                                     </th>
-                                    <td class="px-5 py-5 text-sm leading-7 text-zinc-500">
+                                    <td
+                                        class="px-5 py-5 text-sm leading-7 text-zinc-500"
+                                    >
                                         {{ row.diamond }}
                                     </td>
-                                    <td class="px-5 py-5 text-sm leading-7 text-zinc-300">
+                                    <td
+                                        class="px-5 py-5 text-sm leading-7 text-zinc-300"
+                                    >
                                         {{ row.moissanite }}
                                     </td>
                                 </tr>
@@ -111,7 +133,9 @@ const guide = computed(() => props.guide);
 
             <section class="px-5 py-16 sm:px-6 lg:px-10">
                 <div class="mx-auto grid max-w-[1100px] gap-6 lg:grid-cols-2">
-                    <article class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8">
+                    <article
+                        class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8"
+                    >
                         <h2 class="vvs-display-title text-3xl">
                             {{ guide.vvs_title }}
                         </h2>
@@ -120,7 +144,9 @@ const guide = computed(() => props.guide);
                         </p>
                     </article>
 
-                    <article class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8">
+                    <article
+                        class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8"
+                    >
                         <h2 class="vvs-display-title text-3xl">
                             {{ guide.tester_title }}
                         </h2>
@@ -131,14 +157,20 @@ const guide = computed(() => props.guide);
                 </div>
             </section>
 
-            <section class="border-y border-white/10 px-5 py-16 sm:px-6 lg:px-10">
+            <section
+                class="border-y border-white/10 px-5 py-16 sm:px-6 lg:px-10"
+            >
                 <div class="mx-auto max-w-[1100px]">
-                    <h2 class="vvs-display-title text-center text-4xl sm:text-5xl">
+                    <h2
+                        class="vvs-display-title text-center text-4xl sm:text-5xl"
+                    >
                         {{ guide.choice_title }}
                     </h2>
 
                     <div class="mt-9 grid gap-5 md:grid-cols-2">
-                        <article class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8">
+                        <article
+                            class="rounded-3xl border border-white/10 bg-zinc-950/60 p-6 sm:p-8"
+                        >
                             <h3 class="vvs-display-title text-3xl">
                                 {{ guide.choice_diamond_title }}
                             </h3>
@@ -147,8 +179,12 @@ const guide = computed(() => props.guide);
                             </p>
                         </article>
 
-                        <article class="rounded-3xl border border-amber-300/20 bg-amber-300/[0.025] p-6 sm:p-8">
-                            <h3 class="vvs-display-title text-3xl text-amber-300">
+                        <article
+                            class="rounded-3xl border border-amber-300/20 bg-amber-300/[0.025] p-6 sm:p-8"
+                        >
+                            <h3
+                                class="vvs-display-title text-3xl text-amber-300"
+                            >
                                 {{ guide.choice_moissanite_title }}
                             </h3>
                             <p class="mt-4 text-sm leading-7 text-zinc-400">
@@ -160,11 +196,15 @@ const guide = computed(() => props.guide);
             </section>
 
             <section class="px-5 py-16 text-center sm:px-6 lg:px-10">
-                <div class="mx-auto max-w-3xl rounded-3xl border border-amber-300/20 bg-gradient-to-br from-zinc-950 to-black p-7 sm:p-10">
+                <div
+                    class="mx-auto max-w-3xl rounded-3xl border border-amber-300/20 bg-gradient-to-br from-zinc-950 to-black p-7 sm:p-10"
+                >
                     <h2 class="vvs-display-title text-4xl sm:text-5xl">
                         {{ guide.cta_title }}
                     </h2>
-                    <p class="mx-auto mt-5 max-w-2xl text-sm leading-7 text-zinc-500">
+                    <p
+                        class="mx-auto mt-5 max-w-2xl text-sm leading-7 text-zinc-500"
+                    >
                         {{ guide.cta_text }}
                     </p>
                     <Link
@@ -178,7 +218,9 @@ const guide = computed(() => props.guide);
 
             <section class="px-5 pb-16 sm:px-6 lg:px-10">
                 <div class="mx-auto max-w-3xl border-t border-white/10 pt-8">
-                    <h2 class="text-sm font-black tracking-[0.14em] text-zinc-300 uppercase">
+                    <h2
+                        class="text-sm font-black tracking-[0.14em] text-zinc-300 uppercase"
+                    >
                         {{ guide.sources_title }}
                     </h2>
                     <p class="mt-3 text-xs leading-6 text-zinc-600">
