@@ -26,6 +26,7 @@ const props = defineProps({
 const page = usePage();
 
 const translations = page.props.translations;
+const guideLinks = page.props.guideLinks;
 const localizedRoutes = page.props.localizedRoutes;
 const languageLinks = computed(() => {
     const alternates = props.seo.alternates ?? [];
@@ -724,6 +725,14 @@ onBeforeUnmount(() => {
                         </div>
 
                         <div class="hero-animate mt-9 flex flex-wrap gap-4">
+                            <button
+                                type="button"
+                                class="vvs-button-primary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
+                                @click="scrollToCollection"
+                            >
+                                {{ translations.concept.cta }}
+                            </button>
+
                             <a
                                 href="#concept"
                                 class="vvs-button-secondary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
@@ -756,7 +765,7 @@ onBeforeUnmount(() => {
                             class="hero-watch relative z-10 h-[470px] w-full max-w-[720px] sm:h-[550px] lg:h-[640px]"
                         >
                             <img
-                                v-if="!modelRequested"
+                                v-if="!modelLoaded"
                                 src="/images/vvs-watch-hero.webp"
                                 alt="Montre iced-out VVS FLAWLESS"
                                 width="1536"
@@ -1049,7 +1058,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            v-if="watch.japanese_price"
+                                            v-if="watch.japanese_promo_price"
                                             class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{
@@ -1097,7 +1106,7 @@ onBeforeUnmount(() => {
                                         </p>
 
                                         <p
-                                            v-if="watch.swiss_price"
+                                            v-if="watch.swiss_promo_price"
                                             class="mt-3 text-xs text-zinc-600 line-through"
                                         >
                                             {{ formatPrice(watch.swiss_price) }}
@@ -1306,7 +1315,40 @@ onBeforeUnmount(() => {
                     </p>
                 </div>
 
-                <p class="text-xs text-zinc-700">
+                <nav
+                    class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
+                    :aria-label="translations.navigation.main_label"
+                >
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ guideLinks.eyebrow }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.privacy"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.footer.privacy }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.reservationTerms"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.footer.terms }}
+                    </Link>
+                </nav>
+
+                <p class="text-xs text-zinc-500">
                     {{ translations.footer.copyright }}
                 </p>
             </div>
