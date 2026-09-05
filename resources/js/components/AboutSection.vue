@@ -31,9 +31,7 @@ const translations = computed(() => page.props.translations);
                     </span>
                 </div>
 
-                <h2
-                    class="text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl lg:text-6xl"
-                >
+                <h2 class="vvs-display-title text-5xl sm:text-6xl lg:text-7xl">
                     {{ translations.about.title_before }}
                     <span class="text-amber-300">
                         {{ translations.about.title_highlight }}

@@ -265,7 +265,7 @@ const submit = () => {
                         </div>
 
                         <h1
-                            class="mt-6 max-w-2xl text-4xl leading-[1.03] font-black tracking-[-0.035em] uppercase sm:text-5xl"
+                            class="vvs-display-title mt-6 max-w-2xl text-5xl sm:text-6xl"
                         >
                             {{ watch.name }}
                         </h1>
@@ -301,7 +301,7 @@ const submit = () => {
                                         {{ translations.product.configuration }}
                                     </p>
 
-                                    <h2 class="mt-2 text-xl font-black">
+                                    <h2 class="vvs-display-title mt-2 text-3xl">
                                         {{
                                             translations.product.choose_movement
                                         }}
@@ -616,9 +616,7 @@ const submit = () => {
                             {{ translations.product.your_selection }}
                         </p>
 
-                        <h2
-                            class="mt-4 text-3xl font-black tracking-[-0.03em] uppercase"
-                        >
+                        <h2 class="vvs-display-title mt-4 text-4xl">
                             {{ translations.product.reserve_piece }}
                         </h2>
 
@@ -642,7 +640,7 @@ const submit = () => {
 
                                 <div class="p-4">
                                     <p
-                                        class="line-clamp-2 text-sm leading-5 font-black uppercase"
+                                        class="vvs-display-title line-clamp-2 text-xl leading-5"
                                     >
                                         {{ watch.name }}
                                     </p>
@@ -691,7 +689,7 @@ const submit = () => {
                                     {{ translations.product.reservation }}
                                 </p>
 
-                                <h3 class="mt-2 text-2xl font-black">
+                                <h3 class="vvs-display-title mt-2 text-3xl">
                                     {{ translations.product.your_information }}
                                 </h3>
                             </div>

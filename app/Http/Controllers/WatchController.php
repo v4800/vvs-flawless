@@ -346,10 +346,6 @@ class WatchController extends Controller
 
     private function localizedWatch(Watch $watch): Watch
     {
-        if (app()->getLocale() !== 'nl_BE') {
-            return $watch;
-        }
-
         $translation = trans('watches.'.$watch->id);
 
         if (! is_array($translation)) {

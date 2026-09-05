@@ -138,7 +138,9 @@ onMounted(() => {
                     class="h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.8)]"
                 ></div>
 
-                <span class="text-xs font-black tracking-[0.18em] text-white">
+                <span
+                    class="text-xs font-semibold tracking-[0.18em] text-white"
+                >
                     VVS FLAWLESS
                 </span>
             </div>
@@ -148,7 +150,7 @@ onMounted(() => {
             <div class="flex min-w-0 items-center justify-end gap-3">
                 <nav
                     v-if="languageLinks.fr || languageLinks.nl"
-                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-black"
+                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
                     :aria-label="translations.language.label"
                 >
                     <Link

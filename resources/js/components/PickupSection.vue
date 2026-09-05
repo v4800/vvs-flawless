@@ -27,7 +27,7 @@ const translations = computed(() => page.props.translations);
                     </p>
 
                     <h2
-                        class="mt-5 max-w-3xl text-4xl leading-[0.95] font-black tracking-[-0.04em] uppercase sm:text-5xl"
+                        class="vvs-display-title mt-5 max-w-3xl text-5xl sm:text-6xl"
                     >
                         {{ translations.pickup.title_before }}
 

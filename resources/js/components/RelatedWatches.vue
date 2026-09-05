@@ -46,9 +46,7 @@ const formatPrice = (price) => {
                     {{ translations.related.eyebrow }}
                 </p>
 
-                <h2
-                    class="mt-4 text-3xl font-black tracking-[-0.035em] uppercase sm:text-4xl"
-                >
+                <h2 class="vvs-display-title mt-4 text-4xl sm:text-5xl">
                     {{ translations.related.title_before }}
                     <span class="text-amber-300">
                         {{ translations.related.title_highlight }}
@@ -95,7 +93,7 @@ const formatPrice = (price) => {
                         </p>
 
                         <h3
-                            class="mt-3 min-h-[48px] text-base leading-6 font-black uppercase"
+                            class="vvs-display-title mt-3 min-h-[48px] text-2xl leading-6"
                         >
                             {{ watch.name }}
                         </h3>

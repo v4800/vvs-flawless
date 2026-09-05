@@ -16,9 +16,7 @@ const translations = computed(() => page.props.translations);
                     {{ translations.purchase_guide.eyebrow }}
                 </p>
 
-                <h2
-                    class="mt-4 text-3xl font-black tracking-[-0.035em] uppercase sm:text-4xl"
-                >
+                <h2 class="vvs-display-title mt-4 text-4xl sm:text-5xl">
                     {{ translations.purchase_guide.title_before }}
                     <span class="text-amber-300">
                         {{ translations.purchase_guide.title_highlight }}
@@ -42,7 +40,7 @@ const translations = computed(() => page.props.translations);
                         {{ translations.purchase_guide.movement }}
                     </p>
 
-                    <h3 class="mt-2 text-2xl font-black">
+                    <h3 class="vvs-display-title mt-2 text-3xl">
                         {{ translations.collection.japanese }}
                     </h3>
 
@@ -62,7 +60,7 @@ const translations = computed(() => page.props.translations);
                         {{ translations.purchase_guide.movement }}
                     </p>
 
-                    <h3 class="mt-2 text-2xl font-black">
+                    <h3 class="vvs-display-title mt-2 text-3xl">
                         {{ translations.collection.swiss }}
                     </h3>
 
@@ -90,7 +88,7 @@ const translations = computed(() => page.props.translations);
                         {{ translations.purchase_guide.process_eyebrow }}
                     </p>
 
-                    <h3 class="mt-3 text-2xl font-black">
+                    <h3 class="vvs-display-title mt-3 text-3xl">
                         {{ translations.purchase_guide.process_title }}
                     </h3>
                 </div>

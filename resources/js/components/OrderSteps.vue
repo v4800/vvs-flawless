@@ -85,9 +85,7 @@ onMounted(() => {
                     ></span>
                 </div>
 
-                <h2
-                    class="text-4xl font-black tracking-[-0.04em] uppercase sm:text-5xl"
-                >
+                <h2 class="vvs-display-title text-5xl sm:text-6xl">
                     {{ translations.order.title_before }}
                     <span class="text-amber-300">
                         {{ translations.order.title_highlight }}

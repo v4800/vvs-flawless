@@ -31,7 +31,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
                 >
                     VVS FLAWLESS
                 </p>
-                <h1 class="mt-5 text-4xl font-black uppercase sm:text-6xl">
+                <h1 class="vvs-display-title mt-5 text-5xl sm:text-7xl">
                     {{ translations.navigation.about }}
                 </h1>
                 <p

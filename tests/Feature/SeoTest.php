@@ -151,4 +151,55 @@ class SeoTest extends TestCase
                     ->etc()
             );
     }
+
+    public function test_public_watch_copy_is_localized_in_french_and_dutch(): void
+    {
+        $watch = new Watch([
+            'name' => 'Nom brut en base',
+            'price' => 950,
+            'description' => 'Description brute en base.',
+            'availability' => 'Sur commande',
+        ]);
+
+        $watch->id = 42;
+        $watch->save();
+
+        $this->get(route('watches.show', $watch))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where(
+                        'watch.name',
+                        trans('watches.42.name', [], 'fr_BE')
+                    )
+                    ->where(
+                        'watch.description',
+                        trans(
+                            'watches.42.description',
+                            [],
+                            'fr_BE'
+                        )
+                    )
+                    ->etc()
+            );
+
+        $this->get(route('nl.watches.show', $watch))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where(
+                        'watch.name',
+                        trans('watches.42.name', [], 'nl_BE')
+                    )
+                    ->where(
+                        'watch.description',
+                        trans(
+                            'watches.42.description',
+                            [],
+                            'nl_BE'
+                        )
+                    )
+                    ->etc()
+            );
+    }
 }
