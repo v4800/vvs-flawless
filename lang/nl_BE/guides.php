@@ -13,7 +13,7 @@ return [
         'seo_description' => 'Diamanten horloge, VVS-horloge of moissanite? Vergelijk de stenen, hun uitstraling, identificatie en wat VVS FLAWLESS in België aanbiedt.',
         'eyebrow' => 'VVS FLAWLESS-gids',
         'title' => 'Diamanten horloge of moissanite: wat is het verschil?',
-        'intro' => 'Een horloge bezet met moissanite is geen diamanten horloge. Beide stenen kunnen een zeer opvallende iced-out uitstraling geven, maar hun samenstelling en optische eigenschappen verschillen. De term “VVS” beschrijft een opgegeven zuiverheid; op zichzelf betekent hij niet dat de steen diamant is.',
+        'intro' => 'Een horloge bezet met moissanite is geen diamanten horloge. Beide stenen kunnen een zeer opvallende iced-out uitstraling geven, maar hun samenstelling en optische eigenschappen verschillen. Binnen de GIA-schaal zijn VVS1 en VVS2 zuiverheidsgraden voor diamant; wanneer een verkoper “VVS” gebruikt voor moissanite, is dat een commerciële aanduiding en geen GIA-graad die aan moissanite wordt toegekend.',
         'answer_title' => 'Het korte antwoord',
         'answer' => 'Als je specifiek diamant wilt, vervangt moissanite dat niet: het zijn twee verschillende stenen. Als je vooral een zeer heldere iced-out look zoekt met doorgaans een toegankelijker budget, kan moissanite een alternatief zijn. De modellen op VVS FLAWLESS zijn bezet met VVS-moissanite, niet met diamant.',
         'comparison_title' => 'Diamant vs moissanite',
@@ -27,7 +27,7 @@ return [
             [
                 'label' => 'Samenstelling',
                 'diamond' => 'Diamant bestaat uit koolstof.',
-                'moissanite' => 'Moissanite voor juwelen is siliciumcarbide dat in een laboratorium wordt gemaakt.',
+                'moissanite' => 'De moissanite die vandaag in juwelen wordt gebruikt is in het laboratorium gemaakt siliciumcarbide.',
             ],
             [
                 'label' => 'Schittering',
@@ -42,7 +42,7 @@ return [
             [
                 'label' => 'VVS',
                 'diamond' => 'VVS1 en VVS2 zijn zuiverheidsgraden voor diamant binnen de GIA-schaal.',
-                'moissanite' => 'VVS wordt commercieel ook gebruikt om zeer visueel zuivere moissanite te beschrijven; dat maakt de steen geen diamant.',
+                'moissanite' => '“VVS” kan commercieel worden gebruikt om zeer visueel zuivere moissanite te beschrijven, maar GIA kent de diamantgraden VVS1/VVS2 niet toe aan moissanite.',
             ],
             [
                 'label' => 'Identificatie',
@@ -52,11 +52,11 @@ return [
             [
                 'label' => 'Budget',
                 'diamond' => 'De prijs hangt sterk af van het type diamant, gewicht en kwaliteit.',
-                'moissanite' => 'Maakt grote iced-out zettingen doorgaans mogelijk tegen een toegankelijker budget.',
+                'moissanite' => 'Moissanite is doorgaans een toegankelijker alternatief dan diamant voor een sterk bezette iced-out uitstraling.',
             ],
         ],
         'vvs_title' => 'Wat betekent “VVS-horloge”?',
-        'vvs_text' => 'In de GIA-classificatie voor diamant staat VVS voor “Very, Very Slightly Included”. Op de moissanitemarkt wordt VVS ook commercieel gebruikt als aanduiding van zuiverheid. Bij VVS FLAWLESS betekent “VVS-horloge” een horloge bezet met VVS-moissanite; het betekent nooit dat het horloge met diamant is bezet.',
+        'vvs_text' => 'Binnen de GIA-zuiverheidsschaal voor diamant staat VVS voor “Very, Very Slightly Included” en omvat het de graden VVS1 en VVS2. GIA past die zuiverheidsschaal niet toe op moissanite. Op de moissanitemarkt is “VVS” daarom een commerciële aanduiding van de door verkoper of leverancier opgegeven zuiverheid. Bij VVS FLAWLESS betekent “VVS-horloge” een horloge bezet met VVS-moissanite; het betekent nooit dat het horloge met diamant is bezet.',
         'tester_title' => 'Reageert moissanite op een diamanttester?',
         'tester_text' => 'Moissanite kan bepaalde testers activeren die thermische geleidbaarheid meten, omdat die eigenschap dicht bij die van diamant ligt. Een tester die diamant en moissanite van elkaar onderscheidt, of aangepaste gemmologische analyse, kan beide stenen identificeren.',
         'choice_title' => 'Wat kies je voor een iced-out horloge?',
@@ -71,10 +71,6 @@ return [
         'sources_intro' => 'De technische verschillen in deze gids zijn gebaseerd op bronnen van het Gemological Institute of America (GIA).',
         'sources' => [
             [
-                'label' => 'GIA — Diamond',
-                'url' => 'https://www.gia.edu/diamond',
-            ],
-            [
                 'label' => 'GIA — 4Cs Clarity',
                 'url' => 'https://www.gia.edu/gia-about/4cs-clarity',
             ],
@@ -83,8 +79,16 @@ return [
                 'url' => 'https://www.gia.edu/gem-imitation',
             ],
             [
+                'label' => 'GIA 4Cs — Simulants, Moissanite and Lab-Grown Diamonds',
+                'url' => 'https://4cs.gia.edu/en-us/simulants-moissanite-and-lab-grown-diamonds/',
+            ],
+            [
                 'label' => 'GIA 4Cs — Diamond Alternatives: Moissanite',
                 'url' => 'https://4cs.gia.edu/en-us/blog/diamond-alternatives-engagement-rings/',
+            ],
+            [
+                'label' => 'GIA — Synthetic Moissanite with Fraudulent GIA Inscription',
+                'url' => 'https://hongkong.gia.edu/gems-gemology/fall-2020-labnotes-synthetic-moissanite-fraudulent-gia-inscription',
             ],
         ],
     ],
