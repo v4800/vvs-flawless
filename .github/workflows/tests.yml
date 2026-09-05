@@ -45,8 +45,13 @@ jobs:
       - name: Build production assets
         run: npm run build
 
-      - name: Capture formatter output
+      - name: Capture formatted files
         run: |
           npm run check:fix
-          git diff --no-ext-diff --unified=3 -- resources/js/components/PurchaseGuide.vue resources/js/pages/Guides/DiamondVsMoissanite.vue
+          echo 'PURCHASE_GUIDE_BEGIN'
+          cat resources/js/components/PurchaseGuide.vue
+          echo 'PURCHASE_GUIDE_END'
+          echo 'DIAMOND_GUIDE_BEGIN'
+          cat resources/js/pages/Guides/DiamondVsMoissanite.vue
+          echo 'DIAMOND_GUIDE_END'
           exit 1
