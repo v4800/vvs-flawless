@@ -32,7 +32,7 @@ return [
         'eyebrow' => 'Onze collectie',
         'title_before' => 'Kies jouw',
         'title_highlight' => 'horloge',
-        'description' => 'Bekijk de modellen, vergelijk het Japanse en Zwitserse uurwerk en reserveer jouw favoriete uitvoering.',
+        'description' => 'Ontdek onze VVS-moissanite horloges met iced-out afwerking, vergelijk het Japanse en Zwitserse uurwerk en reserveer jouw favoriete uitvoering.',
         'image_soon' => 'Afbeelding binnenkort',
         'japanese' => 'Japans',
         'swiss' => 'Zwitsers',
@@ -84,8 +84,8 @@ return [
     ],
 
     'seo' => [
-        'collection_title' => 'Horloges met diamantlook in moissanite | VVS FLAWLESS',
-        'collection_description' => 'Op zoek naar een diamanten of iced-out horloge in België? Ontdek onze modellen met VVS-moissanite en een Japans of Zwitsers uurwerk.',
+        'collection_title' => 'VVS-moissanite & iced-out horloges | VVS FLAWLESS',
+        'collection_description' => 'Ontdek VVS-moissanite en iced-out horloges op reservatie in België, met keuze uit een Japans of Zwitsers uurwerk.',
         'product_description_suffix' => 'Horloge bezet met VVS-moissanite, met Japans of Zwitsers uurwerk, op reservatie verkrijgbaar met persoonlijke overhandiging of levering.',
         'product_category' => 'Iced-out horloge bezet met moissanite',
         'offer_name' => ':movement uurwerk',
