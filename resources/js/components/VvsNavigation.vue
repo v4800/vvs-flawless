@@ -43,6 +43,8 @@ const languageLinks = computed(() => {
             ?.href,
         nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
             ?.href,
+        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
+            ?.href,
     };
 });
 
@@ -112,8 +114,6 @@ onMounted(() => {
         <div
             class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
         >
-            <!-- RETOUR -->
-
             <Link
                 v-if="showBack"
                 :href="resolvedBackHref"
@@ -152,8 +152,6 @@ onMounted(() => {
                 </span>
             </div>
 
-            <!-- LIENS / LANGUE / BREADCRUMB -->
-
             <div class="flex min-w-0 items-center justify-end gap-3">
                 <nav
                     class="hidden shrink-0 items-center gap-3 lg:flex"
@@ -177,7 +175,7 @@ onMounted(() => {
                 </nav>
 
                 <nav
-                    v-if="languageLinks.fr || languageLinks.nl"
+                    v-if="languageLinks.fr || languageLinks.nl || languageLinks.en"
                     class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
                     :aria-label="translations.language.label"
                 >
@@ -191,7 +189,7 @@ onMounted(() => {
                                 : 'text-zinc-500 hover:text-white',
                         ]"
                     >
-                        {{ translations.language.fr }}
+                        FR
                     </Link>
                     <Link
                         v-if="languageLinks.nl"
@@ -203,7 +201,19 @@ onMounted(() => {
                                 : 'text-zinc-500 hover:text-white',
                         ]"
                     >
-                        {{ translations.language.nl }}
+                        NL
+                    </Link>
+                    <Link
+                        v-if="languageLinks.en"
+                        :href="languageLinks.en"
+                        :class="[
+                            'rounded-full px-2 py-1 transition',
+                            page.props.locale === 'en_BE'
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-500 hover:text-white',
+                        ]"
+                    >
+                        EN
                     </Link>
                 </nav>
 
