@@ -227,6 +227,35 @@ class SeoTest extends TestCase
             );
     }
 
+    public function test_guide_uses_human_copy_and_explains_report_fields(): void
+    {
+        $frenchGuide = trans(
+            'guides.diamond_vs_moissanite',
+            [],
+            'fr_BE'
+        );
+        $dutchGuide = trans(
+            'guides.diamond_vs_moissanite',
+            [],
+            'nl_BE'
+        );
+
+        $this->assertIsArray($frenchGuide);
+        $this->assertIsArray($dutchGuide);
+        $this->assertArrayNotHasKey('answer_title', $frenchGuide);
+        $this->assertArrayNotHasKey('answer_title', $dutchGuide);
+        $this->assertSame(
+            'Que regarder sur un rapport GRA ?',
+            $frenchGuide['report_title']
+        );
+        $this->assertSame(
+            'Waar let je op bij een GRA-rapport?',
+            $dutchGuide['report_title']
+        );
+        $this->assertCount(12, $frenchGuide['report_fields']);
+        $this->assertCount(12, $dutchGuide['report_fields']);
+    }
+
     public function test_public_watch_copy_is_localized_in_french_and_dutch(): void
     {
         $watch = new Watch([
