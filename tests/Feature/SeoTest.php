@@ -186,6 +186,15 @@ class SeoTest extends TestCase
                             'fr_BE'
                         )
                     )
+                    ->where(
+                        'guide.vvs_title',
+                        trans(
+                            'guides.diamond_vs_moissanite.vvs_title',
+                            [],
+                            'fr_BE'
+                        )
+                    )
+                    ->where('guide.rows.3.label', 'VVS')
                     ->etc()
             );
 
@@ -205,6 +214,15 @@ class SeoTest extends TestCase
                             'nl_BE'
                         )
                     )
+                    ->where(
+                        'guide.vvs_title',
+                        trans(
+                            'guides.diamond_vs_moissanite.vvs_title',
+                            [],
+                            'nl_BE'
+                        )
+                    )
+                    ->where('guide.rows.3.label', 'VVS')
                     ->etc()
             );
     }
