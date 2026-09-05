@@ -10,10 +10,10 @@ return [
 
     'diamond_vs_moissanite' => [
         'seo_title' => 'Montre diamant ou moissanite : quelles différences ? | VVS FLAWLESS',
-        'seo_description' => 'Diamant ou moissanite pour une montre iced-out ? Comparez la nature des pierres, leur rendu, leur identification et ce que propose VVS FLAWLESS en Belgique.',
+        'seo_description' => 'Montre diamant, montre VVS ou moissanite ? Comparez les pierres, leur rendu, leur identification et ce que propose VVS FLAWLESS en Belgique.',
         'eyebrow' => 'Guide VVS FLAWLESS',
         'title' => 'Montre diamant ou moissanite : quelles différences ?',
-        'intro' => 'Une montre sertie de moissanite n’est pas une montre en diamant. Les deux pierres peuvent produire un rendu iced-out très brillant, mais leur composition et leur comportement optique sont différents.',
+        'intro' => 'Une montre sertie de moissanite n’est pas une montre en diamant. Les deux pierres peuvent produire un rendu iced-out très brillant, mais leur composition et leur comportement optique sont différents. Le terme « VVS » décrit une pureté annoncée ; à lui seul, il ne signifie pas que la pierre est un diamant.',
         'answer_title' => 'La réponse courte',
         'answer' => 'Si vous voulez spécifiquement du diamant, la moissanite ne le remplace pas : ce sont deux pierres différentes. Si votre priorité est surtout un rendu iced-out très lumineux avec un budget généralement plus accessible, la moissanite peut être une alternative. Chez VVS FLAWLESS, les modèles présentés sur le site sont sertis de moissanite VVS, pas de diamant.',
         'comparison_title' => 'Diamant vs moissanite',
@@ -40,6 +40,11 @@ return [
                 'moissanite' => 'La moissanite est aussi très dure et durable, mais moins dure que le diamant.',
             ],
             [
+                'label' => 'VVS',
+                'diamond' => 'VVS1 et VVS2 sont des grades de pureté du diamant dans l’échelle du GIA.',
+                'moissanite' => 'Le terme VVS est aussi utilisé commercialement pour décrire une moissanite très propre visuellement ; il ne transforme pas la pierre en diamant.',
+            ],
+            [
                 'label' => 'Identification',
                 'diamond' => 'Des instruments gemmologiques permettent de confirmer l’identification.',
                 'moissanite' => 'Elle peut réagir sur certains testeurs thermiques ; des appareils adaptés permettent de la distinguer du diamant.',
@@ -50,8 +55,8 @@ return [
                 'moissanite' => 'Elle permet généralement d’obtenir de grandes surfaces serties à un coût plus accessible.',
             ],
         ],
-        'vvs_title' => 'Ce que vend VVS FLAWLESS',
-        'vvs_text' => 'Nos montres iced-out sont présentées comme des modèles sertis de moissanite VVS. Nous pouvons parler de « montre diamant » lorsqu’il s’agit d’expliquer ce que recherchent certains acheteurs, mais nous ne présentons jamais la moissanite comme du diamant.',
+        'vvs_title' => 'Que signifie « montre VVS » ?',
+        'vvs_text' => 'Dans la classification GIA du diamant, VVS signifie « Very, Very Slightly Included ». Sur le marché de la moissanite, le terme VVS est également employé comme indication commerciale de pureté. Chez VVS FLAWLESS, « montre VVS » désigne une montre sertie de moissanite VVS ; cela ne signifie jamais que la montre est sertie de diamants.',
         'tester_title' => 'La moissanite passe-t-elle au testeur diamant ?',
         'tester_text' => 'Elle peut déclencher certains testeurs basés sur la conductivité thermique, car cette propriété est proche de celle du diamant. Un testeur capable de différencier diamant et moissanite, ou une analyse gemmologique adaptée, permet de les distinguer.',
         'choice_title' => 'Que choisir pour une montre iced-out ?',
@@ -68,6 +73,10 @@ return [
             [
                 'label' => 'GIA — Diamond',
                 'url' => 'https://www.gia.edu/diamond',
+            ],
+            [
+                'label' => 'GIA — 4Cs Clarity',
+                'url' => 'https://www.gia.edu/gia-about/4cs-clarity',
             ],
             [
                 'label' => 'GIA — An Introduction to Imitation Diamonds & Other Gems',
