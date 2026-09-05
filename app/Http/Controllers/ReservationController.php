@@ -177,9 +177,11 @@ class ReservationController extends Controller
 
         $reservation->load('watch');
 
-        $confirmationRoute = app()->getLocale() === 'nl_BE'
-            ? 'nl.reservations.confirmation'
-            : 'reservations.confirmation';
+        $confirmationRoute = match (app()->getLocale()) {
+            'nl_BE' => 'nl.reservations.confirmation',
+            'en_BE' => 'en.reservations.confirmation',
+            default => 'reservations.confirmation',
+        };
 
         $confirmationUrl =
             URL::temporarySignedRoute(
@@ -272,9 +274,11 @@ class ReservationController extends Controller
             $watchName = $translatedWatch['name'];
         }
 
-        $dateFormat = app()->getLocale() === 'nl_BE'
-            ? 'd/m/Y \\o\\m H:i'
-            : 'd/m/Y à H:i';
+        $dateFormat = match (app()->getLocale()) {
+            'nl_BE' => 'd/m/Y \\o\\m H:i',
+            'en_BE' => 'd/m/Y \\a\\t H:i',
+            default => 'd/m/Y à H:i',
+        };
 
         $response =
             Inertia::render(
