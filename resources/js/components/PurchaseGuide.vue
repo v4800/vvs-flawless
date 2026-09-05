@@ -1,9 +1,11 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const page = usePage();
 const translations = computed(() => page.props.translations);
+const guideLinks = computed(() => page.props.guideLinks);
+const localizedRoutes = computed(() => page.props.localizedRoutes);
 </script>
 
 <template>
@@ -75,6 +77,28 @@ const translations = computed(() => page.props.translations);
             >
                 {{ translations.purchase_guide.details_note }}
             </p>
+
+            <div
+                class="mx-auto mt-8 max-w-3xl rounded-3xl border border-amber-300/15 bg-amber-300/[0.025] p-5 text-center sm:p-6"
+            >
+                <p
+                    class="text-[9px] font-black tracking-[0.24em] text-amber-300 uppercase"
+                >
+                    {{ guideLinks.eyebrow }}
+                </p>
+                <h3 class="vvs-display-title mt-3 text-2xl sm:text-3xl">
+                    {{ guideLinks.title }}
+                </h3>
+                <p class="mx-auto mt-3 max-w-xl text-xs leading-6 text-zinc-500">
+                    {{ guideLinks.description }}
+                </p>
+                <Link
+                    :href="localizedRoutes.diamondGuide"
+                    class="mt-5 inline-flex text-xs font-black tracking-[0.12em] text-amber-300 uppercase underline decoration-amber-300/30 underline-offset-4 hover:text-amber-200"
+                >
+                    {{ guideLinks.cta }}
+                </Link>
+            </div>
 
             <!-- PROCESSUS -->
 

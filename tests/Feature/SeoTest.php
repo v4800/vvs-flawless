@@ -51,6 +51,14 @@ class SeoTest extends TestCase
 
         $response->assertSee(route('about'), false);
         $response->assertSee(route('nl.about'), false);
+        $response->assertSee(
+            route('guides.diamond-vs-moissanite'),
+            false
+        );
+        $response->assertSee(
+            route('nl.guides.diamond-vs-moissanite'),
+            false
+        );
 
         $response->assertSee('hreflang="nl-BE"', false);
 
@@ -148,6 +156,55 @@ class SeoTest extends TestCase
                     ->where('locale', 'nl_BE')
                     ->where('seo.locale', 'nl_BE')
                     ->where('seo.alternates.0.hreflang', 'fr-BE')
+                    ->etc()
+            );
+    }
+
+    public function test_diamond_vs_moissanite_guide_is_localized_and_honest(): void
+    {
+        $this->get(route('guides.diamond-vs-moissanite'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Guides/DiamondVsMoissanite')
+                    ->where('locale', 'fr_BE')
+                    ->where('seo.type', 'article')
+                    ->where('seo.alternates.1.hreflang', 'nl-BE')
+                    ->where(
+                        'seo.structuredData.@graph.0.@type',
+                        'Article'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.1.@type',
+                        'BreadcrumbList'
+                    )
+                    ->where(
+                        'guide.title',
+                        trans(
+                            'guides.diamond_vs_moissanite.title',
+                            [],
+                            'fr_BE'
+                        )
+                    )
+                    ->etc()
+            );
+
+        $this->get(route('nl.guides.diamond-vs-moissanite'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Guides/DiamondVsMoissanite')
+                    ->where('locale', 'nl_BE')
+                    ->where('seo.type', 'article')
+                    ->where('seo.alternates.0.hreflang', 'fr-BE')
+                    ->where(
+                        'guide.title',
+                        trans(
+                            'guides.diamond_vs_moissanite.title',
+                            [],
+                            'nl_BE'
+                        )
+                    )
                     ->etc()
             );
     }
