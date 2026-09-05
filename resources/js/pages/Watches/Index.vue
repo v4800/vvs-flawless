@@ -3,20 +3,19 @@ import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
 
-import VvsNavigation from '@/components/VvsNavigation.vue';
-import StockBadge from '@/components/StockBadge.vue';
-import OrderSteps from '@/components/OrderSteps.vue';
 import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
+import OrderSteps from '@/components/OrderSteps.vue';
 import PickupSection from '@/components/PickupSection.vue';
+import StockBadge from '@/components/StockBadge.vue';
+import VvsNavigation from '@/components/VvsNavigation.vue';
 
 const props = defineProps({
     watches: {
         type: Array,
         default: () => [],
     },
-
     seo: {
         type: Object,
         required: true,
