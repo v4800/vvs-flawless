@@ -33,7 +33,7 @@ return [
         'eyebrow' => 'Notre collection',
         'title_before' => 'Choisissez votre',
         'title_highlight' => 'montre',
-        'description' => 'Découvrez les modèles, comparez les mouvements japonais et suisses, puis réservez la configuration qui vous convient.',
+        'description' => 'Découvrez nos montres VVS serties de moissanite, aux finitions iced-out, comparez les mouvements japonais et suisses, puis réservez la configuration qui vous convient.',
         'image_soon' => 'Image bientôt',
         'japanese' => 'Japonais',
         'swiss' => 'Suisse',
@@ -85,8 +85,8 @@ return [
     ],
 
     'seo' => [
-        'collection_title' => 'Montres effet diamant en moissanite | VVS FLAWLESS',
-        'collection_description' => 'Vous recherchez une montre diamant ou iced-out en Belgique ? Découvrez nos modèles sertis de moissanite VVS, avec mouvement japonais ou suisse.',
+        'collection_title' => 'Montres VVS en moissanite iced-out | VVS FLAWLESS',
+        'collection_description' => 'Découvrez nos montres VVS serties de moissanite et nos modèles iced-out disponibles sur réservation en Belgique, avec mouvement japonais ou suisse.',
         'product_description_suffix' => 'Montre sertie de moissanite VVS, avec mouvement japonais ou suisse, disponible sur réservation avec remise en main propre ou livraison.',
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
