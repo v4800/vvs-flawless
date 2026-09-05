@@ -1111,16 +1111,30 @@ const submit = () => {
                 >
                     <Link
                         :href="localizedRoutes.privacy"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
                     >
                         {{ translations.footer.privacy }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.reservationTerms"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase transition hover:text-amber-300"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
                     >
                         {{ translations.footer.terms }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    >
+                        {{ page.props.guideLinks.eyebrow }}
                     </Link>
 
                     <Link
