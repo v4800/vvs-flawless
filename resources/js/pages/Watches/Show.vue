@@ -348,7 +348,7 @@ const submit = () => {
 
                                     <div class="mt-7">
                                         <p
-                                            v-if="watch.japanese_price"
+                                            v-if="watch.japanese_promo_price"
                                             class="text-xs text-zinc-600 line-through"
                                         >
                                             {{
@@ -421,7 +421,7 @@ const submit = () => {
 
                                     <div class="mt-7">
                                         <p
-                                            v-if="watch.swiss_price"
+                                            v-if="watch.swiss_promo_price"
                                             class="text-xs text-zinc-600 line-through"
                                         >
                                             {{ formatPrice(watch.swiss_price) }}
