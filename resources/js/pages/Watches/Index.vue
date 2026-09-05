@@ -59,12 +59,6 @@ const seoGuides = computed(() => [
     },
 ]);
 
-/*
-|--------------------------------------------------------------------------
-| FORMATAGE DES PRIX
-|--------------------------------------------------------------------------
-*/
-
 const formatPrice = (price) => {
     if (!price) {
         return '—';
@@ -81,24 +75,12 @@ const hasSwissPromotion = (watch) =>
     watch.swiss_promo_price &&
     Number(watch.swiss_promo_price) < Number(watch.swiss_price);
 
-/*
-|--------------------------------------------------------------------------
-| SCROLL COLLECTION
-|--------------------------------------------------------------------------
-*/
-
 const scrollToCollection = () => {
     document.getElementById('collection')?.scrollIntoView({
         behavior: 'smooth',
         block: 'start',
     });
 };
-
-/*
-|--------------------------------------------------------------------------
-| VIEWER 3D
-|--------------------------------------------------------------------------
-*/
 
 const viewerHost = ref(null);
 const modelProgress = ref(0);
@@ -222,16 +204,6 @@ onMounted(() => {
                 duration: 1450,
             },
             '-=900',
-        )
-        .add(
-            '.hero-badge',
-            {
-                opacity: [0, 1],
-                x: [25, 0],
-                scale: [0.92, 1],
-                duration: 750,
-            },
-            '-=650',
         );
 
     animate('.brand-shine', {
@@ -402,12 +374,6 @@ onBeforeUnmount(() => {
                             {{ translations.language.en }}
                         </Link>
                     </nav>
-
-                    <span
-                        class="hidden text-xs tracking-[0.2em] text-zinc-500 uppercase sm:block"
-                    >
-                        {{ translations.navigation.country }}
-                    </span>
                 </div>
             </div>
         </header>
@@ -434,17 +400,7 @@ onBeforeUnmount(() => {
                     ✦
                 </span>
                 <span
-                    class="bling-sparkle absolute top-[29%] left-[35%] text-xl text-white"
-                >
-                    ✦
-                </span>
-                <span
                     class="bling-sparkle absolute top-[14%] right-[10%] text-3xl text-white"
-                >
-                    ✦
-                </span>
-                <span
-                    class="bling-sparkle absolute right-[42%] bottom-[20%] text-xl text-amber-300"
                 >
                     ✦
                 </span>
@@ -494,18 +450,11 @@ onBeforeUnmount(() => {
                             ></span>
                         </h1>
 
-                        <div
-                            class="hero-animate mt-8 flex max-w-xl items-center gap-4"
+                        <p
+                            class="hero-animate vvs-display-title mt-8 max-w-xl text-3xl leading-tight text-amber-200 sm:text-4xl"
                         >
-                            <div
-                                class="hidden h-px w-12 bg-gradient-to-r from-transparent to-amber-400 sm:block"
-                            ></div>
-                            <p
-                                class="vvs-display-title text-3xl leading-tight text-amber-200 sm:text-4xl"
-                            >
-                                {{ translations.hero.tagline }}
-                            </p>
-                        </div>
+                            {{ translations.hero.tagline }}
+                        </p>
 
                         <p
                             class="hero-animate vvs-body-copy mt-7 max-w-xl text-base text-zinc-300 sm:text-lg"
@@ -554,7 +503,7 @@ onBeforeUnmount(() => {
                             >
                                 <button
                                     type="button"
-                                    class="vvs-button-secondary rounded-xl px-6 py-4 text-center backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                                    class="vvs-button-secondary rounded-xl px-6 py-4 text-center backdrop-blur-md"
                                     @click="requestModelViewer"
                                 >
                                     <span
@@ -595,11 +544,7 @@ onBeforeUnmount(() => {
                                 <div
                                     class="rounded-xl border border-red-500/20 bg-black/80 px-6 py-5 text-center"
                                 >
-                                    <p
-                                        class="text-xs font-black tracking-wider text-red-300 uppercase"
-                                    >
-                                        {{ translations.hero.load_error }}
-                                    </p>
+                                    {{ translations.hero.load_error }}
                                 </div>
                             </div>
 
@@ -692,7 +637,6 @@ onBeforeUnmount(() => {
                                         >
                                             {{ translations.collection.japanese }}
                                         </p>
-
                                         <p
                                             v-if="hasJapanesePromotion(watch)"
                                             class="mt-3 text-xs text-zinc-600 line-through"
@@ -745,8 +689,7 @@ onBeforeUnmount(() => {
                                     :href="`${localizedRoutes.watches}/${watch.id}`"
                                     class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
                                 >
-                                    {{ translations.collection.view_watch }}
-                                    <span> → </span>
+                                    {{ translations.collection.view_watch }} →
                                 </Link>
                             </div>
                         </article>
