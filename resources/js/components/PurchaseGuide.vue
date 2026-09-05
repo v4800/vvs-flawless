@@ -89,7 +89,9 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
                 <h3 class="vvs-display-title mt-3 text-2xl sm:text-3xl">
                     {{ guideLinks.title }}
                 </h3>
-                <p class="mx-auto mt-3 max-w-xl text-xs leading-6 text-zinc-500">
+                <p
+                    class="mx-auto mt-3 max-w-xl text-xs leading-6 text-zinc-500"
+                >
                     {{ guideLinks.description }}
                 </p>
                 <Link
