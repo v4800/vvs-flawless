@@ -23,6 +23,11 @@ class PublicPageController extends Controller
             'name' => 'VVS FLAWLESS',
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
+            'description' => (string) trans('site.seo.about_description'),
+            'areaServed' => [
+                '@type' => 'Country',
+                'name' => 'Belgium',
+            ],
             'sameAs' => [
                 'https://www.instagram.com/vvsflawless43/',
                 'https://www.tiktok.com/@vvsflawless43',
