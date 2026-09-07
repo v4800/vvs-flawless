@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Watch;
+use App\Support\LocalizedCopy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Response;
@@ -29,9 +30,11 @@ class WatchController extends Controller
             'watches' => $watches,
 
             'seo' => [
-                'title' => trans('seo_intents.collection_seo.title'),
+                'title' => LocalizedCopy::string(
+                    'seo_intents.collection_seo.title'
+                ),
 
-                'description' => trans(
+                'description' => LocalizedCopy::string(
                     'seo_intents.collection_seo.description'
                 ),
 
@@ -75,10 +78,10 @@ class WatchController extends Controller
                         ],
                         [
                             '@type' => 'CollectionPage',
-                            'name' => trans(
+                            'name' => LocalizedCopy::string(
                                 'seo_intents.collection_seo.title'
                             ),
-                            'description' => trans(
+                            'description' => LocalizedCopy::string(
                                 'seo_intents.collection_seo.description'
                             ),
                             'url' => $collectionUrl,
@@ -119,7 +122,9 @@ class WatchController extends Controller
     ): Response {
         $this->captureMarketingAttribution($request);
 
-        $watch = $this->localizedWatch($watch);
+        $watch = $this->withGallery(
+            $this->localizedWatch($watch)
+        );
 
         $selectedMovement =
             $request->query('movement') === 'Suisse'
@@ -132,7 +137,9 @@ class WatchController extends Controller
                 .'. '
                 .$watch->description
                 .' '
-                .trans('seo_intents.collection_seo.product_suffix')
+                .LocalizedCopy::string(
+                    'seo_intents.collection_seo.product_suffix'
+                )
             ),
             160,
             '…'
@@ -179,15 +186,11 @@ class WatchController extends Controller
 
                     'sku' => 'VVS-'.$watch->id,
 
-                    'category' => trans('site.seo.product_category'),
+                    'category' => LocalizedCopy::string(
+                        'site.seo.product_category'
+                    ),
 
-                    'image' => [
-                        $watch->image
-                            ? url($watch->image)
-                            : url(
-                                '/images/vvs-flawless-profile.webp'
-                            ),
-                    ],
+                    'image' => $this->productImages($watch),
 
                     'offers' => $this->offersForWatch(
                         $watch
@@ -200,7 +203,9 @@ class WatchController extends Controller
                         [
                             '@type' => 'ListItem',
                             'position' => 1,
-                            'name' => trans('site.navigation.watches'),
+                            'name' => LocalizedCopy::string(
+                                'site.navigation.watches'
+                            ),
                             'item' => route(
                                 $this->localizedRouteName(
                                     'watches.index'
@@ -237,11 +242,8 @@ class WatchController extends Controller
 
                 'locale' => app()->getLocale(),
 
-                'image' => $watch->image
-                    ? url($watch->image)
-                    : url(
-                        '/images/vvs-flawless-profile.webp'
-                    ),
+                'image' => $this->productImages($watch)[0]
+                    ?? url('/images/vvs-flawless-profile.webp'),
 
                 'type' => 'product',
 
@@ -291,10 +293,10 @@ class WatchController extends Controller
             $offers[] = [
                 '@type' => 'Offer',
 
-                'name' => trans(
+                'name' => LocalizedCopy::string(
                     'site.seo.offer_name',
                     [
-                        'movement' => trans(
+                        'movement' => LocalizedCopy::string(
                             'site.movements.'.strtolower($movement)
                         ),
                     ]
@@ -395,6 +397,50 @@ class WatchController extends Controller
         }
 
         return $localizedWatch;
+    }
+
+    private function withGallery(Watch $watch): Watch
+    {
+        $configured = config('watch_galleries.'.$watch->id, []);
+        $gallery = collect(is_array($configured) ? $configured : [])
+            ->filter(
+                fn (mixed $image) => is_string($image)
+                    && trim($image) !== ''
+            )
+            ->values()
+            ->all();
+
+        if ($gallery === [] && is_string($watch->image) && $watch->image !== '') {
+            $gallery = [$watch->image];
+        }
+
+        $watch->setAttribute('gallery_images', $gallery);
+
+        return $watch;
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function productImages(Watch $watch): array
+    {
+        $gallery = $watch->getAttribute('gallery_images');
+
+        if (! is_array($gallery) || $gallery === []) {
+            $gallery = is_string($watch->image) && $watch->image !== ''
+                ? [$watch->image]
+                : ['/images/vvs-flawless-profile.webp'];
+        }
+
+        return collect($gallery)
+            ->filter(fn (mixed $image) => is_string($image) && $image !== '')
+            ->map(
+                fn (string $image) => Str::startsWith($image, ['http://', 'https://'])
+                    ? $image
+                    : url($image)
+            )
+            ->values()
+            ->all();
     }
 
     /**
