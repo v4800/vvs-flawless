@@ -70,6 +70,13 @@ return [
         'note' => 'Een reservatie bevestigt je interesse in het horloge. De bestelling wordt afgerond na bevestiging met VVS FLAWLESS.',
     ],
 
+    'visuals' => [
+        'eyebrow' => 'Transparantie',
+        'title' => 'Over onze productbeelden',
+        'text' => 'Sommige presentatiebeelden kunnen met behulp van artificiële intelligentie worden bewerkt of gegenereerd om de visuele stijl van de website consistent te houden. Ze dienen als illustratie en vervangen niet de productspecificaties op de productpagina.',
+        'note' => 'Wanneer een beeld is gegenereerd of ingrijpend gewijzigd, kan de weergave afwijken van het echte product. Voor bevestiging van de reservatie kunnen echte foto’s of video’s worden opgevraagd.',
+    ],
+
     'vvs_navigation' => [
         'collection' => 'Collectie',
         'model' => 'Model',
