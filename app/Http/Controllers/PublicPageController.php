@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\LocalizedCopy;
 use Inertia\Response;
 
 class PublicPageController extends Controller
@@ -11,8 +12,8 @@ class PublicPageController extends Controller
         $routeName = $this->localizedRouteName('about');
 
         $seo = $this->seo(
-            (string) trans('site.seo.about_title'),
-            (string) trans('site.seo.about_description'),
+            LocalizedCopy::string('site.seo.about_title'),
+            LocalizedCopy::string('site.seo.about_description'),
             route($routeName),
             'about'
         );
@@ -23,7 +24,9 @@ class PublicPageController extends Controller
             'name' => 'VVS FLAWLESS',
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
-            'description' => (string) trans('site.seo.about_description'),
+            'description' => LocalizedCopy::string(
+                'site.seo.about_description'
+            ),
             'areaServed' => [
                 '@type' => 'Country',
                 'name' => 'Belgium',
@@ -43,7 +46,7 @@ class PublicPageController extends Controller
     {
         $page = 'guides.diamond-vs-moissanite';
         $routeName = $this->localizedRouteName($page);
-        $guide = (array) trans('guides.diamond_vs_moissanite');
+        $guide = LocalizedCopy::array('guides.diamond_vs_moissanite');
 
         $seo = $this->articleSeo(
             $guide,
@@ -84,11 +87,18 @@ class PublicPageController extends Controller
     public function privacy(): Response
     {
         $routeName = $this->localizedRouteName('privacy');
+        $privacy = LocalizedCopy::array('site.legal.privacy');
+        $sections = is_array($privacy['sections'] ?? null)
+            ? $privacy['sections']
+            : [];
+        $firstSection = is_array($sections[0] ?? null)
+            ? $sections[0]
+            : [];
 
         return inertia('Legal/Privacy', [
             'seo' => $this->seo(
-                (string) trans('site.legal.privacy.seo_title'),
-                (string) trans('site.legal.privacy.sections.0.text'),
+                (string) ($privacy['seo_title'] ?? 'VVS FLAWLESS'),
+                (string) ($firstSection['text'] ?? ''),
                 route($routeName),
                 'privacy'
             ),
@@ -98,11 +108,21 @@ class PublicPageController extends Controller
     public function reservationTerms(): Response
     {
         $routeName = $this->localizedRouteName('reservation-terms');
+        $terms = LocalizedCopy::array('site.legal.terms');
+        $sections = is_array($terms['sections'] ?? null)
+            ? $terms['sections']
+            : [];
+        $firstSection = is_array($sections[0] ?? null)
+            ? $sections[0]
+            : [];
+        $paragraphs = is_array($firstSection['paragraphs'] ?? null)
+            ? $firstSection['paragraphs']
+            : [];
 
         return inertia('Legal/ReservationTerms', [
             'seo' => $this->seo(
-                (string) trans('site.legal.terms.seo_title'),
-                (string) trans('site.legal.terms.sections.0.paragraphs.0'),
+                (string) ($terms['seo_title'] ?? 'VVS FLAWLESS'),
+                (string) ($paragraphs[0] ?? ''),
                 route($routeName),
                 'reservation-terms'
             ),
@@ -114,7 +134,9 @@ class PublicPageController extends Controller
         string $page
     ): Response {
         $routeName = $this->localizedRouteName($page);
-        $guide = (array) trans('seo_intents.'.$translationKey);
+        $guide = LocalizedCopy::array(
+            'seo_intents.'.$translationKey
+        );
 
         return inertia('Guides/SeoIntent', [
             'seo' => $this->articleSeo(
@@ -177,7 +199,9 @@ class PublicPageController extends Controller
                         [
                             '@type' => 'ListItem',
                             'position' => 1,
-                            'name' => trans('site.navigation.watches'),
+                            'name' => LocalizedCopy::string(
+                                'site.navigation.watches'
+                            ),
                             'item' => route(
                                 $this->localizedRouteName('watches.index')
                             ),
