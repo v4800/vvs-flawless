@@ -76,6 +76,13 @@ return [
         'note' => 'Le formulaire ne vous engage pas définitivement. La commande commence seulement après votre confirmation avec VVS FLAWLESS.',
     ],
 
+    'visuals' => [
+        'eyebrow' => 'Transparence',
+        'title' => 'À propos de nos visuels',
+        'text' => "Certaines images de présentation peuvent être retouchées ou générées avec l'aide de l'intelligence artificielle afin d'harmoniser la mise en scène du site. Elles servent d'illustration et ne remplacent pas les caractéristiques indiquées sur la fiche produit.",
+        'note' => "Lorsqu'un visuel est généré ou substantiellement modifié, son apparence peut différer du produit réel. Des photos ou vidéos réelles peuvent être demandées avant confirmation de la réservation.",
+    ],
+
     'vvs_navigation' => [
         'collection' => 'Collection',
         'model' => 'Modèle',
