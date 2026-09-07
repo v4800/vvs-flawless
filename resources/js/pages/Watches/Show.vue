@@ -1,11 +1,11 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, watch as vueWatch } from 'vue';
-import ReservationTrust from '@/components/ReservationTrust.vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
+import ProductGallery from '@/components/ProductGallery.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
 import RelatedWatches from '@/components/RelatedWatches.vue';
-import StockBadge from '@/components/StockBadge.vue';
+import ReservationTrust from '@/components/ReservationTrust.vue';
 import VvsNavigation from '@/components/VvsNavigation.vue';
 
 const props = defineProps({
@@ -33,6 +33,10 @@ const props = defineProps({
 const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
+
+const primaryImage = computed(
+    () => props.watch.gallery_images?.[0] ?? props.watch.image,
+);
 
 const form = useForm({
     watch_id: props.watch.id,
@@ -147,101 +151,7 @@ const submit = () => {
                 <div
                     class="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16"
                 >
-                    <!-- IMAGE -->
-
-                    <div>
-                        <div class="relative">
-                            <div class="absolute top-5 left-5 z-20">
-                                <StockBadge
-                                    :quantity="watch.stock_quantity"
-                                    :availability="watch.availability"
-                                />
-                            </div>
-
-                            <div
-                                class="aspect-square self-start overflow-hidden rounded-3xl bg-zinc-400"
-                            >
-                                <img
-                                    :src="watch.image"
-                                    :alt="watch.name"
-                                    loading="eager"
-                                    fetchpriority="high"
-                                    decoding="async"
-                                    class="block h-full w-full object-contain"
-                                />
-                            </div>
-
-                            <div
-                                class="absolute right-5 bottom-5 left-5 flex items-center justify-between rounded-2xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl"
-                            >
-                                <div>
-                                    <p
-                                        class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
-                                    >
-                                        {{ translations.product.stone }}
-                                    </p>
-
-                                    <p
-                                        class="mt-1 text-sm font-bold text-white"
-                                    >
-                                        Moissanite VVS
-                                    </p>
-                                </div>
-
-                                <div class="h-8 w-px bg-white/10"></div>
-
-                                <div class="text-right">
-                                    <p
-                                        class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
-                                    >
-                                        {{ translations.product.color }}
-                                    </p>
-
-                                    <p
-                                        class="mt-1 text-sm font-bold text-amber-200"
-                                    >
-                                        D
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 grid grid-cols-3 gap-3">
-                            <div class="vvs-choice-card rounded-2xl border p-4">
-                                <p
-                                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
-                                >
-                                    {{ translations.product.purity }}
-                                </p>
-
-                                <p class="vvs-price mt-2 font-black">VVS</p>
-                            </div>
-
-                            <div class="vvs-choice-card rounded-2xl border p-4">
-                                <p
-                                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
-                                >
-                                    {{ translations.product.color }}
-                                </p>
-
-                                <p class="vvs-price mt-2 font-black">D</p>
-                            </div>
-
-                            <div class="vvs-choice-card rounded-2xl border p-4">
-                                <p
-                                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
-                                >
-                                    {{ translations.product.reception }}
-                                </p>
-
-                                <p
-                                    class="mt-2 text-xs font-black text-amber-200"
-                                >
-                                    {{ translations.product.customer_choice }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    <ProductGallery :watch="watch" />
 
                     <!-- INFORMATIONS -->
 
@@ -610,9 +520,9 @@ const submit = () => {
                             class="vvs-luxury-card mt-7 overflow-hidden rounded-2xl border"
                         >
                             <div class="grid grid-cols-[105px_1fr]">
-                                <div class="bg-zinc-400">
+                                <div class="bg-zinc-950">
                                     <img
-                                        :src="watch.image"
+                                        :src="primaryImage"
                                         :alt="watch.name"
                                         loading="lazy"
                                         decoding="async"
