@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\LocalizedCopy;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -45,18 +46,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
-            'translations' => fn () => $this->localizedMarketingCopy(
-                'site',
-                'site'
-            ),
-            'guideLinks' => fn () => $this->localizedMarketingCopy(
-                'guides.links',
-                'guides.links'
-            ),
-            'seoIntentContent' => fn () => $this->localizedMarketingCopy(
-                'seo_intents',
-                'seo_intents'
-            ),
+            'translations' => fn () => LocalizedCopy::array('site'),
+            'guideLinks' => fn () => LocalizedCopy::array('guides.links'),
+            'seoIntentContent' => fn () => LocalizedCopy::array('seo_intents'),
             'localizedRoutes' => [
                 'watches' => route(
                     $routePrefix.'watches.index',
@@ -100,26 +92,5 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    private function localizedMarketingCopy(
-        string $baseKey,
-        string $marketingKey
-    ): array {
-        $base = trans($baseKey);
-        $marketing = trans('marketing.'.$marketingKey);
-
-        if (! is_array($base)) {
-            return [];
-        }
-
-        if (! is_array($marketing)) {
-            return $base;
-        }
-
-        return array_replace_recursive($base, $marketing);
     }
 }
