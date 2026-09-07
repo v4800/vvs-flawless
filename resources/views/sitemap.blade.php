@@ -1,67 +1,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <url>
-        <loc>{{ route('watches.index') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('watches.index') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.watches.index') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('watches.index') }}" />
-    </url>
-
-    <url>
-        <loc>{{ route('nl.watches.index') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('watches.index') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.watches.index') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('watches.index') }}" />
-    </url>
-
-    <url>
-        <loc>{{ route('about') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('about') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.about') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('about') }}" />
-    </url>
-
-    <url>
-        <loc>{{ route('nl.about') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('about') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.about') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('about') }}" />
-    </url>
-
-    <url>
-        <loc>{{ route('guides.diamond-vs-moissanite') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('guides.diamond-vs-moissanite') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.guides.diamond-vs-moissanite') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('guides.diamond-vs-moissanite') }}" />
-    </url>
-
-    <url>
-        <loc>{{ route('nl.guides.diamond-vs-moissanite') }}</loc>
-        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('guides.diamond-vs-moissanite') }}" />
-        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.guides.diamond-vs-moissanite') }}" />
-        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('guides.diamond-vs-moissanite') }}" />
-    </url>
+    @foreach ($staticPages as $page)
+        @foreach (['fr' => 'fr-BE', 'nl' => 'nl-BE', 'en' => 'en-BE'] as $language => $hreflang)
+            <url>
+                <loc>{{ route($page[$language]) }}</loc>
+                <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route($page['fr']) }}" />
+                <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route($page['nl']) }}" />
+                <xhtml:link rel="alternate" hreflang="en-BE" href="{{ route($page['en']) }}" />
+                <xhtml:link rel="alternate" hreflang="x-default" href="{{ route($page['fr']) }}" />
+            </url>
+        @endforeach
+    @endforeach
 
     @foreach ($watches as $watch)
-        <url>
-            <loc>{{ route('watches.show', ['watch' => $watch->id]) }}</loc>
-            <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('watches.show', ['watch' => $watch->id]) }}" />
-            <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.watches.show', ['watch' => $watch->id]) }}" />
-            <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('watches.show', ['watch' => $watch->id]) }}" />
+        @php
+            $watchRoutes = [
+                'fr' => route('watches.show', ['watch' => $watch->id]),
+                'nl' => route('nl.watches.show', ['watch' => $watch->id]),
+                'en' => route('en.watches.show', ['watch' => $watch->id]),
+            ];
+        @endphp
 
-            @if ($watch->updated_at)
-                <lastmod>{{ $watch->updated_at->toAtomString() }}</lastmod>
-            @endif
-        </url>
+        @foreach (['fr' => 'fr-BE', 'nl' => 'nl-BE', 'en' => 'en-BE'] as $language => $hreflang)
+            <url>
+                <loc>{{ $watchRoutes[$language] }}</loc>
+                <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ $watchRoutes['fr'] }}" />
+                <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ $watchRoutes['nl'] }}" />
+                <xhtml:link rel="alternate" hreflang="en-BE" href="{{ $watchRoutes['en'] }}" />
+                <xhtml:link rel="alternate" hreflang="x-default" href="{{ $watchRoutes['fr'] }}" />
 
-        <url>
-            <loc>{{ route('nl.watches.show', ['watch' => $watch->id]) }}</loc>
-            <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('watches.show', ['watch' => $watch->id]) }}" />
-            <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.watches.show', ['watch' => $watch->id]) }}" />
-            <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('watches.show', ['watch' => $watch->id]) }}" />
-
-            @if ($watch->updated_at)
-                <lastmod>{{ $watch->updated_at->toAtomString() }}</lastmod>
-            @endif
-        </url>
+                @if ($watch->updated_at)
+                    <lastmod>{{ $watch->updated_at->toAtomString() }}</lastmod>
+                @endif
+            </url>
+        @endforeach
     @endforeach
 </urlset>
