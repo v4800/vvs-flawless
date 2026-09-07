@@ -17,10 +17,44 @@ class SeoController extends Controller
             ->orderBy('id')
             ->get();
 
+        $staticPages = [
+            [
+                'fr' => 'watches.index',
+                'nl' => 'nl.watches.index',
+                'en' => 'en.watches.index',
+            ],
+            [
+                'fr' => 'about',
+                'nl' => 'nl.about',
+                'en' => 'en.about',
+            ],
+            [
+                'fr' => 'guides.diamond-vs-moissanite',
+                'nl' => 'nl.guides.diamond-vs-moissanite',
+                'en' => 'en.guides.diamond-vs-moissanite',
+            ],
+            [
+                'fr' => 'guides.vvs-watch',
+                'nl' => 'nl.guides.vvs-watch',
+                'en' => 'en.guides.vvs-watch',
+            ],
+            [
+                'fr' => 'guides.men-women',
+                'nl' => 'nl.guides.men-women',
+                'en' => 'en.guides.men-women',
+            ],
+            [
+                'fr' => 'guides.belgium',
+                'nl' => 'nl.guides.belgium',
+                'en' => 'en.guides.belgium',
+            ],
+        ];
+
         return response()->view(
             'sitemap',
             [
                 'watches' => $watches,
+                'staticPages' => $staticPages,
             ],
             200,
             [
@@ -42,6 +76,7 @@ class SeoController extends Controller
             'Disallow: /reset-password',
             'Disallow: /reservation-confirmed/',
             'Disallow: /nl/reservation-confirmed/',
+            'Disallow: /en/reservation-confirmed/',
             '',
             'Sitemap: '.route('sitemap'),
             '',
