@@ -36,6 +36,8 @@ const languageLinks = computed(() => {
             ?.href,
         nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
             ?.href,
+        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
+            ?.href,
     };
 });
 /*
@@ -497,6 +499,18 @@ onBeforeUnmount(() => {
                             ]"
                         >
                             {{ translations.language.nl }}
+                        </Link>
+                        <Link
+                            v-if="languageLinks.en"
+                            :href="languageLinks.en"
+                            :class="[
+                                'rounded-full px-2.5 py-1.5 transition',
+                                page.props.locale === 'en_BE'
+                                    ? 'bg-amber-300 text-black'
+                                    : 'text-zinc-500 hover:text-white',
+                            ]"
+                        >
+                            {{ translations.language.en }}
                         </Link>
                     </nav>
 
