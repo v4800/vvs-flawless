@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { computed, watch as vueWatch } from 'vue';
+import { computed, ref, watch as vueWatch } from 'vue';
 import ReservationTrust from '@/components/ReservationTrust.vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
@@ -12,6 +12,11 @@ const props = defineProps({
     watch: {
         type: Object,
         required: true,
+    },
+
+    gallery: {
+        type: Array,
+        default: () => [],
     },
 
     selectedMovement: {
@@ -33,6 +38,7 @@ const props = defineProps({
 const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
+const activeImage = ref(props.gallery[0] ?? props.watch.image);
 
 const form = useForm({
     watch_id: props.watch.id,
@@ -79,6 +85,14 @@ vueWatch(
     () => props.watch.id,
     (watchId) => {
         form.watch_id = watchId;
+        activeImage.value = props.gallery[0] ?? props.watch.image;
+    },
+);
+
+vueWatch(
+    () => props.gallery,
+    (gallery) => {
+        activeImage.value = gallery[0] ?? props.watch.image;
     },
 );
 
@@ -162,7 +176,7 @@ const submit = () => {
                                 class="aspect-square self-start overflow-hidden rounded-3xl bg-zinc-400"
                             >
                                 <img
-                                    :src="watch.image"
+                                    :src="activeImage"
                                     :alt="watch.name"
                                     loading="eager"
                                     fetchpriority="high"
@@ -204,6 +218,34 @@ const submit = () => {
                                     </p>
                                 </div>
                             </div>
+                        </div>
+
+                        <div
+                            v-if="gallery.length > 1"
+                            class="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-6"
+                        >
+                            <button
+                                v-for="(image, index) in gallery"
+                                :key="image"
+                                type="button"
+                                :aria-label="`${watch.name} — vue ${index + 1}`"
+                                :aria-pressed="activeImage === image"
+                                :class="[
+                                    'aspect-square overflow-hidden rounded-xl border bg-zinc-950 p-1 transition',
+                                    activeImage === image
+                                        ? 'border-amber-300/70 ring-1 ring-amber-300/30'
+                                        : 'border-white/10 hover:border-white/30',
+                                ]"
+                                @click="activeImage = image"
+                            >
+                                <img
+                                    :src="image"
+                                    :alt="`${watch.name} — vue ${index + 1}`"
+                                    loading="lazy"
+                                    decoding="async"
+                                    class="h-full w-full rounded-lg object-cover"
+                                />
+                            </button>
                         </div>
 
                         <div class="mt-4 grid grid-cols-3 gap-3">
@@ -277,7 +319,6 @@ const submit = () => {
                         <div
                             class="my-9 h-px bg-gradient-to-r from-white/10 via-white/5 to-transparent"
                         ></div>
-
                         <!-- MOUVEMENTS -->
 
                         <div>
@@ -612,7 +653,7 @@ const submit = () => {
                             <div class="grid grid-cols-[105px_1fr]">
                                 <div class="bg-zinc-400">
                                     <img
-                                        :src="watch.image"
+                                        :src="activeImage"
                                         :alt="watch.name"
                                         loading="lazy"
                                         decoding="async"
