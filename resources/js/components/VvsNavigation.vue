@@ -175,7 +175,9 @@ onMounted(() => {
                 </nav>
 
                 <nav
-                    v-if="languageLinks.fr || languageLinks.nl || languageLinks.en"
+                    v-if="
+                        languageLinks.fr || languageLinks.nl || languageLinks.en
+                    "
                     class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
                     :aria-label="translations.language.label"
                 >

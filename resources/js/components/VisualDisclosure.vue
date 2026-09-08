@@ -41,7 +41,9 @@ const shouldShow = computed(
                         {{ translations.title }}
                     </h2>
 
-                    <p class="mt-2 max-w-5xl text-xs leading-6 text-zinc-400 sm:text-sm">
+                    <p
+                        class="mt-2 max-w-5xl text-xs leading-6 text-zinc-400 sm:text-sm"
+                    >
                         {{ translations.text }}
                     </p>
 

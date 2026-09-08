@@ -102,7 +102,9 @@ const translations = computed(() => page.props.translations);
                 class="border-y border-white/10 bg-zinc-950/40 px-5 py-20 sm:px-6 lg:px-10"
             >
                 <div class="mx-auto max-w-4xl">
-                    <h2 class="vvs-display-title text-center text-4xl sm:text-5xl">
+                    <h2
+                        class="vvs-display-title text-center text-4xl sm:text-5xl"
+                    >
                         {{ guide.faq_title }}
                     </h2>
 
