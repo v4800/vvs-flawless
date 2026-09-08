@@ -424,7 +424,7 @@ class WatchController extends Controller
             52 => '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
             48 => '/images/watches/catalog/002-twotone-round/01-front.png',
             46 => '/images/watches/catalog/003-square-roman/01-front.png',
-            47 => '/images/watches/catalog/004-black-square/01-front.jpg',
+            47 => '/images/watches/catalog/004-black-square/03-hand.jpg',
             default => null,
         };
     }

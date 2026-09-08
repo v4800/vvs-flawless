@@ -173,7 +173,7 @@ const submit = () => {
                             </div>
 
                             <div
-                                class="aspect-square self-start overflow-hidden rounded-3xl bg-zinc-400"
+                                class="relative aspect-square self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)]"
                             >
                                 <img
                                     :src="activeImage"
@@ -181,7 +181,7 @@ const submit = () => {
                                     loading="eager"
                                     fetchpriority="high"
                                     decoding="async"
-                                    class="block h-full w-full object-contain"
+                                    class="block h-full w-full object-contain p-3 contrast-[1.04] saturate-[0.94] sm:p-5"
                                 />
                             </div>
 
@@ -231,7 +231,7 @@ const submit = () => {
                                 :aria-label="`${watch.name} — vue ${index + 1}`"
                                 :aria-pressed="activeImage === image"
                                 :class="[
-                                    'aspect-square overflow-hidden rounded-xl border bg-zinc-950 p-1 transition',
+                                    'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition',
                                     activeImage === image
                                         ? 'border-amber-300/70 ring-1 ring-amber-300/30'
                                         : 'border-white/10 hover:border-white/30',
@@ -243,7 +243,7 @@ const submit = () => {
                                     :alt="`${watch.name} — vue ${index + 1}`"
                                     loading="lazy"
                                     decoding="async"
-                                    class="h-full w-full rounded-lg object-cover"
+                                    class="h-full w-full rounded-lg object-cover contrast-[1.03] saturate-[0.94]"
                                 />
                             </button>
                         </div>

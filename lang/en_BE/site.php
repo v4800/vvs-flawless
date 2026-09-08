@@ -41,6 +41,14 @@ return [
         'delivery' => 'Estimated availability',
         'delay' => '5–6 working days',
         'view_watch' => 'View the watch',
+        'source_eyebrow' => 'New selection',
+        'source_title' => 'More models',
+        'source_description' => 'Three additional models available on request, presented with the same VVS FLAWLESS art direction.',
+        'source_badge' => 'On request',
+        'source_request' => 'Request this model',
+        'source_black_title' => 'Stainless steel black dial — iced-out style',
+        'source_red_title' => 'Stainless steel red Roman dial — iced-out style',
+        'source_jubilee_title' => 'Stainless steel Jubilee bracelet — bustdown style',
     ],
 
     'stock' => [

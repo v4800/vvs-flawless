@@ -42,6 +42,14 @@ return [
         'delivery' => 'Livraison estimée',
         'delay' => '5–6 jours ouvrables',
         'view_watch' => 'Voir la montre',
+        'source_eyebrow' => 'Nouvelle sélection',
+        'source_title' => 'Encore plus de modèles',
+        'source_description' => 'Trois modèles supplémentaires disponibles sur demande, présentés dans la même direction artistique VVS FLAWLESS.',
+        'source_badge' => 'Sur demande',
+        'source_request' => 'Demander ce modèle',
+        'source_black_title' => 'Montre acier, cadran noir — style iced-out',
+        'source_red_title' => 'Montre acier, cadran rouge romain — style iced-out',
+        'source_jubilee_title' => 'Montre acier, bracelet Jubilee — style bustdown',
     ],
 
     'stock' => [

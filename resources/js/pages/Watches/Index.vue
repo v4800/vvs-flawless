@@ -10,6 +10,7 @@ import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
 import PickupSection from '@/components/PickupSection.vue';
+import SourcedWatches from '@/components/SourcedWatches.vue';
 
 const props = defineProps({
     watches: {
@@ -989,7 +990,7 @@ onBeforeUnmount(() => {
                             <!-- IMAGE -->
 
                             <div
-                                class="relative h-[390px] overflow-hidden bg-zinc-950"
+                                class="relative h-[390px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)]"
                             >
                                 <div
                                     class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
@@ -1009,7 +1010,7 @@ onBeforeUnmount(() => {
                                     :alt="watch.name"
                                     loading="lazy"
                                     decoding="async"
-                                    class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]"
+                                    class="h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.06]"
                                 />
 
                                 <div
@@ -1180,6 +1181,8 @@ onBeforeUnmount(() => {
             <!-- ========================================================= -->
             <!-- COMMENT COMMANDER -->
             <!-- ========================================================= -->
+
+            <SourcedWatches />
 
             <OrderSteps />
 

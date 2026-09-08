@@ -41,6 +41,14 @@ return [
         'delivery' => 'Geschatte levering',
         'delay' => '5–6 werkdagen',
         'view_watch' => 'Bekijk het horloge',
+        'source_eyebrow' => 'Nieuwe selectie',
+        'source_title' => 'Nog meer modellen',
+        'source_description' => 'Drie extra modellen op aanvraag, gepresenteerd in dezelfde VVS FLAWLESS art direction.',
+        'source_badge' => 'Op aanvraag',
+        'source_request' => 'Vraag dit model aan',
+        'source_black_title' => 'Stalen horloge, zwarte wijzerplaat — iced-out stijl',
+        'source_red_title' => 'Stalen horloge, rode Romeinse wijzerplaat — iced-out stijl',
+        'source_jubilee_title' => 'Stalen horloge, Jubilee-band — bustdown stijl',
     ],
 
     'stock' => [
