@@ -409,7 +409,7 @@ class WatchController extends Controller
     {
         $cover = $this->coverForWatch($watch);
 
-        if ($cover === null) {
+        if ($cover === null || ! $this->catalogImageExists($cover)) {
             return $watch;
         }
 
@@ -434,7 +434,7 @@ class WatchController extends Controller
      */
     private function galleryForWatch(Watch $watch): array
     {
-        return match ((int) $watch->id) {
+        $gallery = match ((int) $watch->id) {
             52 => [
                 '/images/watches/catalog/001-blue-round/01-front.png',
                 '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
@@ -461,6 +461,22 @@ class WatchController extends Controller
             ],
             default => [],
         };
+
+        return array_values(
+            array_filter(
+                $gallery,
+                fn (string $image): bool => $this->catalogImageExists($image)
+            )
+        );
+    }
+
+    private function catalogImageExists(string $image): bool
+    {
+        return is_file(
+            public_path(
+                ltrim($image, '/')
+            )
+        );
     }
 
     /**
