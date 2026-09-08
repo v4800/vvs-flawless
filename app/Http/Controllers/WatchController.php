@@ -15,6 +15,19 @@ class WatchController extends Controller
 
         $watches = Watch::latest()->get();
 
+        $watches->transform(function (Watch $watch): Watch {
+            if (
+                Str::contains(
+                    (string) $watch->image,
+                    'presidentielle-bleu-romains'
+                )
+            ) {
+                $watch->image = '/images/watches/catalog/001-blue-round/02-hero-reflection.png';
+            }
+
+            return $watch;
+        });
+
         return inertia('Watches/Index', [
             'watches' => $watches,
 
