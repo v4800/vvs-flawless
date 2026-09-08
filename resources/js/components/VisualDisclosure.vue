@@ -2,9 +2,24 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+type VisualTranslations = {
+    eyebrow: string;
+    title: string;
+    text: string;
+    note: string;
+};
+
+type SharedTranslations = {
+    visuals?: VisualTranslations;
+};
+
 const page = usePage();
 
-const translations = computed(() => page.props.translations?.visuals ?? null);
+const translations = computed(
+    () =>
+        (page.props.translations as SharedTranslations | undefined)?.visuals ??
+        null,
+);
 const shouldShow = computed(
     () => page.component.startsWith('Watches/') && Boolean(translations.value),
 );
@@ -12,7 +27,7 @@ const shouldShow = computed(
 
 <template>
     <section
-        v-if="shouldShow"
+        v-if="shouldShow && translations"
         class="border-t border-white/10 bg-zinc-950/80 px-5 py-8 text-white sm:px-6 lg:px-10"
         aria-labelledby="visual-disclosure-title"
     >
