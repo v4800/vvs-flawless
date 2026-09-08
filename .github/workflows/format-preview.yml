@@ -6,14 +6,16 @@ on:
       - ai/visual-copy-polish
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
-  preview:
+  format:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          ref: ai/visual-copy-polish
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -23,15 +25,18 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Apply formatter locally
-        run: npm run check:fix || true
+      - name: Apply formatter
+        run: npm run check:fix
 
-      - name: Show formatter diff
+      - name: Commit formatter changes
         run: |
-          git diff -- \
-            IMAGE_NAMING.md \
-            resources/data/watch-image-catalog.json \
-            resources/js/components/VisualDisclosure.vue \
-            resources/js/components/VvsNavigation.vue \
-            resources/js/pages/Guides/SeoIntent.vue \
-            resources/js/pages/Watches/Show.vue
+          if git diff --quiet; then
+            echo "No formatter changes required."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add IMAGE_NAMING.md resources/data/watch-image-catalog.json resources/js/components/VisualDisclosure.vue resources/js/components/VvsNavigation.vue resources/js/pages/Guides/SeoIntent.vue resources/js/pages/Watches/Show.vue
+          git commit -m "Format storefront files"
+          git push origin HEAD:ai/visual-copy-polish
