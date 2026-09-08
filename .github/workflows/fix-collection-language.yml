@@ -1,0 +1,53 @@
+name: fix-collection-language
+
+on:
+  push:
+    branches:
+      - ai/visual-copy-polish
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ai/visual-copy-polish
+
+      - name: Add English to collection language switcher
+        shell: python
+        run: |
+          from pathlib import Path
+
+          path = Path('resources/js/pages/Watches/Index.vue')
+          text = path.read_text(encoding='utf-8')
+
+          old_links = """        nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')\n            ?.href,\n    };"""
+          new_links = """        nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')\n            ?.href,\n        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')\n            ?.href,\n    };"""
+
+          old_template = """                        <Link\n                            v-if=\"languageLinks.nl\"\n                            :href=\"languageLinks.nl\"\n                            :class=\"[\n                                'rounded-full px-2.5 py-1.5 transition',\n                                page.props.locale === 'nl_BE'\n                                    ? 'bg-amber-300 text-black'\n                                    : 'text-zinc-500 hover:text-white',\n                            ]\"\n                        >\n                            {{ translations.language.nl }}\n                        </Link>\n                    </nav>"""
+          new_template = """                        <Link\n                            v-if=\"languageLinks.nl\"\n                            :href=\"languageLinks.nl\"\n                            :class=\"[\n                                'rounded-full px-2.5 py-1.5 transition',\n                                page.props.locale === 'nl_BE'\n                                    ? 'bg-amber-300 text-black'\n                                    : 'text-zinc-500 hover:text-white',\n                            ]\"\n                        >\n                            {{ translations.language.nl }}\n                        </Link>\n                        <Link\n                            v-if=\"languageLinks.en\"\n                            :href=\"languageLinks.en\"\n                            :class=\"[\n                                'rounded-full px-2.5 py-1.5 transition',\n                                page.props.locale === 'en_BE'\n                                    ? 'bg-amber-300 text-black'\n                                    : 'text-zinc-500 hover:text-white',\n                            ]\"\n                        >\n                            {{ translations.language.en }}\n                        </Link>\n                    </nav>"""
+
+          if old_links not in text:
+              raise SystemExit('languageLinks target not found')
+          if old_template not in text:
+              raise SystemExit('header language switcher target not found')
+
+          text = text.replace(old_links, new_links, 1)
+          text = text.replace(old_template, new_template, 1)
+          path.write_text(text, encoding='utf-8')
+
+      - name: Commit patch
+        run: |
+          if git diff --quiet; then
+            echo "No changes required."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add resources/js/pages/Watches/Index.vue
+          git commit -m "Add English to collection language switcher"
+          git push origin HEAD:ai/visual-copy-polish
