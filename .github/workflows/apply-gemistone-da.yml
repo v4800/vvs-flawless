@@ -17,152 +17,129 @@ jobs:
         with:
           ref: ai/visual-copy-polish
 
-      - name: Download selected source watch photos
+      - name: Download selected watch photos
         run: |
           set -euo pipefail
           mkdir -p public/images/watches/catalog/005-black-stainless
           mkdir -p public/images/watches/catalog/006-red-roman
           mkdir -p public/images/watches/catalog/007-jubilee
+          curl -L --fail --retry 3 'https://gemistone.com/cdn/shop/files/Moissanite_Iced_Out_Black_Dial_Watch.webp?v=1772686569&width=1946' -o public/images/watches/catalog/005-black-stainless/01-front.webp
+          curl -L --fail --retry 3 'https://gemistone.com/cdn/shop/files/Roman_Number_Moissanite_Red_Dial_Iced_Out_Watch.webp?v=1772688473&width=1946' -o public/images/watches/catalog/006-red-roman/01-front.webp
+          curl -L --fail --retry 3 'https://gemistone.com/cdn/shop/files/Jubilee-Bracelet-Diamond-Watch.jpg?v=1746510531&width=1946' -o public/images/watches/catalog/007-jubilee/01-front.jpg
 
-          curl -L --fail --retry 3 \
-            'https://gemistone.com/cdn/shop/files/Moissanite_Iced_Out_Black_Dial_Watch.webp?v=1772686569&width=1946' \
-            -o public/images/watches/catalog/005-black-stainless/01-front.webp
-
-          curl -L --fail --retry 3 \
-            'https://gemistone.com/cdn/shop/files/Roman_Number_Moissanite_Red_Dial_Iced_Out_Watch.webp?v=1772688473&width=1946' \
-            -o public/images/watches/catalog/006-red-roman/01-front.webp
-
-          curl -L --fail --retry 3 \
-            'https://gemistone.com/cdn/shop/files/Jubilee-Bracelet-Diamond-Watch.jpg?v=1746510531&width=1946' \
-            -o public/images/watches/catalog/007-jubilee/01-front.jpg
-
-      - name: Apply VVS FLAWLESS visual treatment and source cards
+      - name: Apply storefront changes
         shell: python
         run: |
           from pathlib import Path
           import json
 
-          index = Path('resources/js/pages/Watches/Index.vue')
-          text = index.read_text(encoding='utf-8')
+          component = Path('resources/js/components/SourcedWatches.vue')
+          component.write_text("""<script setup>
+          import { usePage } from '@inertiajs/vue3';
+          import { computed } from 'vue';
 
-          marker = """const languageLinks = computed(() => {
-              const alternates = props.seo.alternates ?? [];
+          const page = usePage();
+          const translations = computed(() => page.props.translations);
 
-              return {
-                  fr: alternates.find((alternate) => alternate.hreflang === 'fr-BE')
-                      ?.href,
-                  nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
-                      ?.href,
-                  en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
-                      ?.href,
-              };
-          });"""
-
-          addition = marker + """
-
-          const sourcedModels = computed(() => [
+          const models = computed(() => [
               {
                   key: 'black-stainless',
                   image: '/images/watches/catalog/005-black-stainless/01-front.webp',
-                  name: translations.collection.source_black_title,
+                  name: translations.value.collection.source_black_title,
               },
               {
                   key: 'red-roman',
                   image: '/images/watches/catalog/006-red-roman/01-front.webp',
-                  name: translations.collection.source_red_title,
+                  name: translations.value.collection.source_red_title,
               },
               {
                   key: 'jubilee',
                   image: '/images/watches/catalog/007-jubilee/01-front.jpg',
-                  name: translations.collection.source_jubilee_title,
+                  name: translations.value.collection.source_jubilee_title,
               },
-          ]);"""
+          ]);
+          </script>
 
-          if marker not in text:
-              raise SystemExit('languageLinks marker not found')
-          text = text.replace(marker, addition, 1)
+          <template>
+              <section class=\"border-y border-white/10 bg-black px-5 py-20 sm:px-6 lg:px-10\">
+                  <div class=\"mx-auto max-w-[1500px]\">
+                      <div class=\"mx-auto mb-10 max-w-2xl text-center\">
+                          <p class=\"text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase\">
+                              {{ translations.collection.source_eyebrow }}
+                          </p>
+                          <h2 class=\"vvs-display-title mt-3 text-4xl sm:text-5xl\">
+                              {{ translations.collection.source_title }}
+                          </h2>
+                          <p class=\"mt-4 text-sm leading-7 text-zinc-500\">
+                              {{ translations.collection.source_description }}
+                          </p>
+                      </div>
+
+                      <div class=\"grid gap-6 md:grid-cols-3\">
+                          <article
+                              v-for=\"model in models\"
+                              :key=\"model.key\"
+                              class=\"vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-3xl border\"
+                          >
+                              <div class=\"relative h-[390px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)]\">
+                                  <div class=\"absolute inset-0 z-10 bg-gradient-to-t from-black via-black/10 to-transparent\"></div>
+                                  <div class=\"absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/[0.05] blur-[70px]\"></div>
+                                  <img
+                                      :src=\"model.image\"
+                                      :alt=\"model.name\"
+                                      loading=\"lazy\"
+                                      decoding=\"async\"
+                                      class=\"h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.05]\"
+                                  />
+                                  <span class=\"absolute top-5 left-5 z-20 rounded-full border border-amber-300/25 bg-black/75 px-4 py-2 text-[9px] font-black tracking-[0.18em] text-amber-200 uppercase backdrop-blur\">
+                                      {{ translations.collection.source_badge }}
+                                  </span>
+                              </div>
+
+                              <div class=\"p-6 text-center\">
+                                  <h3 class=\"vvs-display-title min-h-[58px] text-2xl leading-[1.05] text-white\">
+                                      {{ model.name }}
+                                  </h3>
+                                  <p class=\"mt-3 text-[11px] font-black tracking-[0.18em] text-amber-300 uppercase\">
+                                      Moissanite VVS
+                                  </p>
+                                  <a
+                                      href=\"#contact\"
+                                      class=\"vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase\"
+                                  >
+                                      {{ translations.collection.source_request }}
+                                      <span>→</span>
+                                  </a>
+                              </div>
+                          </article>
+                      </div>
+                  </div>
+              </section>
+          </template>
+          """, encoding='utf-8')
+
+          index = Path('resources/js/pages/Watches/Index.vue')
+          text = index.read_text(encoding='utf-8')
+          if "import SourcedWatches from '@/components/SourcedWatches.vue';" not in text:
+              anchor = "import PickupSection from '@/components/PickupSection.vue';"
+              if anchor not in text:
+                  raise SystemExit('Index import anchor not found')
+              text = text.replace(anchor, anchor + "\nimport SourcedWatches from '@/components/SourcedWatches.vue';", 1)
+
+          if '<SourcedWatches />' not in text:
+              anchor = '            <OrderSteps />'
+              if anchor not in text:
+                  raise SystemExit('OrderSteps anchor not found')
+              text = text.replace(anchor, '            <SourcedWatches />\n\n' + anchor, 1)
 
           text = text.replace(
               'class="relative h-[390px] overflow-hidden bg-zinc-950"',
               'class="relative h-[390px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)]"',
-              1,
           )
           text = text.replace(
               'class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.06]"',
               'class="h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.06]"',
-              1,
           )
-
-          end_marker = """                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================= -->
-            <!-- COMMENT COMMANDER -->"""
-
-          source_section = """                    </div>
-
-                    <div class="mt-16 border-t border-white/10 pt-12">
-                        <div class="mx-auto mb-8 max-w-2xl text-center">
-                            <p class="text-[10px] font-black tracking-[0.3em] text-amber-300 uppercase">
-                                {{ translations.collection.source_eyebrow }}
-                            </p>
-                            <h3 class="vvs-display-title mt-3 text-3xl sm:text-4xl">
-                                {{ translations.collection.source_title }}
-                            </h3>
-                            <p class="mt-3 text-sm leading-6 text-zinc-500">
-                                {{ translations.collection.source_description }}
-                            </p>
-                        </div>
-
-                        <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                            <article
-                                v-for="source in sourcedModels"
-                                :key="source.key"
-                                class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
-                            >
-                                <div class="relative h-[360px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)]">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/5 to-transparent"></div>
-                                    <div class="absolute top-1/2 left-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-300/[0.05] blur-[65px]"></div>
-                                    <img
-                                        :src="source.image"
-                                        :alt="source.name"
-                                        loading="lazy"
-                                        decoding="async"
-                                        class="h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.05]"
-                                    />
-                                    <div class="absolute top-4 left-4 z-20 rounded-full border border-amber-300/25 bg-black/70 px-3 py-2 text-[9px] font-black tracking-[0.18em] text-amber-200 uppercase backdrop-blur">
-                                        {{ translations.collection.source_badge }}
-                                    </div>
-                                </div>
-
-                                <div class="p-6 text-center">
-                                    <h4 class="vvs-display-title min-h-[54px] text-2xl leading-[1.05] text-white">
-                                        {{ source.name }}
-                                    </h4>
-                                    <p class="mt-2 text-[11px] font-bold tracking-[0.18em] text-amber-300 uppercase">
-                                        Moissanite VVS
-                                    </p>
-                                    <a
-                                        href="#contact"
-                                        class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
-                                    >
-                                        {{ translations.collection.source_request }}
-                                        <span>→</span>
-                                    </a>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================= -->
-            <!-- COMMENT COMMANDER -->"""
-
-          if end_marker not in text:
-              raise SystemExit('collection end marker not found')
-          text = text.replace(end_marker, source_section, 1)
           index.write_text(text, encoding='utf-8')
 
           show = Path('resources/js/pages/Watches/Show.vue')
@@ -170,22 +147,18 @@ jobs:
           text = text.replace(
               'class="aspect-square self-start overflow-hidden rounded-3xl bg-zinc-400"',
               'class="relative aspect-square self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)]"',
-              1,
           )
           text = text.replace(
               'class="block h-full w-full object-contain"',
               'class="block h-full w-full object-contain p-3 contrast-[1.04] saturate-[0.94] sm:p-5"',
-              1,
           )
           text = text.replace(
               "'aspect-square overflow-hidden rounded-xl border bg-zinc-950 p-1 transition'",
               "'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition'",
-              1,
           )
           text = text.replace(
               'class="h-full w-full rounded-lg object-cover"',
               'class="h-full w-full rounded-lg object-cover contrast-[1.03] saturate-[0.94]"',
-              1,
           )
           show.write_text(text, encoding='utf-8')
 
@@ -193,61 +166,50 @@ jobs:
           text = controller.read_text(encoding='utf-8')
           text = text.replace(
               "47 => '/images/watches/catalog/004-black-square/01-front.jpg',",
-              "47 => '/images/watches/catalog/005-black-stainless/01-front.webp',",
-              1,
+              "47 => '/images/watches/catalog/004-black-square/03-hand.jpg',",
           )
           controller.write_text(text, encoding='utf-8')
 
-          translations = {
-              'lang/fr_BE/site.php': {
-                  'anchor': "        'view_watch' => 'Voir la montre',",
-                  'lines': [
-                      "        'source_eyebrow' => 'Nouvelle sélection',",
-                      "        'source_title' => 'Encore plus de modèles',",
-                      "        'source_description' => 'Des modèles supplémentaires disponibles sur demande, présentés dans la même direction artistique VVS FLAWLESS.',",
-                      "        'source_badge' => 'Sur demande',",
-                      "        'source_request' => 'Demander ce modèle',",
-                      "        'source_black_title' => 'Montre acier, cadran noir — style iced-out',",
-                      "        'source_red_title' => 'Montre acier, cadran rouge romain — style iced-out',",
-                      "        'source_jubilee_title' => 'Montre acier, bracelet Jubilee — style bustdown',",
-                  ],
-              },
-              'lang/nl_BE/site.php': {
-                  'anchor': "        'view_watch' => 'Bekijk het horloge',",
-                  'lines': [
-                      "        'source_eyebrow' => 'Nieuwe selectie',",
-                      "        'source_title' => 'Nog meer modellen',",
-                      "        'source_description' => 'Extra modellen op aanvraag, gepresenteerd in dezelfde VVS FLAWLESS art direction.',",
-                      "        'source_badge' => 'Op aanvraag',",
-                      "        'source_request' => 'Vraag dit model aan',",
-                      "        'source_black_title' => 'Stalen horloge, zwarte wijzerplaat — iced-out stijl',",
-                      "        'source_red_title' => 'Stalen horloge, rode Romeinse wijzerplaat — iced-out stijl',",
-                      "        'source_jubilee_title' => 'Stalen horloge, Jubilee-band — bustdown stijl',",
-                  ],
-              },
-              'lang/en_BE/site.php': {
-                  'anchor': "        'view_watch' => 'View the watch',",
-                  'lines': [
-                      "        'source_eyebrow' => 'New selection',",
-                      "        'source_title' => 'More models',",
-                      "        'source_description' => 'Additional models available on request, presented with the same VVS FLAWLESS art direction.',",
-                      "        'source_badge' => 'On request',",
-                      "        'source_request' => 'Request this model',",
-                      "        'source_black_title' => 'Stainless steel black dial — iced-out style',",
-                      "        'source_red_title' => 'Stainless steel red Roman dial — iced-out style',",
-                      "        'source_jubilee_title' => 'Stainless steel Jubilee bracelet — bustdown style',",
-                  ],
-              },
-          }
+          sets = [
+              (Path('lang/fr_BE/site.php'), "        'view_watch' => 'Voir la montre',", [
+                  "        'source_eyebrow' => 'Nouvelle sélection',",
+                  "        'source_title' => 'Encore plus de modèles',",
+                  "        'source_description' => 'Trois modèles supplémentaires disponibles sur demande, présentés dans la même direction artistique VVS FLAWLESS.',",
+                  "        'source_badge' => 'Sur demande',",
+                  "        'source_request' => 'Demander ce modèle',",
+                  "        'source_black_title' => 'Montre acier, cadran noir — style iced-out',",
+                  "        'source_red_title' => 'Montre acier, cadran rouge romain — style iced-out',",
+                  "        'source_jubilee_title' => 'Montre acier, bracelet Jubilee — style bustdown',",
+              ]),
+              (Path('lang/nl_BE/site.php'), "        'view_watch' => 'Bekijk het horloge',", [
+                  "        'source_eyebrow' => 'Nieuwe selectie',",
+                  "        'source_title' => 'Nog meer modellen',",
+                  "        'source_description' => 'Drie extra modellen op aanvraag, gepresenteerd in dezelfde VVS FLAWLESS art direction.',",
+                  "        'source_badge' => 'Op aanvraag',",
+                  "        'source_request' => 'Vraag dit model aan',",
+                  "        'source_black_title' => 'Stalen horloge, zwarte wijzerplaat — iced-out stijl',",
+                  "        'source_red_title' => 'Stalen horloge, rode Romeinse wijzerplaat — iced-out stijl',",
+                  "        'source_jubilee_title' => 'Stalen horloge, Jubilee-band — bustdown stijl',",
+              ]),
+              (Path('lang/en_BE/site.php'), "        'view_watch' => 'View the watch',", [
+                  "        'source_eyebrow' => 'New selection',",
+                  "        'source_title' => 'More models',",
+                  "        'source_description' => 'Three additional models available on request, presented with the same VVS FLAWLESS art direction.',",
+                  "        'source_badge' => 'On request',",
+                  "        'source_request' => 'Request this model',",
+                  "        'source_black_title' => 'Stainless steel black dial — iced-out style',",
+                  "        'source_red_title' => 'Stainless steel red Roman dial — iced-out style',",
+                  "        'source_jubilee_title' => 'Stainless steel Jubilee bracelet — bustdown style',",
+              ]),
+          ]
 
-          for file, cfg in translations.items():
-              path = Path(file)
+          for path, anchor, lines in sets:
               t = path.read_text(encoding='utf-8')
-              anchor = cfg['anchor']
-              if anchor not in t:
-                  raise SystemExit(f'translation anchor missing: {file}')
-              t = t.replace(anchor, anchor + '\n' + '\n'.join(cfg['lines']), 1)
-              path.write_text(t, encoding='utf-8')
+              if "'source_eyebrow'" not in t:
+                  if anchor not in t:
+                      raise SystemExit(f'Translation anchor missing: {path}')
+                  t = t.replace(anchor, anchor + '\n' + '\n'.join(lines), 1)
+                  path.write_text(t, encoding='utf-8')
 
           catalog = Path('resources/data/watch-image-catalog.json')
           data = json.loads(catalog.read_text(encoding='utf-8'))
@@ -266,15 +228,12 @@ jobs:
       - name: Commit changes
         run: |
           set -euo pipefail
+          if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo 'No changes required.'
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/Http/Controllers/WatchController.php \
-            resources/js/pages/Watches/Index.vue \
-            resources/js/pages/Watches/Show.vue \
-            lang/fr_BE/site.php lang/nl_BE/site.php lang/en_BE/site.php \
-            resources/data/watch-image-catalog.json \
-            public/images/watches/catalog/005-black-stainless \
-            public/images/watches/catalog/006-red-roman \
-            public/images/watches/catalog/007-jubilee
+          git add app/Http/Controllers/WatchController.php resources/js/pages/Watches/Index.vue resources/js/pages/Watches/Show.vue resources/js/components/SourcedWatches.vue lang/fr_BE/site.php lang/nl_BE/site.php lang/en_BE/site.php resources/data/watch-image-catalog.json public/images/watches/catalog/005-black-stainless public/images/watches/catalog/006-red-roman public/images/watches/catalog/007-jubilee
           git commit -m "Expand collection with sourced watches and unified visual treatment"
           git push origin HEAD:ai/visual-copy-polish
