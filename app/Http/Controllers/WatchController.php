@@ -16,27 +16,14 @@ class WatchController extends Controller
         $watches = Watch::latest()
             ->get()
             ->map(
-                fn (Watch $watch) => $this->localizedWatch(
-                    $watch
+                fn (Watch $watch) => $this->applyCatalogCover(
+                    $this->localizedWatch($watch)
                 )
             );
 
         $collectionUrl = route(
             $this->localizedRouteName('watches.index')
         );
-
-        $watches->transform(function (Watch $watch): Watch {
-            if (
-                Str::contains(
-                    (string) $watch->image,
-                    'presidentielle-bleu-romains'
-                )
-            ) {
-                $watch->image = '/images/watches/catalog/001-blue-round/02-hero-reflection.png';
-            }
-
-            return $watch;
-        });
 
         return inertia('Watches/Index', [
             'watches' => $watches,
@@ -133,6 +120,11 @@ class WatchController extends Controller
         $this->captureMarketingAttribution($request);
 
         $watch = $this->localizedWatch($watch);
+        $gallery = $this->galleryForWatch($watch);
+
+        if ($gallery !== []) {
+            $watch->image = $gallery[0];
+        }
 
         $selectedMovement =
             $request->query('movement') === 'Suisse'
@@ -167,8 +159,8 @@ class WatchController extends Controller
             ->limit(3)
             ->get()
             ->map(
-                fn (Watch $relatedWatch) => $this->localizedWatch(
-                    $relatedWatch
+                fn (Watch $relatedWatch) => $this->applyCatalogCover(
+                    $this->localizedWatch($relatedWatch)
                 )
             );
 
@@ -176,6 +168,17 @@ class WatchController extends Controller
             $this->localizedRouteName('watches.show'),
             $watch
         );
+
+        $structuredImages = $gallery !== []
+            ? array_map(
+                fn (string $image): string => url($image),
+                $gallery
+            )
+            : [
+                $watch->image
+                    ? url($watch->image)
+                    : url('/images/vvs-flawless-profile.webp'),
+            ];
 
         $structuredData = [
             '@context' => 'https://schema.org',
@@ -194,13 +197,7 @@ class WatchController extends Controller
 
                     'category' => trans('site.seo.product_category'),
 
-                    'image' => [
-                        $watch->image
-                            ? url($watch->image)
-                            : url(
-                                '/images/vvs-flawless-profile.webp'
-                            ),
-                    ],
+                    'image' => $structuredImages,
 
                     'offers' => $this->offersForWatch(
                         $watch
@@ -234,6 +231,8 @@ class WatchController extends Controller
         return inertia('Watches/Show', [
             'watch' => $watch,
 
+            'gallery' => $gallery,
+
             'selectedMovement' => $selectedMovement,
 
             'relatedWatches' => $relatedWatches,
@@ -250,11 +249,7 @@ class WatchController extends Controller
 
                 'locale' => app()->getLocale(),
 
-                'image' => $watch->image
-                    ? url($watch->image)
-                    : url(
-                        '/images/vvs-flawless-profile.webp'
-                    ),
+                'image' => $structuredImages[0],
 
                 'type' => 'product',
 
@@ -408,6 +403,64 @@ class WatchController extends Controller
         }
 
         return $localizedWatch;
+    }
+
+    private function applyCatalogCover(Watch $watch): Watch
+    {
+        $cover = $this->coverForWatch($watch);
+
+        if ($cover === null) {
+            return $watch;
+        }
+
+        $watch->image = $cover;
+
+        return $watch;
+    }
+
+    private function coverForWatch(Watch $watch): ?string
+    {
+        return match ((int) $watch->id) {
+            52 => '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
+            48 => '/images/watches/catalog/002-twotone-round/01-front.png',
+            46 => '/images/watches/catalog/003-square-roman/01-front.png',
+            47 => '/images/watches/catalog/004-black-square/01-front.jpg',
+            default => null,
+        };
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function galleryForWatch(Watch $watch): array
+    {
+        return match ((int) $watch->id) {
+            52 => [
+                '/images/watches/catalog/001-blue-round/01-front.png',
+                '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
+                '/images/watches/catalog/001-blue-round/03-angle-top.png',
+                '/images/watches/catalog/001-blue-round/04-side-bracelet.png',
+                '/images/watches/catalog/001-blue-round/05-bracelet-vertical.png',
+                '/images/watches/catalog/001-blue-round/06-bracelet-clasp.png',
+            ],
+            48 => [
+                '/images/watches/catalog/002-twotone-round/01-front.png',
+                '/images/watches/catalog/002-twotone-round/02-angle-right.png',
+                '/images/watches/catalog/002-twotone-round/03-angle-left.png',
+                '/images/watches/catalog/002-twotone-round/04-angle-wide.png',
+                '/images/watches/catalog/002-twotone-round/05-back.png',
+            ],
+            46 => [
+                '/images/watches/catalog/003-square-roman/01-front.png',
+                '/images/watches/catalog/003-square-roman/02-front-variant.png',
+            ],
+            47 => [
+                '/images/watches/catalog/004-black-square/01-front.jpg',
+                '/images/watches/catalog/004-black-square/02-angle.jpg',
+                '/images/watches/catalog/004-black-square/03-hand.jpg',
+            ],
+            default => [],
+        };
     }
 
     /**
