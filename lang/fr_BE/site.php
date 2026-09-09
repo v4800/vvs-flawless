@@ -47,9 +47,9 @@ return [
         'source_description' => 'Trois modèles supplémentaires disponibles sur demande, présentés dans la même direction artistique VVS FLAWLESS.',
         'source_badge' => 'Sur demande',
         'source_request' => 'Demander ce modèle',
-        'source_black_title' => 'Montre acier, cadran noir — style iced-out',
-        'source_red_title' => 'Montre acier, cadran rouge romain — style iced-out',
-        'source_jubilee_title' => 'Montre acier, bracelet Jubilee — style bustdown',
+        'source_black_title' => 'Montre carrée à chiffres romains — style iced-out',
+        'source_red_title' => 'Montre sportive à bracelet intégré — style bustdown',
+        'source_jubilee_title' => 'Montre classique à bracelet Jubilee — style iced-out',
     ],
 
     'stock' => [

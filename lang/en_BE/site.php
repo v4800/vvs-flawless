@@ -46,9 +46,9 @@ return [
         'source_description' => 'Three additional models available on request, presented with the same VVS FLAWLESS art direction.',
         'source_badge' => 'On request',
         'source_request' => 'Request this model',
-        'source_black_title' => 'Stainless steel black dial — iced-out style',
-        'source_red_title' => 'Stainless steel red Roman dial — iced-out style',
-        'source_jubilee_title' => 'Stainless steel Jubilee bracelet — bustdown style',
+        'source_black_title' => 'Square Roman numeral watch — iced-out style',
+        'source_red_title' => 'Integrated-bracelet sports watch — bustdown style',
+        'source_jubilee_title' => 'Classic Jubilee bracelet watch — iced-out style',
     ],
 
     'stock' => [
