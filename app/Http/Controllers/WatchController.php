@@ -16,8 +16,8 @@ class WatchController extends Controller
         $watches = Watch::latest()
             ->get()
             ->map(
-                fn (Watch $watch) => $this->localizedWatch(
-                    $watch
+                fn (Watch $watch) => $this->applyCatalogCover(
+                    $this->localizedWatch($watch)
                 )
             );
 
@@ -29,10 +29,10 @@ class WatchController extends Controller
             'watches' => $watches,
 
             'seo' => [
-                'title' => trans('site.seo.collection_title'),
+                'title' => trans('seo_intents.collection_seo.title'),
 
                 'description' => trans(
-                    'site.seo.collection_description'
+                    'seo_intents.collection_seo.description'
                 ),
 
                 'canonical' => $collectionUrl,
@@ -50,32 +50,62 @@ class WatchController extends Controller
                 'structuredData' => [
                     '@context' => 'https://schema.org',
 
-                    '@type' => 'WebSite',
-
-                    'name' => 'VVS FLAWLESS',
-
-                    'url' => $collectionUrl,
-
-                    'inLanguage' => str_replace(
-                        '_',
-                        '-',
-                        app()->getLocale()
-                    ),
-
-                    'publisher' => [
-                        '@type' => 'Organization',
-
-                        'name' => 'VVS FLAWLESS',
-
-                        'url' => url('/'),
-
-                        'logo' => url(
-                            '/images/vvs-flawless-profile.webp'
-                        ),
-
-                        'sameAs' => [
-                            'https://www.instagram.com/vvsflawless43/',
-                            'https://www.tiktok.com/@vvsflawless43',
+                    '@graph' => [
+                        [
+                            '@type' => 'WebSite',
+                            'name' => 'VVS FLAWLESS',
+                            'url' => $collectionUrl,
+                            'inLanguage' => str_replace(
+                                '_',
+                                '-',
+                                app()->getLocale()
+                            ),
+                            'publisher' => [
+                                '@type' => 'Organization',
+                                'name' => 'VVS FLAWLESS',
+                                'url' => url('/'),
+                                'logo' => url(
+                                    '/images/vvs-flawless-profile.webp'
+                                ),
+                                'sameAs' => [
+                                    'https://www.instagram.com/vvsflawless43/',
+                                    'https://www.tiktok.com/@vvsflawless43',
+                                ],
+                            ],
+                        ],
+                        [
+                            '@type' => 'CollectionPage',
+                            'name' => trans(
+                                'seo_intents.collection_seo.title'
+                            ),
+                            'description' => trans(
+                                'seo_intents.collection_seo.description'
+                            ),
+                            'url' => $collectionUrl,
+                            'inLanguage' => str_replace(
+                                '_',
+                                '-',
+                                app()->getLocale()
+                            ),
+                            'mainEntity' => [
+                                '@type' => 'ItemList',
+                                'itemListElement' => $watches
+                                    ->values()
+                                    ->map(
+                                        fn (Watch $watch, int $index) => [
+                                            '@type' => 'ListItem',
+                                            'position' => $index + 1,
+                                            'name' => $watch->name,
+                                            'url' => route(
+                                                $this->localizedRouteName(
+                                                    'watches.show'
+                                                ),
+                                                $watch
+                                            ),
+                                        ]
+                                    )
+                                    ->all(),
+                            ],
                         ],
                     ],
                 ],
@@ -90,6 +120,11 @@ class WatchController extends Controller
         $this->captureMarketingAttribution($request);
 
         $watch = $this->localizedWatch($watch);
+        $gallery = $this->galleryForWatch($watch);
+
+        if ($gallery !== []) {
+            $watch->image = $gallery[0];
+        }
 
         $selectedMovement =
             $request->query('movement') === 'Suisse'
@@ -102,7 +137,7 @@ class WatchController extends Controller
                 .'. '
                 .$watch->description
                 .' '
-                .trans('site.seo.product_description_suffix')
+                .trans('seo_intents.collection_seo.product_suffix')
             ),
             160,
             '…'
@@ -124,8 +159,8 @@ class WatchController extends Controller
             ->limit(3)
             ->get()
             ->map(
-                fn (Watch $relatedWatch) => $this->localizedWatch(
-                    $relatedWatch
+                fn (Watch $relatedWatch) => $this->applyCatalogCover(
+                    $this->localizedWatch($relatedWatch)
                 )
             );
 
@@ -133,6 +168,17 @@ class WatchController extends Controller
             $this->localizedRouteName('watches.show'),
             $watch
         );
+
+        $structuredImages = $gallery !== []
+            ? array_map(
+                fn (string $image): string => url($image),
+                $gallery
+            )
+            : [
+                $watch->image
+                    ? url($watch->image)
+                    : url('/images/vvs-flawless-profile.webp'),
+            ];
 
         $structuredData = [
             '@context' => 'https://schema.org',
@@ -151,13 +197,7 @@ class WatchController extends Controller
 
                     'category' => trans('site.seo.product_category'),
 
-                    'image' => [
-                        $watch->image
-                            ? url($watch->image)
-                            : url(
-                                '/images/vvs-flawless-profile.webp'
-                            ),
-                    ],
+                    'image' => $structuredImages,
 
                     'offers' => $this->offersForWatch(
                         $watch
@@ -191,13 +231,15 @@ class WatchController extends Controller
         return inertia('Watches/Show', [
             'watch' => $watch,
 
+            'gallery' => $gallery,
+
             'selectedMovement' => $selectedMovement,
 
             'relatedWatches' => $relatedWatches,
 
             'seo' => [
                 'title' => $watch->name
-                    .' — VVS FLAWLESS',
+                    .' | Moissanite VVS | VVS FLAWLESS',
 
                 'description' => $description,
 
@@ -207,11 +249,7 @@ class WatchController extends Controller
 
                 'locale' => app()->getLocale(),
 
-                'image' => $watch->image
-                    ? url($watch->image)
-                    : url(
-                        '/images/vvs-flawless-profile.webp'
-                    ),
+                'image' => $structuredImages[0],
 
                 'type' => 'product',
 
@@ -339,17 +377,15 @@ class WatchController extends Controller
 
     private function localizedRouteName(string $name): string
     {
-        return app()->getLocale() === 'nl_BE'
-            ? 'nl.'.$name
-            : $name;
+        return match (app()->getLocale()) {
+            'nl_BE' => 'nl.'.$name,
+            'en_BE' => 'en.'.$name,
+            default => $name,
+        };
     }
 
     private function localizedWatch(Watch $watch): Watch
     {
-        if (app()->getLocale() !== 'nl_BE') {
-            return $watch;
-        }
-
         $translation = trans('watches.'.$watch->id);
 
         if (! is_array($translation)) {
@@ -369,6 +405,80 @@ class WatchController extends Controller
         return $localizedWatch;
     }
 
+    private function applyCatalogCover(Watch $watch): Watch
+    {
+        $cover = $this->coverForWatch($watch);
+
+        if ($cover === null || ! $this->catalogImageExists($cover)) {
+            return $watch;
+        }
+
+        $watch->image = $cover;
+
+        return $watch;
+    }
+
+    private function coverForWatch(Watch $watch): ?string
+    {
+        return match ((int) $watch->id) {
+            52 => '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
+            48 => '/images/watches/catalog/002-twotone-round/01-front.png',
+            46 => '/images/watches/catalog/003-square-roman/01-front.png',
+            47 => '/images/watches/catalog/004-black-square/03-hand.jpg',
+            default => null,
+        };
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function galleryForWatch(Watch $watch): array
+    {
+        $gallery = match ((int) $watch->id) {
+            52 => [
+                '/images/watches/catalog/001-blue-round/01-front.png',
+                '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
+                '/images/watches/catalog/001-blue-round/03-angle-top.png',
+                '/images/watches/catalog/001-blue-round/04-side-bracelet.png',
+                '/images/watches/catalog/001-blue-round/05-bracelet-vertical.png',
+                '/images/watches/catalog/001-blue-round/06-bracelet-clasp.png',
+            ],
+            48 => [
+                '/images/watches/catalog/002-twotone-round/01-front.png',
+                '/images/watches/catalog/002-twotone-round/02-angle-right.png',
+                '/images/watches/catalog/002-twotone-round/03-angle-left.png',
+                '/images/watches/catalog/002-twotone-round/04-angle-wide.png',
+                '/images/watches/catalog/002-twotone-round/05-back.png',
+            ],
+            46 => [
+                '/images/watches/catalog/003-square-roman/01-front.png',
+                '/images/watches/catalog/003-square-roman/02-front-variant.png',
+            ],
+            47 => [
+                '/images/watches/catalog/004-black-square/01-front.jpg',
+                '/images/watches/catalog/004-black-square/02-angle.jpg',
+                '/images/watches/catalog/004-black-square/03-hand.jpg',
+            ],
+            default => [],
+        };
+
+        return array_values(
+            array_filter(
+                $gallery,
+                fn (string $image): bool => $this->catalogImageExists($image)
+            )
+        );
+    }
+
+    private function catalogImageExists(string $image): bool
+    {
+        return is_file(
+            public_path(
+                ltrim($image, '/')
+            )
+        );
+    }
+
     /**
      * @return list<array{hreflang: string, href: string}>
      */
@@ -382,6 +492,10 @@ class WatchController extends Controller
             [
                 'hreflang' => 'nl-BE',
                 'href' => route('nl.watches.index'),
+            ],
+            [
+                'hreflang' => 'en-BE',
+                'href' => route('en.watches.index'),
             ],
             [
                 'hreflang' => 'x-default',
@@ -403,6 +517,10 @@ class WatchController extends Controller
             [
                 'hreflang' => 'nl-BE',
                 'href' => route('nl.watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'en-BE',
+                'href' => route('en.watches.show', $watch),
             ],
             [
                 'hreflang' => 'x-default',

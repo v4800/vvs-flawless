@@ -1,0 +1,62 @@
+{
+    "version": 1,
+    "next_watch_id": 8,
+    "naming_rule": "NNN-model-slug/NN-view.ext",
+    "watches": [
+        {
+            "id": 1,
+            "slug": "blue-round",
+            "folder": "001-blue-round",
+            "images": [
+                "01-front.png",
+                "02-hero-reflection.png",
+                "03-angle-top.png",
+                "04-side-bracelet.png",
+                "05-bracelet-vertical.png",
+                "06-bracelet-clasp.png"
+            ]
+        },
+        {
+            "id": 2,
+            "slug": "twotone-round",
+            "folder": "002-twotone-round",
+            "images": [
+                "01-front.png",
+                "02-angle-right.png",
+                "03-angle-left.png",
+                "04-angle-wide.png",
+                "05-back.png"
+            ]
+        },
+        {
+            "id": 3,
+            "slug": "square-roman",
+            "folder": "003-square-roman",
+            "images": ["01-front.png", "02-front-variant.png"]
+        },
+        {
+            "id": 4,
+            "slug": "black-square",
+            "folder": "004-black-square",
+            "images": ["01-front.jpg", "02-angle.jpg", "03-hand.jpg"]
+        },
+        {
+            "id": 5,
+            "slug": "black-stainless",
+            "folder": "005-black-stainless",
+            "images": ["01-front.webp"]
+        },
+        {
+            "id": 6,
+            "slug": "red-roman",
+            "folder": "006-red-roman",
+            "images": ["01-front.webp"]
+        },
+        {
+            "id": 7,
+            "slug": "jubilee",
+            "folder": "007-jubilee",
+            "images": ["01-front.jpg"]
+        }
+    ]
+}

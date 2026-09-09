@@ -11,9 +11,11 @@ class SetLocale
 {
     public function handle(Request $request, Closure $next): Response
     {
-        $locale = $request->is('nl', 'nl/*')
-            ? 'nl_BE'
-            : 'fr_BE';
+        $locale = match (true) {
+            $request->is('nl', 'nl/*') => 'nl_BE',
+            $request->is('en', 'en/*') => 'en_BE',
+            default => 'fr_BE',
+        };
 
         App::setLocale($locale);
 

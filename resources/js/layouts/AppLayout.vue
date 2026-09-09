@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/app/AppSidebarLayout.vue';
+import VisualDisclosure from '@/components/VisualDisclosure.vue';
 import VvsCursor from '@/components/VvsCursor.vue';
 
 import type { BreadcrumbItem } from '@/types';
@@ -7,12 +7,14 @@ import type { BreadcrumbItem } from '@/types';
 const { breadcrumbs = [] } = defineProps<{
     breadcrumbs?: BreadcrumbItem[];
 }>();
+
+void breadcrumbs;
 </script>
 
 <template>
-    <AppLayout :breadcrumbs="breadcrumbs">
-        <slot />
-    </AppLayout>
+    <slot />
+
+    <VisualDisclosure />
 
     <!-- CURSEUR GLOBAL VVS FLAWLESS -->
     <VvsCursor />

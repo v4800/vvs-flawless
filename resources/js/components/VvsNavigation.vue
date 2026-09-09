@@ -33,6 +33,7 @@ const props = defineProps({
 const page = usePage();
 
 const translations = computed(() => page.props.translations);
+const guideLinks = computed(() => page.props.guideLinks);
 const localizedRoutes = computed(() => page.props.localizedRoutes);
 const languageLinks = computed(() => {
     const alternates = page.props.seo?.alternates ?? [];
@@ -41,6 +42,8 @@ const languageLinks = computed(() => {
         fr: alternates.find((alternate) => alternate.hreflang === 'fr-BE')
             ?.href,
         nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
+            ?.href,
+        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
             ?.href,
     };
 });
@@ -88,6 +91,12 @@ onMounted(() => {
         return;
     }
 
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        navigation.value.style.opacity = '1';
+
+        return;
+    }
+
     animate(navigation.value, {
         opacity: [0, 1],
         y: [-12, 0],
@@ -103,10 +112,8 @@ onMounted(() => {
         class="sticky top-4 z-40 mx-auto mb-8 max-w-6xl px-4 opacity-0 sm:px-0"
     >
         <div
-            class="flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/75 px-4 py-3 shadow-[0_15px_60px_rgba(0,0,0,0.45)] backdrop-blur-xl sm:px-5"
+            class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
         >
-            <!-- RETOUR -->
-
             <Link
                 v-if="showBack"
                 :href="resolvedBackHref"
@@ -138,17 +145,40 @@ onMounted(() => {
                     class="h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.8)]"
                 ></div>
 
-                <span class="text-xs font-black tracking-[0.18em] text-white">
+                <span
+                    class="text-xs font-semibold tracking-[0.18em] text-white"
+                >
                     VVS FLAWLESS
                 </span>
             </div>
 
-            <!-- BREADCRUMB -->
-
             <div class="flex min-w-0 items-center justify-end gap-3">
                 <nav
-                    v-if="languageLinks.fr || languageLinks.nl"
-                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-black"
+                    class="hidden shrink-0 items-center gap-3 lg:flex"
+                    :aria-label="translations.navigation.main_label"
+                >
+                    <Link
+                        :href="localizedRoutes.about"
+                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                    >
+                        {{ translations.navigation.about }}
+                    </Link>
+
+                    <span class="text-zinc-800" aria-hidden="true">•</span>
+
+                    <Link
+                        :href="localizedRoutes.diamondGuide"
+                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                    >
+                        {{ guideLinks.eyebrow }}
+                    </Link>
+                </nav>
+
+                <nav
+                    v-if="
+                        languageLinks.fr || languageLinks.nl || languageLinks.en
+                    "
+                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
                     :aria-label="translations.language.label"
                 >
                     <Link
@@ -161,7 +191,7 @@ onMounted(() => {
                                 : 'text-zinc-500 hover:text-white',
                         ]"
                     >
-                        {{ translations.language.fr }}
+                        FR
                     </Link>
                     <Link
                         v-if="languageLinks.nl"
@@ -173,7 +203,19 @@ onMounted(() => {
                                 : 'text-zinc-500 hover:text-white',
                         ]"
                     >
-                        {{ translations.language.nl }}
+                        NL
+                    </Link>
+                    <Link
+                        v-if="languageLinks.en"
+                        :href="languageLinks.en"
+                        :class="[
+                            'rounded-full px-2 py-1 transition',
+                            page.props.locale === 'en_BE'
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-500 hover:text-white',
+                        ]"
+                    >
+                        EN
                     </Link>
                 </nav>
 

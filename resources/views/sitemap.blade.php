@@ -27,6 +27,20 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('about') }}" />
     </url>
 
+    <url>
+        <loc>{{ route('guides.diamond-vs-moissanite') }}</loc>
+        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('guides.diamond-vs-moissanite') }}" />
+        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.guides.diamond-vs-moissanite') }}" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('guides.diamond-vs-moissanite') }}" />
+    </url>
+
+    <url>
+        <loc>{{ route('nl.guides.diamond-vs-moissanite') }}</loc>
+        <xhtml:link rel="alternate" hreflang="fr-BE" href="{{ route('guides.diamond-vs-moissanite') }}" />
+        <xhtml:link rel="alternate" hreflang="nl-BE" href="{{ route('nl.guides.diamond-vs-moissanite') }}" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="{{ route('guides.diamond-vs-moissanite') }}" />
+    </url>
+
     @foreach ($watches as $watch)
         <url>
             <loc>{{ route('watches.show', ['watch' => $watch->id]) }}</loc>

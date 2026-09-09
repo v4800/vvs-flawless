@@ -1,12 +1,10 @@
 @php
     $watchName = $reservation->watch->name;
 
-    if (app()->getLocale() === 'nl_BE') {
-        $translatedWatch = trans('watches.'.$reservation->watch->id);
+    $translatedWatch = trans('watches.'.$reservation->watch->id);
 
-        if (is_array($translatedWatch) && is_string($translatedWatch['name'] ?? null)) {
-            $watchName = $translatedWatch['name'];
-        }
+    if (is_array($translatedWatch) && is_string($translatedWatch['name'] ?? null)) {
+        $watchName = $translatedWatch['name'];
     }
 
     $movement = $reservation->movement === 'Suisse'

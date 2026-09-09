@@ -13,7 +13,11 @@ export default defineConfig({
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {
-                    weights: [400, 500, 600],
+                    weights: [400, 500, 600, 700],
+                    optimizedFallbacks: false,
+                }),
+                bunny('Cormorant Garamond', {
+                    weights: [500, 600, 700],
                     optimizedFallbacks: false,
                 }),
             ],

@@ -35,15 +35,19 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $routePrefix = app()->getLocale() === 'nl_BE'
-            ? 'nl.'
-            : '';
+        $routePrefix = match (app()->getLocale()) {
+            'nl_BE' => 'nl.',
+            'en_BE' => 'en.',
+            default => '',
+        };
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
             'translations' => fn () => trans('site'),
+            'guideLinks' => fn () => trans('guides.links'),
+            'seoIntentContent' => fn () => trans('seo_intents'),
             'localizedRoutes' => [
                 'watches' => route(
                     $routePrefix.'watches.index',
@@ -63,6 +67,22 @@ class HandleInertiaRequests extends Middleware
                 ),
                 'about' => route(
                     $routePrefix.'about',
+                    absolute: false
+                ),
+                'diamondGuide' => route(
+                    $routePrefix.'guides.diamond-vs-moissanite',
+                    absolute: false
+                ),
+                'vvsGuide' => route(
+                    $routePrefix.'guides.vvs-watch',
+                    absolute: false
+                ),
+                'menWomenGuide' => route(
+                    $routePrefix.'guides.men-women',
+                    absolute: false
+                ),
+                'belgiumGuide' => route(
+                    $routePrefix.'guides.belgium',
                     absolute: false
                 ),
             ],

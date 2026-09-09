@@ -71,7 +71,7 @@ const formatPrice = (price) => {
                     VVS FLAWLESS
                 </p>
 
-                <h1 class="mt-3 text-3xl font-black uppercase sm:text-4xl">
+                <h1 class="vvs-display-title mt-3 text-4xl sm:text-5xl">
                     {{ translations.confirmation.recorded }}
                 </h1>
 
@@ -138,7 +138,9 @@ const formatPrice = (price) => {
                             {{ translations.confirmation.your_watch }}
                         </p>
 
-                        <h2 class="mt-3 text-2xl leading-tight font-black">
+                        <h2
+                            class="vvs-display-title mt-3 text-3xl leading-tight"
+                        >
                             {{ watch.name }}
                         </h2>
 
