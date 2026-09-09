@@ -1,0 +1,101 @@
+name: rebuild-sourced-watch-assets
+
+on:
+  push:
+    branches:
+      - ai/visual-copy-polish
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ai/visual-copy-polish
+
+      - name: Install ImageMagick
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+      - name: Download source watches
+        run: |
+          mkdir -p /tmp/vvs-sources
+          curl -L --retry 3 -A 'Mozilla/5.0' 'https://img2.exportersindia.com/product_images/bc-full/2024/11/13346396/cartier-fully-iced-out-black-amp-white-luxurious-1732868037-7709698.jpg' -o /tmp/vvs-sources/cartier.jpg
+          curl -L --retry 3 -A 'Mozilla/5.0' 'https://www.frostnyc.com/cdn/shop/products/PP_4_1de5d0e5-401b-4fc3-a6a4-0fb4446ce54a_2048x.jpg?v=1677678766' -o /tmp/vvs-sources/patek.jpg
+          curl -L --retry 3 -A 'Mozilla/5.0' 'https://chrono21.com/cdn/shop/files/2228_1.jpg?v=1740780630&width=1946' -o /tmp/vvs-sources/datejust.jpg
+          file /tmp/vvs-sources/*
+
+      - name: Build VVS backgrounds and remove visible brand marks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/vvs-work
+
+          make_bg() {
+            local out="$1"
+            convert -size 1080x1350 xc:'#050505' \
+              \( -size 1080x1350 radial-gradient:'#3a240e-#050505' -evaluate multiply 0.55 \) \
+              -compose screen -composite \
+              \( -size 1080x1350 xc:none -fill 'rgba(214,161,58,0.10)' -draw 'ellipse 540,510 420,260 0,360' -blur 0x70 \) \
+              -compose over -composite \
+              \( -size 1080x1350 xc:none -stroke 'rgba(214,161,58,0.20)' -strokewidth 2 -fill none -draw 'roundrectangle 28,28 1052,1322 42,42' \) \
+              -compose over -composite "$out"
+          }
+
+          prep_watch() {
+            local src="$1"
+            local clean="$2"
+            local blur1="$3"
+            local blur2="$4"
+
+            convert "$src" -auto-orient -resize 1100x1100\> -gravity center -extent 1100x1100 /tmp/vvs-work/base.png
+            convert /tmp/vvs-work/base.png \
+              \( +clone -region "$blur1" -blur 0x10 \) -compose over -composite \
+              \( +clone -region "$blur2" -blur 0x10 \) -compose over -composite \
+              -alpha on -fuzz 4% -transparent white -trim +repage "$clean"
+          }
+
+          make_bg /tmp/vvs-work/bg.png
+
+          # Cartier/Santos style: remove dial brand text and small signature text.
+          prep_watch /tmp/vvs-sources/cartier.jpg /tmp/vvs-work/cartier.png '150x150+390+420' '120x90+505+500'
+          # Patek/Nautilus style: remove Patek/Genève dial text.
+          prep_watch /tmp/vvs-sources/patek.jpg /tmp/vvs-work/patek.png '230x145+245+430' '180x95+455+455'
+          # Datejust style: remove crown/Rolex text and Datejust text.
+          prep_watch /tmp/vvs-sources/datejust.jpg /tmp/vvs-work/datejust.png '220x155+390+395' '210x105+405+545'
+
+          compose_watch() {
+            local watch="$1"
+            local out="$2"
+            convert "$watch" -resize 930x930\> /tmp/vvs-work/watch.png
+            convert /tmp/vvs-work/bg.png \
+              \( /tmp/vvs-work/watch.png \( +clone -channel A -shadow 55x18+0+30 \) +swap -background none -layers merge +repage \) \
+              -gravity center -geometry +0-5 -compose over -composite \
+              -quality 92 "$out"
+          }
+
+          compose_watch /tmp/vvs-work/cartier.png public/images/watches/catalog/005-black-stainless/01-front.webp
+          compose_watch /tmp/vvs-work/patek.png public/images/watches/catalog/006-red-roman/01-front.webp
+          compose_watch /tmp/vvs-work/datejust.png public/images/watches/catalog/007-jubilee/01-front.jpg
+
+          identify public/images/watches/catalog/005-black-stainless/01-front.webp
+          identify public/images/watches/catalog/006-red-roman/01-front.webp
+          identify public/images/watches/catalog/007-jubilee/01-front.jpg
+
+      - name: Commit rebuilt assets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add public/images/watches/catalog/005-black-stainless/01-front.webp public/images/watches/catalog/006-red-roman/01-front.webp public/images/watches/catalog/007-jubilee/01-front.jpg
+          if git diff --cached --quiet; then
+            echo 'No asset changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Rebuild sourced watch assets without brand marks'
+          git push origin HEAD:ai/visual-copy-polish
