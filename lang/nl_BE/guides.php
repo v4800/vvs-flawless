@@ -14,7 +14,7 @@ return [
         'eyebrow' => 'VVS FLAWLESS-gids',
         'title' => 'Diamanten horloge of moissanite: wat is het verschil?',
         'intro' => 'Diamant en moissanite kunnen allebei een zeer heldere uitstraling geven aan een bezet horloge. Een kleurloze, goed geslepen moissanite kan visueel sterk op diamant lijken, maar reageert anders op licht: de steen produceert vooral meer vuur en dus meer kleurrijke flitsen.',
-        'answer' => 'Voor een iced-out horloge is VVS-moissanite een sterke visuele alternative voor diamant. GIA vermeldt dat moissanite meer dan twee keer zoveel vuur en iets meer brilliance heeft dan diamant. VVS FLAWLESS-modellen zijn bezet met kleur D VVS-moissanite: het steentype wordt duidelijk vermeld terwijl de stijl mikt op de opvallende uitstraling die mensen zoeken in een diamanten of volledig bezet horloge.',
+        'answer' => 'Voor een iced-out horloge is VVS-moissanite een sterk visueel alternatief voor diamant. GIA vermeldt dat moissanite meer dan twee keer zoveel vuur en iets meer brilliance heeft dan diamant. VVS FLAWLESS-modellen zijn bezet met kleur D VVS-moissanite: het steentype wordt duidelijk vermeld terwijl de stijl mikt op de opvallende uitstraling die mensen zoeken in een diamanten of volledig bezet horloge.',
         'comparison_title' => 'Wat verandert er echt aan de pols?',
         'comparison_intro' => 'Beide stenen schitteren sterk, maar niet op precies dezelfde manier. Dit zijn de nuttigste verschillen.',
         'columns' => [
