@@ -19,10 +19,7 @@ class SecurityHeadersTest extends TestCase
 
     public function test_public_pages_have_security_headers(): void
     {
-        $response =
-            $this->get(
-                route('watches.index')
-            );
+        $response = $this->get(route('watches.index'));
 
         $response->assertOk();
 
@@ -51,14 +48,21 @@ class SecurityHeadersTest extends TestCase
             '0'
         );
 
-        $permissions =
-            $response->headers->get(
-                'Permissions-Policy'
-            );
-
-        $this->assertNotNull(
-            $permissions
+        $response->assertHeader(
+            'Cross-Origin-Opener-Policy',
+            'same-origin'
         );
+
+        $response->assertHeader(
+            'Cross-Origin-Resource-Policy',
+            'same-origin'
+        );
+
+        $permissions = $response->headers->get(
+            'Permissions-Policy'
+        );
+
+        $this->assertNotNull($permissions);
 
         $this->assertStringContainsString(
             'camera=()',
@@ -76,13 +80,11 @@ class SecurityHeadersTest extends TestCase
         );
 
         $this->assertFalse(
-            $response->headers->has(
-                'X-Powered-By'
-            )
+            $response->headers->has('X-Powered-By')
         );
     }
 
-    public function test_private_pages_are_not_indexable(): void
+    public function test_private_pages_are_not_indexable_and_not_cacheable(): void
     {
         foreach (
             [
@@ -95,6 +97,7 @@ class SecurityHeadersTest extends TestCase
                 '/settings/profile',
                 '/reservation-confirmed/test',
                 '/nl/reservation-confirmed/test',
+                '/en/reservation-confirmed/test',
             ] as $path
         ) {
             $response = $this->get($path);
@@ -103,22 +106,31 @@ class SecurityHeadersTest extends TestCase
                 'X-Robots-Tag',
                 'noindex, nofollow, noarchive'
             );
+
+            $cacheControl = $response->headers->get(
+                'Cache-Control'
+            );
+
+            $this->assertNotNull($cacheControl);
+            $this->assertStringContainsString(
+                'no-store',
+                $cacheControl
+            );
+            $this->assertStringContainsString(
+                'private',
+                $cacheControl
+            );
         }
     }
 
     public function test_public_watches_page_is_not_marked_noindex(): void
     {
-        $response =
-            $this->get(
-                route('watches.index')
-            );
+        $response = $this->get(route('watches.index'));
 
         $response->assertOk();
 
         $this->assertFalse(
-            $response->headers->has(
-                'X-Robots-Tag'
-            )
+            $response->headers->has('X-Robots-Tag')
         );
     }
 
@@ -134,51 +146,24 @@ class SecurityHeadersTest extends TestCase
 
     public function test_production_https_has_csp_and_hsts(): void
     {
-        /*
-        |--------------------------------------------------------------------------
-        | SIMULATION PRODUCTION
-        |--------------------------------------------------------------------------
-        */
-
-        $this->app['env'] =
-            'production';
-
-        /*
-        |--------------------------------------------------------------------------
-        | ROUTE SIMPLE
-        |--------------------------------------------------------------------------
-        |
-        | On utilise une réponse texte pour tester les headers
-        | sans dépendre du rendu Vue/Vite.
-        |
-        */
+        $this->app['env'] = 'production';
 
         Route::get(
             '/security-header-test',
             fn () => response('OK')
         );
 
-        $response =
-    $this->get(
-        'https://localhost/security-header-test'
-    );
+        $response = $this->get(
+            'https://localhost/security-header-test'
+        );
 
         $response->assertOk();
 
-        /*
-        |--------------------------------------------------------------------------
-        | CSP
-        |--------------------------------------------------------------------------
-        */
-
-        $csp =
-            $response->headers->get(
-                'Content-Security-Policy'
-            );
-
-        $this->assertNotNull(
-            $csp
+        $csp = $response->headers->get(
+            'Content-Security-Policy'
         );
+
+        $this->assertNotNull($csp);
 
         $this->assertStringContainsString(
             "default-src 'self'",
@@ -205,12 +190,6 @@ class SecurityHeadersTest extends TestCase
             $csp
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | HSTS
-        |--------------------------------------------------------------------------
-        */
-
         $response->assertHeader(
             'Strict-Transport-Security',
             'max-age=31536000; includeSubDomains'
@@ -231,9 +210,7 @@ class SecurityHeadersTest extends TestCase
             'Content-Security-Policy'
         );
 
-        $this->assertNotNull(
-            $contentSecurityPolicy
-        );
+        $this->assertNotNull($contentSecurityPolicy);
 
         $this->assertSame(
             1,
