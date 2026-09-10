@@ -24,9 +24,12 @@ class PublicPageController extends Controller
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
             'description' => (string) trans('site.seo.about_description'),
-            'areaServed' => [
-                '@type' => 'Country',
-                'name' => 'Belgium',
+            'areaServed' => $this->serviceAreas(),
+            'knowsAbout' => [
+                'VVS moissanite watches',
+                'Iced-out watches',
+                'Fully set watches',
+                'Diamond and moissanite comparison',
             ],
             'sameAs' => [
                 'https://www.instagram.com/vvsflawless43/',
@@ -158,6 +161,12 @@ class PublicPageController extends Controller
                         '-',
                         app()->getLocale()
                     ),
+                    'about' => [
+                        'Moissanite',
+                        'VVS clarity',
+                        'Iced-out watches',
+                        'Diamond watches',
+                    ],
                     'author' => [
                         '@type' => 'Organization',
                         'name' => 'VVS FLAWLESS',
@@ -165,6 +174,7 @@ class PublicPageController extends Controller
                     'publisher' => [
                         '@type' => 'Organization',
                         'name' => 'VVS FLAWLESS',
+                        'url' => url('/'),
                         'logo' => [
                             '@type' => 'ImageObject',
                             'url' => url('/images/vvs-flawless-profile.webp'),
@@ -237,6 +247,39 @@ class PublicPageController extends Controller
             [
                 'hreflang' => 'x-default',
                 'href' => route($page),
+            ],
+        ];
+    }
+
+    /**
+     * @return list<array<string, string>>
+     */
+    private function serviceAreas(): array
+    {
+        return [
+            [
+                '@type' => 'Country',
+                'name' => 'Belgium',
+            ],
+            [
+                '@type' => 'AdministrativeArea',
+                'name' => 'Northern France',
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Maastricht',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Netherlands',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Gulpen',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Netherlands',
+                ],
             ],
         ];
     }
