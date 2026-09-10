@@ -1,7 +1,7 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
+import { Link, router, usePage } from '@inertiajs/vue3';
 import { animate } from 'animejs';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 
 const props = defineProps({
     current: {
@@ -57,36 +57,122 @@ const resolvedBackLabel = computed(
 );
 
 const navigation = ref(null);
+const headerControlCleanups = [];
 
-const steps = computed(() => {
-    const items = [
+const visitLanguage = (href) => {
+    if (href) {
+        router.visit(href);
+    }
+};
+
+const setupHeaderControls = () => {
+    const header = document.querySelector('.site-header');
+
+    if (!header) {
+        return;
+    }
+
+    const languageNav = Array.from(header.querySelectorAll('nav')).find(
+        (nav) =>
+            nav.getAttribute('aria-label') ===
+            translations.value.language.label,
+    );
+
+    if (languageNav) {
+        languageNav.style.flexShrink = '0';
+        languageNav.style.whiteSpace = 'nowrap';
+        languageNav.style.overflow = 'visible';
+
+        languageNav.querySelectorAll('a').forEach((link) => {
+            link.style.paddingInline = '0.55rem';
+        });
+
+        const hasEnglish = Array.from(languageNav.querySelectorAll('a')).some(
+            (link) => link.textContent?.trim().toUpperCase() === 'EN',
+        );
+
+        if (!hasEnglish && languageLinks.value.en) {
+            const englishLink = document.createElement('a');
+            englishLink.href = languageLinks.value.en;
+            englishLink.textContent = 'EN';
+            englishLink.className =
+                page.props.locale === 'en_BE'
+                    ? 'rounded-full bg-amber-300 px-2 py-1.5 text-black transition'
+                    : 'rounded-full px-2 py-1.5 text-zinc-500 transition hover:text-white';
+            englishLink.setAttribute('aria-label', 'English');
+
+            const handleEnglishClick = (event) => {
+                event.preventDefault();
+                visitLanguage(languageLinks.value.en);
+            };
+
+            englishLink.addEventListener('click', handleEnglishClick);
+            languageNav.appendChild(englishLink);
+
+            headerControlCleanups.push(() => {
+                englishLink.removeEventListener('click', handleEnglishClick);
+                englishLink.remove();
+            });
+        }
+    }
+
+    const flagLanguageLinks = [
         {
-            label: translations.value.vvs_navigation.collection,
-            href: localizedRoutes.value.watches,
-            key: 'collection',
+            selector: '[title="Belgique"]',
+            href: languageLinks.value.fr,
+            label: 'Français',
+        },
+        {
+            selector: '[title="Nord de la France"]',
+            href: languageLinks.value.fr,
+            label: 'Français',
+        },
+        {
+            selector: '[title="Maastricht et Gulpen"]',
+            href: languageLinks.value.nl,
+            label: 'Nederlands',
         },
     ];
 
-    if (props.current === 'watch' || props.current === 'reservation') {
-        items.push({
-            label: translations.value.vvs_navigation.model,
-            href: props.watchHref,
-            key: 'watch',
-        });
-    }
+    flagLanguageLinks.forEach(({ selector, href, label }) => {
+        const flag = header.querySelector(selector);
 
-    if (props.current === 'reservation') {
-        items.push({
-            label: translations.value.vvs_navigation.reservation,
-            href: null,
-            key: 'reservation',
-        });
-    }
+        if (!flag || !href) {
+            return;
+        }
 
-    return items;
-});
+        const handleVisit = () => visitLanguage(href);
+        const handleKeydown = (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') {
+                return;
+            }
+
+            event.preventDefault();
+            handleVisit();
+        };
+
+        flag.setAttribute('role', 'link');
+        flag.setAttribute('tabindex', '0');
+        flag.setAttribute('aria-label', `Afficher le site en ${label}`);
+        flag.classList.add(
+            'cursor-pointer',
+            'transition',
+            'hover:border-amber-300/40',
+            'hover:bg-amber-300/[0.06]',
+        );
+        flag.addEventListener('click', handleVisit);
+        flag.addEventListener('keydown', handleKeydown);
+
+        headerControlCleanups.push(() => {
+            flag.removeEventListener('click', handleVisit);
+            flag.removeEventListener('keydown', handleKeydown);
+        });
+    });
+};
 
 onMounted(() => {
+    setupHeaderControls();
+
     if (!navigation.value) {
         return;
     }
@@ -103,6 +189,10 @@ onMounted(() => {
         duration: 650,
         ease: 'outQuart',
     });
+});
+
+onBeforeUnmount(() => {
+    headerControlCleanups.splice(0).forEach((cleanup) => cleanup());
 });
 </script>
 
@@ -171,51 +261,6 @@ onMounted(() => {
                         class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
                     >
                         {{ guideLinks.eyebrow }}
-                    </Link>
-                </nav>
-
-                <nav
-                    v-if="
-                        languageLinks.fr || languageLinks.nl || languageLinks.en
-                    "
-                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[9px] font-bold"
-                    :aria-label="translations.language.label"
-                >
-                    <Link
-                        v-if="languageLinks.fr"
-                        :href="languageLinks.fr"
-                        :class="[
-                            'rounded-full px-2 py-1 transition',
-                            page.props.locale === 'fr_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
-                        ]"
-                    >
-                        FR
-                    </Link>
-                    <Link
-                        v-if="languageLinks.nl"
-                        :href="languageLinks.nl"
-                        :class="[
-                            'rounded-full px-2 py-1 transition',
-                            page.props.locale === 'nl_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
-                        ]"
-                    >
-                        NL
-                    </Link>
-                    <Link
-                        v-if="languageLinks.en"
-                        :href="languageLinks.en"
-                        :class="[
-                            'rounded-full px-2 py-1 transition',
-                            page.props.locale === 'en_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
-                        ]"
-                    >
-                        EN
                     </Link>
                 </nav>
 
