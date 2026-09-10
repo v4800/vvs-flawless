@@ -36,6 +36,17 @@ const startingAtLabel = computed(() => {
         }[page.props.locale] ?? 'À partir de'
     );
 });
+
+const detailsLabel = computed(() => {
+    return (
+        {
+            fr_BE: 'Options et délai confirmés avec vous avant réservation.',
+            nl_BE: 'Opties en termijn worden vóór reservatie met u bevestigd.',
+            en_BE: 'Options and timing are confirmed with you before reservation.',
+        }[page.props.locale] ??
+        'Options et délai confirmés avec vous avant réservation.'
+    );
+});
 </script>
 
 <template>
@@ -110,7 +121,7 @@ const startingAtLabel = computed(() => {
             <p
                 class="mt-5 line-clamp-2 text-center text-sm leading-6 text-zinc-500"
             >
-                {{ translations.collection.source_details }}
+                {{ detailsLabel }}
             </p>
 
             <div
