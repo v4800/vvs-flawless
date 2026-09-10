@@ -42,6 +42,7 @@ class SeoController extends Controller
             'Disallow: /reset-password',
             'Disallow: /reservation-confirmed/',
             'Disallow: /nl/reservation-confirmed/',
+            'Disallow: /en/reservation-confirmed/',
             '',
             'Sitemap: '.route('sitemap'),
             '',
