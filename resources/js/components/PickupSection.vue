@@ -97,10 +97,15 @@ const zoneCopy = computed(() => {
                                         class="flex h-5 w-8 overflow-hidden rounded-[3px] border border-white/10"
                                     >
                                         <span class="flex-1 bg-black"></span>
-                                        <span class="flex-1 bg-yellow-400"></span>
+                                        <span
+                                            class="flex-1 bg-yellow-400"
+                                        ></span>
                                         <span class="flex-1 bg-red-600"></span>
                                     </div>
-                                    <span class="text-[9px] font-black tracking-[0.18em] text-zinc-600">BE</span>
+                                    <span
+                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        >BE</span
+                                    >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.be }}
@@ -121,7 +126,10 @@ const zoneCopy = computed(() => {
                                         <span class="flex-1 bg-white"></span>
                                         <span class="flex-1 bg-red-600"></span>
                                     </div>
-                                    <span class="text-[9px] font-black tracking-[0.18em] text-zinc-600">FR</span>
+                                    <span
+                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        >FR</span
+                                    >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.fr }}
@@ -142,7 +150,10 @@ const zoneCopy = computed(() => {
                                         <span class="flex-1 bg-white"></span>
                                         <span class="flex-1 bg-blue-700"></span>
                                     </div>
-                                    <span class="text-[9px] font-black tracking-[0.18em] text-zinc-600">NL</span>
+                                    <span
+                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        >NL</span
+                                    >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.nl }}
@@ -161,7 +172,9 @@ const zoneCopy = computed(() => {
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-300/30 font-black text-amber-200"
-                        >01</div>
+                        >
+                            01
+                        </div>
                         <div>
                             <p class="font-bold">
                                 {{ translations.pickup.step_1_title }}
@@ -177,7 +190,9 @@ const zoneCopy = computed(() => {
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-amber-300/30 font-black text-amber-200"
-                        >02</div>
+                        >
+                            02
+                        </div>
                         <div>
                             <p class="font-bold">
                                 {{ translations.pickup.step_2_title }}
@@ -193,7 +208,9 @@ const zoneCopy = computed(() => {
                     >
                         <div
                             class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber-300 font-black text-black"
-                        >03</div>
+                        >
+                            03
+                        </div>
                         <div>
                             <p class="font-bold">
                                 {{ translations.pickup.step_3_title }}
