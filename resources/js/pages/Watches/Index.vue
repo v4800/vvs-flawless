@@ -45,12 +45,33 @@ const languageLinks = computed(() => {
     };
 });
 
+const startingAtLabel = computed(() => {
+    return (
+        {
+            fr_BE: 'À partir de',
+            nl_BE: 'Vanaf',
+            en_BE: 'From',
+        }[page.props.locale] ?? 'À partir de'
+    );
+});
+
 const formatPrice = (price) => {
     if (!price) {
         return '—';
     }
 
     return `${Number(price).toFixed(0)} €`;
+};
+
+const watchStartingPrice = (watch) => {
+    const prices = [
+        watch.japanese_promo_price ?? watch.japanese_price,
+        watch.swiss_promo_price ?? watch.swiss_price,
+    ]
+        .map((price) => Number(price))
+        .filter((price) => Number.isFinite(price) && price > 0);
+
+    return prices.length ? Math.min(...prices) : null;
 };
 
 const scrollToCollection = () => {
@@ -70,7 +91,7 @@ onMounted(() => {
     if (prefersReducedMotion) {
         document
             .querySelectorAll(
-                '.hero-animate, .hero-watch, .hero-badge, .reveal-on-scroll',
+                '.hero-animate, .hero-watch, .reveal-on-scroll',
             )
             .forEach((element) => {
                 element.style.opacity = '1';
@@ -111,16 +132,6 @@ onMounted(() => {
                 duration: 1450,
             },
             '-=900',
-        )
-        .add(
-            '.hero-badge',
-            {
-                opacity: [0, 1],
-                x: [25, 0],
-                scale: [0.92, 1],
-                duration: 750,
-            },
-            '-=650',
         );
 
     animate('.brand-shine', {
@@ -246,7 +257,7 @@ onBeforeUnmount(() => {
 
                 <div class="flex items-center gap-3">
                     <nav
-                        class="flex items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
+                        class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
                         :aria-label="translations.language.label"
                     >
                         <Link
@@ -259,7 +270,7 @@ onBeforeUnmount(() => {
                                     : 'text-zinc-500 hover:text-white',
                             ]"
                         >
-                            {{ translations.language.fr }}
+                            FR
                         </Link>
                         <Link
                             v-if="languageLinks.nl"
@@ -271,7 +282,7 @@ onBeforeUnmount(() => {
                                     : 'text-zinc-500 hover:text-white',
                             ]"
                         >
-                            {{ translations.language.nl }}
+                            NL
                         </Link>
                         <Link
                             v-if="languageLinks.en"
@@ -283,7 +294,7 @@ onBeforeUnmount(() => {
                                     : 'text-zinc-500 hover:text-white',
                             ]"
                         >
-                            {{ translations.language.en }}
+                            EN
                         </Link>
                     </nav>
 
@@ -291,9 +302,11 @@ onBeforeUnmount(() => {
                         class="hidden items-center gap-2 lg:flex"
                         aria-label="Zones de remise en main propre"
                     >
-                        <div
-                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1"
-                            title="Belgique"
+                        <Link
+                            v-if="languageLinks.fr"
+                            :href="languageLinks.fr"
+                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                            title="Belgique — français"
                         >
                             <div
                                 class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
@@ -306,11 +319,13 @@ onBeforeUnmount(() => {
                                 class="text-[8px] font-bold tracking-wider text-zinc-500"
                                 >BE</span
                             >
-                        </div>
+                        </Link>
 
-                        <div
-                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1"
-                            title="Nord de la France"
+                        <Link
+                            v-if="languageLinks.fr"
+                            :href="languageLinks.fr"
+                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                            title="Nord de la France — français"
                         >
                             <div
                                 class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
@@ -323,11 +338,13 @@ onBeforeUnmount(() => {
                                 class="text-[8px] font-bold tracking-wider text-zinc-500"
                                 >FR</span
                             >
-                        </div>
+                        </Link>
 
-                        <div
-                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1"
-                            title="Maastricht et Gulpen"
+                        <Link
+                            v-if="languageLinks.nl"
+                            :href="languageLinks.nl"
+                            class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                            title="Maastricht et Gulpen — Nederlands"
                         >
                             <div
                                 class="flex h-4 w-6 flex-col overflow-hidden rounded-[2px] border border-white/10"
@@ -340,7 +357,7 @@ onBeforeUnmount(() => {
                                 class="text-[8px] font-bold tracking-wider text-zinc-500"
                                 >NL</span
                             >
-                        </div>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -463,26 +480,22 @@ onBeforeUnmount(() => {
                                 <p class="text-[10px] text-zinc-500">VVS</p>
                             </div>
                             <div class="vvs-choice-card rounded-xl border p-3">
-                                <div class="text-lg text-amber-300">♢</div>
-                                <p
-                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
-                                >
-                                    {{ translations.collection.japanese }}
-                                </p>
-                                <p class="text-[10px] text-zinc-500">
-                                    {{ translations.hero.selected }}
-                                </p>
-                            </div>
-                            <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">✦</div>
                                 <p
                                     class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                                 >
-                                    {{ translations.collection.swiss }}
+                                    Couleur D
                                 </p>
-                                <p class="text-[10px] text-zinc-500">
-                                    {{ translations.collection.premium }}
+                                <p class="text-[10px] text-zinc-500">Éclat net</p>
+                            </div>
+                            <div class="vvs-choice-card rounded-xl border p-3">
+                                <div class="text-lg text-amber-300">◷</div>
+                                <p
+                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
+                                >
+                                    5–6 jours
                                 </p>
+                                <p class="text-[10px] text-zinc-500">Sur réservation</p>
                             </div>
                             <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">↗</div>
@@ -533,20 +546,16 @@ onBeforeUnmount(() => {
                             <div
                                 class="absolute inset-x-0 top-0 z-20 flex items-center justify-between border-b border-white/[0.07] bg-black/35 px-5 py-4 backdrop-blur-md"
                             >
-                                <div>
-                                    <p
-                                        class="text-[8px] font-black tracking-[0.28em] text-amber-300 uppercase"
-                                    >
-                                        VVS FLAWLESS
-                                    </p>
-                                    <p class="mt-1 text-[10px] text-zinc-500">
-                                        Signature selection
-                                    </p>
-                                </div>
+                                <p
+                                    class="text-[9px] font-black tracking-[0.28em] text-amber-300 uppercase"
+                                >
+                                    VVS FLAWLESS
+                                </p>
                                 <span
                                     class="rounded-full border border-white/10 px-3 py-1.5 text-[8px] font-bold tracking-[0.18em] text-zinc-400 uppercase"
-                                    >Belgium</span
                                 >
+                                    BE • FR • NL
+                                </span>
                             </div>
 
                             <img
@@ -567,89 +576,37 @@ onBeforeUnmount(() => {
                             ></div>
 
                             <div
-                                class="absolute right-5 bottom-5 left-5 z-20 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end"
+                                class="absolute right-5 bottom-5 left-5 z-20 rounded-2xl border border-white/10 bg-black/72 p-5 backdrop-blur-xl"
                             >
+                                <p
+                                    class="text-[9px] font-black tracking-[0.24em] text-amber-300 uppercase"
+                                >
+                                    Moissanite VVS • Couleur D
+                                </p>
                                 <div
-                                    class="rounded-2xl border border-white/10 bg-black/70 p-5 backdrop-blur-xl"
+                                    class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
                                 >
                                     <p
-                                        class="text-[9px] font-black tracking-[0.24em] text-amber-300 uppercase"
+                                        class="vvs-display-title text-3xl leading-none text-white sm:text-4xl"
                                     >
-                                        Moissanite VVS • Couleur D
+                                        Pièce signature.
                                     </p>
-                                    <p
-                                        class="vvs-display-title mt-2 text-3xl leading-none text-white sm:text-4xl"
-                                    >
-                                        Éclat signature.
-                                    </p>
-                                    <p
-                                        class="mt-3 max-w-md text-xs leading-5 text-zinc-500"
-                                    >
-                                        Une vitrine plus éditoriale, légère et
-                                        immédiate — sans chargement 3D.
-                                    </p>
-                                </div>
-
-                                <div
-                                    class="grid grid-cols-3 gap-2 sm:grid-cols-1"
-                                >
                                     <div
-                                        class="rounded-xl border border-white/10 bg-black/70 px-3 py-3 text-center backdrop-blur-xl"
+                                        class="flex flex-wrap gap-2 text-[9px] font-bold uppercase tracking-wider"
                                     >
-                                        <p
-                                            class="text-[8px] font-black tracking-wider text-amber-300 uppercase"
-                                        >
-                                            Remise
-                                        </p>
-                                        <p
-                                            class="mt-1 text-[9px] font-bold text-white"
-                                        >
-                                            BE • FR • NL
-                                        </p>
-                                    </div>
-                                    <div
-                                        class="rounded-xl border border-white/10 bg-black/70 px-3 py-3 text-center backdrop-blur-xl"
-                                    >
-                                        <p
-                                            class="text-[8px] font-black tracking-wider text-amber-300 uppercase"
-                                        >
-                                            Délai
-                                        </p>
-                                        <p
-                                            class="mt-1 text-[9px] font-bold text-white"
+                                        <span
+                                            class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-2 text-zinc-300"
                                         >
                                             5–6 jours
-                                        </p>
-                                    </div>
-                                    <div
-                                        class="rounded-xl border border-white/10 bg-black/70 px-3 py-3 text-center backdrop-blur-xl"
-                                    >
-                                        <p
-                                            class="text-[8px] font-black tracking-wider text-amber-300 uppercase"
-                                        >
-                                            Service
-                                        </p>
-                                        <p
-                                            class="mt-1 text-[9px] font-bold text-white"
+                                        </span>
+                                        <span
+                                            class="rounded-full border border-amber-300/20 bg-amber-300/[0.06] px-3 py-2 text-amber-200"
                                         >
                                             Sur réservation
-                                        </p>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div
-                            class="hero-badge absolute top-[12%] -right-2 z-20 hidden rounded-2xl border border-amber-300/30 bg-black/80 px-5 py-4 shadow-[0_0_35px_rgba(251,191,36,0.1)] backdrop-blur-xl md:block"
-                        >
-                            <p
-                                class="text-[8px] font-black tracking-[0.25em] text-amber-300 uppercase"
-                            >
-                                Private selection
-                            </p>
-                            <p class="mt-2 text-xs font-bold text-white">
-                                VVS • D Color
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -767,83 +724,19 @@ onBeforeUnmount(() => {
                                     Moissanite VVS
                                 </p>
 
-                                <div class="mt-6 grid grid-cols-2 gap-3">
-                                    <Link
-                                        :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
-                                        class="vvs-choice-card group/version rounded-xl border p-4"
+                                <Link
+                                    :href="`${localizedRoutes.watches}/${watch.id}`"
+                                    class="vvs-choice-card vvs-choice-card--featured mt-6 rounded-xl border p-4 text-center"
+                                >
+                                    <p
+                                        class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
                                     >
-                                        <p
-                                            class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
-                                        >
-                                            {{
-                                                translations.collection.japanese
-                                            }}
-                                        </p>
-                                        <p
-                                            v-if="watch.japanese_promo_price"
-                                            class="mt-3 text-xs text-zinc-600 line-through"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.japanese_price,
-                                                )
-                                            }}
-                                        </p>
-                                        <p
-                                            class="vvs-price mt-1 text-xl font-black"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.japanese_promo_price ??
-                                                        watch.japanese_price,
-                                                )
-                                            }}
-                                        </p>
-                                        <p
-                                            class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
-                                        >
-                                            {{ translations.collection.choose }}
-                                        </p>
-                                    </Link>
-
-                                    <Link
-                                        :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
-                                        class="vvs-choice-card vvs-choice-card--featured group/version relative overflow-hidden rounded-xl border p-4"
-                                    >
-                                        <span
-                                            class="absolute top-2 right-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black tracking-wider text-black uppercase"
-                                            >{{
-                                                translations.collection.premium
-                                            }}</span
-                                        >
-                                        <p
-                                            class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
-                                        >
-                                            {{ translations.collection.swiss }}
-                                        </p>
-                                        <p
-                                            v-if="watch.swiss_promo_price"
-                                            class="mt-3 text-xs text-zinc-600 line-through"
-                                        >
-                                            {{ formatPrice(watch.swiss_price) }}
-                                        </p>
-                                        <p
-                                            class="vvs-price mt-1 text-xl font-black"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.swiss_promo_price ??
-                                                        watch.swiss_price,
-                                                )
-                                            }}
-                                        </p>
-                                        <p
-                                            class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
-                                        >
-                                            {{ translations.collection.choose }}
-                                        </p>
-                                    </Link>
-                                </div>
+                                        {{ startingAtLabel }}
+                                    </p>
+                                    <p class="vvs-price mt-2 text-2xl font-black">
+                                        {{ formatPrice(watchStartingPrice(watch)) }}
+                                    </p>
+                                </Link>
 
                                 <p
                                     class="mt-5 line-clamp-2 text-center text-sm leading-6 text-zinc-500"
