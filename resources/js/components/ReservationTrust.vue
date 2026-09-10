@@ -8,7 +8,7 @@ const translations = computed(() => page.props.translations);
 
 <template>
     <div
-        class="rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5"
+        class="h-full rounded-2xl border border-amber-300/15 bg-amber-300/[0.025] p-5 xl:col-span-2"
     >
         <div class="flex items-start gap-4">
             <div
