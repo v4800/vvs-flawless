@@ -252,7 +252,7 @@ class PublicPageController extends Controller
     }
 
     /**
-     * @return list<array<string, string>>
+     * @return list<array<string, mixed>>
      */
     private function serviceAreas(): array
     {
