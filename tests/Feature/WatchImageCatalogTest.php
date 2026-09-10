@@ -102,4 +102,40 @@ class WatchImageCatalogTest extends TestCase
 
         $this->assertDatabaseCount('watches', 0);
     }
+
+    public function test_featured_public_catalog_images_use_optimized_webp_variants(): void
+    {
+        $catalog = json_decode(
+            file_get_contents(resource_path('data/watch-image-catalog.json')),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        foreach ($catalog['watches'] as $entry) {
+            if (! ($entry['featured'] ?? false)) {
+                continue;
+            }
+
+            $files = [
+                ...$entry['images'],
+                $entry['card_image'] ?? $entry['images'][0],
+            ];
+
+            foreach (array_unique($files) as $filename) {
+                $this->assertStringEndsWith('.webp', $filename);
+
+                $path = public_path(
+                    'images/watches/catalog/'.$entry['folder'].'/'.$filename
+                );
+
+                $this->assertFileExists($path);
+                $this->assertLessThanOrEqual(
+                    1024 * 1024,
+                    filesize($path),
+                    $path.' should stay below 1 MB for public delivery.'
+                );
+            }
+        }
+    }
 }
