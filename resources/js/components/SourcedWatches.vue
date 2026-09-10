@@ -22,11 +22,13 @@ const displayModels = computed(() =>
 );
 
 const requestPriceLabel = computed(() => {
-    return {
-        fr_BE: 'Prix sur demande',
-        nl_BE: 'Prijs op aanvraag',
-        en_BE: 'Price on request',
-    }[page.props.locale] ?? 'Prix sur demande';
+    return (
+        {
+            fr_BE: 'Prix sur demande',
+            nl_BE: 'Prijs op aanvraag',
+            en_BE: 'Price on request',
+        }[page.props.locale] ?? 'Prix sur demande'
+    );
 });
 
 const imageClickCleanups = [];
