@@ -14,6 +14,12 @@ const translations = computed(() => page.props.translations);
 
 const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
+const featuredStartingPrices = {
+    'VVS-C002': 850,
+    'VVS-C004': 850,
+    'VVS-C008': 650,
+};
+
 const matchedWatch = (model) => {
     return (page.props.watches ?? []).find((watch) => watch.image === model.image);
 };
@@ -22,7 +28,7 @@ const startingPrice = (model) => {
     const watch = matchedWatch(model);
 
     if (!watch) {
-        return null;
+        return featuredStartingPrices[model.reference] ?? null;
     }
 
     const prices = [
