@@ -1,0 +1,105 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\Watch;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
+use Tests\TestCase;
+
+class WatchImageCatalogTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->withoutVite();
+    }
+
+    public function test_row_numbers_do_not_assign_another_models_photos(): void
+    {
+        foreach ([46, 47, 48, 52] as $id) {
+            $watch = new Watch([
+                'name' => 'Original model',
+                'description' => 'Original description',
+                'price' => 950,
+                'availability' => 'Sur commande',
+                'image' => '/images/watches/original-'.$id.'.webp',
+            ]);
+            $watch->id = $id;
+            $watch->save();
+
+            $this->get(route('watches.show', $watch))
+                ->assertOk()
+                ->assertInertia(fn (Assert $page) => $page
+                    ->where('watch.image', $watch->image)
+                    ->has('gallery', 0)
+                    ->etc());
+        }
+    }
+
+    public function test_blue_photo_updates_the_collection_product_and_seo_without_writing_to_database(): void
+    {
+        $original = '/images/watches/presidentielle-bleu-romains.webp';
+        $photo = '/images/watches/catalog/001-blue-round/07-black-marble.webp';
+        $watch = Watch::query()->create([
+            'name' => 'Blue Roman dial',
+            'description' => 'Original description',
+            'price' => 950,
+            'japanese_price' => 950,
+            'availability' => 'Sur commande',
+            'stock_quantity' => null,
+            'image' => $original,
+        ]);
+        $before = $watch->getAttributes();
+
+        $this->get(route('watches.index'))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('watches.0.image', $photo)
+                ->where('catalogModels.0.watchUrl', route('watches.show', $watch))
+                ->etc());
+
+        $this->get(route('watches.show', $watch))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('watch.image', $photo)
+                ->where('gallery', [$photo])
+                ->where('seo.image', url($photo))
+                ->where('seo.structuredData.@graph.0.image', [url($photo)])
+                ->where('seo.structuredData.@graph.0.offers.0.availability', 'https://schema.org/PreOrder')
+                ->etc());
+
+        $this->assertSame($before, $watch->fresh()->getAttributes());
+        $this->assertDatabaseCount('watches', 1);
+    }
+
+    public function test_new_models_have_real_images_localized_names_and_no_invented_offers(): void
+    {
+        foreach (['watches.index' => 'fr_BE', 'nl.watches.index' => 'nl_BE', 'en.watches.index' => 'en_BE'] as $route => $locale) {
+            $this->get(route($route))
+                ->assertOk()
+                ->assertInertia(fn (Assert $page) => $page
+                    ->has('watches', 0)
+                    ->has('catalogModels', 4)
+                    ->where('catalogModels.0.name', trans('site.collection.catalog_names.blue-round', [], $locale))
+                    ->where('catalogModels.3.name', trans('site.collection.catalog_names.sport-black-strap', [], $locale))
+                    ->where('catalogModels', function ($models) {
+                        foreach ($models as $model) {
+                            $this->assertFileExists(public_path(ltrim($model['image'], '/')));
+                            $this->assertFileExists(public_path(ltrim($model['cardImage'], '/')));
+                            $this->assertNull($model['watchUrl']);
+                            $this->assertArrayNotHasKey('price', $model);
+                            $this->assertArrayNotHasKey('offers', $model);
+                        }
+
+                        return true;
+                    })
+                    ->etc());
+        }
+
+        $this->assertDatabaseCount('watches', 0);
+    }
+}

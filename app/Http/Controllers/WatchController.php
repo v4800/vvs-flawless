@@ -7,8 +7,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
+/**
+ * @phpstan-type CatalogEntry array{
+ *     id: int,
+ *     slug: string,
+ *     folder: string,
+ *     images: list<string>,
+ *     featured?: bool,
+ *     card_image?: string,
+ *     legacy_images?: list<string>
+ * }
+ */
 class WatchController extends Controller
 {
+    /** @var list<CatalogEntry>|null */
+    private ?array $imageCatalog = null;
+
     public function index(Request $request): Response
     {
         $this->captureMarketingAttribution($request);
@@ -27,6 +41,8 @@ class WatchController extends Controller
 
         return inertia('Watches/Index', [
             'watches' => $watches,
+
+            'catalogModels' => $this->featuredCatalogModels($watches),
 
             'seo' => [
                 'title' => trans('seo_intents.collection_seo.title'),
@@ -407,67 +423,118 @@ class WatchController extends Controller
 
     private function applyCatalogCover(Watch $watch): Watch
     {
-        $cover = $this->coverForWatch($watch);
+        $gallery = $this->galleryForWatch($watch);
 
-        if ($cover === null || ! $this->catalogImageExists($cover)) {
-            return $watch;
+        if ($gallery !== []) {
+            $watch = clone $watch;
+            $watch->image = $gallery[0];
         }
-
-        $watch->image = $cover;
 
         return $watch;
     }
 
-    private function coverForWatch(Watch $watch): ?string
+    /**
+     * @return list<CatalogEntry>
+     */
+    private function catalogEntries(): array
     {
-        return match ((int) $watch->id) {
-            52 => '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
-            48 => '/images/watches/catalog/002-twotone-round/01-front.png',
-            46 => '/images/watches/catalog/003-square-roman/01-front.png',
-            47 => '/images/watches/catalog/004-black-square/03-hand.jpg',
-            default => null,
-        };
+        if ($this->imageCatalog === null) {
+            $contents = file_get_contents(resource_path('data/watch-image-catalog.json'));
+
+            if ($contents === false) {
+                return [];
+            }
+
+            /** @var array{watches: list<CatalogEntry>} $catalog */
+            $catalog = json_decode($contents, true, 512, JSON_THROW_ON_ERROR);
+            $this->imageCatalog = $catalog['watches'];
+        }
+
+        return $this->imageCatalog;
     }
 
     /**
+     * Match an explicitly assigned image, never a database row number.
+     *
      * @return list<string>
      */
     private function galleryForWatch(Watch $watch): array
     {
-        $gallery = match ((int) $watch->id) {
-            52 => [
-                '/images/watches/catalog/001-blue-round/01-front.png',
-                '/images/watches/catalog/001-blue-round/02-hero-reflection.png',
-                '/images/watches/catalog/001-blue-round/03-angle-top.png',
-                '/images/watches/catalog/001-blue-round/04-side-bracelet.png',
-                '/images/watches/catalog/001-blue-round/05-bracelet-vertical.png',
-                '/images/watches/catalog/001-blue-round/06-bracelet-clasp.png',
-            ],
-            48 => [
-                '/images/watches/catalog/002-twotone-round/01-front.png',
-                '/images/watches/catalog/002-twotone-round/02-angle-right.png',
-                '/images/watches/catalog/002-twotone-round/03-angle-left.png',
-                '/images/watches/catalog/002-twotone-round/04-angle-wide.png',
-                '/images/watches/catalog/002-twotone-round/05-back.png',
-            ],
-            46 => [
-                '/images/watches/catalog/003-square-roman/01-front.png',
-                '/images/watches/catalog/003-square-roman/02-front-variant.png',
-            ],
-            47 => [
-                '/images/watches/catalog/004-black-square/01-front.jpg',
-                '/images/watches/catalog/004-black-square/02-angle.jpg',
-                '/images/watches/catalog/004-black-square/03-hand.jpg',
-            ],
-            default => [],
-        };
+        if (! is_string($watch->image) || $watch->image === '') {
+            return [];
+        }
 
-        return array_values(
-            array_filter(
-                $gallery,
-                fn (string $image): bool => $this->catalogImageExists($image)
-            )
-        );
+        $image = '/'.ltrim($watch->image, '/');
+
+        foreach ($this->catalogEntries() as $entry) {
+            $directory = '/images/watches/catalog/'.$entry['folder'].'/';
+
+            if (str_starts_with($image, $directory)
+                || in_array($image, $entry['legacy_images'] ?? [], true)) {
+                return $this->catalogGallery($entry);
+            }
+        }
+
+        return [];
+    }
+
+    /**
+     * @param  CatalogEntry  $entry
+     * @return list<string>
+     */
+    private function catalogGallery(array $entry): array
+    {
+        $directory = '/images/watches/catalog/'.$entry['folder'].'/';
+
+        return array_values(array_filter(
+            array_map(fn (string $image): string => $directory.$image, $entry['images']),
+            fn (string $image): bool => $this->catalogImageExists($image)
+        ));
+    }
+
+    /**
+     * @param  iterable<Watch>  $watches
+     * @return list<array{reference: string, name: string, image: string, cardImage: string, watchUrl: string|null}>
+     */
+    private function featuredCatalogModels(iterable $watches): array
+    {
+        $models = [];
+
+        foreach ($this->catalogEntries() as $entry) {
+            if (! ($entry['featured'] ?? false)) {
+                continue;
+            }
+
+            $gallery = $this->catalogGallery($entry);
+
+            if ($gallery === []) {
+                continue;
+            }
+
+            $watchUrl = null;
+
+            foreach ($watches as $watch) {
+                if ($watch->image === $gallery[0]) {
+                    $watchUrl = route($this->localizedRouteName('watches.show'), $watch);
+                    break;
+                }
+            }
+
+            $cardImage = '/images/watches/catalog/'.$entry['folder'].'/'.($entry['card_image'] ?? $entry['images'][0]);
+
+            $name = trans('site.collection.catalog_names.'.$entry['slug']);
+            $name = is_string($name) ? $name : $entry['slug'];
+
+            $models[] = [
+                'reference' => sprintf('VVS-C%03d', $entry['id']),
+                'name' => $name,
+                'image' => $gallery[0],
+                'cardImage' => $this->catalogImageExists($cardImage) ? $cardImage : $gallery[0],
+                'watchUrl' => $watchUrl,
+            ];
+        }
+
+        return $models;
     }
 
     private function catalogImageExists(string $image): bool

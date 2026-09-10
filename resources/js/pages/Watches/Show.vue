@@ -181,7 +181,7 @@ const submit = () => {
                                     loading="eager"
                                     fetchpriority="high"
                                     decoding="async"
-                                    class="block h-full w-full object-contain p-3 contrast-[1.04] saturate-[0.94] sm:p-5"
+                                    class="block h-full w-full object-contain p-3 sm:p-5"
                                 />
                             </div>
 
@@ -243,7 +243,7 @@ const submit = () => {
                                     :alt="`${watch.name} — vue ${index + 1}`"
                                     loading="lazy"
                                     decoding="async"
-                                    class="h-full w-full rounded-lg object-cover contrast-[1.03] saturate-[0.94]"
+                                    class="h-full w-full rounded-lg object-contain"
                                 />
                             </button>
                         </div>

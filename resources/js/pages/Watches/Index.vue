@@ -18,6 +18,11 @@ const props = defineProps({
         default: () => [],
     },
 
+    catalogModels: {
+        type: Array,
+        default: () => [],
+    },
+
     seo: {
         type: Object,
         required: true,
@@ -934,6 +939,8 @@ onBeforeUnmount(() => {
             <!-- COLLECTION -->
             <!-- ========================================================= -->
 
+            <SourcedWatches :models="catalogModels" />
+
             <section
                 id="collection"
                 class="relative scroll-mt-24 overflow-hidden px-5 py-20 sm:px-6 lg:px-10"
@@ -1010,7 +1017,7 @@ onBeforeUnmount(() => {
                                     :alt="watch.name"
                                     loading="lazy"
                                     decoding="async"
-                                    class="h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.06]"
+                                    class="h-full w-full object-contain"
                                 />
 
                                 <div
@@ -1181,8 +1188,6 @@ onBeforeUnmount(() => {
             <!-- ========================================================= -->
             <!-- COMMENT COMMANDER -->
             <!-- ========================================================= -->
-
-            <SourcedWatches />
 
             <OrderSteps />
 
