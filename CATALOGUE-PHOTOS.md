@@ -1,26 +1,42 @@
-# Photos du catalogue — 10 septembre 2026
+# Photos du catalogue — état SEO/GEO
 
-Cette série reprend quatre images déjà réalisées : fond en marbre noir, décor noir et doré, lumière chaude. Aucune nouvelle génération, aucun détourage ni changement de couleur ou de montre. Les PNG originaux sont conservés séparément dans le paquet de livraison. Le site utilise des encodages WebP (1448 × 1086) et des variantes de 720 pixels pour les cartes.
+La série actuelle utilise quatre visuels sur fond marbre noir avec décor noir et doré. Le site sert les variantes WebP optimisées pour l’affichage public. Les fichiers sources plus lourds peuvent rester archivés, mais les nouvelles images destinées au site doivent suivre la convention décrite dans `IMAGE_NAMING.md`.
 
-| Référence visuelle | Modèle                         | Liaison actuelle                                                   |
-| ------------------ | ------------------------------ | ------------------------------------------------------------------ |
-| VVS-C001           | Cadran bleu, chiffres romains  | Fiche portant l’image `presidentielle-bleu-romains.webp` ou `.png` |
-| VVS-C002           | Bicolore, bracelet intégré     | Contact pour prix, options et délai                                |
-| VVS-C004           | Carrée noire, chiffres romains | Contact pour prix, options et délai                                |
-| VVS-C008           | Sportive, bracelet noir        | Contact pour prix, options et délai                                |
+| Référence interne | Modèle                         | Affichage actuel |
+| ----------------- | ------------------------------ | ---------------- |
+| VVS-C001          | Cadran bleu, chiffres romains  | Relié à sa fiche produit ; prix récupéré depuis la fiche |
+| VVS-C002          | Bicolore, bracelet intégré     | À partir de 650 € |
+| VVS-C004          | Carrée noire, chiffres romains | À partir de 850 € |
+| VVS-C008          | Sportive, bracelet noir        | À partir de 650 € |
 
-Les références VVS-C et les identifiants du JSON désignent des images, pas les lignes de la base. Les anciennes associations automatiques aux lignes 46, 47 et 48 sont supprimées : elles pouvaient afficher un autre modèle sous un nom et un prix existants. Les autres produits conservent leur photo enregistrée en base. Aucun prix, stock, produit ni réservation n’est modifié en base.
+Les références `VVS-Cxxx` et les identifiants du JSON sont des références techniques internes aux visuels. Elles ne doivent pas servir de nom commercial visible pour le client. Les associations d’images reposent sur des chemins explicitement connus dans `resources/data/watch-image-catalog.json`, jamais sur le numéro d’une ligne de base de données.
 
-`resources/data/watch-image-catalog.json` définit les images et les modèles à présenter (`featured`). `legacy_images` contient uniquement les chemins dont la correspondance est établie. Une image explicitement enregistrée dans un dossier du catalogue permet également de rattacher une fiche à ce dossier. Les anciennes images restent sur disque et sont répertoriées sous `archived_images` pour les modèles remplacés.
+## Image SEO
 
-Pour les trois autres modèles de cette série, il faut encore confirmer les prix et les options avant de créer des fiches avec réservation. Pour uniformiser les autres montres du site, il manque leurs images individuelles dans cette direction artistique. Ne pas substituer un modèle ressemblant et ne pas réutiliser le prix d’une autre montre.
+Les fichiers actuels `black-marble.webp` proviennent d’une série déjà intégrée. On ne les renomme pas à chaud afin d’éviter de casser les chemins existants. Les **prochaines photos** doivent en revanche utiliser dès l’import des noms descriptifs comme :
 
-## Vérification
+`01-montre-moissanite-vvs-cadran-bleu-face.webp`
 
-Versions vérifiées dans les fichiers verrouillés : Laravel 13.29.0, inertia-laravel 3.3.1, Vue 3.5.42, Inertia Vue 3.7.0, Tailwind 4.3.3, Vite 8.2.2. Aucune dépendance modifiée.
+ou :
 
-Contrôles réalisés : formatage et lint frontend, compilation des quatre composants Vue concernés, analyse syntaxique des PHP modifiés, existence et dimensions des nouveaux fichiers image. Les tests de régression couvrent la correspondance des images, la conservation des données, les trois langues et les métadonnées produit.
+`02-montre-iced-out-moissanite-vvs-bracelet-noir-angle.webp`
 
-PHP est absent de l’environnement de préparation ; les contrôles complets (build, TypeScript, Pint, PHPStan et tests Laravel) sont donc exécutés par GitHub Actions. Leur résultat est consultable dans la [proposition nº 3](https://github.com/v4800/vvs-flawless/pull/3). Contrôler ensuite `/watches`, `/nl/watches`, `/en/watches` et la fiche bleue, sur mobile et ordinateur, avant toute fusion.
+Les règles complètes sont dans `IMAGE_NAMING.md` : WebP pour les photos publiques, dimensions cohérentes, variante carte plus légère, `alt` descriptif et absence de keyword stuffing.
 
-Documentation de référence : [props Vue](https://vuejs.org/guide/components/props.html), [Laravel 13](https://laravel.com/docs/13.x/responses).
+Les visuels WebP actuels de la série principale font environ 1448 × 1086, avec des versions carte d’environ 720 px. C’est une bonne base pour conserver une grille visuellement stable et éviter de charger de gros PNG de plusieurs mégaoctets quand ils n’apportent aucun gain visible.
+
+## Galeries et schema Product
+
+Pour une vraie fiche produit reliée à la base, toutes les images actives déclarées dans `images` pour son entrée catalogue sont reprises par la galerie. Le contrôleur transforme ensuite cette galerie en tableau `image` du schema `Product`. Quand de nouvelles vues sont ajoutées — face, angle, cadran, bracelet, fermoir, dos — il suffit donc de les ajouter proprement à l’entrée concernée pour qu’elles puissent être exposées au produit après vérification.
+
+Les modèles uniquement présentés dans le catalogue et renvoyant encore vers le contact ne reçoivent pas artificiellement une fiche `Product` ou des `Offer` inventées. Une vraie fiche doit être créée ou reliée avant de leur attribuer ces données structurées.
+
+## À faire lors du prochain ajout d’images
+
+1. Importer les nouvelles photos directement en WebP avec un nom descriptif.
+2. Garder des proportions cohérentes pour toutes les cartes d’une même série.
+3. Ajouter plusieurs vues utiles dans `resources/data/watch-image-catalog.json`.
+4. Vérifier le `alt` dans la langue affichée et la présence des images de galerie dans le schema `Product` pour les fiches reliées.
+5. Contrôler le poids des fichiers avant mise en ligne et conserver les originaux lourds hors du chemin public lorsqu’ils ne sont pas nécessaires.
+
+Aucune dépendance Laravel/Vue/Inertia/Tailwind/Vite n’est modifiée par ce travail SEO/GEO.
