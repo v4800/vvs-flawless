@@ -21,6 +21,6 @@ Versions vérifiées dans les fichiers verrouillés : Laravel 13.29.0, inertia-l
 
 Contrôles réalisés : formatage et lint frontend, compilation des quatre composants Vue concernés, analyse syntaxique des PHP modifiés, existence et dimensions des nouveaux fichiers image. Les tests de régression couvrent la correspondance des images, la conservation des données, les trois langues et les métadonnées produit.
 
-Le build complet, le contrôle TypeScript et les tests Laravel restent à exécuter dans l’environnement local : PHP est absent de l’environnement de préparation, donc Wayfinder ne peut pas générer ses fichiers. Les tests PHP ajoutés n’ont pas encore été exécutés. Contrôler ensuite `/watches`, `/nl/watches`, `/en/watches` et la fiche bleue, sur mobile et ordinateur.
+PHP est absent de l’environnement de préparation ; les contrôles complets (build, TypeScript, Pint, PHPStan et tests Laravel) sont donc exécutés par GitHub Actions. Leur résultat est consultable dans la [proposition nº 3](https://github.com/v4800/vvs-flawless/pull/3). Contrôler ensuite `/watches`, `/nl/watches`, `/en/watches` et la fiche bleue, sur mobile et ordinateur, avant toute fusion.
 
 Documentation de référence : [props Vue](https://vuejs.org/guide/components/props.html), [Laravel 13](https://laravel.com/docs/13.x/responses).

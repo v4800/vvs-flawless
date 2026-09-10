@@ -53,7 +53,7 @@ class WatchImageCatalogTest extends TestCase
             'stock_quantity' => null,
             'image' => $original,
         ]);
-        $before = $watch->getAttributes();
+        $before = $watch->fresh()->getAttributes();
 
         $this->get(route('watches.index'))
             ->assertOk()
