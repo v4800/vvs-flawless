@@ -90,9 +90,7 @@ onMounted(() => {
 
     if (prefersReducedMotion) {
         document
-            .querySelectorAll(
-                '.hero-animate, .hero-watch, .reveal-on-scroll',
-            )
+            .querySelectorAll('.hero-animate, .hero-watch, .reveal-on-scroll')
             .forEach((element) => {
                 element.style.opacity = '1';
                 element.style.transform = 'none';
@@ -486,7 +484,9 @@ onBeforeUnmount(() => {
                                 >
                                     Couleur D
                                 </p>
-                                <p class="text-[10px] text-zinc-500">Éclat net</p>
+                                <p class="text-[10px] text-zinc-500">
+                                    Éclat net
+                                </p>
                             </div>
                             <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">◷</div>
@@ -495,7 +495,9 @@ onBeforeUnmount(() => {
                                 >
                                     5–6 jours
                                 </p>
-                                <p class="text-[10px] text-zinc-500">Sur réservation</p>
+                                <p class="text-[10px] text-zinc-500">
+                                    Sur réservation
+                                </p>
                             </div>
                             <div class="vvs-choice-card rounded-xl border p-3">
                                 <div class="text-lg text-amber-300">↗</div>
@@ -592,7 +594,7 @@ onBeforeUnmount(() => {
                                         Pièce signature.
                                     </p>
                                     <div
-                                        class="flex flex-wrap gap-2 text-[9px] font-bold uppercase tracking-wider"
+                                        class="flex flex-wrap gap-2 text-[9px] font-bold tracking-wider uppercase"
                                     >
                                         <span
                                             class="rounded-full border border-white/10 bg-white/[0.035] px-3 py-2 text-zinc-300"
@@ -733,8 +735,14 @@ onBeforeUnmount(() => {
                                     >
                                         {{ startingAtLabel }}
                                     </p>
-                                    <p class="vvs-price mt-2 text-2xl font-black">
-                                        {{ formatPrice(watchStartingPrice(watch)) }}
+                                    <p
+                                        class="vvs-price mt-2 text-2xl font-black"
+                                    >
+                                        {{
+                                            formatPrice(
+                                                watchStartingPrice(watch),
+                                            )
+                                        }}
                                     </p>
                                 </Link>
 
