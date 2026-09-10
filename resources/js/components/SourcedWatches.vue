@@ -13,7 +13,7 @@ const page = usePage();
 const translations = computed(() => page.props.translations);
 
 const featuredStartingPrices = {
-    'VVS-C002': 850,
+    'VVS-C002': 650,
     'VVS-C004': 850,
     'VVS-C008': 650,
 };
