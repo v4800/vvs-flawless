@@ -418,6 +418,10 @@ class WatchController extends Controller
             $localizedWatch->description = $translation['description'];
         }
 
+        if (is_string($translation['short_description'] ?? null)) {
+            $localizedWatch->setAttribute('short_description', $translation['short_description']);
+        }
+
         return $localizedWatch;
     }
 

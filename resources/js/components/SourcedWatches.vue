@@ -40,11 +40,10 @@ const startingAtLabel = computed(() => {
 const detailsLabel = computed(() => {
     return (
         {
-            fr_BE: 'Options et délai confirmés avec vous avant réservation.',
-            nl_BE: 'Opties en termijn worden vóór reservatie met u bevestigd.',
-            en_BE: 'Options and timing are confirmed with you before reservation.',
-        }[page.props.locale] ??
-        'Options et délai confirmés avec vous avant réservation.'
+            fr_BE: 'Options à confirmer ensemble.',
+            nl_BE: 'Opties in overleg.',
+            en_BE: 'Options confirmed with you.',
+        }[page.props.locale] ?? 'Options à confirmer ensemble.'
     );
 });
 </script>
@@ -61,7 +60,7 @@ const detailsLabel = computed(() => {
 
         <a
             href="#contact"
-            class="relative block h-[390px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="relative block aspect-[4/3] w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.source_request} — ${model.name}`"
         >
             <div
@@ -81,7 +80,7 @@ const detailsLabel = computed(() => {
                 height="1086"
                 loading="lazy"
                 decoding="async"
-                class="h-full w-full object-contain transition duration-700 group-hover:scale-[1.04]"
+                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
             />
 
             <span
@@ -91,9 +90,9 @@ const detailsLabel = computed(() => {
             </span>
         </a>
 
-        <div class="relative flex flex-1 flex-col p-6">
+        <div class="relative flex flex-1 flex-col p-5">
             <h3
-                class="vvs-display-title min-h-[58px] text-center text-2xl leading-[1.05] text-white"
+                class="vvs-display-title text-center text-2xl leading-tight text-white"
             >
                 {{ model.name }}
             </h3>
@@ -106,42 +105,42 @@ const detailsLabel = computed(() => {
 
             <div
                 v-if="startingPrice(model)"
-                class="vvs-choice-card vvs-choice-card--featured mt-6 rounded-xl border p-4 text-center"
+                class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-xl border px-4 py-3 text-center"
             >
                 <p
                     class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
                 >
                     {{ startingAtLabel }}
                 </p>
-                <p class="vvs-price mt-2 text-2xl font-black">
+                <p class="vvs-price mt-1 text-2xl font-black">
                     {{ formatPrice(startingPrice(model)) }}
                 </p>
             </div>
 
-            <p
-                class="mt-5 line-clamp-2 text-center text-sm leading-6 text-zinc-500"
-            >
+            <p class="mt-3 text-center text-sm leading-5 text-zinc-400">
                 {{ detailsLabel }}
             </p>
 
-            <div
-                class="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs"
-            >
-                <span class="text-zinc-600">
-                    {{ translations.collection.delivery }}
-                </span>
-                <span class="font-semibold text-zinc-300">
-                    {{ translations.collection.delay }}
-                </span>
-            </div>
+            <div class="mt-auto pt-4">
+                <div
+                    class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3 text-xs"
+                >
+                    <span class="text-zinc-600">
+                        {{ translations.collection.delivery }}
+                    </span>
+                    <span class="font-semibold text-zinc-300">
+                        {{ translations.collection.delay }}
+                    </span>
+                </div>
 
-            <a
-                href="#contact"
-                class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
-            >
-                {{ translations.collection.source_request }}
-                <span>→</span>
-            </a>
+                <a
+                    href="#contact"
+                    class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase"
+                >
+                    {{ translations.collection.source_request }}
+                    <span>→</span>
+                </a>
+            </div>
         </div>
     </article>
 </template>
