@@ -46,6 +46,17 @@ const detailsLabel = computed(() => {
         }[page.props.locale] ?? 'Options à confirmer ensemble.'
     );
 });
+
+const imageAlt = (model) => {
+    return (
+        {
+            fr_BE: `${model.name}, montre sertie de moissanite VVS couleur D`,
+            nl_BE: `${model.name}, horloge bezet met kleur D VVS-moissanite`,
+            en_BE: `${model.name}, watch set with colour D VVS moissanite`,
+        }[page.props.locale] ??
+        `${model.name}, montre sertie de moissanite VVS couleur D`
+    );
+};
 </script>
 
 <template>
@@ -75,7 +86,7 @@ const detailsLabel = computed(() => {
                 :src="model.cardImage"
                 :srcset="`${model.cardImage} 720w, ${model.image} 1448w`"
                 sizes="(min-width: 1280px) 32vw, (min-width: 640px) 48vw, 100vw"
-                :alt="model.name"
+                :alt="imageAlt(model)"
                 width="1448"
                 height="1086"
                 loading="lazy"
