@@ -51,7 +51,7 @@ const formatPrice = (price) => {
 
             <a
                 href="#reservation"
-                class="flex shrink-0 items-center gap-3 rounded-xl bg-amber-300 px-5 py-3.5 text-xs font-black tracking-[0.08em] text-black uppercase transition active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                class="flex shrink-0 items-center gap-3 rounded-xl bg-amber-300 px-5 py-3.5 text-xs font-black tracking-[0.08em] text-black uppercase transition focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none active:scale-[0.98]"
             >
                 {{ translations.mobile_reservation.cta }}
 
