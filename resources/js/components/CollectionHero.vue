@@ -22,20 +22,24 @@ const hero = page.props.landingCopy.hero;
 
         <span
             class="bling-sparkle absolute top-[19%] left-[5%] text-3xl text-amber-200"
-            >✦</span
         >
+            ✦
+        </span>
         <span
             class="bling-sparkle absolute top-[29%] left-[35%] text-xl text-white"
-            >✦</span
         >
+            ✦
+        </span>
         <span
             class="bling-sparkle absolute top-[14%] right-[10%] text-3xl text-white"
-            >✦</span
         >
+            ✦
+        </span>
         <span
             class="bling-sparkle absolute right-[42%] bottom-[20%] text-xl text-amber-300"
-            >✦</span
         >
+            ✦
+        </span>
 
         <div class="absolute top-0 right-0 hidden h-full w-1.5 lg:flex">
             <div class="h-full flex-1 bg-black"></div>
@@ -72,17 +76,18 @@ const hero = page.props.landingCopy.hero;
                 <h1
                     class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.82] font-semibold tracking-[-0.055em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
                 >
-                    <span class="vvs-gradient-text vvs-gradient-text--hero"
-                        >VVS</span
-                    >
+                    <span class="vvs-gradient-text vvs-gradient-text--hero">
+                        VVS
+                    </span>
                     <br />
-                    <span class="vvs-gradient-text vvs-gradient-text--hero"
-                        >FLAWLESS</span
-                    >
+                    <span class="vvs-gradient-text vvs-gradient-text--hero">
+                        FLAWLESS
+                    </span>
                     <span
                         class="absolute top-2 -right-2 hidden text-3xl text-amber-200 sm:block"
-                        >✦</span
                     >
+                        ✦
+                    </span>
                     <span
                         class="brand-shine pointer-events-none absolute top-0 -left-[30%] h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"
                     ></span>
