@@ -280,6 +280,12 @@ class ReservationController extends Controller
             default => 'd/m/Y à H:i',
         };
 
+        $createdAt = $reservation->created_at;
+
+        if ($createdAt === null) {
+            abort(500, 'Reservation creation date missing.');
+        }
+
         $response =
             Inertia::render(
                 'Reservations/Confirmation',
@@ -315,8 +321,7 @@ class ReservationController extends Controller
                         'message' => $reservation
                             ->message,
 
-                        'date' => $reservation
-                            ->created_at
+                        'date' => $createdAt
                             ->copy()
                             ->timezone(
                                 'Europe/Brussels'
