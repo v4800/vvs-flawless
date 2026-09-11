@@ -7,6 +7,7 @@ return [
     'handover_fr_title' => 'Northern France — French',
     'handover_nl_title' => 'Maastricht and Gulpen — Dutch',
     'starting_at' => 'From',
+    'collection_description' => 'Explore our VVS moissanite watches, their iced-out finishes and starting prices, then open the product page for the model you like.',
     'hero' => [
         'badge_stone' => 'VVS Moissanite',
         'badge_style' => 'Iced Out',
