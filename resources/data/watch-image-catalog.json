@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "next_watch_id": 12,
+    "next_watch_id": 13,
     "naming_rule": "NNN-model-slug/NN-view.ext",
     "watches": [
         {
@@ -151,6 +151,18 @@
                 "01-front.webp",
                 "02-side.webp",
                 "03-bracelet.webp"
+            ],
+            "featured": false,
+            "card_image": "01-front-card.webp"
+        },
+        {
+            "id": 12,
+            "slug": "women-pink",
+            "folder": "012-women-pink",
+            "images": [
+                "01-front.webp",
+                "02-bracelet-vertical.webp",
+                "03-clasp.webp"
             ],
             "featured": false,
             "card_image": "01-front-card.webp"
