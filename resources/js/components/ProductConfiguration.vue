@@ -47,7 +47,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         </h1>
 
         <p
-            class="mt-4 text-xs font-bold tracking-[0.22em] text-zinc-500 uppercase"
+            class="mt-4 text-xs font-bold tracking-[0.22em] text-zinc-400 uppercase"
         >
             Moissanite VVS
             <span aria-hidden="true" class="mx-2 text-amber-400"> • </span>
@@ -67,7 +67,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
             <div class="flex items-end justify-between gap-5">
                 <div>
                     <p
-                        class="text-[10px] font-black tracking-[0.3em] text-zinc-600 uppercase"
+                        class="text-[10px] font-black tracking-[0.3em] text-zinc-400 uppercase"
                     >
                         {{ translations.product.configuration }}
                     </p>
@@ -77,7 +77,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     </h2>
                 </div>
 
-                <p class="hidden text-xs text-zinc-600 sm:block">
+                <p class="hidden text-xs text-zinc-400 sm:block">
                     {{ translations.product.two_versions }}
                 </p>
             </div>
@@ -97,7 +97,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <p
-                                class="text-[9px] font-black tracking-[0.22em] text-zinc-500 uppercase"
+                                class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
                             >
                                 {{ translations.product.version }}
                             </p>
@@ -123,7 +123,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="mt-7">
                         <p
                             v-if="watch.japanese_promo_price"
-                            class="text-xs text-zinc-600 line-through"
+                            class="text-xs text-zinc-400 line-through"
                         >
                             {{ formatPrice(watch.japanese_price) }}
                         </p>
@@ -139,7 +139,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     </div>
 
                     <p
-                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-600 uppercase"
+                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-400 uppercase"
                     >
                         {{ translations.product.select }}
                     </p>
@@ -159,7 +159,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="flex items-start justify-between gap-4">
                         <div>
                             <p
-                                class="text-[9px] font-black tracking-[0.22em] text-zinc-500 uppercase"
+                                class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
                             >
                                 {{ translations.product.version }}
                             </p>
@@ -185,7 +185,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="mt-7">
                         <p
                             v-if="watch.swiss_promo_price"
-                            class="text-xs text-zinc-600 line-through"
+                            class="text-xs text-zinc-400 line-through"
                         >
                             {{ formatPrice(watch.swiss_price) }}
                         </p>
@@ -201,7 +201,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     </div>
 
                     <p
-                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-600 uppercase"
+                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-400 uppercase"
                     >
                         {{ translations.product.select }}
                     </p>
@@ -214,7 +214,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         >
             <div>
                 <p
-                    class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.25em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.your_selection }}
                 </p>
@@ -227,7 +227,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
             <div class="text-right">
                 <p
                     v-if="selectedOldPrice > selectedPrice"
-                    class="text-xs text-zinc-600 line-through"
+                    class="text-xs text-zinc-400 line-through"
                 >
                     {{ formatPrice(selectedOldPrice) }}
                 </p>
@@ -241,7 +241,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <div class="vvs-choice-card rounded-2xl border p-5">
                 <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.estimated_availability }}
                 </p>
@@ -253,7 +253,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
             <div class="vvs-choice-card rounded-2xl border p-5">
                 <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.reception }}
                 </p>
