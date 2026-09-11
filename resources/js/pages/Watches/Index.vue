@@ -1,23 +1,31 @@
 <script setup>
-import { Head, Link, usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import { onBeforeUnmount, onMounted } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
 
 import VvsNavigation from '@/components/VvsNavigation.vue';
-import StockBadge from '@/components/StockBadge.vue';
 import OrderSteps from '@/components/OrderSteps.vue';
 import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
 import PickupSection from '@/components/PickupSection.vue';
 import SourcedWatches from '@/components/SourcedWatches.vue';
+import SeoContentHub from '@/components/SeoContentHub.vue';
+import CollectionSiteHeader from '@/components/CollectionSiteHeader.vue';
+import CollectionHero from '@/components/CollectionHero.vue';
+import CollectionWatchCard from '@/components/CollectionWatchCard.vue';
+import CollectionValueSections from '@/components/CollectionValueSections.vue';
+import CollectionFooter from '@/components/CollectionFooter.vue';
 
 const props = defineProps({
     watches: {
         type: Array,
         default: () => [],
     },
-
+    catalogModels: {
+        type: Array,
+        default: () => [],
+    },
     seo: {
         type: Object,
         required: true,
@@ -25,41 +33,8 @@ const props = defineProps({
 });
 
 const page = usePage();
-
 const translations = page.props.translations;
-const guideLinks = page.props.guideLinks;
-const localizedRoutes = page.props.localizedRoutes;
-const languageLinks = computed(() => {
-    const alternates = props.seo.alternates ?? [];
-
-    return {
-        fr: alternates.find((alternate) => alternate.hreflang === 'fr-BE')
-            ?.href,
-        nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
-            ?.href,
-        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
-            ?.href,
-    };
-});
-/*
-|--------------------------------------------------------------------------
-| FORMATAGE DES PRIX
-|--------------------------------------------------------------------------
-*/
-
-const formatPrice = (price) => {
-    if (!price) {
-        return '—';
-    }
-
-    return `${Number(price).toFixed(0)} €`;
-};
-
-/*
-|--------------------------------------------------------------------------
-| SCROLL COLLECTION
-|--------------------------------------------------------------------------
-*/
+const landingCopy = page.props.landingCopy;
 
 const scrollToCollection = () => {
     document.getElementById('collection')?.scrollIntoView({
@@ -68,155 +43,7 @@ const scrollToCollection = () => {
     });
 };
 
-/*
-|--------------------------------------------------------------------------
-| VIEWER 3D
-|--------------------------------------------------------------------------
-|
-| Le model-viewer est chargé uniquement côté navigateur.
-| Ça évite de casser le SSR / hydratation de Laravel + Inertia.
-|
-*/
-
-const viewerHost = ref(null);
-
-const modelProgress = ref(0);
-const modelLoaded = ref(false);
-const modelError = ref(false);
-const modelRequested = ref(false);
-
-let modelViewerElement = null;
 let revealObserver = null;
-
-const mountModelViewer = async () => {
-    try {
-        /*
-         * Chargement uniquement côté client
-         */
-        await import('@google/model-viewer');
-
-        if (!viewerHost.value) {
-            return;
-        }
-
-        const viewer = document.createElement('model-viewer');
-
-        modelViewerElement = viewer;
-
-        /*
-         * FICHIER 3D
-         */
-        viewer.setAttribute('src', '/models/vvs-watch.glb');
-
-        viewer.setAttribute('alt', 'Montre VVS FLAWLESS 3D');
-
-        viewer.setAttribute('poster', '/images/vvs-watch-hero.webp');
-
-        /*
-         * CONTRÔLES
-         */
-        viewer.setAttribute('camera-controls', '');
-
-        viewer.setAttribute('auto-rotate', '');
-
-        viewer.setAttribute('rotation-per-second', '12deg');
-
-        viewer.setAttribute('interaction-prompt', 'none');
-
-        viewer.setAttribute('touch-action', 'pan-y');
-
-        /*
-         * CAMÉRA
-         */
-        viewer.setAttribute('camera-orbit', '0deg 75deg 105%');
-
-        viewer.setAttribute('field-of-view', '30deg');
-
-        viewer.setAttribute('min-field-of-view', '18deg');
-
-        viewer.setAttribute('max-field-of-view', '55deg');
-
-        viewer.setAttribute('min-camera-orbit', 'auto auto 60%');
-
-        viewer.setAttribute('max-camera-orbit', 'auto auto 200%');
-
-        /*
-         * ÉCLAIRAGE / RENDU
-         */
-        viewer.setAttribute('environment-image', 'neutral');
-
-        viewer.setAttribute('exposure', '1.15');
-
-        viewer.setAttribute('shadow-intensity', '1.25');
-
-        viewer.setAttribute('shadow-softness', '0.8');
-
-        viewer.setAttribute('tone-mapping', 'commerce');
-
-        /*
-         * Le viewer n'est créé qu'après le clic.
-         * Une fois demandé, le modèle peut démarrer immédiatement.
-         */
-        viewer.setAttribute('loading', 'eager');
-
-        viewer.setAttribute('reveal', 'auto');
-
-        /*
-         * DIMENSIONS
-         */
-        viewer.style.width = '100%';
-        viewer.style.height = '100%';
-        viewer.style.display = 'block';
-        viewer.style.background = 'transparent';
-
-        /*
-         * PROGRESSION DU GLB 64 MO
-         */
-        viewer.addEventListener('progress', (event) => {
-            const progress = event.detail?.totalProgress ?? 0;
-
-            modelProgress.value = Math.round(progress * 100);
-        });
-
-        /*
-         * MODÈLE CHARGÉ
-         */
-        viewer.addEventListener('load', () => {
-            modelProgress.value = 100;
-            modelLoaded.value = true;
-            modelError.value = false;
-        });
-
-        /*
-         * ERREUR
-         */
-        viewer.addEventListener('error', () => {
-            modelError.value = true;
-            modelLoaded.value = false;
-        });
-
-        viewerHost.value.replaceChildren(viewer);
-    } catch (error) {
-        console.error('Erreur chargement montre 3D :', error);
-
-        modelError.value = true;
-    }
-};
-
-const requestModelViewer = () => {
-    if (modelRequested.value || modelLoaded.value) {
-        return;
-    }
-
-    modelRequested.value = true;
-    mountModelViewer();
-};
-
-/*
-|--------------------------------------------------------------------------
-| ANIMATIONS
-|--------------------------------------------------------------------------
-*/
 
 onMounted(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -233,12 +60,6 @@ onMounted(() => {
 
         return;
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | ENTRÉE CINÉMATIQUE DU HERO
-    |--------------------------------------------------------------------------
-    */
 
     const heroTimeline = createTimeline({
         defaults: {
@@ -267,27 +88,11 @@ onMounted(() => {
             {
                 opacity: [0, 1],
                 x: [85, 0],
-                scale: [0.86, 1],
+                scale: [0.9, 1],
                 duration: 1450,
             },
             '-=900',
-        )
-        .add(
-            '.hero-badge',
-            {
-                opacity: [0, 1],
-                x: [25, 0],
-                scale: [0.92, 1],
-                duration: 750,
-            },
-            '-=650',
         );
-
-    /*
-    |--------------------------------------------------------------------------
-    | REFLET TITRE
-    |--------------------------------------------------------------------------
-    */
 
     animate('.brand-shine', {
         x: ['0%', '560%'],
@@ -299,55 +104,25 @@ onMounted(() => {
         ease: 'inOutQuad',
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | ÉCLATS
-    |--------------------------------------------------------------------------
-    */
-
     animate('.bling-sparkle', {
         opacity: [0.08, 1, 0.08],
-
         scale: [0.35, 1.55, 0.35],
-
         rotate: [0, 45, 90],
-
         duration: 1450,
-
         delay: stagger(230),
-
         loop: true,
-
         loopDelay: 350,
-
         ease: 'inOutQuad',
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | HALOS
-    |--------------------------------------------------------------------------
-    */
 
     animate('.hero-orb', {
         opacity: [0.35, 0.75],
-
         scale: [0.92, 1.08],
-
         duration: 3800,
-
         loop: true,
-
         alternate: true,
-
         ease: 'inOutQuad',
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | APPARITION DES SECTIONS
-    |--------------------------------------------------------------------------
-    */
 
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
@@ -363,36 +138,21 @@ onMounted(() => {
                 }
 
                 const element = entry.target;
-
                 const isCard = element.classList.contains('watch-card');
 
                 animate(element, {
                     opacity: [0, 1],
-
-                    y: [
-                        isCard ? 42 : 30,
-
-                        0,
-                    ],
-
-                    scale: [
-                        isCard ? 0.96 : 0.985,
-
-                        1,
-                    ],
-
+                    y: [isCard ? 42 : 30, 0],
+                    scale: [isCard ? 0.96 : 0.985, 1],
                     duration: isCard ? 850 : 950,
-
                     ease: 'outExpo',
                 });
 
                 revealObserver?.unobserve(element);
             });
         },
-
         {
             threshold: 0.12,
-
             rootMargin: '0px 0px -40px 0px',
         },
     );
@@ -402,18 +162,8 @@ onMounted(() => {
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| NETTOYAGE
-|--------------------------------------------------------------------------
-*/
-
 onBeforeUnmount(() => {
     revealObserver?.disconnect();
-
-    modelViewerElement?.remove();
-
-    modelViewerElement = null;
 });
 </script>
 
@@ -428,511 +178,16 @@ onBeforeUnmount(() => {
             {{ translations.accessibility.skip_content }}
         </a>
 
-        <!-- ========================================================= -->
-        <!-- HEADER -->
-        <!-- ========================================================= -->
-
-        <header
-            class="site-header sticky top-0 z-50 border-b border-white/10 bg-black/90 backdrop-blur-xl"
-        >
-            <div
-                class="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-5 md:px-8"
-            >
-                <Link
-                    :href="localizedRoutes.watches"
-                    class="group flex flex-col leading-none"
-                >
-                    <span
-                        class="text-xl font-semibold tracking-[0.08em] text-white md:text-2xl"
-                    >
-                        VVS FLAWLESS
-                    </span>
-
-                    <span
-                        class="mt-1 text-[9px] tracking-[0.42em] text-amber-300/80 uppercase"
-                    >
-                        Belgium
-                    </span>
-                </Link>
-
-                <nav
-                    class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
-                    :aria-label="translations.navigation.main_label"
-                >
-                    <a href="#collection" class="vvs-nav-link">
-                        {{ translations.navigation.watches }}
-                    </a>
-
-                    <a href="#concept" class="vvs-nav-link">
-                        {{ translations.navigation.about }}
-                    </a>
-
-                    <a href="#services" class="vvs-nav-link">
-                        {{ translations.navigation.delivery }}
-                    </a>
-                </nav>
-
-                <div class="flex items-center gap-3">
-                    <nav
-                        class="flex items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
-                        :aria-label="translations.language.label"
-                    >
-                        <Link
-                            v-if="languageLinks.fr"
-                            :href="languageLinks.fr"
-                            :class="[
-                                'rounded-full px-2.5 py-1.5 transition',
-                                page.props.locale === 'fr_BE'
-                                    ? 'bg-amber-300 text-black'
-                                    : 'text-zinc-500 hover:text-white',
-                            ]"
-                        >
-                            {{ translations.language.fr }}
-                        </Link>
-                        <Link
-                            v-if="languageLinks.nl"
-                            :href="languageLinks.nl"
-                            :class="[
-                                'rounded-full px-2.5 py-1.5 transition',
-                                page.props.locale === 'nl_BE'
-                                    ? 'bg-amber-300 text-black'
-                                    : 'text-zinc-500 hover:text-white',
-                            ]"
-                        >
-                            {{ translations.language.nl }}
-                        </Link>
-                        <Link
-                            v-if="languageLinks.en"
-                            :href="languageLinks.en"
-                            :class="[
-                                'rounded-full px-2.5 py-1.5 transition',
-                                page.props.locale === 'en_BE'
-                                    ? 'bg-amber-300 text-black'
-                                    : 'text-zinc-500 hover:text-white',
-                            ]"
-                        >
-                            {{ translations.language.en }}
-                        </Link>
-                    </nav>
-
-                    <span
-                        class="hidden text-xs tracking-[0.2em] text-zinc-500 uppercase sm:block"
-                    >
-                        {{ translations.navigation.country }}
-                    </span>
-
-                    <div
-                        class="flex h-7 overflow-hidden rounded-sm border border-white/20 shadow-[0_0_18px_rgba(251,191,36,0.15)]"
-                        :aria-label="translations.navigation.country"
-                    >
-                        <span class="w-2.5 bg-black"></span>
-
-                        <span class="w-2.5 bg-yellow-400"></span>
-
-                        <span class="w-2.5 bg-red-600"></span>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <CollectionSiteHeader :seo="seo" />
 
         <main id="main-content" tabindex="-1">
-            <!-- ========================================================= -->
-            <!-- NAVIGATION VVS -->
-            <!-- ========================================================= -->
-
             <VvsNavigation
                 current="collection"
                 :show-back="false"
                 class="!top-24"
             />
 
-            <!-- ========================================================= -->
-            <!-- HERO -->
-            <!-- ========================================================= -->
-
-            <section
-                class="relative isolate overflow-hidden border-b border-amber-400/20"
-            >
-                <div class="absolute inset-0 -z-30 bg-black"></div>
-
-                <div
-                    class="hero-orb absolute top-10 -left-40 -z-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]"
-                ></div>
-
-                <div
-                    class="hero-orb absolute top-0 right-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.04] blur-[160px]"
-                ></div>
-
-                <!-- ÉCLATS -->
-
-                <span
-                    class="bling-sparkle absolute top-[19%] left-[5%] text-3xl text-amber-200"
-                >
-                    ✦
-                </span>
-
-                <span
-                    class="bling-sparkle absolute top-[29%] left-[35%] text-xl text-white"
-                >
-                    ✦
-                </span>
-
-                <span
-                    class="bling-sparkle absolute top-[14%] right-[10%] text-3xl text-white"
-                >
-                    ✦
-                </span>
-
-                <span
-                    class="bling-sparkle absolute right-[42%] bottom-[20%] text-xl text-amber-300"
-                >
-                    ✦
-                </span>
-
-                <!-- LIGNE BELGIQUE -->
-
-                <div class="absolute top-0 right-0 hidden h-full w-1.5 lg:flex">
-                    <div class="h-full flex-1 bg-black"></div>
-
-                    <div class="h-full flex-1 bg-yellow-400"></div>
-
-                    <div class="h-full flex-1 bg-red-600"></div>
-                </div>
-
-                <div
-                    class="mx-auto grid min-h-[690px] max-w-[1500px] items-center gap-12 px-6 py-16 lg:grid-cols-[0.95fr_1.05fr] lg:px-10 lg:py-20"
-                >
-                    <!-- HERO TEXTE -->
-
-                    <div class="relative z-10">
-                        <div
-                            class="hero-animate mb-7 flex flex-wrap items-center gap-3"
-                        >
-                            <span
-                                class="text-xs font-semibold tracking-[0.25em] text-amber-300 uppercase"
-                            >
-                                Moissanite VVS
-                            </span>
-
-                            <span class="text-amber-500"> • </span>
-
-                            <span
-                                class="text-xs font-semibold tracking-[0.25em] text-amber-300 uppercase"
-                            >
-                                Iced Out
-                            </span>
-
-                            <span class="text-amber-500"> • </span>
-
-                            <span
-                                class="text-xs font-semibold tracking-[0.25em] text-amber-300 uppercase"
-                            >
-                                Bustdown
-                            </span>
-                        </div>
-
-                        <h1
-                            class="hero-animate relative max-w-3xl overflow-hidden text-[clamp(3rem,17vw,4rem)] leading-[0.82] font-semibold tracking-[-0.055em] uppercase sm:text-[5.5rem] lg:text-[7rem]"
-                        >
-                            <span
-                                class="vvs-gradient-text vvs-gradient-text--hero"
-                            >
-                                VVS
-                            </span>
-
-                            <br />
-
-                            <span
-                                class="vvs-gradient-text vvs-gradient-text--hero"
-                            >
-                                FLAWLESS
-                            </span>
-
-                            <span
-                                class="absolute top-2 -right-2 hidden text-3xl text-amber-200 sm:block"
-                            >
-                                ✦
-                            </span>
-
-                            <span
-                                class="brand-shine pointer-events-none absolute top-0 -left-[30%] h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"
-                            ></span>
-                        </h1>
-
-                        <div
-                            class="hero-animate mt-8 flex max-w-xl items-center gap-4"
-                        >
-                            <div
-                                class="hidden h-px w-12 bg-gradient-to-r from-transparent to-amber-400 sm:block"
-                            ></div>
-
-                            <p
-                                class="vvs-display-title text-3xl leading-tight text-amber-200 sm:text-4xl"
-                            >
-                                {{ translations.hero.tagline }}
-                            </p>
-                        </div>
-
-                        <p
-                            class="hero-animate vvs-body-copy mt-7 max-w-xl text-base text-zinc-300 sm:text-lg"
-                        >
-                            {{ translations.hero.description }}
-                        </p>
-
-                        <!-- FEATURES -->
-
-                        <div
-                            class="hero-animate mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4"
-                        >
-                            <div class="vvs-choice-card rounded-xl border p-3">
-                                <div class="text-xl text-amber-300">◇</div>
-
-                                <p
-                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
-                                >
-                                    Moissanite
-                                </p>
-
-                                <p class="text-[10px] text-zinc-500">VVS</p>
-                            </div>
-
-                            <div class="vvs-choice-card rounded-xl border p-3">
-                                <div class="text-lg text-amber-300">♢</div>
-
-                                <p
-                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
-                                >
-                                    {{ translations.collection.japanese }}
-                                </p>
-
-                                <p class="text-[10px] text-zinc-500">
-                                    {{ translations.hero.selected }}
-                                </p>
-                            </div>
-
-                            <div class="vvs-choice-card rounded-xl border p-3">
-                                <div class="text-lg text-amber-300">✦</div>
-
-                                <p
-                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
-                                >
-                                    {{ translations.collection.swiss }}
-                                </p>
-
-                                <p class="text-[10px] text-zinc-500">
-                                    {{ translations.collection.premium }}
-                                </p>
-                            </div>
-
-                            <div class="vvs-choice-card rounded-xl border p-3">
-                                <div class="text-lg text-amber-300">↗</div>
-
-                                <p
-                                    class="mt-2 text-[10px] font-bold tracking-wider uppercase"
-                                >
-                                    {{ translations.navigation.country }}
-                                </p>
-
-                                <p class="text-[10px] text-zinc-500">
-                                    {{ translations.hero.handover }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="hero-animate mt-9 flex flex-wrap gap-4">
-                            <button
-                                type="button"
-                                class="vvs-button-primary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
-                                @click="scrollToCollection"
-                            >
-                                {{ translations.concept.cta }}
-                            </button>
-
-                            <a
-                                href="#concept"
-                                class="vvs-button-secondary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
-                            >
-                                {{ translations.hero.concept }}
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- ================================================= -->
-                    <!-- MONTRE 3D -->
-                    <!-- ================================================= -->
-
-                    <div
-                        class="relative flex min-h-[470px] items-center justify-center lg:min-h-[620px]"
-                    >
-                        <div
-                            class="absolute h-[65%] w-[65%] rounded-full border border-amber-400/10 bg-amber-400/[0.025]"
-                        ></div>
-
-                        <div
-                            class="absolute h-[85%] w-[85%] rounded-full border border-white/[0.04]"
-                        ></div>
-
-                        <div
-                            class="absolute h-[420px] w-[420px] rounded-full bg-amber-300/10 blur-[90px]"
-                        ></div>
-
-                        <div
-                            class="hero-watch relative z-10 h-[470px] w-full max-w-[720px] sm:h-[550px] lg:h-[640px]"
-                        >
-                            <img
-                                v-if="!modelLoaded"
-                                src="/images/vvs-watch-hero.webp"
-                                alt="Montre iced-out VVS FLAWLESS"
-                                width="1536"
-                                height="1024"
-                                fetchpriority="high"
-                                decoding="async"
-                                class="absolute inset-0 h-full w-full object-contain"
-                            />
-
-                            <!-- MODEL VIEWER EST CRÉÉ ICI EN JS -->
-
-                            <div
-                                ref="viewerHost"
-                                class="absolute inset-0"
-                            ></div>
-
-                            <!-- CHARGEMENT -->
-
-                            <div
-                                v-if="
-                                    !modelRequested &&
-                                    !modelLoaded &&
-                                    !modelError
-                                "
-                                class="absolute inset-0 z-20 flex items-center justify-center"
-                            >
-                                <button
-                                    type="button"
-                                    class="vvs-button-secondary rounded-xl px-6 py-4 text-center backdrop-blur-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
-                                    @click="requestModelViewer"
-                                >
-                                    <span
-                                        class="block text-[10px] font-black tracking-[0.25em] text-amber-300 uppercase"
-                                    >
-                                        {{ translations.hero.view_3d }}
-                                    </span>
-
-                                    <span
-                                        class="mt-2 block text-[9px] tracking-wider text-zinc-400 uppercase"
-                                    >
-                                        {{ translations.hero.click_to_load }}
-                                    </span>
-                                </button>
-                            </div>
-
-                            <div
-                                v-else-if="!modelLoaded && !modelError"
-                                class="pointer-events-none absolute inset-0 z-20 flex items-center justify-center"
-                            >
-                                <div
-                                    class="rounded-xl border border-white/10 bg-black/70 px-6 py-4 text-center backdrop-blur-md"
-                                >
-                                    <p
-                                        class="text-[10px] font-black tracking-[0.25em] text-amber-300 uppercase"
-                                    >
-                                        {{ translations.hero.loading_3d }}
-                                    </p>
-
-                                    <p
-                                        class="mt-2 text-lg font-black text-white"
-                                    >
-                                        {{ modelProgress }}%
-                                    </p>
-
-                                    <div
-                                        class="mt-3 h-[2px] w-40 overflow-hidden rounded-full bg-white/10"
-                                    >
-                                        <div
-                                            class="h-full bg-amber-300 transition-all duration-300"
-                                            :style="{
-                                                width: `${modelProgress}%`,
-                                            }"
-                                        ></div>
-                                    </div>
-
-                                    <p
-                                        class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
-                                    >
-                                        {{
-                                            translations.hero.high_quality_model
-                                        }}
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- ERREUR -->
-
-                            <div
-                                v-if="modelError"
-                                class="absolute inset-0 z-20 flex items-center justify-center"
-                            >
-                                <div
-                                    class="rounded-xl border border-red-500/20 bg-black/80 px-6 py-5 text-center"
-                                >
-                                    <p
-                                        class="text-xs font-black tracking-wider text-red-300 uppercase"
-                                    >
-                                        {{ translations.hero.load_error }}
-                                    </p>
-
-                                    <p class="mt-2 text-[10px] text-zinc-500">
-                                        /models/vvs-watch.glb
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- TEXTE 360 -->
-
-                            <div
-                                v-if="modelLoaded"
-                                class="pointer-events-none absolute bottom-3 left-1/2 z-30 -translate-x-1/2 rounded-full border border-white/10 bg-black/60 px-4 py-2 text-[9px] font-bold tracking-[0.18em] whitespace-nowrap text-zinc-400 uppercase backdrop-blur-md"
-                            >
-                                {{ translations.hero.drag_360 }}
-                            </div>
-                        </div>
-
-                        <!-- BADGE -->
-
-                        <div
-                            class="hero-badge absolute right-0 bottom-[8%] z-20 hidden border border-amber-300/50 bg-black/80 px-6 py-5 text-center shadow-[0_0_35px_rgba(251,191,36,0.12)] backdrop-blur md:block"
-                        >
-                            <p
-                                class="text-[9px] font-bold tracking-[0.3em] text-amber-300 uppercase"
-                            >
-                                360°
-                            </p>
-
-                            <p
-                                class="mt-2 text-sm leading-5 font-bold uppercase"
-                            >
-                                Vue
-                                <br />
-                                Interactive
-                            </p>
-
-                            <div
-                                class="mx-auto mt-3 flex h-5 w-9 overflow-hidden"
-                            >
-                                <span class="flex-1 bg-black"></span>
-
-                                <span class="flex-1 bg-yellow-400"></span>
-
-                                <span class="flex-1 bg-red-600"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================= -->
-            <!-- COLLECTION -->
-            <!-- ========================================================= -->
+            <CollectionHero @scroll-to-collection="scrollToCollection" />
 
             <section
                 id="collection"
@@ -950,13 +205,11 @@ onBeforeUnmount(() => {
                             <span
                                 class="h-px w-12 bg-gradient-to-r from-transparent to-amber-400"
                             ></span>
-
                             <span
                                 class="text-[11px] font-bold tracking-[0.4em] text-amber-300 uppercase"
                             >
                                 {{ translations.collection.eyebrow }}
                             </span>
-
                             <span
                                 class="h-px w-12 bg-gradient-to-l from-transparent to-amber-400"
                             ></span>
@@ -964,7 +217,6 @@ onBeforeUnmount(() => {
 
                         <h2 class="vvs-display-title text-5xl sm:text-6xl">
                             {{ translations.collection.title_before }}
-
                             <span class="vvs-gradient-text">
                                 {{ translations.collection.title_highlight }}
                             </span>
@@ -973,340 +225,28 @@ onBeforeUnmount(() => {
                         <p
                             class="mx-auto mt-4 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base"
                         >
-                            {{ translations.collection.description }}
+                            {{ landingCopy.collection_description }}
                         </p>
                     </header>
 
                     <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                        <article
+                        <SourcedWatches :models="catalogModels" />
+
+                        <CollectionWatchCard
                             v-for="watch in props.watches"
                             :key="watch.id"
-                            class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative overflow-hidden rounded-2xl border"
-                        >
-                            <div
-                                class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
-                            ></div>
-
-                            <!-- IMAGE -->
-
-                            <div
-                                class="relative h-[390px] overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)]"
-                            >
-                                <div
-                                    class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-                                ></div>
-
-                                <div
-                                    class="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.04] blur-[70px]"
-                                ></div>
-
-                                <div
-                                    class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
-                                ></div>
-
-                                <img
-                                    v-if="watch.image"
-                                    :src="watch.image"
-                                    :alt="watch.name"
-                                    loading="lazy"
-                                    decoding="async"
-                                    class="h-full w-full object-cover contrast-[1.04] saturate-[0.92] transition duration-700 group-hover:scale-[1.06]"
-                                />
-
-                                <div
-                                    v-else
-                                    class="flex h-full items-center justify-center text-zinc-600"
-                                >
-                                    {{ translations.collection.image_soon }}
-                                </div>
-
-                                <div class="absolute top-4 left-4 z-20">
-                                    <StockBadge
-                                        :quantity="watch.stock_quantity"
-                                        :availability="watch.availability"
-                                    />
-                                </div>
-
-                                <span
-                                    class="bling-sparkle absolute top-[21%] right-[13%] text-2xl text-white"
-                                >
-                                    ✦
-                                </span>
-
-                                <span
-                                    class="bling-sparkle absolute bottom-[22%] left-[13%] text-lg text-amber-200"
-                                >
-                                    ✦
-                                </span>
-                            </div>
-
-                            <!-- CONTENU -->
-
-                            <div class="relative p-6">
-                                <h3
-                                    class="vvs-display-title min-h-[58px] text-center text-2xl leading-[1.05] text-white"
-                                >
-                                    {{ watch.name }}
-                                </h3>
-
-                                <p
-                                    class="mt-2 text-center text-[11px] font-bold tracking-[0.18em] text-amber-300 uppercase"
-                                >
-                                    Moissanite VVS
-                                </p>
-
-                                <!-- MOUVEMENTS -->
-
-                                <div class="mt-6 grid grid-cols-2 gap-3">
-                                    <!-- JAPON -->
-
-                                    <Link
-                                        :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
-                                        class="vvs-choice-card group/version rounded-xl border p-4"
-                                    >
-                                        <p
-                                            class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
-                                        >
-                                            {{
-                                                translations.collection.japanese
-                                            }}
-                                        </p>
-
-                                        <p
-                                            v-if="watch.japanese_promo_price"
-                                            class="mt-3 text-xs text-zinc-600 line-through"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.japanese_price,
-                                                )
-                                            }}
-                                        </p>
-
-                                        <p
-                                            class="vvs-price mt-1 text-xl font-black"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.japanese_promo_price ??
-                                                        watch.japanese_price,
-                                                )
-                                            }}
-                                        </p>
-
-                                        <p
-                                            class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
-                                        >
-                                            {{ translations.collection.choose }}
-                                        </p>
-                                    </Link>
-
-                                    <!-- SUISSE -->
-
-                                    <Link
-                                        :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
-                                        class="vvs-choice-card vvs-choice-card--featured group/version relative overflow-hidden rounded-xl border p-4"
-                                    >
-                                        <span
-                                            class="absolute top-2 right-2 rounded bg-amber-300 px-1.5 py-0.5 text-[7px] font-black tracking-wider text-black uppercase"
-                                            >{{
-                                                translations.collection.premium
-                                            }}</span
-                                        >
-
-                                        <p
-                                            class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase transition group-hover/version:text-amber-200"
-                                        >
-                                            {{ translations.collection.swiss }}
-                                        </p>
-
-                                        <p
-                                            v-if="watch.swiss_promo_price"
-                                            class="mt-3 text-xs text-zinc-600 line-through"
-                                        >
-                                            {{ formatPrice(watch.swiss_price) }}
-                                        </p>
-
-                                        <p
-                                            class="vvs-price mt-1 text-xl font-black"
-                                        >
-                                            {{
-                                                formatPrice(
-                                                    watch.swiss_promo_price ??
-                                                        watch.swiss_price,
-                                                )
-                                            }}
-                                        </p>
-
-                                        <p
-                                            class="mt-3 text-[9px] tracking-wider text-zinc-600 uppercase"
-                                        >
-                                            {{ translations.collection.choose }}
-                                        </p>
-                                    </Link>
-                                </div>
-
-                                <p
-                                    class="mt-5 line-clamp-2 text-center text-sm leading-6 text-zinc-500"
-                                >
-                                    {{ watch.description }}
-                                </p>
-
-                                <div
-                                    class="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-xs"
-                                >
-                                    <span class="text-zinc-600">
-                                        {{ translations.collection.delivery }}
-                                    </span>
-
-                                    <span class="font-semibold text-zinc-300">
-                                        {{ translations.collection.delay }}
-                                    </span>
-                                </div>
-
-                                <Link
-                                    :href="`${localizedRoutes.watches}/${watch.id}`"
-                                    class="vvs-button-secondary mt-6 flex w-full items-center justify-center gap-3 rounded-xl px-4 py-4 text-xs font-bold tracking-[0.12em] uppercase"
-                                >
-                                    {{ translations.collection.view_watch }}
-
-                                    <span> → </span>
-                                </Link>
-                            </div>
-                        </article>
+                            :watch="watch"
+                        />
                     </div>
                 </div>
             </section>
 
-            <!-- ========================================================= -->
-            <!-- COMMENT COMMANDER -->
-            <!-- ========================================================= -->
-
-            <SourcedWatches />
-
+            <SeoContentHub />
             <OrderSteps />
 
-            <!-- ========================================================= -->
-            <!-- CONCEPT -->
-            <!-- ========================================================= -->
-
-            <section
-                id="concept"
-                class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10"
-            >
-                <div
-                    class="reveal-on-scroll vvs-luxury-card mx-auto max-w-[1500px] overflow-hidden rounded-2xl border"
-                >
-                    <div
-                        class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
-                    >
-                        <div
-                            class="flex h-20 w-28 overflow-hidden rounded-lg border border-white/10 shadow-[0_0_30px_rgba(251,191,36,0.15)]"
-                        >
-                            <span class="flex-1 bg-black"></span>
-
-                            <span class="flex-1 bg-yellow-400"></span>
-
-                            <span class="flex-1 bg-red-600"></span>
-                        </div>
-
-                        <div>
-                            <p
-                                class="text-xs font-black tracking-[0.3em] text-amber-300 uppercase"
-                            >
-                                {{ translations.concept.eyebrow }}
-                            </p>
-
-                            <h2
-                                class="vvs-display-title mt-3 text-3xl sm:text-4xl"
-                            >
-                                {{ translations.concept.title }}
-                            </h2>
-
-                            <p
-                                class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400"
-                            >
-                                {{ translations.concept.description }}
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            @click="scrollToCollection"
-                            class="vvs-button-primary rounded-xl px-6 py-4 text-xs font-bold tracking-[0.15em] uppercase"
-                        >
-                            {{ translations.concept.cta }}
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- ========================================================= -->
-            <!-- SERVICES -->
-            <!-- ========================================================= -->
-
-            <section
-                id="services"
-                class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10"
-            >
-                <div
-                    class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
-                >
-                    <div
-                        class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
-                    >
-                        <div class="text-2xl text-amber-300">◇</div>
-
-                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
-                            {{ translations.services.quality_title }}
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            {{ translations.services.quality_text }}
-                        </p>
-                    </div>
-
-                    <div
-                        class="border-b border-white/10 p-7 lg:border-r lg:border-b-0"
-                    >
-                        <div class="text-2xl text-amber-300">⚙</div>
-
-                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
-                            {{ translations.services.movements_title }}
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            {{ translations.services.movements_text }}
-                        </p>
-                    </div>
-
-                    <div
-                        class="border-b border-white/10 p-7 sm:border-r sm:border-b-0"
-                    >
-                        <div class="text-2xl text-amber-300">↗</div>
-
-                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
-                            {{ translations.services.delivery_title }}
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            {{ translations.services.delivery_text }}
-                        </p>
-                    </div>
-
-                    <div class="p-7">
-                        <div class="text-2xl text-amber-300">◷</div>
-
-                        <h3 class="mt-4 text-sm font-semibold tracking-wide">
-                            {{ translations.services.delay_title }}
-                        </h3>
-
-                        <p class="mt-2 text-xs leading-5 text-zinc-500">
-                            {{ translations.services.delay_text }}
-                        </p>
-                    </div>
-                </div>
-            </section>
+            <CollectionValueSections
+                @scroll-to-collection="scrollToCollection"
+            />
 
             <AboutSection />
             <PickupSection />
@@ -1314,61 +254,6 @@ onBeforeUnmount(() => {
             <ContactSection />
         </main>
 
-        <!-- ========================================================= -->
-        <!-- FOOTER -->
-        <!-- ========================================================= -->
-
-        <footer class="border-t border-white/10 bg-black px-6 py-10">
-            <div
-                class="mx-auto flex max-w-[1500px] flex-col gap-5 text-center md:flex-row md:items-center md:justify-between md:text-left"
-            >
-                <div>
-                    <p class="font-black tracking-[0.12em] uppercase">
-                        VVS FLAWLESS
-                    </p>
-
-                    <p class="mt-1 text-xs text-zinc-600">
-                        {{ translations.footer.tagline }}
-                    </p>
-                </div>
-
-                <nav
-                    class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2"
-                    :aria-label="translations.navigation.main_label"
-                >
-                    <Link
-                        :href="localizedRoutes.about"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
-                    >
-                        {{ translations.navigation.about }}
-                    </Link>
-
-                    <Link
-                        :href="localizedRoutes.diamondGuide"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
-                    >
-                        {{ guideLinks.eyebrow }}
-                    </Link>
-
-                    <Link
-                        :href="localizedRoutes.privacy"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
-                    >
-                        {{ translations.footer.privacy }}
-                    </Link>
-
-                    <Link
-                        :href="localizedRoutes.reservationTerms"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
-                    >
-                        {{ translations.footer.terms }}
-                    </Link>
-                </nav>
-
-                <p class="text-xs text-zinc-500">
-                    {{ translations.footer.copyright }}
-                </p>
-            </div>
-        </footer>
+        <CollectionFooter />
     </div>
 </template>

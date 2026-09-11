@@ -35,6 +35,10 @@
                 ? $seo['image']
                 : url('/images/vvs-flawless-profile.webp');
 
+            $seoImageAlt = is_string($seo['imageAlt'] ?? null)
+                ? $seo['imageAlt']
+                : 'VVS FLAWLESS';
+
             $seoType = is_string($seo['type'] ?? null)
                 ? $seo['type']
                 : 'website';
@@ -134,6 +138,11 @@
             content="{{ $seoImage }}"
         >
 
+        <meta
+            property="og:image:alt"
+            content="{{ $seoImageAlt }}"
+        >
+
         {{-- Partage social --}}
 
         <meta
@@ -154,6 +163,11 @@
         <meta
             name="twitter:image"
             content="{{ $seoImage }}"
+        >
+
+        <meta
+            name="twitter:image:alt"
+            content="{{ $seoImageAlt }}"
         >
 
         {{-- Données structurées SEO --}}

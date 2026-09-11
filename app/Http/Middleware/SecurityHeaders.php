@@ -13,29 +13,9 @@ class SecurityHeaders
         Request $request,
         Closure $next
     ): Response {
-
-        /*
-        |--------------------------------------------------------------------------
-        | MASQUER LA TECHNOLOGIE PHP
-        |--------------------------------------------------------------------------
-        |
-        | PHP peut envoyer automatiquement :
-        |
-        | X-Powered-By: PHP/x.x.x
-        |
-        | On retire cette information.
-        |
-        */
-
         if (function_exists('header_remove')) {
             header_remove('X-Powered-By');
         }
-
-        /*
-        |--------------------------------------------------------------------------
-        | CSP NONCE
-        |--------------------------------------------------------------------------
-        */
 
         if (app()->isProduction()) {
             Vite::useCspNonce();
@@ -43,54 +23,22 @@ class SecurityHeaders
 
         $response = $next($request);
 
-        /*
-        |--------------------------------------------------------------------------
-        | SUPPRESSION DES HEADERS TECHNOLOGIQUES
-        |--------------------------------------------------------------------------
-        */
-
-        $response->headers->remove(
-            'X-Powered-By'
-        );
-
-        /*
-        |--------------------------------------------------------------------------
-        | MIME SNIFFING
-        |--------------------------------------------------------------------------
-        */
+        $response->headers->remove('X-Powered-By');
 
         $response->headers->set(
             'X-Content-Type-Options',
             'nosniff'
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | CLICKJACKING
-        |--------------------------------------------------------------------------
-        */
-
         $response->headers->set(
             'X-Frame-Options',
             'DENY'
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | REFERRER POLICY
-        |--------------------------------------------------------------------------
-        */
-
         $response->headers->set(
             'Referrer-Policy',
             'strict-origin-when-cross-origin'
         );
-
-        /*
-        |--------------------------------------------------------------------------
-        | PERMISSIONS POLICY
-        |--------------------------------------------------------------------------
-        */
 
         $response->headers->set(
             'Permissions-Policy',
@@ -106,45 +54,32 @@ class SecurityHeaders
             ])
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | CROSS DOMAIN POLICIES
-        |--------------------------------------------------------------------------
-        */
-
         $response->headers->set(
             'X-Permitted-Cross-Domain-Policies',
             'none'
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | ANCIEN XSS AUDITOR
-        |--------------------------------------------------------------------------
-        */
-
+        // The legacy browser XSS auditor is disabled on purpose. The CSP below
+        // and framework output escaping are the primary XSS defenses.
         $response->headers->set(
             'X-XSS-Protection',
             '0'
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | PAGES PRIVÉES : PAS D'INDEXATION
-        |--------------------------------------------------------------------------
-        |
-        | Google/Bing ne doivent pas indexer :
-        |
-        | - dashboard
-        | - login / auth
-        | - confirmation client
-        | - réglages
-        |
-        */
+        // Isolate the application from unrelated browsing contexts without
+        // requiring COEP, which could break legitimate external resources.
+        $response->headers->set(
+            'Cross-Origin-Opener-Policy',
+            'same-origin'
+        );
 
-        if (
-            $response->getStatusCode() === 404
-            || $request->is('dashboard*')
+        $response->headers->set(
+            'Cross-Origin-Resource-Policy',
+            'same-origin'
+        );
+
+        $isPrivatePage =
+            $request->is('dashboard*')
             || $request->is('login*')
             || $request->is('forgot-password*')
             || $request->is('reset-password*')
@@ -154,7 +89,12 @@ class SecurityHeaders
             || $request->is('two-factor-challenge*')
             || $request->is('reservation-confirmed/*')
             || $request->is('nl/reservation-confirmed/*')
-            || $request->is('settings*')
+            || $request->is('en/reservation-confirmed/*')
+            || $request->is('settings*');
+
+        if (
+            $response->getStatusCode() === 404
+            || $isPrivatePage
         ) {
             $response->headers->set(
                 'X-Robots-Tag',
@@ -162,70 +102,52 @@ class SecurityHeaders
             );
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | CONTENT SECURITY POLICY
-        |--------------------------------------------------------------------------
-        |
-        | Production uniquement afin de ne pas casser Vite HMR en local.
-        |
-        */
+        if ($isPrivatePage) {
+            $response->headers->set(
+                'Cache-Control',
+                'no-store, private, max-age=0, must-revalidate'
+            );
+
+            $response->headers->set(
+                'Pragma',
+                'no-cache'
+            );
+
+            $response->headers->set(
+                'Expires',
+                '0'
+            );
+        }
 
         if (app()->isProduction()) {
-
             $nonce = Vite::cspNonce();
 
-            $contentSecurityPolicy =
-                implode(
-                    '; ',
-                    [
-                        "default-src 'self'",
-
-                        "base-uri 'self'",
-
-                        "object-src 'none'",
-
-                        "frame-ancestors 'none'",
-
-                        "form-action 'self'",
-
-                        "script-src 'self' 'nonce-{$nonce}'",
-
-                        "script-src-attr 'none'",
-
-                        "style-src 'self' 'unsafe-inline'",
-
-                        "img-src 'self' data: blob:",
-
-                        "font-src 'self' data:",
-
-                        "connect-src 'self'",
-
-                        "media-src 'self'",
-
-                        "worker-src 'self' blob:",
-
-                        "manifest-src 'self'",
-
-                        "frame-src 'none'",
-
-                        'upgrade-insecure-requests',
-                    ]
-                );
+            $contentSecurityPolicy = implode(
+                '; ',
+                [
+                    "default-src 'self'",
+                    "base-uri 'self'",
+                    "object-src 'none'",
+                    "frame-ancestors 'none'",
+                    "form-action 'self'",
+                    "script-src 'self' 'nonce-{$nonce}'",
+                    "script-src-attr 'none'",
+                    "style-src 'self' 'unsafe-inline'",
+                    "img-src 'self' data: blob:",
+                    "font-src 'self' data:",
+                    "connect-src 'self'",
+                    "media-src 'self'",
+                    "worker-src 'self' blob:",
+                    "manifest-src 'self'",
+                    "frame-src 'none'",
+                    'upgrade-insecure-requests',
+                ]
+            );
 
             $response->headers->set(
                 'Content-Security-Policy',
                 $contentSecurityPolicy
             );
-
-            /*
-            |--------------------------------------------------------------------------
-            | HSTS
-            |--------------------------------------------------------------------------
-            |
-            | Seulement sur une vraie connexion HTTPS.
-            |
-            */
 
             if ($request->isSecure()) {
                 $response->headers->set(

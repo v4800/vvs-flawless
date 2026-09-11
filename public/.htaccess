@@ -5,6 +5,19 @@
 
     RewriteEngine On
 
+    # Reject HTTP methods that are not used by the application and can expose
+    # unnecessary server behaviour.
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)$ [NC]
+    RewriteRule .* - [F,L]
+
+    # Never expose version-control metadata if it is copied below public/ by
+    # mistake during a deployment.
+    RewriteRule (^|/)\.(git|svn|hg)(/|$) - [F,L,NC]
+
+    # Static media folders must never execute PHP-like payloads. This is a
+    # defense-in-depth rule in case an upload feature is introduced later.
+    RewriteRule ^(?:images|models)/.*\.(?:php[0-9]*|phtml|phar|phps)$ - [F,L,NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -22,4 +35,12 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    # Protect common secrets, backups, logs and project manifests if they are
+    # ever copied into the web root accidentally.
+    <FilesMatch "(?i)^(?:\.env(?:\..*)?|composer\.(?:json|lock)|package(?:-lock)?\.json|phpunit\.xml(?:\.dist)?|.*\.(?:log|sql|sqlite|bak|backup|old|orig|swp))$">
+        Require all denied
+    </FilesMatch>
 </IfModule>

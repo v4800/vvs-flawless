@@ -1,6 +1,7 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import SeoContentHub from '@/components/SeoContentHub.vue';
 
 const page = usePage();
 const translations = computed(() => page.props.translations);
@@ -18,8 +19,6 @@ const translations = computed(() => page.props.translations);
         <div
             class="mx-auto grid max-w-[1350px] gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center"
         >
-            <!-- IDENTITÉ -->
-
             <div>
                 <div class="mb-5 flex items-center gap-3">
                     <span class="h-px w-10 bg-amber-300"></span>
@@ -48,8 +47,6 @@ const translations = computed(() => page.props.translations);
                     <span class="flex-1 bg-red-600"></span>
                 </div>
             </div>
-
-            <!-- TEXTE -->
 
             <div class="vvs-luxury-card rounded-3xl border p-7 sm:p-9">
                 <p class="text-lg leading-8 text-zinc-300">
@@ -101,4 +98,6 @@ const translations = computed(() => page.props.translations);
             </div>
         </div>
     </section>
+
+    <SeoContentHub />
 </template>

@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\LocalizedRoute;
 use Inertia\Response;
 
 class PublicPageController extends Controller
 {
+    public function __construct(
+        private readonly LocalizedRoute $localizedRoute
+    ) {}
+
     public function about(): Response
     {
-        $routeName = $this->localizedRouteName('about');
+        $routeName = $this->localizedRoute->name('about');
 
         $seo = $this->seo(
             (string) trans('site.seo.about_title'),
@@ -20,13 +25,17 @@ class PublicPageController extends Controller
         $seo['structuredData'] = [
             '@context' => 'https://schema.org',
             '@type' => 'Organization',
+            '@id' => url('/').'#organization',
             'name' => 'VVS FLAWLESS',
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
             'description' => (string) trans('site.seo.about_description'),
-            'areaServed' => [
-                '@type' => 'Country',
-                'name' => 'Belgium',
+            'areaServed' => $this->serviceAreas(),
+            'knowsAbout' => [
+                'VVS moissanite watches',
+                'Iced-out watches',
+                'Fully set watches',
+                'Diamond and moissanite comparison',
             ],
             'sameAs' => [
                 'https://www.instagram.com/vvsflawless43/',
@@ -42,17 +51,11 @@ class PublicPageController extends Controller
     public function diamondVsMoissanite(): Response
     {
         $page = 'guides.diamond-vs-moissanite';
-        $routeName = $this->localizedRouteName($page);
+        $routeName = $this->localizedRoute->name($page);
         $guide = (array) trans('guides.diamond_vs_moissanite');
 
-        $seo = $this->articleSeo(
-            $guide,
-            $page,
-            $routeName
-        );
-
         return inertia('Guides/DiamondVsMoissanite', [
-            'seo' => $seo,
+            'seo' => $this->articleSeo($guide, $page, $routeName),
             'guide' => $guide,
         ]);
     }
@@ -83,7 +86,7 @@ class PublicPageController extends Controller
 
     public function privacy(): Response
     {
-        $routeName = $this->localizedRouteName('privacy');
+        $routeName = $this->localizedRoute->name('privacy');
 
         return inertia('Legal/Privacy', [
             'seo' => $this->seo(
@@ -97,7 +100,7 @@ class PublicPageController extends Controller
 
     public function reservationTerms(): Response
     {
-        $routeName = $this->localizedRouteName('reservation-terms');
+        $routeName = $this->localizedRoute->name('reservation-terms');
 
         return inertia('Legal/ReservationTerms', [
             'seo' => $this->seo(
@@ -113,7 +116,7 @@ class PublicPageController extends Controller
         string $translationKey,
         string $page
     ): Response {
-        $routeName = $this->localizedRouteName($page);
+        $routeName = $this->localizedRoute->name($page);
         $guide = (array) trans('seo_intents.'.$translationKey);
 
         return inertia('Guides/SeoIntent', [
@@ -144,53 +147,68 @@ class PublicPageController extends Controller
             $page
         );
 
-        $seo['type'] = 'article';
-        $seo['structuredData'] = [
-            '@context' => 'https://schema.org',
-            '@graph' => [
-                [
-                    '@type' => 'Article',
-                    'headline' => (string) ($guide['title'] ?? ''),
-                    'description' => (string) ($guide['seo_description'] ?? ''),
-                    'mainEntityOfPage' => $canonical,
-                    'inLanguage' => str_replace(
-                        '_',
-                        '-',
-                        app()->getLocale()
-                    ),
-                    'author' => [
-                        '@type' => 'Organization',
-                        'name' => 'VVS FLAWLESS',
-                    ],
-                    'publisher' => [
-                        '@type' => 'Organization',
-                        'name' => 'VVS FLAWLESS',
-                        'logo' => [
-                            '@type' => 'ImageObject',
-                            'url' => url('/images/vvs-flawless-profile.webp'),
-                        ],
-                    ],
+        $graph = [
+            [
+                '@type' => 'Article',
+                'headline' => (string) ($guide['title'] ?? ''),
+                'description' => (string) ($guide['seo_description'] ?? ''),
+                'mainEntityOfPage' => $canonical,
+                'inLanguage' => str_replace(
+                    '_',
+                    '-',
+                    app()->getLocale()
+                ),
+                'about' => [
+                    'Moissanite',
+                    'VVS clarity',
+                    'Iced-out watches',
+                    'Diamond watches',
                 ],
-                [
-                    '@type' => 'BreadcrumbList',
-                    'itemListElement' => [
-                        [
-                            '@type' => 'ListItem',
-                            'position' => 1,
-                            'name' => trans('site.navigation.watches'),
-                            'item' => route(
-                                $this->localizedRouteName('watches.index')
-                            ),
-                        ],
-                        [
-                            '@type' => 'ListItem',
-                            'position' => 2,
-                            'name' => (string) ($guide['title'] ?? ''),
-                            'item' => $canonical,
-                        ],
+                'author' => [
+                    '@type' => 'Organization',
+                    'name' => 'VVS FLAWLESS',
+                ],
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'VVS FLAWLESS',
+                    'url' => url('/'),
+                    'logo' => [
+                        '@type' => 'ImageObject',
+                        'url' => url('/images/vvs-flawless-profile.webp'),
                     ],
                 ],
             ],
+            [
+                '@type' => 'BreadcrumbList',
+                'itemListElement' => [
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 1,
+                        'name' => trans('site.navigation.watches'),
+                        'item' => route(
+                            $this->localizedRoute->name('watches.index')
+                        ),
+                    ],
+                    [
+                        '@type' => 'ListItem',
+                        'position' => 2,
+                        'name' => (string) ($guide['title'] ?? ''),
+                        'item' => $canonical,
+                    ],
+                ],
+            ],
+        ];
+
+        $faqSchema = $this->faqSchema($guide['faq'] ?? null);
+
+        if ($faqSchema !== null) {
+            $graph[] = $faqSchema;
+        }
+
+        $seo['type'] = 'article';
+        $seo['structuredData'] = [
+            '@context' => 'https://schema.org',
+            '@graph' => $graph,
         ];
 
         return $seo;
@@ -212,6 +230,7 @@ class PublicPageController extends Controller
             'alternates' => $this->alternates($page),
             'locale' => app()->getLocale(),
             'image' => url('/images/vvs-flawless-profile.webp'),
+            'imageAlt' => 'VVS FLAWLESS',
             'type' => 'website',
         ];
     }
@@ -241,12 +260,90 @@ class PublicPageController extends Controller
         ];
     }
 
-    private function localizedRouteName(string $name): string
+    /**
+     * @return array<string, mixed>|null
+     */
+    private function faqSchema(mixed $faq): ?array
     {
-        return match (app()->getLocale()) {
-            'nl_BE' => 'nl.'.$name,
-            'en_BE' => 'en.'.$name,
-            default => $name,
-        };
+        if (! is_array($faq)) {
+            return null;
+        }
+
+        $entities = [];
+
+        foreach ($faq as $item) {
+            if (! is_array($item)) {
+                continue;
+            }
+
+            $question = $item['question'] ?? null;
+            $answer = $item['answer'] ?? null;
+
+            if (! is_string($question)
+                || $question === ''
+                || ! is_string($answer)
+                || $answer === '') {
+                continue;
+            }
+
+            $entities[] = [
+                '@type' => 'Question',
+                'name' => $question,
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => $answer,
+                ],
+            ];
+        }
+
+        if ($entities === []) {
+            return null;
+        }
+
+        return [
+            '@type' => 'FAQPage',
+            'mainEntity' => $entities,
+        ];
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function serviceAreas(): array
+    {
+        return [
+            [
+                '@type' => 'Country',
+                'name' => 'Belgium',
+            ],
+            [
+                '@type' => 'AdministrativeArea',
+                'name' => 'Northern France',
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Maastricht',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Netherlands',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Gulpen',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Netherlands',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Liège',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+        ];
     }
 }

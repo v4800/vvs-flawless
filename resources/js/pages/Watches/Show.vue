@@ -181,7 +181,7 @@ const submit = () => {
                                     loading="eager"
                                     fetchpriority="high"
                                     decoding="async"
-                                    class="block h-full w-full object-contain p-3 contrast-[1.04] saturate-[0.94] sm:p-5"
+                                    class="block h-full w-full object-contain p-3 sm:p-5"
                                 />
                             </div>
 
@@ -243,7 +243,7 @@ const submit = () => {
                                     :alt="`${watch.name} — vue ${index + 1}`"
                                     loading="lazy"
                                     decoding="async"
-                                    class="h-full w-full rounded-lg object-cover contrast-[1.03] saturate-[0.94]"
+                                    class="h-full w-full rounded-lg object-contain"
                                 />
                             </button>
                         </div>
@@ -623,18 +623,18 @@ const submit = () => {
 
             <section
                 id="reservation"
-                class="relative scroll-mt-24 px-5 py-24 sm:px-6 lg:px-10"
+                class="relative scroll-mt-24 px-5 py-20 sm:px-6 lg:px-10"
             >
                 <div
-                    class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[550px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.035] blur-[150px]"
+                    class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[550px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.035] blur-[150px]"
                 ></div>
 
                 <div
-                    class="mx-auto grid max-w-[1200px] gap-8 lg:grid-cols-[0.75fr_1.25fr]"
+                    class="mx-auto grid max-w-[1500px] gap-8 xl:grid-cols-[0.58fr_1.42fr] xl:gap-10"
                 >
                     <!-- RÉCAP -->
 
-                    <div class="lg:sticky lg:top-28 lg:self-start">
+                    <div class="xl:sticky xl:top-28 xl:self-start">
                         <p class="vvs-eyebrow">
                             {{ translations.product.your_selection }}
                         </p>
@@ -699,11 +699,11 @@ const submit = () => {
                     <!-- FORMULAIRE -->
 
                     <form
-                        class="vvs-form vvs-luxury-card rounded-3xl border p-6 sm:p-8"
+                        class="vvs-form vvs-luxury-card rounded-3xl border p-6 sm:p-8 xl:p-9"
                         @submit.prevent="submit"
                     >
                         <div
-                            class="mb-8 flex items-center justify-between gap-5 border-b border-white/10 pb-6"
+                            class="mb-6 flex items-center justify-between gap-5 border-b border-white/10 pb-5"
                         >
                             <div>
                                 <p
@@ -724,7 +724,7 @@ const submit = () => {
                             </div>
                         </div>
 
-                        <div class="grid gap-5 md:grid-cols-2">
+                        <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
                             <!-- NOM -->
 
                             <div>
@@ -967,7 +967,7 @@ const submit = () => {
                                 <textarea
                                     id="reservation-message"
                                     v-model="form.message"
-                                    rows="4"
+                                    rows="3"
                                     :aria-invalid="Boolean(form.errors.message)"
                                     :aria-describedby="
                                         form.errors.message
@@ -1024,7 +1024,7 @@ const submit = () => {
                             <div class="md:col-span-2">
                                 <label
                                     for="reservation-confirmation"
-                                    class="flex cursor-pointer items-start gap-4 rounded-xl border border-white/10 bg-black/60 p-4"
+                                    class="flex h-full cursor-pointer items-start gap-4 rounded-xl border border-white/10 bg-black/60 p-4"
                                 >
                                     <input
                                         id="reservation-confirmation"
@@ -1068,7 +1068,7 @@ const submit = () => {
 
                             <div class="md:col-span-2">
                                 <div
-                                    class="flex items-end justify-between gap-5 border-t border-white/10 pt-6"
+                                    class="flex h-full items-center justify-between gap-5 rounded-xl border border-white/10 bg-black/40 px-5 py-4"
                                 >
                                     <div>
                                         <p
@@ -1094,7 +1094,7 @@ const submit = () => {
 
                             <!-- BOUTON -->
 
-                            <div class="md:col-span-2">
+                            <div class="md:col-span-2 xl:col-span-4">
                                 <button
                                     type="submit"
                                     :disabled="form.processing"

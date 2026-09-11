@@ -72,7 +72,7 @@ const formatPrice = (price) => {
                             :alt="watch.name"
                             loading="lazy"
                             decoding="async"
-                            class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
+                            class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                         />
 
                         <div
