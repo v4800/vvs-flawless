@@ -5,6 +5,7 @@ return [
         'title' => 'Montres moissanite VVS & iced-out en Belgique | VVS FLAWLESS',
         'description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS couleur D : modèles iced-out et montres serties pour homme, femme ou style unisexe, disponibles sur réservation en Belgique.',
         'product_suffix' => 'Montre sertie de moissanite VVS couleur D, pensée pour un rendu iced-out très lumineux. Prix affiché sur la fiche, réservation en ligne puis remise en main propre ou livraison selon confirmation.',
+        'image_alt' => 'Montres iced-out VVS FLAWLESS serties de moissanite VVS couleur D',
     ],
 
     'product_bridge' => [
@@ -104,7 +105,7 @@ return [
         'seo_description' => 'Montre diamant homme ou femme, montre moissanite VVS, iced-out ou sertie : choisissez selon le format, le cadran et le rendu au poignet.',
         'eyebrow' => 'Guide style',
         'title' => 'Montre iced-out homme ou femme : comment choisir ?',
-        'intro' => 'Les recherches « montre diamant homme », « montre diamant femme », « montre moissanite homme » ou « montre moissanite femme » renvoient souvent à une même question : quel format et quel style auront le meilleur rendu au poignet ?',
+        'intro' => 'Que vous regardiez une montre diamant homme, une montre diamant femme ou une montre moissanite VVS, le bon choix dépend surtout du format et du style qui auront le meilleur rendu à votre poignet.',
         'answer' => 'Les modèles VVS FLAWLESS sont sertis de moissanite VVS couleur D. Pour choisir entre un style homme, femme ou unisexe, regardez surtout le boîtier, la largeur du bracelet, le cadran, la finition et la densité du sertissage.',
         'sections' => [
             [
@@ -117,7 +118,7 @@ return [
             [
                 'title' => 'Pour une présence plus forte',
                 'paragraphs' => [
-                    'Un boîtier plus large, une lunette imposante et un bracelet épais créent un rendu plus visible. C’est le type de silhouette souvent recherché derrière les expressions « montre diamant homme » ou « iced-out watch ».',
+                    'Un boîtier plus large, une lunette imposante et un bracelet épais créent un rendu plus visible. C’est la silhouette typique d’une montre iced-out pensée pour avoir une forte présence au poignet.',
                     'La moissanite VVS permet d’obtenir beaucoup de lumière sur ces grandes surfaces serties tout en gardant un budget généralement plus accessible que le diamant.',
                 ],
             ],
@@ -179,7 +180,7 @@ return [
             [
                 'title' => 'Homme, femme ou style unisexe',
                 'paragraphs' => [
-                    'La même collection peut répondre à une recherche de montre diamant homme, montre diamant femme, montre sertie ou montre moissanite VVS. Le choix dépend surtout du style et des proportions recherchées.',
+                    'La collection comprend des silhouettes plus fines, plus sportives ou plus imposantes. Une montre peut donc convenir à un homme, une femme ou être portée dans un style totalement unisexe selon ses proportions.',
                     'Les fiches permettent de comparer les modèles sans dupliquer artificiellement chaque montre par genre.',
                 ],
             ],
