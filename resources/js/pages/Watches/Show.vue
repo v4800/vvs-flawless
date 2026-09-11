@@ -1,6 +1,6 @@
 <script setup>
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-import { computed, ref, watch as vueWatch } from 'vue';
+import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
@@ -113,9 +113,30 @@ const selectedOldPrice = computed(() => {
     return Number(props.watch.japanese_price ?? 0);
 });
 
+const focusFirstInvalidField = async () => {
+    await nextTick();
+
+    const invalidField = document.querySelector(
+        'input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"], [aria-invalid="true"] input, [aria-invalid="true"] textarea, [aria-invalid="true"] select',
+    );
+
+    if (!(invalidField instanceof HTMLElement)) {
+        return;
+    }
+
+    invalidField.focus({ preventScroll: true });
+    invalidField.scrollIntoView({
+        block: 'center',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'auto'
+            : 'smooth',
+    });
+};
+
 const submit = () => {
     form.post(localizedRoutes.reservationStore, {
         preserveScroll: false,
+        onError: focusFirstInvalidField,
     });
 };
 </script>
@@ -251,35 +272,35 @@ const submit = () => {
                 >
                     <Link
                         :href="localizedRoutes.privacy"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.privacy }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.reservationTerms"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.terms }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.about"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.navigation.about }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.diamondGuide"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ page.props.guideLinks.eyebrow }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.watches"
-                        class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.collection }}
                     </Link>
