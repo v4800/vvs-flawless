@@ -17,7 +17,7 @@ const landingCopy = page.props.landingCopy;
 const localizedRoutes = page.props.localizedRoutes;
 
 const href = computed(() => {
-    return `${localizedRoutes.watches}/${props.watch.id}`;
+    return `${localizedRoutes.watches}/${props.watch.slug}`;
 });
 
 const displayImage = computed(() => {
