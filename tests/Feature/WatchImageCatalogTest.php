@@ -44,6 +44,7 @@ class WatchImageCatalogTest extends TestCase
     {
         $original = '/images/watches/presidentielle-bleu-romains.webp';
         $photo = '/images/watches/catalog/001-blue-round/07-black-marble.webp';
+        $cardPhoto = '/images/watches/catalog/001-blue-round/07-black-marble-card.webp';
         $watch = Watch::query()->create([
             'name' => 'Blue Roman dial',
             'description' => 'Original description',
@@ -59,6 +60,7 @@ class WatchImageCatalogTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->where('watches.0.image', $photo)
+                ->where('watches.0.card_image', $cardPhoto)
                 ->where('catalogModels.0.watchUrl', route('watches.show', $watch))
                 ->etc());
 
@@ -134,6 +136,21 @@ class WatchImageCatalogTest extends TestCase
                     1024 * 1024,
                     filesize($path),
                     $path.' should stay below 1 MB for public delivery.'
+                );
+            }
+
+            if (isset($entry['card_image'])) {
+                $fullPath = public_path(
+                    'images/watches/catalog/'.$entry['folder'].'/'.$entry['images'][0]
+                );
+                $cardPath = public_path(
+                    'images/watches/catalog/'.$entry['folder'].'/'.$entry['card_image']
+                );
+
+                $this->assertLessThan(
+                    filesize($fullPath),
+                    filesize($cardPath),
+                    $cardPath.' should stay lighter than the product image.'
                 );
             }
         }
