@@ -47,7 +47,7 @@ class AddWomenSquare36WatchSeeder extends Seeder
                 '02-angle.webp',
                 '03-bracelet.webp',
             ],
-            'featured' => true,
+            'featured' => false,
             'card_image' => '01-front-card.webp',
         ];
 
@@ -85,8 +85,8 @@ class AddWomenSquare36WatchSeeder extends Seeder
             ->first();
 
         if ($existing !== null) {
-            $existing->name = '36 mm · Femme, carrée pavée';
-            $existing->description = 'Modèle femme 36 mm à boîtier carré, cadran clair à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.';
+            $existing->name = '36 mm · Femme, cadran blanc';
+            $existing->description = 'Modèle femme 36 mm à boîtier carré, cadran blanc à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.';
             $existing->image = $directory.'01-front.webp';
             $existing->save();
 
@@ -111,14 +111,14 @@ class AddWomenSquare36WatchSeeder extends Seeder
         }
 
         Watch::query()->create([
-            'name' => '36 mm · Femme, carrée pavée',
+            'name' => '36 mm · Femme, cadran blanc',
             'price' => $japanesePrice,
             'promo_price' => $pricingSource->promo_price,
             'japanese_price' => $japanesePrice,
             'japanese_promo_price' => $pricingSource->japanese_promo_price,
             'swiss_price' => $swissPrice,
             'swiss_promo_price' => $pricingSource->swiss_promo_price,
-            'description' => 'Modèle femme 36 mm à boîtier carré, cadran clair à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.',
+            'description' => 'Modèle femme 36 mm à boîtier carré, cadran blanc à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.',
             'availability' => $pricingSource->availability ?: 'Sur commande',
             'stock_quantity' => null,
             'image' => $directory.'01-front.webp',
