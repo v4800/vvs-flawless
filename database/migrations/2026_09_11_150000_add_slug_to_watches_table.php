@@ -28,9 +28,11 @@ return new class extends Migration
                 }
 
                 $slug = $baseSlug;
+                $suffix = 2;
 
-                if (isset($usedSlugs[$slug])) {
-                    $slug .= '-'.$watch->id;
+                while (isset($usedSlugs[$slug])) {
+                    $slug = $baseSlug.'-'.$suffix;
+                    $suffix++;
                 }
 
                 $usedSlugs[$slug] = true;
