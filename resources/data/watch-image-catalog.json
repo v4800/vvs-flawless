@@ -176,7 +176,7 @@
                 "02-angle.webp",
                 "03-bracelet.webp"
             ],
-            "featured": true,
+            "featured": false,
             "card_image": "01-front-card.webp"
         }
     ]
