@@ -32,9 +32,7 @@ const translations = page.props.translations;
                     <h2 class="vvs-display-title mt-3 text-3xl sm:text-4xl">
                         {{ translations.concept.title }}
                     </h2>
-                    <p
-                        class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400"
-                    >
+                    <p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
                         {{ translations.concept.description }}
                     </p>
                 </div>
@@ -54,9 +52,7 @@ const translations = page.props.translations;
         <div
             class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
         >
-            <div
-                class="border-b border-white/10 p-7 sm:border-r lg:border-b-0"
-            >
+            <div class="border-b border-white/10 p-7 sm:border-r lg:border-b-0">
                 <div class="text-2xl text-amber-300">◇</div>
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.quality_title }}
@@ -65,9 +61,7 @@ const translations = page.props.translations;
                     {{ translations.services.quality_text }}
                 </p>
             </div>
-            <div
-                class="border-b border-white/10 p-7 lg:border-r lg:border-b-0"
-            >
+            <div class="border-b border-white/10 p-7 lg:border-r lg:border-b-0">
                 <div class="text-2xl text-amber-300">⚙</div>
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.movements_title }}
@@ -76,9 +70,7 @@ const translations = page.props.translations;
                     {{ translations.services.movements_text }}
                 </p>
             </div>
-            <div
-                class="border-b border-white/10 p-7 sm:border-r sm:border-b-0"
-            >
+            <div class="border-b border-white/10 p-7 sm:border-r sm:border-b-0">
                 <div class="text-2xl text-amber-300">↗</div>
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.delivery_title }}
