@@ -91,46 +91,8 @@ final class WatchCatalog
     }
 
     /**
-     * @return array{
-     *     reference: string,
-     *     slug: string,
-     *     name: string,
-     *     image: string,
-     *     cardImage: string,
-     *     gallery: list<string>,
-     *     detailUrl: string
-     * }|null
-     */
-    public function catalogModel(string $slug): ?array
-    {
-        foreach ($this->catalogEntries() as $entry) {
-            if ($entry['slug'] !== $slug) {
-                continue;
-            }
-
-            $gallery = $this->catalogGallery($entry);
-
-            if ($gallery === []) {
-                return null;
-            }
-
-            return [
-                'reference' => sprintf('VVS-C%03d', $entry['id']),
-                'slug' => $entry['slug'],
-                'name' => $this->catalogName($entry),
-                'image' => $gallery[0],
-                'cardImage' => $this->catalogCardImage($entry, $gallery[0]),
-                'gallery' => $gallery,
-                'detailUrl' => $this->catalogDetailUrl($entry),
-            ];
-        }
-
-        return null;
-    }
-
-    /**
      * @param  iterable<Watch>  $watches
-     * @return list<array{reference: string, name: string, image: string, cardImage: string, detailUrl: string, watchUrl: string|null}>
+     * @return list<array{reference: string, name: string, image: string, cardImage: string, watchUrl: string|null}>
      */
     public function featuredModels(iterable $watches): array
     {
@@ -159,12 +121,14 @@ final class WatchCatalog
                 }
             }
 
+            $name = trans('site.collection.catalog_names.'.$entry['slug']);
+            $name = is_string($name) ? $name : $entry['slug'];
+
             $models[] = [
                 'reference' => sprintf('VVS-C%03d', $entry['id']),
-                'name' => $this->catalogName($entry),
+                'name' => $name,
                 'image' => $gallery[0],
                 'cardImage' => $this->catalogCardImage($entry, $gallery[0]),
-                'detailUrl' => $this->catalogDetailUrl($entry),
                 'watchUrl' => $watchUrl,
             ];
         }
@@ -254,27 +218,6 @@ final class WatchCatalog
         return $this->catalogImageExists($cardImage)
             ? $cardImage
             : $fallback;
-    }
-
-    /**
-     * @param  CatalogEntry  $entry
-     */
-    private function catalogName(array $entry): string
-    {
-        $name = trans('site.collection.catalog_names.'.$entry['slug']);
-
-        return is_string($name) ? $name : $entry['slug'];
-    }
-
-    /**
-     * @param  CatalogEntry  $entry
-     */
-    private function catalogDetailUrl(array $entry): string
-    {
-        return route(
-            $this->localizedRoute->name('catalog.show'),
-            ['catalogSlug' => $entry['slug']]
-        );
     }
 
     private function catalogImageExists(string $image): bool
