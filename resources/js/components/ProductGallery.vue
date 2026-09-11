@@ -1,7 +1,7 @@
 <script setup>
 import StockBadge from '@/components/StockBadge.vue';
 
-const props = defineProps({
+defineProps({
     watch: {
         type: Object,
         required: true,
