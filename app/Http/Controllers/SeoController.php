@@ -12,6 +12,7 @@ class SeoController extends Controller
         $watches = Watch::query()
             ->select([
                 'id',
+                'slug',
                 'updated_at',
             ])
             ->orderBy('id')
