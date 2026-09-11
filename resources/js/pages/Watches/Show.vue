@@ -155,7 +155,7 @@ const submit = () => {
         <VvsNavigation
             current="watch"
             :back-label="translations.vvs_navigation.collection"
-            :watch-href="`${localizedRoutes.watches}/${watch.id}`"
+            :watch-href="`${localizedRoutes.watches}/${watch.slug}`"
         />
 
         <main id="main-content" tabindex="-1">
