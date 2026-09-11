@@ -66,10 +66,7 @@ const selectImage = (image) => {
                     </p>
                 </div>
 
-                <div
-                    aria-hidden="true"
-                    class="h-8 w-px bg-white/10"
-                ></div>
+                <div aria-hidden="true" class="h-8 w-px bg-white/10"></div>
 
                 <div class="text-right">
                     <p
@@ -94,7 +91,7 @@ const selectImage = (image) => {
                 :aria-label="`${watch.name} — ${index + 1}`"
                 :aria-pressed="activeImage === image"
                 :class="[
-                    'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+                    'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                     activeImage === image
                         ? 'border-amber-300/70 ring-1 ring-amber-300/30'
                         : 'border-white/10 hover:border-white/30',
