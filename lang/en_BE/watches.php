@@ -7,9 +7,9 @@ return [
         'description' => 'A sporty chronograph with a camouflage dial and a bold wrist presence. D-colour VVS moissanite adds strong sparkle without hiding the dial details.',
     ],
     43 => [
-        'name' => '41 mm · Two-tone turquoise',
-        'short_description' => 'Turquoise dial and two-tone finish.',
-        'description' => 'The turquoise dial brings colour while the two-tone finish keeps the design balanced. D-colour VVS moissanite strengthens the contrast.',
+        'name' => '41 mm · Yellow gold, black dial',
+        'short_description' => 'Yellow-gold-tone finish, black dial and stone-set bracelet.',
+        'description' => 'The yellow-gold-tone finish contrasts with the deep black dial. The bezel and outer bracelet links are set with D-colour VVS moissanite, while the polished centre links keep the design sharply contrasted.',
     ],
     44 => [
         'name' => '41 mm · Two-tone dual time',
