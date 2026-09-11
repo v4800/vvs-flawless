@@ -66,7 +66,10 @@ const selectImage = (image) => {
                     </p>
                 </div>
 
-                <div aria-hidden="true" class="h-8 w-px bg-white/10"></div>
+                <div
+                    aria-hidden="true"
+                    class="h-8 w-px bg-white/10"
+                ></div>
 
                 <div class="text-right">
                     <p
