@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
 
-const props = defineProps({
+defineProps({
     watch: {
         type: Object,
         required: true,
