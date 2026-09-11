@@ -5,6 +5,7 @@ return [
         'title' => 'VVS Moissanite & Iced-Out Watches in Belgium | VVS FLAWLESS',
         'description' => 'Discover VVS FLAWLESS watches set with colour D VVS moissanite: iced-out and fully set styles for men, women or unisex wear, available by reservation in Belgium.',
         'product_suffix' => 'Watch set with colour D VVS moissanite for a bright iced-out look. Pricing is shown on the product page; reserve online, then choose hand delivery or shipping once confirmed.',
+        'image_alt' => 'VVS FLAWLESS iced-out watches set with colour D VVS moissanite',
     ],
 
     'product_bridge' => [
@@ -104,7 +105,7 @@ return [
         'seo_description' => 'Diamond watch for men or women, VVS moissanite, iced-out or fully set: choose by size, dial and wrist presence.',
         'eyebrow' => 'Style guide',
         'title' => 'Iced-out watch for men or women: how to choose',
-        'intro' => 'Searches such as “diamond watch men”, “diamond watch women”, “moissanite watch men” or “moissanite watch women” often come down to the same question: which size and style will look best on the wrist?',
+        'intro' => 'Whether you are comparing a diamond watch for men, a diamond watch for women or a VVS moissanite watch, the useful question is the same: which size and style will look best on your wrist?',
         'answer' => 'VVS FLAWLESS models are set with colour D VVS moissanite. For a men’s, women’s or unisex look, focus on case size, bracelet width, dial, finish and how heavily the watch is set.',
         'sections' => [
             [
@@ -117,7 +118,7 @@ return [
             [
                 'title' => 'For stronger wrist presence',
                 'paragraphs' => [
-                    'A wider case, larger bezel and thicker bracelet create a more visible statement. That is often the silhouette people have in mind when searching for a men’s diamond watch or iced-out watch.',
+                    'A wider case, larger bezel and thicker bracelet create a more visible statement. That is the classic silhouette of an iced-out watch designed to stand out on the wrist.',
                     'VVS moissanite can cover those larger set surfaces with strong light return while generally remaining more accessible than diamond.',
                 ],
             ],
@@ -179,7 +180,7 @@ return [
             [
                 'title' => 'Men, women or unisex',
                 'paragraphs' => [
-                    'The same collection can fit searches for a men’s diamond watch, women’s diamond watch, fully set watch or VVS moissanite watch. The better choice depends mainly on style and proportions.',
+                    'The collection includes refined, sporty and more statement-focused silhouettes. A model can therefore suit men, women or fully unisex wear depending on its proportions.',
                     'Product pages let you compare the actual watches without artificially duplicating every model by gender.',
                 ],
             ],
