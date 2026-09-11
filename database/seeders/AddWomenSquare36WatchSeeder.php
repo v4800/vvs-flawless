@@ -47,7 +47,7 @@ class AddWomenSquare36WatchSeeder extends Seeder
                 '02-angle.webp',
                 '03-bracelet.webp',
             ],
-            'featured' => false,
+            'featured' => true,
             'card_image' => '01-front-card.webp',
         ];
 
