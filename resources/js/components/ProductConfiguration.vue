@@ -38,7 +38,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 <template>
     <div class="lg:pt-5">
         <div class="flex items-center gap-3">
-            <span class="h-px w-8 bg-amber-300"></span>
+            <span aria-hidden="true" class="h-px w-8 bg-amber-300"></span>
             <p class="vvs-eyebrow">VVS FLAWLESS</p>
         </div>
 
@@ -50,7 +50,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
             class="mt-4 text-xs font-bold tracking-[0.22em] text-zinc-500 uppercase"
         >
             Moissanite VVS
-            <span class="mx-2 text-amber-400"> • </span>
+            <span aria-hidden="true" class="mx-2 text-amber-400"> • </span>
             {{ translations.product.color }} D
         </p>
 
@@ -59,6 +59,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         </p>
 
         <div
+            aria-hidden="true"
             class="my-9 h-px bg-gradient-to-r from-white/10 via-white/5 to-transparent"
         ></div>
 
@@ -85,8 +86,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                 <Link
                     :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
                     preserve-scroll
+                    :aria-current="movement === 'Japonais' ? 'true' : undefined"
                     :class="[
-                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5',
+                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                         movement === 'Japonais'
                             ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                             : '',
@@ -106,6 +108,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         </div>
 
                         <div
+                            aria-hidden="true"
                             :class="[
                                 'flex h-7 w-7 items-center justify-center rounded-full border text-[10px] font-black transition',
                                 movement === 'Japonais'
@@ -145,8 +148,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                 <Link
                     :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
                     preserve-scroll
+                    :aria-current="movement === 'Suisse' ? 'true' : undefined"
                     :class="[
-                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5',
+                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                         movement === 'Suisse'
                             ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                             : '',
@@ -166,6 +170,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         </div>
 
                         <div
+                            aria-hidden="true"
                             :class="[
                                 'flex h-7 w-7 items-center justify-center rounded-full border text-[10px] font-black transition',
                                 movement === 'Suisse'
@@ -261,10 +266,10 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
         <a
             href="#reservation"
-            class="vvs-button-primary mt-6 flex w-full items-center justify-between rounded-2xl px-6 py-5 font-bold tracking-[0.1em] uppercase"
+            class="vvs-button-primary mt-6 flex w-full items-center justify-between rounded-2xl px-6 py-5 font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
         >
             <span>{{ translations.product.reserve_watch }}</span>
-            <span class="text-xl"> ↓ </span>
+            <span aria-hidden="true" class="text-xl"> ↓ </span>
         </a>
     </div>
 </template>
