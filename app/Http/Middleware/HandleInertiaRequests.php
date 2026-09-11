@@ -46,6 +46,7 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'locale' => app()->getLocale(),
             'translations' => fn () => trans('site'),
+            'landingCopy' => fn () => trans('landing'),
             'guideLinks' => fn () => trans('guides.links'),
             'seoIntentContent' => fn () => trans('seo_intents'),
             'localizedRoutes' => [
