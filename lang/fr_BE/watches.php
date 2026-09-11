@@ -7,9 +7,9 @@ return [
         'description' => 'Un chronographe sportif au cadran camouflage, pensé pour un look affirmé. La moissanite VVS couleur D ajoute un éclat franc sans masquer les détails du cadran.',
     ],
     43 => [
-        'name' => '41 mm · Bicolore turquoise',
-        'short_description' => 'Cadran turquoise et finition bicolore.',
-        'description' => 'Le cadran turquoise apporte la couleur, tandis que la finition bicolore garde l’ensemble équilibré. Le sertissage en moissanite VVS couleur D accentue le contraste.',
+        'name' => '41 mm · Or jaune, cadran noir',
+        'short_description' => 'Finition or jaune, cadran noir et bracelet serti.',
+        'description' => 'La finition or jaune contraste avec le cadran noir profond. La lunette et les maillons extérieurs sont sertis de moissanite VVS couleur D, tandis que le centre du bracelet reste poli pour garder un contraste net.',
     ],
     44 => [
         'name' => '41 mm · Bicolore double fuseau',
