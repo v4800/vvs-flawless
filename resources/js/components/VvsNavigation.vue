@@ -49,16 +49,19 @@ const steps = computed(() => [
         key: 'collection',
         label: translations.value.vvs_navigation.collection,
         href: localizedRoutes.value.watches,
+        local: false,
     },
     {
         key: 'watch',
         label: translations.value.vvs_navigation.model,
-        href: props.watchHref,
+        href: props.watchHref ? '#model' : null,
+        local: true,
     },
     {
         key: 'reservation',
         label: translations.value.vvs_navigation.reservation,
         href: props.watchHref ? '#reservation' : null,
+        local: true,
     },
 ]);
 
@@ -160,25 +163,41 @@ onMounted(() => {
                     :aria-label="translations.vvs_navigation.label"
                 >
                     <template v-for="(step, index) in steps" :key="step.key">
-                        <Link
-                            v-if="step.href && step.key !== current"
+                        <a
+                            v-if="step.href && step.local"
                             :href="step.href"
-                            class="hidden rounded text-xs font-medium whitespace-nowrap text-zinc-400 transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline"
+                            :aria-current="
+                                step.key === current ? 'location' : undefined
+                            "
+                            :class="[
+                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                step.key === current
+                                    ? 'text-amber-200'
+                                    : 'text-zinc-400 hover:text-amber-200',
+                            ]"
+                        >
+                            {{ step.label }}
+                        </a>
+
+                        <Link
+                            v-else-if="step.href"
+                            :href="step.href"
+                            :aria-current="
+                                step.key === current ? 'page' : undefined
+                            "
+                            :class="[
+                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                step.key === current
+                                    ? 'text-amber-200'
+                                    : 'text-zinc-400 hover:text-amber-200',
+                            ]"
                         >
                             {{ step.label }}
                         </Link>
 
                         <span
                             v-else
-                            :aria-current="
-                                step.key === current ? 'page' : undefined
-                            "
-                            :class="[
-                                'text-xs font-semibold whitespace-nowrap',
-                                step.key === current
-                                    ? 'text-amber-200'
-                                    : 'hidden text-zinc-400 sm:inline',
-                            ]"
+                            class="hidden text-xs font-semibold whitespace-nowrap text-zinc-500 sm:inline"
                         >
                             {{ step.label }}
                         </span>
