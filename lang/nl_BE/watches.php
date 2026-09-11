@@ -7,9 +7,9 @@ return [
         'description' => 'Een sportieve chronograaf met camouflagewijzerplaat en een uitgesproken look. De VVS-moissanite in kleur D geeft extra schittering zonder de details van de wijzerplaat te verbergen.',
     ],
     43 => [
-        'name' => '41 mm · Tweekleurig turquoise',
-        'short_description' => 'Turquoise wijzerplaat, tweekleurige afwerking.',
-        'description' => 'De turquoise wijzerplaat zorgt voor kleur, terwijl de tweekleurige afwerking het geheel in balans houdt. De VVS-moissanite in kleur D versterkt het contrast.',
+        'name' => '41 mm · Geelgoud, zwarte wijzerplaat',
+        'short_description' => 'Geelgoudkleurige afwerking, zwarte wijzerplaat en bezette armband.',
+        'description' => 'De geelgoudkleurige afwerking contrasteert met de diepe zwarte wijzerplaat. De lunette en buitenste schakels zijn bezet met VVS-moissanite in kleur D, terwijl het gepolijste midden van de armband voor een duidelijk contrast zorgt.',
     ],
     44 => [
         'name' => '41 mm · Tweekleurig dubbele tijd',
