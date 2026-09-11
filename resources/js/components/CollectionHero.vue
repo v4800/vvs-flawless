@@ -93,9 +93,7 @@ const hero = page.props.landingCopy.hero;
                     ></span>
                 </h1>
 
-                <div
-                    class="hero-animate mt-8 flex max-w-xl items-center gap-4"
-                >
+                <div class="hero-animate mt-8 flex max-w-xl items-center gap-4">
                     <div
                         class="hidden h-px w-12 bg-gradient-to-r from-transparent to-amber-400 sm:block"
                     ></div>
