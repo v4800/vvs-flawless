@@ -163,10 +163,12 @@ const submit = () => {
                 class="relative overflow-hidden px-5 pt-10 pb-20 sm:px-6 lg:px-10 lg:pt-14"
             >
                 <div
+                    aria-hidden="true"
                     class="pointer-events-none absolute top-20 -left-40 -z-10 h-[500px] w-[500px] rounded-full bg-amber-400/[0.05] blur-[150px]"
                 ></div>
 
                 <div
+                    aria-hidden="true"
                     class="pointer-events-none absolute top-0 right-0 -z-10 h-[650px] w-[650px] rounded-full bg-white/[0.025] blur-[160px]"
                 ></div>
 
@@ -206,7 +208,7 @@ const submit = () => {
                             Moissanite VVS
                         </p>
 
-                        <p class="mt-2 text-xs text-zinc-600">
+                        <p class="mt-2 text-xs text-zinc-400">
                             {{ translations.product.sparkle_text }}
                         </p>
                     </div>
@@ -218,7 +220,7 @@ const submit = () => {
                             {{ translations.product.color }} D
                         </p>
 
-                        <p class="mt-2 text-xs text-zinc-600">
+                        <p class="mt-2 text-xs text-zinc-400">
                             {{ translations.product.color_render }}
                         </p>
                     </div>
@@ -230,7 +232,7 @@ const submit = () => {
                             {{ translations.product.reception_choice }}
                         </p>
 
-                        <p class="mt-2 text-xs text-zinc-600">
+                        <p class="mt-2 text-xs text-zinc-400">
                             {{ translations.product.handover_or_delivery }}
                         </p>
                     </div>
@@ -262,7 +264,7 @@ const submit = () => {
                         VVS FLAWLESS
                     </p>
 
-                    <p class="mt-1 text-xs text-zinc-700">
+                    <p class="mt-1 text-xs text-zinc-400">
                         {{ translations.product.footer_material }}
                     </p>
                 </div>
@@ -272,35 +274,35 @@ const submit = () => {
                 >
                     <Link
                         :href="localizedRoutes.privacy"
-                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.privacy }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.reservationTerms"
-                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.terms }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.about"
-                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.navigation.about }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.diamondGuide"
-                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ page.props.guideLinks.eyebrow }}
                     </Link>
 
                     <Link
                         :href="localizedRoutes.watches"
-                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.footer.collection }}
                     </Link>
