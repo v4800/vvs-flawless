@@ -62,7 +62,7 @@ const formatPrice = (price) => {
                 <Link
                     v-for="watch in watches"
                     :key="watch.id"
-                    :href="`${localizedRoutes.watches}/${watch.id}`"
+                    :href="`${localizedRoutes.watches}/${watch.slug}`"
                     class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
                 >
                     <div class="h-[280px] overflow-hidden bg-zinc-400">
