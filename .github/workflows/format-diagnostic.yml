@@ -9,22 +9,16 @@ permissions:
   contents: read
 
 jobs:
-  format:
+  inspect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
-        with:
-          node-version: 22
-      - run: npm ci
-      - run: npm run check:fix -- resources/js/components/CollectionHero.vue resources/js/components/CollectionValueSections.vue
-      - name: Print formatted collection files
+      - name: Verify 3D references
         run: |
-          echo '===COLLECTION_HERO_BEGIN==='
-          cat resources/js/components/CollectionHero.vue
-          echo '===COLLECTION_HERO_END==='
-          echo '===COLLECTION_VALUE_SECTIONS_BEGIN==='
-          cat resources/js/components/CollectionValueSections.vue
-          echo '===COLLECTION_VALUE_SECTIONS_END==='
+          echo '===3D_REFERENCES_BEGIN==='
+          grep -R -n -E 'HeroLiveWatch|vvs-watch\.glb|@google/model-viewer' app bootstrap config database resources routes tests package.json vite.config.* 2>/dev/null || true
+          echo '===3D_REFERENCES_END==='
+          echo '===3D_ASSET_SIZE==='
+          stat -c '%n %s bytes' public/models/vvs-watch.glb 2>/dev/null || true
