@@ -127,7 +127,7 @@ const handleThumbnailKeydown = (event, index) => {
             >
                 <div>
                     <p
-                        class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
+                        class="text-[9px] font-black tracking-[0.25em] text-zinc-400 uppercase"
                     >
                         {{ translations.product.stone }}
                     </p>
@@ -141,7 +141,7 @@ const handleThumbnailKeydown = (event, index) => {
 
                 <div class="text-right">
                     <p
-                        class="text-[9px] font-black tracking-[0.25em] text-zinc-500 uppercase"
+                        class="text-[9px] font-black tracking-[0.25em] text-zinc-400 uppercase"
                     >
                         {{ translations.product.color }}
                     </p>
@@ -192,7 +192,7 @@ const handleThumbnailKeydown = (event, index) => {
         <div class="mt-4 grid grid-cols-3 gap-3">
             <div class="vvs-choice-card rounded-2xl border p-4">
                 <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.purity }}
                 </p>
@@ -202,7 +202,7 @@ const handleThumbnailKeydown = (event, index) => {
 
             <div class="vvs-choice-card rounded-2xl border p-4">
                 <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.color }}
                 </p>
@@ -212,7 +212,7 @@ const handleThumbnailKeydown = (event, index) => {
 
             <div class="vvs-choice-card rounded-2xl border p-4">
                 <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-600 uppercase"
+                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
                     {{ translations.product.reception }}
                 </p>
