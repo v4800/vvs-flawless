@@ -67,6 +67,9 @@ Route::get(
 Route::get('/watches', [WatchController::class, 'index'])
     ->name('watches.index');
 
+Route::get('/watches/catalog/{catalogSlug}', [WatchController::class, 'showCatalog'])
+    ->name('catalog.show');
+
 Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
     ->whereNumber('watchId')
     ->name('watches.legacy');
@@ -140,6 +143,9 @@ Route::prefix('nl')
 
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
+
+        Route::get('/watches/catalog/{catalogSlug}', [WatchController::class, 'showCatalog'])
+            ->name('catalog.show');
 
         Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
             ->whereNumber('watchId')
@@ -215,6 +221,9 @@ Route::prefix('en')
 
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
+
+        Route::get('/watches/catalog/{catalogSlug}', [WatchController::class, 'showCatalog'])
+            ->name('catalog.show');
 
         Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
             ->whereNumber('watchId')
