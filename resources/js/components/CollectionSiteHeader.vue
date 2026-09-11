@@ -37,7 +37,7 @@ const languageLinks = computed(() => {
         >
             <Link
                 :href="localizedRoutes.watches"
-                class="group flex flex-col leading-none"
+                class="group flex flex-col rounded leading-none focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
             >
                 <span
                     class="text-xl font-semibold tracking-[0.08em] text-white md:text-2xl"
@@ -55,13 +55,22 @@ const languageLinks = computed(() => {
                 class="hidden items-center gap-10 text-sm font-medium text-zinc-300 md:flex"
                 :aria-label="translations.navigation.main_label"
             >
-                <a href="#collection" class="vvs-nav-link">
+                <a
+                    href="#collection"
+                    class="vvs-nav-link rounded focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                     {{ translations.navigation.watches }}
                 </a>
-                <a href="#concept" class="vvs-nav-link">
+                <a
+                    href="#concept"
+                    class="vvs-nav-link rounded focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                     {{ translations.navigation.about }}
                 </a>
-                <a href="#services" class="vvs-nav-link">
+                <a
+                    href="#services"
+                    class="vvs-nav-link rounded focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                >
                     {{ translations.navigation.delivery }}
                 </a>
             </nav>
@@ -74,8 +83,12 @@ const languageLinks = computed(() => {
                     <Link
                         v-if="languageLinks.fr"
                         :href="languageLinks.fr"
+                        hreflang="fr-BE"
+                        :aria-current="
+                            page.props.locale === 'fr_BE' ? 'page' : undefined
+                        "
                         :class="[
-                            'rounded-full px-2.5 py-1.5 transition',
+                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'fr_BE'
                                 ? 'bg-amber-300 text-black'
                                 : 'text-zinc-500 hover:text-white',
@@ -86,8 +99,12 @@ const languageLinks = computed(() => {
                     <Link
                         v-if="languageLinks.nl"
                         :href="languageLinks.nl"
+                        hreflang="nl-BE"
+                        :aria-current="
+                            page.props.locale === 'nl_BE' ? 'page' : undefined
+                        "
                         :class="[
-                            'rounded-full px-2.5 py-1.5 transition',
+                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'nl_BE'
                                 ? 'bg-amber-300 text-black'
                                 : 'text-zinc-500 hover:text-white',
@@ -98,8 +115,12 @@ const languageLinks = computed(() => {
                     <Link
                         v-if="languageLinks.en"
                         :href="languageLinks.en"
+                        hreflang="en-BE"
+                        :aria-current="
+                            page.props.locale === 'en_BE' ? 'page' : undefined
+                        "
                         :class="[
-                            'rounded-full px-2.5 py-1.5 transition',
+                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'en_BE'
                                 ? 'bg-amber-300 text-black'
                                 : 'text-zinc-500 hover:text-white',
@@ -109,17 +130,19 @@ const languageLinks = computed(() => {
                     </Link>
                 </nav>
 
-                <div
+                <nav
                     class="hidden items-center gap-2 lg:flex"
                     :aria-label="landingCopy.handover_aria"
                 >
                     <Link
                         v-if="languageLinks.fr"
                         :href="languageLinks.fr"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                        :aria-label="landingCopy.handover_be_title"
+                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                         :title="landingCopy.handover_be_title"
                     >
                         <div
+                            aria-hidden="true"
                             class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
                         >
                             <span class="flex-1 bg-black"></span>
@@ -127,6 +150,7 @@ const languageLinks = computed(() => {
                             <span class="flex-1 bg-red-600"></span>
                         </div>
                         <span
+                            aria-hidden="true"
                             class="text-[8px] font-bold tracking-wider text-zinc-500"
                             >BE</span
                         >
@@ -135,10 +159,12 @@ const languageLinks = computed(() => {
                     <Link
                         v-if="languageLinks.fr"
                         :href="languageLinks.fr"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                        :aria-label="landingCopy.handover_fr_title"
+                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                         :title="landingCopy.handover_fr_title"
                     >
                         <div
+                            aria-hidden="true"
                             class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
                         >
                             <span class="flex-1 bg-blue-700"></span>
@@ -146,6 +172,7 @@ const languageLinks = computed(() => {
                             <span class="flex-1 bg-red-600"></span>
                         </div>
                         <span
+                            aria-hidden="true"
                             class="text-[8px] font-bold tracking-wider text-zinc-500"
                             >FR</span
                         >
@@ -154,10 +181,12 @@ const languageLinks = computed(() => {
                     <Link
                         v-if="languageLinks.nl"
                         :href="languageLinks.nl"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30"
+                        :aria-label="landingCopy.handover_nl_title"
+                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                         :title="landingCopy.handover_nl_title"
                     >
                         <div
+                            aria-hidden="true"
                             class="flex h-4 w-6 flex-col overflow-hidden rounded-[2px] border border-white/10"
                         >
                             <span class="flex-1 bg-red-600"></span>
@@ -165,11 +194,12 @@ const languageLinks = computed(() => {
                             <span class="flex-1 bg-blue-700"></span>
                         </div>
                         <span
+                            aria-hidden="true"
                             class="text-[8px] font-bold tracking-wider text-zinc-500"
                             >NL</span
                         >
                     </Link>
-                </div>
+                </nav>
             </div>
         </div>
     </header>
