@@ -84,7 +84,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
             <div class="mt-5 grid gap-4 sm:grid-cols-2">
                 <Link
-                    :href="`${localizedRoutes.watches}/${watch.id}?movement=Japonais`"
+                    :href="`${localizedRoutes.watches}/${watch.slug}?movement=Japonais`"
                     preserve-scroll
                     :aria-current="movement === 'Japonais' ? 'true' : undefined"
                     :class="[
@@ -146,7 +146,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                 </Link>
 
                 <Link
-                    :href="`${localizedRoutes.watches}/${watch.id}?movement=Suisse`"
+                    :href="`${localizedRoutes.watches}/${watch.slug}?movement=Suisse`"
                     preserve-scroll
                     :aria-current="movement === 'Suisse' ? 'true' : undefined"
                     :class="[
