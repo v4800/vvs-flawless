@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $name
- * @property string $slug
+ * @property string|null $slug
  * @property string|int|float $price
  * @property string|int|float|null $promo_price
  * @property string|int|float|null $japanese_price
