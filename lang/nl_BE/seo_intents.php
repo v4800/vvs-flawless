@@ -5,6 +5,7 @@ return [
         'title' => 'VVS-moissanite & iced-out horloges in België | VVS FLAWLESS',
         'description' => 'Ontdek VVS FLAWLESS-horloges met kleur D VVS-moissanite: iced-out en bezette modellen voor heren, dames of een uniseks stijl, op reservatie verkrijgbaar in België.',
         'product_suffix' => 'Horloge bezet met kleur D VVS-moissanite voor een zeer heldere iced-out uitstraling. De prijs staat op de productpagina; reservatie gebeurt online, gevolgd door persoonlijke overhandiging of levering na bevestiging.',
+        'image_alt' => 'VVS FLAWLESS iced-out horloges bezet met kleur D VVS-moissanite',
     ],
 
     'product_bridge' => [
@@ -104,7 +105,7 @@ return [
         'seo_description' => 'Diamanten heren- of dameshorloge, VVS-moissanite, iced-out of bezet horloge: kies volgens formaat, wijzerplaat en uitstraling aan de pols.',
         'eyebrow' => 'Stijlgids',
         'title' => 'Iced-out horloge voor heren of dames: hoe kies je?',
-        'intro' => 'Zoekopdrachten zoals “diamanten horloge heren”, “diamanten horloge dames”, “moissanite horloge heren” of “moissanite horloge dames” draaien vaak om dezelfde vraag: welk formaat en welke stijl passen het best aan de pols?',
+        'intro' => 'Of je nu naar een diamanten herenhorloge, diamanten dameshorloge of VVS-moissanite horloge kijkt, de belangrijkste vraag blijft welk formaat en welke stijl het best bij je pols passen.',
         'answer' => 'VVS FLAWLESS-modellen zijn bezet met kleur D VVS-moissanite. Kies voor een heren-, dames- of uniseks uitstraling vooral op kastformaat, bandbreedte, wijzerplaat, afwerking en de dichtheid van de bezetting.',
         'sections' => [
             [
@@ -117,7 +118,7 @@ return [
             [
                 'title' => 'Voor een sterkere aanwezigheid',
                 'paragraphs' => [
-                    'Een grotere kast, opvallende lunette en bredere band geven een krachtiger resultaat. Dat is vaak de stijl die wordt bedoeld met “diamanten herenhorloge” of “iced-out watch”.',
+                    'Een grotere kast, opvallende lunette en bredere band geven een krachtiger resultaat. Dat is de typische silhouet van een iced-out horloge dat duidelijk aanwezig mag zijn aan de pols.',
                     'VVS-moissanite kan veel licht over zulke grote bezette oppervlakken geven met een doorgaans toegankelijker budget dan diamant.',
                 ],
             ],
@@ -179,7 +180,7 @@ return [
             [
                 'title' => 'Heren, dames of uniseks',
                 'paragraphs' => [
-                    'Dezelfde collectie kan passen bij een zoekopdracht naar een diamanten herenhorloge, diamanten dameshorloge, bezet horloge of VVS-moissanite horloge. De keuze hangt vooral af van stijl en proporties.',
+                    'De collectie bevat verfijnde, sportieve en meer uitgesproken silhouetten. Een model kan dus bij heren, dames of een volledig uniseks stijl passen, afhankelijk van de proporties.',
                     'De productpagina’s laten je modellen vergelijken zonder hetzelfde horloge kunstmatig per gender te dupliceren.',
                 ],
             ],
