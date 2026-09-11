@@ -7,6 +7,7 @@ return [
     'handover_fr_title' => 'Nord de la France — français',
     'handover_nl_title' => 'Maastricht et Gulpen — néerlandais',
     'starting_at' => 'À partir de',
+    'collection_description' => 'Découvrez nos montres VVS serties de moissanite, leurs finitions iced-out et leur prix de départ, puis ouvrez la fiche du modèle qui vous plaît.',
     'hero' => [
         'badge_stone' => 'Moissanite VVS',
         'badge_style' => 'Iced Out',
