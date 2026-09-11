@@ -70,7 +70,7 @@ const imageAlt = (model) => {
         ></div>
 
         <a
-            :href="model.image"
+            :href="model.detailUrl"
             class="relative block aspect-[4/3] w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.view_watch} — ${model.name}`"
         >
@@ -145,7 +145,7 @@ const imageAlt = (model) => {
                 </div>
 
                 <a
-                    :href="model.image"
+                    :href="model.detailUrl"
                     class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase"
                 >
                     {{ translations.collection.view_watch }}
