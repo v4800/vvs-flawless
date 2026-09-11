@@ -34,7 +34,7 @@ const formatPrice = (price) => {
         <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
             <div class="min-w-0">
                 <p
-                    class="truncate text-[9px] font-black tracking-[0.16em] text-zinc-600 uppercase"
+                    class="truncate text-[9px] font-black tracking-[0.16em] text-zinc-400 uppercase"
                 >
                     {{
                         translations.mobile_reservation.movement.replace(
