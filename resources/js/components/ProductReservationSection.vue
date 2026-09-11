@@ -43,6 +43,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         class="relative scroll-mt-24 px-5 py-20 sm:px-6 lg:px-10"
     >
         <div
+            aria-hidden="true"
             class="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[550px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.035] blur-[150px]"
         ></div>
 
@@ -58,7 +59,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     {{ translations.product.reserve_piece }}
                 </h2>
 
-                <p class="mt-4 text-sm leading-7 text-zinc-500">
+                <p class="mt-4 text-sm leading-7 text-zinc-400">
                     {{ translations.product.reservation_intro }}
                 </p>
 
@@ -84,7 +85,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                             </p>
 
                             <p
-                                class="mt-2 text-[10px] tracking-[0.15em] text-zinc-500 uppercase"
+                                class="mt-2 text-[10px] tracking-[0.15em] text-zinc-400 uppercase"
                             >
                                 {{ localizedMovement }}
                             </p>
@@ -103,7 +104,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         ◆ {{ form.delivery_method }}
                     </p>
 
-                    <p class="mt-2 text-xs leading-5 text-zinc-600">
+                    <p class="mt-2 text-xs leading-5 text-zinc-400">
                         {{ translations.product.reception_note }}
                     </p>
                 </div>
@@ -111,6 +112,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
             <form
                 class="vvs-form vvs-luxury-card rounded-3xl border p-6 sm:p-8 xl:p-9"
+                :aria-busy="form.processing"
                 @submit.prevent="emit('submit')"
             >
                 <div
@@ -118,7 +120,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                 >
                     <div>
                         <p
-                            class="text-[9px] font-black tracking-[0.3em] text-zinc-600 uppercase"
+                            class="text-[9px] font-black tracking-[0.3em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.reservation }}
                         </p>
@@ -139,7 +141,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div>
                         <label
                             for="reservation-customer-name"
-                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.full_name }}
                         </label>
@@ -156,7 +158,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     ? 'reservation-customer-name-error'
                                     : undefined
                             "
-                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
+                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-400 focus-visible:border-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                             :placeholder="translations.product.name_placeholder"
                         />
 
@@ -173,7 +175,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div>
                         <label
                             for="reservation-email"
-                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.email }}
                         </label>
@@ -190,7 +192,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     ? 'reservation-email-error'
                                     : undefined
                             "
-                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
+                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-400 focus-visible:border-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                             :placeholder="
                                 translations.product.email_placeholder
                             "
@@ -209,7 +211,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div>
                         <label
                             for="reservation-phone"
-                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.phone }}
                         </label>
@@ -226,7 +228,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     ? 'reservation-phone-error'
                                     : undefined
                             "
-                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
+                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-400 focus-visible:border-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                             placeholder="+32..."
                         />
 
@@ -243,7 +245,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div>
                         <label
                             for="reservation-city"
-                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.city }}
                         </label>
@@ -259,7 +261,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     ? 'reservation-city-error'
                                     : undefined
                             "
-                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
+                            class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-400 focus-visible:border-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                             :placeholder="translations.product.city_placeholder"
                         />
 
@@ -283,7 +285,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         "
                     >
                         <legend
-                            class="mb-2 text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.reception_method }}
                         </legend>
@@ -294,7 +296,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                 :key="option.value"
                                 :for="`reservation-delivery-method-${index}`"
                                 :class="[
-                                    'cursor-pointer rounded-xl border p-5 transition',
+                                    'cursor-pointer rounded-xl border p-5 transition focus-within:ring-2 focus-within:ring-amber-300 focus-within:ring-offset-2 focus-within:ring-offset-black',
                                     form.delivery_method === option.value
                                         ? 'border-amber-300/50 bg-amber-300/[0.05]'
                                         : 'border-white/10 bg-black hover:border-white/20',
@@ -319,7 +321,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                         </span>
 
                                         <span
-                                            class="mt-1 block text-sm leading-6 text-zinc-500"
+                                            class="mt-1 block text-sm leading-6 text-zinc-400"
                                         >
                                             {{ option.description }}
                                         </span>
@@ -341,12 +343,12 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="md:col-span-2">
                         <label
                             for="reservation-message"
-                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-500 uppercase"
+                            class="mb-2 block text-xs font-bold tracking-[0.1em] text-zinc-400 uppercase"
                         >
                             {{ translations.product.message }}
 
                             <span
-                                class="tracking-normal text-zinc-700 normal-case"
+                                class="tracking-normal text-zinc-400 normal-case"
                             >
                                 {{ translations.product.optional }}
                             </span>
@@ -362,7 +364,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     ? 'reservation-message-error'
                                     : undefined
                             "
-                            class="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
+                            class="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-400 focus-visible:border-amber-300 focus-visible:ring-2 focus-visible:ring-amber-300/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                             :placeholder="
                                 translations.product.message_placeholder
                             "
@@ -388,7 +390,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                 {{ translations.product.contact_question }}
                             </p>
 
-                            <p class="mt-1 text-xs leading-5 text-zinc-600">
+                            <p class="mt-1 text-xs leading-5 text-zinc-400">
                                 {{ translations.product.contact_text }}
                             </p>
                         </div>
@@ -397,7 +399,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                             href="https://www.tiktok.com/@vvsflawless43"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="vvs-button-secondary shrink-0 rounded-xl px-5 py-3 text-center text-xs font-bold tracking-[0.1em] uppercase"
+                            class="vvs-button-secondary shrink-0 rounded-xl px-5 py-3 text-center text-xs font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                         >
                             @vvsflawless43 →
                         </a>
@@ -406,7 +408,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     <div class="md:col-span-2">
                         <label
                             for="reservation-confirmation"
-                            class="flex h-full cursor-pointer items-start gap-4 rounded-xl border border-white/10 bg-black/60 p-4"
+                            class="flex h-full cursor-pointer items-start gap-4 rounded-xl border border-white/10 bg-black/60 p-4 focus-within:ring-2 focus-within:ring-amber-300 focus-within:ring-offset-2 focus-within:ring-offset-black"
                         >
                             <input
                                 id="reservation-confirmation"
@@ -424,7 +426,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                 class="mt-1 h-4 w-4 accent-amber-300"
                             />
 
-                            <span class="text-xs leading-6 text-zinc-500">
+                            <span class="text-xs leading-6 text-zinc-400">
                                 {{ translations.product.confirmation_text }}
                             </span>
                         </label>
@@ -445,7 +447,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         >
                             <div>
                                 <p
-                                    class="text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
+                                    class="text-[9px] font-black tracking-[0.25em] text-zinc-400 uppercase"
                                 >
                                     {{ translations.product.piece_amount }}
                                 </p>
@@ -466,7 +468,8 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         <button
                             type="submit"
                             :disabled="form.processing"
-                            class="vvs-button-primary group flex w-full items-center justify-between rounded-xl px-6 py-5 text-sm font-bold tracking-[0.1em] uppercase disabled:cursor-not-allowed disabled:opacity-50"
+                            :aria-busy="form.processing"
+                            class="vvs-button-primary group flex w-full items-center justify-between rounded-xl px-6 py-5 text-sm font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <span>
                                 {{
@@ -477,6 +480,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                             </span>
 
                             <span
+                                aria-hidden="true"
                                 class="text-xl transition duration-300 group-hover:translate-x-1"
                             >
                                 →
@@ -484,7 +488,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                         </button>
 
                         <p
-                            class="mt-4 text-center text-[11px] leading-5 text-zinc-700"
+                            class="mt-4 text-center text-[11px] leading-5 text-zinc-400"
                         >
                             {{ translations.product.reservation_note }}
                         </p>
