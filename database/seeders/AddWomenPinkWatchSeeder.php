@@ -47,7 +47,7 @@ class AddWomenPinkWatchSeeder extends Seeder
                 '02-bracelet-vertical.webp',
                 '03-clasp.webp',
             ],
-            'featured' => false,
+            'featured' => true,
             'card_image' => '01-front-card.webp',
         ];
 
