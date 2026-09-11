@@ -67,7 +67,11 @@ Route::get(
 Route::get('/watches', [WatchController::class, 'index'])
     ->name('watches.index');
 
-Route::get('/watches/{watch}', [WatchController::class, 'show'])
+Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+    ->whereNumber('watchId')
+    ->name('watches.legacy');
+
+Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
     ->name('watches.show');
 
 Route::post('/reservations', [ReservationController::class, 'store'])
@@ -137,7 +141,11 @@ Route::prefix('nl')
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
 
-        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+        Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+            ->whereNumber('watchId')
+            ->name('watches.legacy');
+
+        Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
             ->name('watches.show');
 
         Route::post('/reservations', [ReservationController::class, 'store'])
@@ -208,7 +216,11 @@ Route::prefix('en')
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
 
-        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+        Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+            ->whereNumber('watchId')
+            ->name('watches.legacy');
+
+        Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
             ->name('watches.show');
 
         Route::post('/reservations', [ReservationController::class, 'store'])
