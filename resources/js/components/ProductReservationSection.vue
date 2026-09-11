@@ -191,7 +191,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     : undefined
                             "
                             class="w-full rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                            :placeholder="translations.product.email_placeholder"
+                            :placeholder="
+                                translations.product.email_placeholder
+                            "
                         />
 
                         <p
@@ -310,7 +312,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     />
 
                                     <span>
-                                        <span class="block font-bold text-white">
+                                        <span
+                                            class="block font-bold text-white"
+                                        >
                                             {{ option.label }}
                                         </span>
 
@@ -359,7 +363,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                     : undefined
                             "
                             class="w-full resize-none rounded-xl border border-white/10 bg-black px-4 py-4 text-sm text-white transition outline-none placeholder:text-zinc-700 focus:border-amber-300/50"
-                            :placeholder="translations.product.message_placeholder"
+                            :placeholder="
+                                translations.product.message_placeholder
+                            "
                         ></textarea>
 
                         <p
@@ -407,7 +413,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                 v-model="form.confirmation"
                                 type="checkbox"
                                 required
-                                :aria-invalid="Boolean(form.errors.confirmation)"
+                                :aria-invalid="
+                                    Boolean(form.errors.confirmation)
+                                "
                                 :aria-describedby="
                                     form.errors.confirmation
                                         ? 'reservation-confirmation-error'
