@@ -1,7 +1,9 @@
 <script setup>
+import { computed, nextTick, ref } from 'vue';
+
 import StockBadge from '@/components/StockBadge.vue';
 
-defineProps({
+const props = defineProps({
     watch: {
         type: Object,
         required: true,
@@ -21,9 +23,69 @@ defineProps({
 });
 
 const emit = defineEmits(['select-image']);
+const thumbnailButtons = ref([]);
+
+const activeIndex = computed(() => {
+    const index = props.gallery.indexOf(props.activeImage);
+
+    return index >= 0 ? index : 0;
+});
+
+const imagePosition = computed(() => {
+    return `${activeIndex.value + 1}/${Math.max(props.gallery.length, 1)}`;
+});
 
 const selectImage = (image) => {
     emit('select-image', image);
+};
+
+const setThumbnailButton = (element, index) => {
+    if (element) {
+        thumbnailButtons.value[index] = element;
+    }
+};
+
+const moveToImage = (index) => {
+    if (!props.gallery.length) {
+        return;
+    }
+
+    const normalizedIndex =
+        (index + props.gallery.length) % props.gallery.length;
+
+    selectImage(props.gallery[normalizedIndex]);
+
+    nextTick(() => {
+        thumbnailButtons.value[normalizedIndex]?.focus();
+    });
+};
+
+const handleThumbnailKeydown = (event, index) => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+        event.preventDefault();
+        moveToImage(index + 1);
+
+        return;
+    }
+
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+        event.preventDefault();
+        moveToImage(index - 1);
+
+        return;
+    }
+
+    if (event.key === 'Home') {
+        event.preventDefault();
+        moveToImage(0);
+
+        return;
+    }
+
+    if (event.key === 'End') {
+        event.preventDefault();
+        moveToImage(props.gallery.length - 1);
+    }
 };
 </script>
 
@@ -38,11 +100,20 @@ const selectImage = (image) => {
             </div>
 
             <div
+                id="product-gallery-panel"
+                role="tabpanel"
+                :aria-labelledby="
+                    gallery.length > 1
+                        ? `product-gallery-tab-${activeIndex}`
+                        : undefined
+                "
+                aria-live="polite"
+                aria-atomic="true"
                 class="relative aspect-square self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)]"
             >
                 <img
                     :src="activeImage"
-                    :alt="watch.name"
+                    :alt="`${watch.name} — ${imagePosition}`"
                     loading="eager"
                     fetchpriority="high"
                     decoding="async"
@@ -82,14 +153,21 @@ const selectImage = (image) => {
 
         <div
             v-if="gallery.length > 1"
+            role="tablist"
+            :aria-label="watch.name"
             class="mt-4 grid grid-cols-4 gap-3 sm:grid-cols-6"
         >
             <button
                 v-for="(image, index) in gallery"
+                :id="`product-gallery-tab-${index}`"
                 :key="image"
+                :ref="(element) => setThumbnailButton(element, index)"
                 type="button"
-                :aria-label="`${watch.name} — ${index + 1}`"
-                :aria-pressed="activeImage === image"
+                role="tab"
+                :aria-label="`${watch.name} — ${index + 1}/${gallery.length}`"
+                :aria-selected="activeImage === image"
+                aria-controls="product-gallery-panel"
+                :tabindex="activeImage === image ? 0 : -1"
                 :class="[
                     'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                     activeImage === image
@@ -97,6 +175,7 @@ const selectImage = (image) => {
                         : 'border-white/10 hover:border-white/30',
                 ]"
                 @click="selectImage(image)"
+                @keydown="handleThumbnailKeydown($event, index)"
             >
                 <img
                     :src="image"
