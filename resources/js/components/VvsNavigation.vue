@@ -107,7 +107,7 @@ onMounted(() => {
 
                 <div class="hidden sm:block">
                     <p
-                        class="text-[9px] font-bold tracking-[0.25em] text-zinc-600 uppercase"
+                        class="text-[9px] font-bold tracking-[0.25em] text-zinc-400 uppercase"
                     >
                         {{ translations.vvs_navigation.back }}
                     </p>
@@ -140,7 +140,7 @@ onMounted(() => {
                 >
                     <Link
                         :href="localizedRoutes.about"
-                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-400 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.navigation.about }}
                     </Link>
@@ -149,7 +149,7 @@ onMounted(() => {
 
                     <Link
                         :href="localizedRoutes.diamondGuide"
-                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-400 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ guideLinks.eyebrow }}
                     </Link>
@@ -163,7 +163,7 @@ onMounted(() => {
                         <Link
                             v-if="step.href && step.key !== current"
                             :href="step.href"
-                            class="hidden rounded text-xs font-medium whitespace-nowrap text-zinc-500 transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline"
+                            class="hidden rounded text-xs font-medium whitespace-nowrap text-zinc-400 transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline"
                         >
                             {{ step.label }}
                         </Link>
@@ -177,7 +177,7 @@ onMounted(() => {
                                 'text-xs font-semibold whitespace-nowrap',
                                 step.key === current
                                     ? 'text-amber-200'
-                                    : 'hidden text-zinc-500 sm:inline',
+                                    : 'hidden text-zinc-400 sm:inline',
                             ]"
                         >
                             {{ step.label }}
