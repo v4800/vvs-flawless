@@ -47,10 +47,7 @@ class WatchController extends Controller
 
         $url = route(
             $this->localizedRoute->name('watches.show'),
-            [
-                'watch' => $watch,
-                ...$request->query(),
-            ]
+            ['watch' => $watch] + $request->query()
         );
 
         return redirect()->to($url, 301);
