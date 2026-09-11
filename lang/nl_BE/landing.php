@@ -7,6 +7,7 @@ return [
     'handover_fr_title' => 'Noord-Frankrijk — Frans',
     'handover_nl_title' => 'Maastricht en Gulpen — Nederlands',
     'starting_at' => 'Vanaf',
+    'collection_description' => 'Ontdek onze met VVS-moissanite bezette horloges, hun iced-out afwerking en vanafprijs, en open daarna de productpagina van het model dat je aanspreekt.',
     'hero' => [
         'badge_stone' => 'VVS-moissanite',
         'badge_style' => 'Iced Out',
