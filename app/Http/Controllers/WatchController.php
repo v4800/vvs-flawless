@@ -39,6 +39,26 @@ class WatchController extends Controller
         ]);
     }
 
+    public function showCatalog(
+        Request $request,
+        string $catalogSlug
+    ): Response {
+        $this->marketingAttribution->capture($request);
+
+        $model = $this->catalog->catalogModel($catalogSlug);
+
+        abort_if($model === null, 404);
+
+        return inertia('Watches/CatalogShow', [
+            'model' => $model,
+            'seo' => [
+                'title' => '41 mm · '.$model['name'].' | VVS FLAWLESS',
+                'description' => trans('site.collection.source_description'),
+                'canonical' => $model['detailUrl'],
+            ],
+        ]);
+    }
+
     public function redirectLegacy(
         Request $request,
         int $watchId
