@@ -91,7 +91,7 @@ const languageLinks = computed(() => {
                             'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'fr_BE'
                                 ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
+                                : 'text-zinc-400 hover:text-white',
                         ]"
                     >
                         FR
@@ -107,7 +107,7 @@ const languageLinks = computed(() => {
                             'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'nl_BE'
                                 ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
+                                : 'text-zinc-400 hover:text-white',
                         ]"
                     >
                         NL
@@ -123,7 +123,7 @@ const languageLinks = computed(() => {
                             'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                             page.props.locale === 'en_BE'
                                 ? 'bg-amber-300 text-black'
-                                : 'text-zinc-500 hover:text-white',
+                                : 'text-zinc-400 hover:text-white',
                         ]"
                     >
                         EN
@@ -151,7 +151,7 @@ const languageLinks = computed(() => {
                         </div>
                         <span
                             aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-500"
+                            class="text-[8px] font-bold tracking-wider text-zinc-400"
                             >BE</span
                         >
                     </Link>
@@ -173,7 +173,7 @@ const languageLinks = computed(() => {
                         </div>
                         <span
                             aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-500"
+                            class="text-[8px] font-bold tracking-wider text-zinc-400"
                             >FR</span
                         >
                     </Link>
@@ -195,7 +195,7 @@ const languageLinks = computed(() => {
                         </div>
                         <span
                             aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-500"
+                            class="text-[8px] font-bold tracking-wider text-zinc-400"
                             >NL</span
                         >
                     </Link>
