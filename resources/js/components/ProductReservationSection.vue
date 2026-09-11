@@ -1,7 +1,7 @@
 <script setup>
 import ReservationTrust from '@/components/ReservationTrust.vue';
 
-const props = defineProps({
+defineProps({
     watch: {
         type: Object,
         required: true,
