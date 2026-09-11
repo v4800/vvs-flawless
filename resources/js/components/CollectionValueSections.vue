@@ -8,10 +8,7 @@ const translations = page.props.translations;
 </script>
 
 <template>
-    <section
-        id="concept"
-        class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10"
-    >
+    <section id="concept" class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10">
         <div
             class="reveal-on-scroll vvs-luxury-card mx-auto max-w-[1500px] overflow-hidden rounded-2xl border"
         >
@@ -53,10 +50,7 @@ const translations = page.props.translations;
         </div>
     </section>
 
-    <section
-        id="services"
-        class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10"
-    >
+    <section id="services" class="scroll-mt-24 px-5 py-12 sm:px-6 lg:px-10">
         <div
             class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
         >
