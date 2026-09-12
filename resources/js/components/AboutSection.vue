@@ -1,7 +1,6 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
-import SeoContentHub from '@/components/SeoContentHub.vue';
 
 const page = usePage();
 const translations = computed(() => page.props.translations);
@@ -98,6 +97,4 @@ const translations = computed(() => page.props.translations);
             </div>
         </div>
     </section>
-
-    <SeoContentHub />
 </template>
