@@ -4,28 +4,6 @@
     "naming_rule":  "NNN-model-slug/NN-view.ext",
     "watches":  [
                     {
-                        "id":  1,
-                        "slug":  "blue-round",
-                        "folder":  "001-blue-round",
-                        "images":  [
-                                       "07-black-marble.webp"
-                                   ],
-                        "featured":  true,
-                        "archived_images":  [
-                                                "01-front.png",
-                                                "02-hero-reflection.png",
-                                                "03-angle-top.png",
-                                                "04-side-bracelet.png",
-                                                "05-bracelet-vertical.png",
-                                                "06-bracelet-clasp.png"
-                                            ],
-                        "card_image":  "07-black-marble-card.webp",
-                        "legacy_images":  [
-                                              "/images/watches/presidentielle-bleu-romains.webp",
-                                              "/images/watches/presidentielle-bleu-romains.png"
-                                          ]
-                    },
-                    {
                         "id":  2,
                         "slug":  "twotone-round",
                         "folder":  "002-twotone-round",
@@ -224,6 +202,22 @@
                         "legacy_images":  [
                                               "/images/watches/presidentielle-or-jaune-cannelee.webp",
                                               "/images/watches/presidentielle-or-jaune-cannelee.png"
+                                          ]
+                    },
+                    {
+                        "id":  1,
+                        "slug":  "blue-round",
+                        "folder":  "001-blue-round",
+                        "images":  [
+                                       "01-front.webp",
+                                       "02-angle.webp",
+                                       "03-bracelet.webp"
+                                   ],
+                        "featured":  true,
+                        "card_image":  "01-front.webp",
+                        "legacy_images":  [
+                                              "/images/watches/presidentielle-bleu-romains.webp",
+                                              "/images/watches/presidentielle-bleu-romains.png"
                                           ]
                     }
                 ]
