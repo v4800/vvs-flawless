@@ -264,6 +264,7 @@ final class WatchSeo
             ['hreflang' => 'fr-BE', 'href' => route('watches.index')],
             ['hreflang' => 'nl-BE', 'href' => route('nl.watches.index')],
             ['hreflang' => 'en-BE', 'href' => route('en.watches.index')],
+            ['hreflang' => 'de-BE', 'href' => route('de.watches.index')],
             ['hreflang' => 'x-default', 'href' => route('watches.index')],
         ];
     }
@@ -285,6 +286,10 @@ final class WatchSeo
             [
                 'hreflang' => 'en-BE',
                 'href' => route('en.watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'de-BE',
+                'href' => route('de.watches.show', $watch),
             ],
             [
                 'hreflang' => 'x-default',
