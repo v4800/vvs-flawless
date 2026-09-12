@@ -44,6 +44,25 @@ const resolvedBackLabel = computed(
     () => props.backLabel ?? translations.value.vvs_navigation.collection,
 );
 
+const languageLinks = computed(() => {
+    const alternates = page.props.seo?.alternates ?? [];
+    const languages = [
+        { code: 'FR', locale: 'fr_BE', hreflang: 'fr-BE' },
+        { code: 'NL', locale: 'nl_BE', hreflang: 'nl-BE' },
+        { code: 'EN', locale: 'en_BE', hreflang: 'en-BE' },
+        { code: 'DE', locale: 'de_BE', hreflang: 'de-BE' },
+    ];
+
+    return languages
+        .map((language) => ({
+            ...language,
+            href: alternates.find(
+                (alternate) => alternate.hreflang === language.hreflang,
+            )?.href,
+        }))
+        .filter((language) => language.href);
+});
+
 const steps = computed(() => [
     {
         key: 'collection',
@@ -93,7 +112,7 @@ onMounted(() => {
         class="sticky top-4 z-40 mx-auto mb-8 max-w-6xl px-4 opacity-0 sm:px-0"
     >
         <div
-            class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-4 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
+            class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-3 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
         >
             <Link
                 v-if="showBack"
@@ -155,6 +174,32 @@ onMounted(() => {
                         class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-400 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ guideLinks.eyebrow }}
+                    </Link>
+                </nav>
+
+                <nav
+                    v-if="showBack && languageLinks.length"
+                    class="flex shrink-0 items-center rounded-full border border-white/10 p-0.5 text-[9px] font-bold tracking-wide"
+                    :aria-label="translations.language.label"
+                >
+                    <Link
+                        v-for="language in languageLinks"
+                        :key="language.hreflang"
+                        :href="language.href"
+                        :hreflang="language.hreflang"
+                        :aria-current="
+                            page.props.locale === language.locale
+                                ? 'page'
+                                : undefined
+                        "
+                        :class="[
+                            'rounded-full px-2 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:outline-none',
+                            page.props.locale === language.locale
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-500 hover:text-white',
+                        ]"
+                    >
+                        {{ language.code }}
                     </Link>
                 </nav>
 
