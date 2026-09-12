@@ -49,7 +49,7 @@ const formatPrice = (price) => {
     <Head :title="translations.confirmation.title" />
 
     <main
-        class="relative min-h-screen overflow-hidden bg-black px-5 py-12 text-white sm:px-6"
+        class="vvs-storefront relative min-h-screen overflow-hidden px-5 py-12 text-white sm:px-6"
     >
         <!-- HALO -->
         <div

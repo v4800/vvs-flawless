@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
+
 const props = defineProps({
     models: {
         type: Array,
@@ -82,16 +84,11 @@ const imageAlt = (model) => {
                 class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
             ></div>
 
-            <img
+            <WatchCardVisual
                 :src="model.cardImage"
                 :srcset="`${model.cardImage} 720w, ${model.image} 1448w`"
                 sizes="(min-width: 1280px) 32vw, (min-width: 640px) 48vw, 100vw"
                 :alt="imageAlt(model)"
-                width="1448"
-                height="1086"
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
             />
 
             <span
@@ -105,7 +102,7 @@ const imageAlt = (model) => {
             <h3
                 class="vvs-display-title text-center text-2xl leading-tight text-white"
             >
-                41 mm · {{ model.name }}
+                {{ model.name }}
             </h3>
 
             <p

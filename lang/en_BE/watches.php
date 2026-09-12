@@ -7,9 +7,9 @@ return [
         'description' => 'A sporty chronograph with a camouflage dial and a bold wrist presence. D-colour VVS moissanite adds strong sparkle without hiding the dial details.',
     ],
     43 => [
-        'name' => '41 mm · Two-tone turquoise',
-        'short_description' => 'Turquoise dial and two-tone finish.',
-        'description' => 'The turquoise dial brings colour while the two-tone finish keeps the design balanced. D-colour VVS moissanite strengthens the contrast.',
+        'name' => '41 mm · Yellow gold, black dial',
+        'short_description' => 'Yellow-gold-tone finish, black dial and stone-set bracelet.',
+        'description' => 'The yellow-gold-tone finish contrasts with the deep black dial. The bezel and outer bracelet links are set with D-colour VVS moissanite, while the polished centre links keep the design sharply contrasted.',
     ],
     44 => [
         'name' => '41 mm · Two-tone dual time',
@@ -17,14 +17,14 @@ return [
         'description' => 'A detailed two-tone dual-time design with a technical look. D-colour VVS moissanite gives the watch a bright, highly visible finish.',
     ],
     45 => [
-        'name' => '41 mm · Royal-blue dial',
-        'short_description' => 'Royal-blue dial, iced-out finish.',
-        'description' => 'The royal-blue dial contrasts clearly with the D-colour VVS moissanite setting. A more classic shape with an unmistakable iced-out finish.',
+        'name' => '41 mm · Two-tone, champagne dial',
+        'short_description' => 'Two-tone finish and champagne dial.',
+        'description' => 'The champagne dial complements the silver- and yellow-gold-tone finish. The bracelet and bezel are set with D-colour VVS moissanite.',
     ],
     46 => [
-        'name' => '41 mm · Two-tone geometric',
-        'short_description' => 'Geometric case and integrated bracelet.',
-        'description' => 'Its geometric case and integrated bracelet create a sporty silhouette. D-colour VVS moissanite highlights the shape with a bright setting.',
+        'name' => '41 mm · Geometric, champagne dial',
+        'short_description' => 'Silver-tone finish and champagne dial.',
+        'description' => 'The geometric case, champagne dial and fully set integrated bracelet create a clean, bright silhouette.',
     ],
     47 => [
         'name' => '41 mm · Geometric tapisserie',
@@ -37,14 +37,14 @@ return [
         'description' => 'A two-tone finish paired with a bright sunburst dial. D-colour VVS moissanite adds a bustdown look while keeping the overall design balanced.',
     ],
     49 => [
-        'name' => '41 mm · Yellow-gold presidential',
-        'short_description' => 'Yellow-gold-tone, iced-out finish.',
-        'description' => 'A yellow-gold-tone finish for a strong wrist presence. D-colour VVS moissanite adds clear sparkle across the watch.',
+        'name' => '41 mm · Rose-gold presidential',
+        'short_description' => 'Rose-gold-tone finish, pavé dial and iced-out bracelet.',
+        'description' => 'A rose-gold-tone finish with a pavé dial, stone-set bezel and fully iced-out bracelet in D-colour VVS moissanite.',
     ],
     50 => [
-        'name' => '41 mm · Yellow gold, fluted bezel',
-        'short_description' => 'Yellow-gold-tone finish, fluted bezel.',
-        'description' => 'The fluted bezel adds texture to the yellow-gold-tone finish. D-colour VVS moissanite completes the model with a more pronounced iced-out look.',
+        'name' => '41 mm · Two-tone presidential, champagne dial',
+        'short_description' => 'Two-tone finish, champagne dial and iced-out bracelet.',
+        'description' => 'A silver-and-gold two-tone finish around a champagne dial, with a stone-set bezel and iced-out bracelet in D-colour VVS moissanite.',
     ],
     51 => [
         'name' => '41 mm · Rose gold, olive dial',

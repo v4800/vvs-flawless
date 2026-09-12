@@ -1,7 +1,7 @@
 <script setup>
-import { Link, router, usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { animate } from 'animejs';
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps({
     current: {
@@ -35,18 +35,6 @@ const page = usePage();
 const translations = computed(() => page.props.translations);
 const guideLinks = computed(() => page.props.guideLinks);
 const localizedRoutes = computed(() => page.props.localizedRoutes);
-const languageLinks = computed(() => {
-    const alternates = page.props.seo?.alternates ?? [];
-
-    return {
-        fr: alternates.find((alternate) => alternate.hreflang === 'fr-BE')
-            ?.href,
-        nl: alternates.find((alternate) => alternate.hreflang === 'nl-BE')
-            ?.href,
-        en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
-            ?.href,
-    };
-});
 
 const resolvedBackHref = computed(
     () => props.backHref ?? localizedRoutes.value.watches,
@@ -56,123 +44,30 @@ const resolvedBackLabel = computed(
     () => props.backLabel ?? translations.value.vvs_navigation.collection,
 );
 
+const steps = computed(() => [
+    {
+        key: 'collection',
+        label: translations.value.vvs_navigation.collection,
+        href: localizedRoutes.value.watches,
+        local: false,
+    },
+    {
+        key: 'watch',
+        label: translations.value.vvs_navigation.model,
+        href: props.watchHref ? '#model' : null,
+        local: true,
+    },
+    {
+        key: 'reservation',
+        label: translations.value.vvs_navigation.reservation,
+        href: props.watchHref ? '#reservation' : null,
+        local: true,
+    },
+]);
+
 const navigation = ref(null);
-const headerControlCleanups = [];
-
-const visitLanguage = (href) => {
-    if (href) {
-        router.visit(href);
-    }
-};
-
-const setupHeaderControls = () => {
-    const header = document.querySelector('.site-header');
-
-    if (!header) {
-        return;
-    }
-
-    const languageNav = Array.from(header.querySelectorAll('nav')).find(
-        (nav) =>
-            nav.getAttribute('aria-label') ===
-            translations.value.language.label,
-    );
-
-    if (languageNav) {
-        languageNav.style.flexShrink = '0';
-        languageNav.style.whiteSpace = 'nowrap';
-        languageNav.style.overflow = 'visible';
-
-        languageNav.querySelectorAll('a').forEach((link) => {
-            link.style.paddingInline = '0.55rem';
-        });
-
-        const hasEnglish = Array.from(languageNav.querySelectorAll('a')).some(
-            (link) => link.textContent?.trim().toUpperCase() === 'EN',
-        );
-
-        if (!hasEnglish && languageLinks.value.en) {
-            const englishLink = document.createElement('a');
-            englishLink.href = languageLinks.value.en;
-            englishLink.textContent = 'EN';
-            englishLink.className =
-                page.props.locale === 'en_BE'
-                    ? 'rounded-full bg-amber-300 px-2 py-1.5 text-black transition'
-                    : 'rounded-full px-2 py-1.5 text-zinc-500 transition hover:text-white';
-            englishLink.setAttribute('aria-label', 'English');
-
-            const handleEnglishClick = (event) => {
-                event.preventDefault();
-                visitLanguage(languageLinks.value.en);
-            };
-
-            englishLink.addEventListener('click', handleEnglishClick);
-            languageNav.appendChild(englishLink);
-
-            headerControlCleanups.push(() => {
-                englishLink.removeEventListener('click', handleEnglishClick);
-                englishLink.remove();
-            });
-        }
-    }
-
-    const flagLanguageLinks = [
-        {
-            selector: '[title="Belgique"]',
-            href: languageLinks.value.fr,
-            label: 'Français',
-        },
-        {
-            selector: '[title="Nord de la France"]',
-            href: languageLinks.value.fr,
-            label: 'Français',
-        },
-        {
-            selector: '[title="Maastricht et Gulpen"]',
-            href: languageLinks.value.nl,
-            label: 'Nederlands',
-        },
-    ];
-
-    flagLanguageLinks.forEach(({ selector, href, label }) => {
-        const flag = header.querySelector(selector);
-
-        if (!flag || !href) {
-            return;
-        }
-
-        const handleVisit = () => visitLanguage(href);
-        const handleKeydown = (event) => {
-            if (event.key !== 'Enter' && event.key !== ' ') {
-                return;
-            }
-
-            event.preventDefault();
-            handleVisit();
-        };
-
-        flag.setAttribute('role', 'link');
-        flag.setAttribute('tabindex', '0');
-        flag.setAttribute('aria-label', `Afficher le site en ${label}`);
-        flag.classList.add(
-            'cursor-pointer',
-            'transition',
-            'hover:border-amber-300/40',
-            'hover:bg-amber-300/[0.06]',
-        );
-        flag.addEventListener('click', handleVisit);
-        flag.addEventListener('keydown', handleKeydown);
-
-        headerControlCleanups.push(() => {
-            flag.removeEventListener('click', handleVisit);
-            flag.removeEventListener('keydown', handleKeydown);
-        });
-    });
-};
 
 onMounted(() => {
-    setupHeaderControls();
-
     if (!navigation.value) {
         return;
     }
@@ -190,10 +85,6 @@ onMounted(() => {
         ease: 'outQuart',
     });
 });
-
-onBeforeUnmount(() => {
-    headerControlCleanups.splice(0).forEach((cleanup) => cleanup());
-});
 </script>
 
 <template>
@@ -207,9 +98,11 @@ onBeforeUnmount(() => {
             <Link
                 v-if="showBack"
                 :href="resolvedBackHref"
-                class="group flex shrink-0 items-center gap-3"
+                :aria-label="`${translations.vvs_navigation.back}: ${resolvedBackLabel}`"
+                class="group flex shrink-0 items-center gap-3 rounded-xl focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
             >
                 <span
+                    aria-hidden="true"
                     class="flex h-10 w-10 items-center justify-center rounded-full border border-amber-300/30 bg-amber-300/[0.06] text-lg text-amber-200 transition-all duration-300 group-hover:-translate-x-1 group-hover:border-amber-300 group-hover:bg-amber-300 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(252,211,77,0.25)]"
                 >
                     ←
@@ -217,7 +110,7 @@ onBeforeUnmount(() => {
 
                 <div class="hidden sm:block">
                     <p
-                        class="text-[9px] font-bold tracking-[0.25em] text-zinc-600 uppercase"
+                        class="text-[9px] font-bold tracking-[0.25em] text-zinc-400 uppercase"
                     >
                         {{ translations.vvs_navigation.back }}
                     </p>
@@ -232,6 +125,7 @@ onBeforeUnmount(() => {
 
             <div v-else class="flex items-center gap-3">
                 <div
+                    aria-hidden="true"
                     class="h-2 w-2 rounded-full bg-amber-300 shadow-[0_0_14px_rgba(252,211,77,0.8)]"
                 ></div>
 
@@ -249,7 +143,7 @@ onBeforeUnmount(() => {
                 >
                     <Link
                         :href="localizedRoutes.about"
-                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-400 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ translations.navigation.about }}
                     </Link>
@@ -258,7 +152,7 @@ onBeforeUnmount(() => {
 
                     <Link
                         :href="localizedRoutes.diamondGuide"
-                        class="text-[10px] font-semibold tracking-[0.08em] text-zinc-500 uppercase transition hover:text-amber-200"
+                        class="rounded text-[10px] font-semibold tracking-[0.08em] text-zinc-400 uppercase transition hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
                     >
                         {{ guideLinks.eyebrow }}
                     </Link>
@@ -269,29 +163,48 @@ onBeforeUnmount(() => {
                     :aria-label="translations.vvs_navigation.label"
                 >
                     <template v-for="(step, index) in steps" :key="step.key">
-                        <Link
-                            v-if="step.href && step.key !== current"
+                        <a
+                            v-if="step.href && step.local"
                             :href="step.href"
-                            class="hidden text-xs font-medium whitespace-nowrap text-zinc-500 transition hover:text-amber-200 sm:inline"
+                            :aria-current="
+                                step.key === current ? 'location' : undefined
+                            "
+                            :class="[
+                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                step.key === current
+                                    ? 'text-amber-200'
+                                    : 'text-zinc-400 hover:text-amber-200',
+                            ]"
+                        >
+                            {{ step.label }}
+                        </a>
+
+                        <Link
+                            v-else-if="step.href"
+                            :href="step.href"
+                            :aria-current="
+                                step.key === current ? 'page' : undefined
+                            "
+                            :class="[
+                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                step.key === current
+                                    ? 'text-amber-200'
+                                    : 'text-zinc-400 hover:text-amber-200',
+                            ]"
                         >
                             {{ step.label }}
                         </Link>
 
                         <span
                             v-else
-                            :class="[
-                                'text-xs font-semibold whitespace-nowrap',
-
-                                step.key === current
-                                    ? 'text-amber-200'
-                                    : 'hidden text-zinc-500 sm:inline',
-                            ]"
+                            class="hidden text-xs font-semibold whitespace-nowrap text-zinc-500 sm:inline"
                         >
                             {{ step.label }}
                         </span>
 
                         <span
                             v-if="index < steps.length - 1"
+                            aria-hidden="true"
                             class="mx-2 hidden text-zinc-700 sm:inline"
                         >
                             ›
@@ -299,6 +212,7 @@ onBeforeUnmount(() => {
                     </template>
 
                     <div
+                        aria-hidden="true"
                         class="ml-3 hidden h-px w-8 bg-gradient-to-r from-amber-300/70 to-transparent md:block"
                     ></div>
                 </nav>

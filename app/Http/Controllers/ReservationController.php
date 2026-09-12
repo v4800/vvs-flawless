@@ -6,6 +6,7 @@ use App\Mail\CustomerReservationMail;
 use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -247,7 +248,8 @@ class ReservationController extends Controller
     }
 
     public function confirmation(
-        string $reservationNumber
+        string $reservationNumber,
+        WatchCatalog $catalog
     ): SymfonyResponse {
         $reservation =
             Reservation::query()
@@ -265,20 +267,19 @@ class ReservationController extends Controller
             404
         );
 
-        $watchName = $watch->name;
-
-        $translatedWatch = trans('watches.'.$watch->id);
-
-        if (is_array($translatedWatch)
-            && is_string($translatedWatch['name'] ?? null)) {
-            $watchName = $translatedWatch['name'];
-        }
+        $watchName = $catalog->localizedWatch($watch)->name;
 
         $dateFormat = match (app()->getLocale()) {
             'nl_BE' => 'd/m/Y \\o\\m H:i',
             'en_BE' => 'd/m/Y \\a\\t H:i',
             default => 'd/m/Y à H:i',
         };
+
+        $createdAt = $reservation->created_at;
+
+        if ($createdAt === null) {
+            abort(500, 'Reservation creation date missing.');
+        }
 
         $response =
             Inertia::render(
@@ -315,8 +316,7 @@ class ReservationController extends Controller
                         'message' => $reservation
                             ->message,
 
-                        'date' => $reservation
-                            ->created_at
+                        'date' => $createdAt
                             ->copy()
                             ->timezone(
                                 'Europe/Brussels'

@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\Watch;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * @phpstan-type CatalogEntry array{
@@ -28,13 +29,24 @@ final class WatchCatalog
     {
         $translation = trans('watches.'.$watch->id);
 
-        if (! is_array($translation)) {
+        $entry = $this->catalogEntryForWatch($watch);
+        $catalogKey = $entry === null
+            ? null
+            : 'site.collection.catalog_names.'.$entry['slug'];
+        $catalogName = is_string($catalogKey) && Lang::has($catalogKey)
+            ? trans($catalogKey)
+            : null;
+
+        if (! is_array($translation) && ! is_string($catalogName)) {
             return $watch;
         }
 
+        $translation = is_array($translation) ? $translation : [];
         $localizedWatch = clone $watch;
 
-        if (is_string($translation['name'] ?? null)) {
+        if (is_string($catalogName)) {
+            $localizedWatch->name = $catalogName;
+        } elseif (is_string($translation['name'] ?? null)) {
             $localizedWatch->name = $translation['name'];
         }
 
@@ -54,7 +66,13 @@ final class WatchCatalog
 
     public function applyCover(Watch $watch): Watch
     {
-        $gallery = $this->galleryForWatch($watch);
+        $entry = $this->catalogEntryForWatch($watch);
+
+        if ($entry === null) {
+            return $watch;
+        }
+
+        $gallery = $this->catalogGallery($entry);
 
         if ($gallery === []) {
             return $watch;
@@ -62,6 +80,10 @@ final class WatchCatalog
 
         $watch = clone $watch;
         $watch->image = $gallery[0];
+        $watch->setAttribute(
+            'card_image',
+            $this->catalogCardImage($entry, $gallery[0])
+        );
 
         return $watch;
     }
@@ -73,22 +95,11 @@ final class WatchCatalog
      */
     public function galleryForWatch(Watch $watch): array
     {
-        if (! is_string($watch->image) || $watch->image === '') {
-            return [];
-        }
+        $entry = $this->catalogEntryForWatch($watch);
 
-        $image = '/'.ltrim($watch->image, '/');
-
-        foreach ($this->catalogEntries() as $entry) {
-            $directory = '/images/watches/catalog/'.$entry['folder'].'/';
-
-            if (str_starts_with($image, $directory)
-                || in_array($image, $entry['legacy_images'] ?? [], true)) {
-                return $this->catalogGallery($entry);
-            }
-        }
-
-        return [];
+        return $entry === null
+            ? []
+            : $this->catalogGallery($entry);
     }
 
     /**
@@ -122,10 +133,6 @@ final class WatchCatalog
                 }
             }
 
-            $cardImage = '/images/watches/catalog/'
-                .$entry['folder'].'/'
-                .($entry['card_image'] ?? $entry['images'][0]);
-
             $name = trans('site.collection.catalog_names.'.$entry['slug']);
             $name = is_string($name) ? $name : $entry['slug'];
 
@@ -133,9 +140,7 @@ final class WatchCatalog
                 'reference' => sprintf('VVS-C%03d', $entry['id']),
                 'name' => $name,
                 'image' => $gallery[0],
-                'cardImage' => $this->catalogImageExists($cardImage)
-                    ? $cardImage
-                    : $gallery[0],
+                'cardImage' => $this->catalogCardImage($entry, $gallery[0]),
                 'watchUrl' => $watchUrl,
             ];
         }
@@ -174,6 +179,29 @@ final class WatchCatalog
     }
 
     /**
+     * @return CatalogEntry|null
+     */
+    private function catalogEntryForWatch(Watch $watch): ?array
+    {
+        if (! is_string($watch->image) || $watch->image === '') {
+            return null;
+        }
+
+        $image = '/'.ltrim($watch->image, '/');
+
+        foreach ($this->catalogEntries() as $entry) {
+            $directory = '/images/watches/catalog/'.$entry['folder'].'/';
+
+            if (str_starts_with($image, $directory)
+                || in_array($image, $entry['legacy_images'] ?? [], true)) {
+                return $entry;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param  CatalogEntry  $entry
      * @return list<string>
      */
@@ -188,6 +216,20 @@ final class WatchCatalog
             ),
             fn (string $image): bool => $this->catalogImageExists($image)
         ));
+    }
+
+    /**
+     * @param  CatalogEntry  $entry
+     */
+    private function catalogCardImage(array $entry, string $fallback): string
+    {
+        $cardImage = '/images/watches/catalog/'
+            .$entry['folder'].'/'
+            .($entry['card_image'] ?? $entry['images'][0]);
+
+        return $this->catalogImageExists($cardImage)
+            ? $cardImage
+            : $fallback;
     }
 
     private function catalogImageExists(string $image): bool

@@ -48,9 +48,9 @@
     @foreach ($watches as $watch)
         @php
             $watchGroup = [
-                'fr-BE' => route('watches.show', ['watch' => $watch->id]),
-                'nl-BE' => route('nl.watches.show', ['watch' => $watch->id]),
-                'en-BE' => route('en.watches.show', ['watch' => $watch->id]),
+                'fr-BE' => route('watches.show', $watch),
+                'nl-BE' => route('nl.watches.show', $watch),
+                'en-BE' => route('en.watches.show', $watch),
             ];
         @endphp
 

@@ -37,8 +37,12 @@ const translations = page.props.translations;
 const landingCopy = page.props.landingCopy;
 
 const scrollToCollection = () => {
+    const prefersReducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+    ).matches;
+
     document.getElementById('collection')?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
         block: 'start',
     });
 };
@@ -170,7 +174,7 @@ onBeforeUnmount(() => {
 <template>
     <Head :title="seo.title" />
 
-    <div class="min-h-screen bg-black text-white">
+    <div class="vvs-storefront min-h-screen text-white">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
@@ -194,6 +198,7 @@ onBeforeUnmount(() => {
                 class="relative scroll-mt-24 overflow-hidden px-5 py-20 sm:px-6 lg:px-10"
             >
                 <div
+                    aria-hidden="true"
                     class="absolute top-0 left-1/2 -z-10 h-[400px] w-[900px] -translate-x-1/2 rounded-full bg-amber-500/[0.035] blur-[120px]"
                 ></div>
 
@@ -203,6 +208,7 @@ onBeforeUnmount(() => {
                             class="mb-4 flex items-center justify-center gap-3"
                         >
                             <span
+                                aria-hidden="true"
                                 class="h-px w-12 bg-gradient-to-r from-transparent to-amber-400"
                             ></span>
                             <span
@@ -211,6 +217,7 @@ onBeforeUnmount(() => {
                                 {{ translations.collection.eyebrow }}
                             </span>
                             <span
+                                aria-hidden="true"
                                 class="h-px w-12 bg-gradient-to-l from-transparent to-amber-400"
                             ></span>
                         </div>

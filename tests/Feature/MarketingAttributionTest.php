@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Watch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
@@ -13,8 +13,8 @@ class MarketingAttributionTest extends TestCase
 
     private function createWatch(): int
     {
-        return DB::table('watches')
-            ->insertGetId([
+        return Watch::query()
+            ->create([
                 'name' => 'Montre Marketing Test',
                 'price' => 1500.00,
                 'promo_price' => 1000.00,
@@ -26,9 +26,8 @@ class MarketingAttributionTest extends TestCase
                 'swiss_price' => 1950.00,
                 'swiss_promo_price' => 1350.00,
                 'stock_quantity' => 3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            ])
+            ->id;
     }
 
     /**
@@ -99,6 +98,7 @@ class MarketingAttributionTest extends TestCase
     public function test_normal_navigation_does_not_delete_existing_attribution(): void
     {
         $watchId = $this->createWatch();
+        $watch = Watch::query()->findOrFail($watchId);
 
         $response = $this
             ->withSession([
@@ -111,7 +111,7 @@ class MarketingAttributionTest extends TestCase
             ->get(
                 route(
                     'watches.show',
-                    $watchId
+                    $watch
                 )
             );
 

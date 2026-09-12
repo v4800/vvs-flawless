@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Watch;
+use App\Support\LocalizedRoute;
 use App\Support\MarketingAttribution;
 use App\Support\WatchCatalog;
 use App\Support\WatchSeo;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Response;
 
@@ -14,7 +16,8 @@ class WatchController extends Controller
     public function __construct(
         private readonly WatchCatalog $catalog,
         private readonly WatchSeo $seo,
-        private readonly MarketingAttribution $marketingAttribution
+        private readonly MarketingAttribution $marketingAttribution,
+        private readonly LocalizedRoute $localizedRoute
     ) {}
 
     public function index(Request $request): Response
@@ -34,6 +37,20 @@ class WatchController extends Controller
             'catalogModels' => $this->catalog->featuredModels($watches),
             'seo' => $this->seo->collection($watches),
         ]);
+    }
+
+    public function redirectLegacy(
+        Request $request,
+        int $watchId
+    ): RedirectResponse {
+        $watch = Watch::query()->findOrFail($watchId);
+
+        $url = route(
+            $this->localizedRoute->name('watches.show'),
+            ['watch' => $watch] + $request->query()
+        );
+
+        return redirect()->to($url, 301);
     }
 
     public function show(
@@ -58,6 +75,7 @@ class WatchController extends Controller
             ->select([
                 'id',
                 'name',
+                'slug',
                 'image',
                 'stock_quantity',
                 'japanese_price',

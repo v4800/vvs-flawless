@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 import StockBadge from '@/components/StockBadge.vue';
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
 
 const props = defineProps({
     watch: {
@@ -17,7 +18,11 @@ const landingCopy = page.props.landingCopy;
 const localizedRoutes = page.props.localizedRoutes;
 
 const href = computed(() => {
-    return `${localizedRoutes.watches}/${props.watch.id}`;
+    return `${localizedRoutes.watches}/${props.watch.slug}`;
+});
+
+const displayImage = computed(() => {
+    return props.watch.card_image ?? props.watch.image ?? null;
 });
 
 const startingPrice = computed(() => {
@@ -45,6 +50,7 @@ const formattedPrice = computed(() => {
         class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex flex-col overflow-hidden rounded-2xl border"
     >
         <div
+            aria-hidden="true"
             class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
         ></div>
 
@@ -54,22 +60,22 @@ const formattedPrice = computed(() => {
             :aria-label="`${translations.collection.view_watch} — ${watch.name}`"
         >
             <div
+                aria-hidden="true"
                 class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
             ></div>
             <div
+                aria-hidden="true"
                 class="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.04] blur-[70px]"
             ></div>
             <div
+                aria-hidden="true"
                 class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
             ></div>
 
-            <img
-                v-if="watch.image"
-                :src="watch.image"
+            <WatchCardVisual
+                v-if="displayImage"
+                :src="displayImage"
                 :alt="watch.name"
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
             />
             <div
                 v-else
@@ -86,10 +92,12 @@ const formattedPrice = computed(() => {
             </div>
 
             <span
+                aria-hidden="true"
                 class="bling-sparkle absolute top-[21%] right-[13%] text-2xl text-white"
                 >✦</span
             >
             <span
+                aria-hidden="true"
                 class="bling-sparkle absolute bottom-[22%] left-[13%] text-lg text-amber-200"
                 >✦</span
             >
@@ -110,7 +118,7 @@ const formattedPrice = computed(() => {
 
             <Link
                 :href="href"
-                class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-xl border px-4 py-3 text-center"
+                class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-xl border px-4 py-3 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
                 <p
                     class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
@@ -143,10 +151,10 @@ const formattedPrice = computed(() => {
 
                 <Link
                     :href="href"
-                    class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase"
+                    class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
                 >
                     {{ translations.collection.view_watch }}
-                    <span>→</span>
+                    <span aria-hidden="true">→</span>
                 </Link>
             </div>
         </div>

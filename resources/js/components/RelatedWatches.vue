@@ -2,6 +2,8 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
+
 defineProps({
     watches: {
         type: Array,
@@ -62,17 +64,16 @@ const formatPrice = (price) => {
                 <Link
                     v-for="watch in watches"
                     :key="watch.id"
-                    :href="`${localizedRoutes.watches}/${watch.id}`"
+                    :href="`${localizedRoutes.watches}/${watch.slug}`"
                     class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
                 >
-                    <div class="h-[280px] overflow-hidden bg-zinc-400">
-                        <img
+                    <div
+                        class="relative aspect-[4/3] overflow-hidden bg-[#070707]"
+                    >
+                        <WatchCardVisual
                             v-if="watch.image"
-                            :src="watch.image"
+                            :src="watch.card_image ?? watch.image"
                             :alt="watch.name"
-                            loading="lazy"
-                            decoding="async"
-                            class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                         />
 
                         <div

@@ -12,7 +12,7 @@ class DashboardController extends Controller
 {
     public function index(Request $request): Response
     {
-        abort_unless($request->user()?->is_admin, 403);
+        abort_unless((bool) $request->user()?->is_admin, 403);
 
         $reservations = Reservation::with('watch')
             ->latest()
@@ -27,7 +27,7 @@ class DashboardController extends Controller
         Request $request,
         Reservation $reservation
     ): RedirectResponse {
-        abort_unless($request->user()?->is_admin, 403);
+        abort_unless((bool) $request->user()?->is_admin, 403);
 
         $validated = $request->validate([
             'status' => [
