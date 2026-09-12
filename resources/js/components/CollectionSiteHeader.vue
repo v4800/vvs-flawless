@@ -24,6 +24,8 @@ const languageLinks = computed(() => {
             ?.href,
         en: alternates.find((alternate) => alternate.hreflang === 'en-BE')
             ?.href,
+        de: alternates.find((alternate) => alternate.hreflang === 'de-BE')
+            ?.href,
     };
 });
 </script>
@@ -75,132 +77,75 @@ const languageLinks = computed(() => {
                 </a>
             </nav>
 
-            <div class="flex items-center gap-3">
-                <nav
-                    class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
-                    :aria-label="translations.language.label"
+            <nav
+                class="flex shrink-0 items-center rounded-full border border-white/10 p-1 text-[10px] font-bold tracking-wider"
+                :aria-label="translations.language.label"
+            >
+                <Link
+                    v-if="languageLinks.fr"
+                    :href="languageLinks.fr"
+                    hreflang="fr-BE"
+                    :aria-current="
+                        page.props.locale === 'fr_BE' ? 'page' : undefined
+                    "
+                    :class="[
+                        'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        page.props.locale === 'fr_BE'
+                            ? 'bg-amber-300 text-black'
+                            : 'text-zinc-400 hover:text-white',
+                    ]"
                 >
-                    <Link
-                        v-if="languageLinks.fr"
-                        :href="languageLinks.fr"
-                        hreflang="fr-BE"
-                        :aria-current="
-                            page.props.locale === 'fr_BE' ? 'page' : undefined
-                        "
-                        :class="[
-                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
-                            page.props.locale === 'fr_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-400 hover:text-white',
-                        ]"
-                    >
-                        FR
-                    </Link>
-                    <Link
-                        v-if="languageLinks.nl"
-                        :href="languageLinks.nl"
-                        hreflang="nl-BE"
-                        :aria-current="
-                            page.props.locale === 'nl_BE' ? 'page' : undefined
-                        "
-                        :class="[
-                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
-                            page.props.locale === 'nl_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-400 hover:text-white',
-                        ]"
-                    >
-                        NL
-                    </Link>
-                    <Link
-                        v-if="languageLinks.en"
-                        :href="languageLinks.en"
-                        hreflang="en-BE"
-                        :aria-current="
-                            page.props.locale === 'en_BE' ? 'page' : undefined
-                        "
-                        :class="[
-                            'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
-                            page.props.locale === 'en_BE'
-                                ? 'bg-amber-300 text-black'
-                                : 'text-zinc-400 hover:text-white',
-                        ]"
-                    >
-                        EN
-                    </Link>
-                </nav>
-
-                <nav
-                    class="hidden items-center gap-2 lg:flex"
-                    :aria-label="landingCopy.handover_aria"
+                    FR
+                </Link>
+                <Link
+                    v-if="languageLinks.nl"
+                    :href="languageLinks.nl"
+                    hreflang="nl-BE"
+                    :aria-current="
+                        page.props.locale === 'nl_BE' ? 'page' : undefined
+                    "
+                    :class="[
+                        'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        page.props.locale === 'nl_BE'
+                            ? 'bg-amber-300 text-black'
+                            : 'text-zinc-400 hover:text-white',
+                    ]"
                 >
-                    <Link
-                        v-if="languageLinks.fr"
-                        :href="languageLinks.fr"
-                        :aria-label="landingCopy.handover_be_title"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
-                        :title="landingCopy.handover_be_title"
-                    >
-                        <div
-                            aria-hidden="true"
-                            class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
-                        >
-                            <span class="flex-1 bg-black"></span>
-                            <span class="flex-1 bg-yellow-400"></span>
-                            <span class="flex-1 bg-red-600"></span>
-                        </div>
-                        <span
-                            aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-400"
-                            >BE</span
-                        >
-                    </Link>
-
-                    <Link
-                        v-if="languageLinks.fr"
-                        :href="languageLinks.fr"
-                        :aria-label="landingCopy.handover_fr_title"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
-                        :title="landingCopy.handover_fr_title"
-                    >
-                        <div
-                            aria-hidden="true"
-                            class="flex h-4 w-6 overflow-hidden rounded-[2px] border border-white/10"
-                        >
-                            <span class="flex-1 bg-blue-700"></span>
-                            <span class="flex-1 bg-white"></span>
-                            <span class="flex-1 bg-red-600"></span>
-                        </div>
-                        <span
-                            aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-400"
-                            >FR</span
-                        >
-                    </Link>
-
-                    <Link
-                        v-if="languageLinks.nl"
-                        :href="languageLinks.nl"
-                        :aria-label="landingCopy.handover_nl_title"
-                        class="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.025] px-2 py-1 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
-                        :title="landingCopy.handover_nl_title"
-                    >
-                        <div
-                            aria-hidden="true"
-                            class="flex h-4 w-6 flex-col overflow-hidden rounded-[2px] border border-white/10"
-                        >
-                            <span class="flex-1 bg-red-600"></span>
-                            <span class="flex-1 bg-white"></span>
-                            <span class="flex-1 bg-blue-700"></span>
-                        </div>
-                        <span
-                            aria-hidden="true"
-                            class="text-[8px] font-bold tracking-wider text-zinc-400"
-                            >NL</span
-                        >
-                    </Link>
-                </nav>
-            </div>
+                    NL
+                </Link>
+                <Link
+                    v-if="languageLinks.en"
+                    :href="languageLinks.en"
+                    hreflang="en-BE"
+                    :aria-current="
+                        page.props.locale === 'en_BE' ? 'page' : undefined
+                    "
+                    :class="[
+                        'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        page.props.locale === 'en_BE'
+                            ? 'bg-amber-300 text-black'
+                            : 'text-zinc-400 hover:text-white',
+                    ]"
+                >
+                    EN
+                </Link>
+                <Link
+                    v-if="languageLinks.de"
+                    :href="languageLinks.de"
+                    hreflang="de-BE"
+                    :aria-current="
+                        page.props.locale === 'de_BE' ? 'page' : undefined
+                    "
+                    :class="[
+                        'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        page.props.locale === 'de_BE'
+                            ? 'bg-amber-300 text-black'
+                            : 'text-zinc-400 hover:text-white',
+                    ]"
+                >
+                    DE
+                </Link>
+            </nav>
         </div>
     </header>
 </template>
