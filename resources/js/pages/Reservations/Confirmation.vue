@@ -18,16 +18,7 @@ const props = defineProps({
 const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
-const locale = computed(() => {
-    return (
-        {
-            fr_BE: 'fr-BE',
-            nl_BE: 'nl-BE',
-            en_BE: 'en-BE',
-            de_BE: 'de-BE',
-        }[page.props.locale] ?? 'fr-BE'
-    );
-});
+const locale = computed(() => page.props.locale.replace('_', '-'));
 
 const localizedMovement = computed(() =>
     props.reservation.movement === 'Suisse'
@@ -60,11 +51,13 @@ const formatPrice = (price) => {
     <main
         class="vvs-storefront relative min-h-screen overflow-hidden px-5 py-12 text-white sm:px-6"
     >
+        <!-- HALO -->
         <div
             class="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-amber-400/[0.06] blur-[140px]"
         ></div>
 
         <div class="relative z-10 mx-auto max-w-4xl">
+            <!-- CONFIRMATION -->
             <div class="mb-8 text-center">
                 <div
                     class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/[0.08] text-2xl font-black text-amber-200"
@@ -89,9 +82,11 @@ const formatPrice = (price) => {
                 </p>
             </div>
 
+            <!-- BON -->
             <section
                 class="overflow-hidden rounded-3xl border border-amber-300/20 bg-zinc-950 shadow-[0_30px_100px_rgba(0,0,0,0.6)]"
             >
+                <!-- EN-TÊTE -->
                 <div
                     class="flex flex-col gap-6 border-b border-white/10 bg-black px-7 py-7 sm:flex-row sm:items-center sm:justify-between"
                 >
@@ -124,6 +119,7 @@ const formatPrice = (price) => {
                     </div>
                 </div>
 
+                <!-- MONTRE -->
                 <div
                     class="grid border-b border-white/10 md:grid-cols-[280px_1fr]"
                 >
@@ -161,7 +157,9 @@ const formatPrice = (price) => {
 
                             <div>
                                 <p class="text-xs text-zinc-600">
-                                    {{ translations.confirmation.reserved_price }}
+                                    {{
+                                        translations.confirmation.reserved_price
+                                    }}
                                 </p>
 
                                 <p
@@ -174,6 +172,7 @@ const formatPrice = (price) => {
                     </div>
                 </div>
 
+                <!-- CLIENT -->
                 <div class="p-7 sm:p-8">
                     <h3
                         class="text-xs font-black tracking-[0.25em] text-zinc-500 uppercase"
@@ -228,6 +227,7 @@ const formatPrice = (price) => {
 
                     <div class="my-7 border-t border-white/10"></div>
 
+                    <!-- LIVRAISON -->
                     <div class="grid gap-6 sm:grid-cols-2">
                         <div>
                             <p class="text-xs text-zinc-600">
@@ -252,6 +252,7 @@ const formatPrice = (price) => {
                         </div>
                     </div>
 
+                    <!-- MESSAGE -->
                     <div
                         v-if="reservation.message"
                         class="mt-7 rounded-2xl border border-white/10 bg-black/40 p-5"
@@ -267,6 +268,7 @@ const formatPrice = (price) => {
                         </p>
                     </div>
 
+                    <!-- SUITE -->
                     <div
                         class="mt-7 rounded-2xl border border-amber-300/20 bg-amber-300/[0.04] p-5"
                     >
@@ -283,6 +285,7 @@ const formatPrice = (price) => {
                         </p>
                     </div>
 
+                    <!-- BOUTONS -->
                     <div class="mt-8 grid gap-3 sm:grid-cols-2">
                         <Link
                             :href="localizedRoutes.watches"
