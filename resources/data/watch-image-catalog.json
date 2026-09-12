@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "next_watch_id": 14,
+    "next_watch_id": 15,
     "naming_rule": "NNN-model-slug/NN-view.ext",
     "watches": [
         {
@@ -178,6 +178,23 @@
             ],
             "featured": false,
             "card_image": "01-front-card.webp"
+        },
+        {
+            "id": 14,
+            "slug": "presidentielle-bicolore-romains",
+            "folder": "014-presidentielle-bicolore-romains",
+            "images": [
+                "01-front.webp",
+                "02-front-vertical.webp",
+                "03-side.webp",
+                "04-bracelet.webp"
+            ],
+            "featured": false,
+            "card_image": "01-front-card.webp",
+            "legacy_images": [
+                "/images/watches/presidentielle-or-jaune.webp",
+                "/images/watches/presidentielle-or-jaune.png"
+            ]
         }
     ]
 }
