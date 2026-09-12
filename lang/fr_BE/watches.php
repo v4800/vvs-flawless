@@ -37,9 +37,9 @@ return [
         'description' => 'Une finition bicolore associée à un cadran solaire lumineux. La moissanite VVS couleur D ajoute l’éclat bustdown tout en gardant une allure soignée.',
     ],
     49 => [
-        'name' => '41 mm · Présidentielle bicolore, chiffres romains',
-        'short_description' => 'Bicolore argent et or jaune, cadran pavé à chiffres romains.',
-        'description' => 'Une finition bicolore argent et or jaune avec cadran pavé à chiffres romains, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.',
+        'name' => '41 mm · Présidentielle or rose',
+        'short_description' => 'Finition or rose, cadran pavé et bracelet iced-out.',
+        'description' => 'Une finition or rose avec cadran pavé, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.',
     ],
     50 => [
         'name' => '41 mm · Or jaune, lunette cannelée',
