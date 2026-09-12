@@ -33,29 +33,36 @@ class SeoTest extends TestCase
             route('watches.index'),
             route('nl.watches.index'),
             route('en.watches.index'),
+            route('de.watches.index'),
             route('watches.show', $watch),
             route('nl.watches.show', $watch),
             route('en.watches.show', $watch),
+            route('de.watches.show', $watch),
             route('about'),
             route('nl.about'),
             route('en.about'),
+            route('de.about'),
             route('guides.diamond-vs-moissanite'),
             route('nl.guides.diamond-vs-moissanite'),
             route('en.guides.diamond-vs-moissanite'),
+            route('de.guides.diamond-vs-moissanite'),
             route('guides.vvs-watch'),
             route('nl.guides.vvs-watch'),
             route('en.guides.vvs-watch'),
+            route('de.guides.vvs-watch'),
             route('guides.men-women'),
             route('nl.guides.men-women'),
             route('en.guides.men-women'),
+            route('de.guides.men-women'),
             route('guides.belgium'),
             route('nl.guides.belgium'),
             route('en.guides.belgium'),
+            route('de.guides.belgium'),
         ] as $url) {
             $response->assertSee($url, false);
         }
 
-        foreach (['fr-BE', 'nl-BE', 'en-BE', 'x-default'] as $hreflang) {
+        foreach (['fr-BE', 'nl-BE', 'en-BE', 'de-BE', 'x-default'] as $hreflang) {
             $response->assertSee(
                 'hreflang="'.$hreflang.'"',
                 false
@@ -152,6 +159,7 @@ class SeoTest extends TestCase
         $response->assertSee('Disallow: /reservation-confirmed/');
         $response->assertSee('Disallow: /nl/reservation-confirmed/');
         $response->assertSee('Disallow: /en/reservation-confirmed/');
+        $response->assertSee('Disallow: /de/reservierung-bestaetigt/');
     }
 
     public function test_public_collection_uses_requested_locale_canonical_and_all_alternates(): void
@@ -160,6 +168,7 @@ class SeoTest extends TestCase
             'watches.index' => ['locale' => 'fr_BE', 'canonical' => route('watches.index')],
             'nl.watches.index' => ['locale' => 'nl_BE', 'canonical' => route('nl.watches.index')],
             'en.watches.index' => ['locale' => 'en_BE', 'canonical' => route('en.watches.index')],
+            'de.watches.index' => ['locale' => 'de_BE', 'canonical' => route('de.watches.index')],
         ] as $routeName => $expected) {
             $this->get(route($routeName))
                 ->assertOk()
@@ -171,7 +180,8 @@ class SeoTest extends TestCase
                         ->where('seo.alternates.0.hreflang', 'fr-BE')
                         ->where('seo.alternates.1.hreflang', 'nl-BE')
                         ->where('seo.alternates.2.hreflang', 'en-BE')
-                        ->where('seo.alternates.3.hreflang', 'x-default')
+                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.4.hreflang', 'x-default')
                         ->where(
                             'seo.structuredData.@graph.0.@type',
                             'WebSite'
@@ -191,6 +201,7 @@ class SeoTest extends TestCase
             'guides.diamond-vs-moissanite' => 'fr_BE',
             'nl.guides.diamond-vs-moissanite' => 'nl_BE',
             'en.guides.diamond-vs-moissanite' => 'en_BE',
+            'de.guides.diamond-vs-moissanite' => 'de_BE',
         ] as $routeName => $locale) {
             $this->get(route($routeName))
                 ->assertOk()
@@ -202,6 +213,8 @@ class SeoTest extends TestCase
                         ->where('seo.alternates.0.hreflang', 'fr-BE')
                         ->where('seo.alternates.1.hreflang', 'nl-BE')
                         ->where('seo.alternates.2.hreflang', 'en-BE')
+                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.4.hreflang', 'x-default')
                         ->where(
                             'seo.structuredData.@graph.0.@type',
                             'Article'
@@ -313,7 +326,7 @@ class SeoTest extends TestCase
             );
     }
 
-    public function test_public_watch_copy_is_localized_in_all_three_languages(): void
+    public function test_public_watch_copy_is_localized_in_all_four_languages(): void
     {
         $watch = new Watch([
             'name' => 'Nom brut en base',
@@ -329,6 +342,7 @@ class SeoTest extends TestCase
             'watches.show' => 'fr_BE',
             'nl.watches.show' => 'nl_BE',
             'en.watches.show' => 'en_BE',
+            'de.watches.show' => 'de_BE',
         ] as $routeName => $locale) {
             $this->get(route($routeName, $watch))
                 ->assertOk()
@@ -347,6 +361,8 @@ class SeoTest extends TestCase
                             )
                         )
                         ->where('seo.alternates.2.hreflang', 'en-BE')
+                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.4.hreflang', 'x-default')
                         ->etc()
                 );
         }
