@@ -4,31 +4,37 @@
             'fr-BE' => route('watches.index'),
             'nl-BE' => route('nl.watches.index'),
             'en-BE' => route('en.watches.index'),
+            'de-BE' => route('de.watches.index'),
         ],
         [
             'fr-BE' => route('about'),
             'nl-BE' => route('nl.about'),
             'en-BE' => route('en.about'),
+            'de-BE' => route('de.about'),
         ],
         [
             'fr-BE' => route('guides.diamond-vs-moissanite'),
             'nl-BE' => route('nl.guides.diamond-vs-moissanite'),
             'en-BE' => route('en.guides.diamond-vs-moissanite'),
+            'de-BE' => route('de.guides.diamond-vs-moissanite'),
         ],
         [
             'fr-BE' => route('guides.vvs-watch'),
             'nl-BE' => route('nl.guides.vvs-watch'),
             'en-BE' => route('en.guides.vvs-watch'),
+            'de-BE' => route('de.guides.vvs-watch'),
         ],
         [
             'fr-BE' => route('guides.men-women'),
             'nl-BE' => route('nl.guides.men-women'),
             'en-BE' => route('en.guides.men-women'),
+            'de-BE' => route('de.guides.men-women'),
         ],
         [
             'fr-BE' => route('guides.belgium'),
             'nl-BE' => route('nl.guides.belgium'),
             'en-BE' => route('en.guides.belgium'),
+            'de-BE' => route('de.guides.belgium'),
         ],
     ];
 @endphp
@@ -51,6 +57,7 @@
                 'fr-BE' => route('watches.show', $watch),
                 'nl-BE' => route('nl.watches.show', $watch),
                 'en-BE' => route('en.watches.show', $watch),
+                'de-BE' => route('de.watches.show', $watch),
             ];
         @endphp
 
