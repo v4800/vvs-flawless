@@ -116,7 +116,7 @@ class AddSquareBicolorWatchSeeder extends Seeder
         $japanesePrice = $pricingSource->japanese_price ?? $pricingSource->price;
         $swissPrice = $pricingSource->swiss_price;
 
-        if ($japanesePrice === null || $swissPrice === null) {
+        if ($swissPrice === null) {
             throw new \RuntimeException(
                 'Watch ID 43 does not have both Japanese and Swiss prices.'
             );
