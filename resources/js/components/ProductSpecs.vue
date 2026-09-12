@@ -23,7 +23,8 @@ const copy = computed(() => {
                 title: 'Caractéristiques vérifiées',
                 diameter: 'Diamètre',
                 movements: 'Mouvements disponibles',
-                note: 'Nous affichons uniquement les caractéristiques connues pour ce modèle.',
+                note:
+                    'Nous affichons uniquement les caractéristiques connues pour ce modèle.',
             },
             nl_BE: {
                 eyebrow: 'Modeldetails',
@@ -44,14 +45,16 @@ const copy = computed(() => {
                 title: 'Geprüfte Merkmale',
                 diameter: 'Gehäusedurchmesser',
                 movements: 'Verfügbare Uhrwerke',
-                note: 'Es werden nur bekannte Merkmale dieses Modells angezeigt.',
+                note:
+                    'Es werden nur bekannte Merkmale dieses Modells angezeigt.',
             },
         }[page.props.locale] ?? {
             eyebrow: 'Détails du modèle',
             title: 'Caractéristiques vérifiées',
             diameter: 'Diamètre',
             movements: 'Mouvements disponibles',
-            note: 'Nous affichons uniquement les caractéristiques connues pour ce modèle.',
+            note:
+                'Nous affichons uniquement les caractéristiques connues pour ce modèle.',
         }
     );
 });
@@ -95,7 +98,9 @@ const specs = computed(() => {
 </script>
 
 <template>
-    <section class="border-y border-white/10 bg-zinc-950/60 px-5 py-10 sm:px-6 lg:px-10">
+    <section
+        class="border-y border-white/10 bg-zinc-950/60 px-5 py-10 sm:px-6 lg:px-10"
+    >
         <div class="mx-auto max-w-[1400px]">
             <header class="mb-7 max-w-3xl">
                 <p class="vvs-eyebrow">{{ copy.eyebrow }}</p>
