@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 import StockBadge from '@/components/StockBadge.vue';
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
 
 const props = defineProps({
     watch: {
@@ -71,13 +72,10 @@ const formattedPrice = computed(() => {
                 class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
             ></div>
 
-            <img
+            <WatchCardVisual
                 v-if="displayImage"
                 :src="displayImage"
                 :alt="watch.name"
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
             />
             <div
                 v-else
