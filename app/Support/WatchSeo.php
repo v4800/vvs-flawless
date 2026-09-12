@@ -148,6 +148,7 @@ final class WatchSeo
                         ],
                         'material' => trans('site.product.footer_material'),
                         'image' => $structuredImages,
+                        'additionalProperty' => $this->productProperties($watch),
                         'offers' => $this->offersForWatch($watch),
                     ],
                     [
@@ -174,6 +175,49 @@ final class WatchSeo
                 ],
             ],
         ];
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
+    private function productProperties(Watch $watch): array
+    {
+        $properties = [
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.stone'),
+                'value' => 'Moissanite VVS',
+            ],
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.color'),
+                'value' => 'D',
+            ],
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.movement'),
+                'value' => trans('site.movements.japonais')
+                    .' / '
+                    .trans('site.movements.suisse'),
+            ],
+        ];
+
+        if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
+            $sizeLabel = match (app()->getLocale()) {
+                'nl_BE' => 'Diameter',
+                'en_BE' => 'Case diameter',
+                'de_BE' => 'Gehäusedurchmesser',
+                default => 'Diamètre',
+            };
+
+            $properties[] = [
+                '@type' => 'PropertyValue',
+                'name' => $sizeLabel,
+                'value' => $matches[1].' mm',
+            ];
+        }
+
+        return $properties;
     }
 
     /**
