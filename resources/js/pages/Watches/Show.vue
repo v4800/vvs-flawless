@@ -5,6 +5,7 @@ import MobileReservationBar from '@/components/MobileReservationBar.vue';
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
 import ProductReservationSection from '@/components/ProductReservationSection.vue';
+import ProductSpecs from '@/components/ProductSpecs.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
 import RelatedWatches from '@/components/RelatedWatches.vue';
 import VvsNavigation from '@/components/VvsNavigation.vue';
@@ -196,49 +197,7 @@ const submit = () => {
                 </div>
             </section>
 
-            <section
-                class="border-y border-white/10 bg-zinc-950/60 px-5 py-6 sm:px-6 lg:px-10"
-            >
-                <div
-                    class="mx-auto grid max-w-[1400px] gap-6 text-center sm:grid-cols-3"
-                >
-                    <div>
-                        <p
-                            class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
-                        >
-                            Moissanite VVS
-                        </p>
-
-                        <p class="mt-2 text-xs text-zinc-400">
-                            {{ translations.product.sparkle_text }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p
-                            class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
-                        >
-                            {{ translations.product.color }} D
-                        </p>
-
-                        <p class="mt-2 text-xs text-zinc-400">
-                            {{ translations.product.color_render }}
-                        </p>
-                    </div>
-
-                    <div>
-                        <p
-                            class="text-xs font-black tracking-[0.18em] text-amber-200 uppercase"
-                        >
-                            {{ translations.product.reception_choice }}
-                        </p>
-
-                        <p class="mt-2 text-xs text-zinc-400">
-                            {{ translations.product.handover_or_delivery }}
-                        </p>
-                    </div>
-                </div>
-            </section>
+            <ProductSpecs :watch="watch" :translations="translations" />
 
             <PurchaseGuide />
 
