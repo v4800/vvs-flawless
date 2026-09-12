@@ -13,10 +13,7 @@ class ReplacePresidentielleOrJauneWatchSeeder extends Seeder
         $directory = '/images/watches/catalog/'.$folder.'/';
         $requiredImages = [
             '01-front.webp',
-            '01-front-card.webp',
             '02-front-vertical.webp',
-            '03-side.webp',
-            '04-bracelet.webp',
         ];
 
         foreach ($requiredImages as $image) {
@@ -24,7 +21,7 @@ class ReplacePresidentielleOrJauneWatchSeeder extends Seeder
 
             if (! is_file($path)) {
                 throw new \RuntimeException(
-                    'Missing image: '.$path.'. Extract the replacement assets before running this seeder.'
+                    'Missing image: '.$path.'. Pull the latest replacement assets before running this seeder.'
                 );
             }
         }
@@ -46,11 +43,9 @@ class ReplacePresidentielleOrJauneWatchSeeder extends Seeder
             'images' => [
                 '01-front.webp',
                 '02-front-vertical.webp',
-                '03-side.webp',
-                '04-bracelet.webp',
             ],
             'featured' => false,
-            'card_image' => '01-front-card.webp',
+            'card_image' => '01-front.webp',
             'legacy_images' => [
                 '/images/watches/presidentielle-or-jaune.webp',
                 '/images/watches/presidentielle-or-jaune.png',
@@ -95,11 +90,11 @@ class ReplacePresidentielleOrJauneWatchSeeder extends Seeder
                 ->first();
 
         if ($watch === null) {
-            throw new \RuntimeException('The presidential yellow-gold watch to replace was not found.');
+            throw new \RuntimeException('The presidential watch to replace was not found.');
         }
 
-        $watch->name = '41 mm · Présidentielle bicolore, chiffres romains';
-        $watch->description = 'Modèle bicolore argent et or jaune avec cadran pavé à chiffres romains, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.';
+        $watch->name = '41 mm · Présidentielle or rose';
+        $watch->description = 'Finition or rose, cadran pavé, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.';
         $watch->image = $directory.'01-front.webp';
         $watch->save();
     }
