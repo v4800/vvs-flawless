@@ -1,11 +1,23 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const emit = defineEmits(['scroll-to-collection']);
 
 const page = usePage();
 const translations = page.props.translations;
 const hero = page.props.landingCopy.hero;
+
+const premiumTagline = computed(() => {
+    return (
+        {
+            fr_BE: 'L’éclat VVS, pensé en Belgique',
+            nl_BE: 'VVS-glans, ontworpen in België',
+            en_BE: 'VVS brilliance, designed in Belgium',
+            de_BE: 'VVS-Brillanz, entwickelt in Belgien',
+        }[page.props.locale] ?? 'L’éclat VVS, pensé en Belgique'
+    );
+});
 </script>
 
 <template>
@@ -99,7 +111,7 @@ const hero = page.props.landingCopy.hero;
                     <p
                         class="vvs-display-title text-3xl leading-tight text-amber-200 sm:text-4xl"
                     >
-                        {{ translations.hero.tagline }}
+                        {{ premiumTagline }}
                     </p>
                 </div>
 
