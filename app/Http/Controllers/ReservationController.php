@@ -181,6 +181,7 @@ class ReservationController extends Controller
         $confirmationRoute = match (app()->getLocale()) {
             'nl_BE' => 'nl.reservations.confirmation',
             'en_BE' => 'en.reservations.confirmation',
+            'de_BE' => 'de.reservations.confirmation',
             default => 'reservations.confirmation',
         };
 
@@ -272,6 +273,7 @@ class ReservationController extends Controller
         $dateFormat = match (app()->getLocale()) {
             'nl_BE' => 'd/m/Y \\o\\m H:i',
             'en_BE' => 'd/m/Y \\a\\t H:i',
+            'de_BE' => 'd.m.Y \\u\\m H:i',
             default => 'd/m/Y à H:i',
         };
 
@@ -349,6 +351,11 @@ class ReservationController extends Controller
         $response->headers->set(
             'Expires',
             '0'
+        );
+
+        $response->headers->set(
+            'X-Robots-Tag',
+            'noindex, nofollow, noarchive'
         );
 
         return $response;
