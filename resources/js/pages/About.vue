@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
 import PickupSection from '@/components/PickupSection.vue';
+import SeoContentHub from '@/components/SeoContentHub.vue';
 import VvsNavigation from '@/components/VvsNavigation.vue';
 
 defineProps({
@@ -41,6 +42,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
             </header>
 
             <AboutSection />
+            <SeoContentHub />
             <PickupSection />
             <ContactSection :collection-href="localizedRoutes.watches" />
         </main>
