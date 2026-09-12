@@ -10,7 +10,7 @@ const content = computed(() => page.props.translations.legal.privacy);
 <template>
     <Head :title="content.seo_title" />
 
-    <div class="min-h-screen bg-black px-5 py-16 text-white sm:px-6">
+    <div class="vvs-storefront min-h-screen px-5 py-16 text-white sm:px-6">
         <main class="mx-auto max-w-3xl">
             <Link
                 :href="localizedRoutes.watches"

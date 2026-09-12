@@ -144,7 +144,7 @@ const submit = () => {
 <template>
     <Head :title="seo.title" />
 
-    <div class="min-h-screen bg-black pb-24 text-white lg:pb-0">
+    <div class="vvs-storefront min-h-screen pb-24 text-white lg:pb-0">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"

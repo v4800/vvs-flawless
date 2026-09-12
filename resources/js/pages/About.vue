@@ -22,7 +22,7 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
 <template>
     <Head :title="seo.title" />
 
-    <div class="min-h-screen bg-black text-white">
+    <div class="vvs-storefront min-h-screen text-white">
         <VvsNavigation :back-label="translations.vvs_navigation.collection" />
 
         <main id="main-content">
