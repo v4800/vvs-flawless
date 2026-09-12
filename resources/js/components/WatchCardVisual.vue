@@ -24,7 +24,9 @@ defineProps({
 </script>
 
 <template>
-    <div class="absolute inset-0 overflow-hidden bg-[#070707]">
+    <div
+        class="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_50%_42%,rgba(251,191,36,0.08),#080706_54%,#050505_100%)]"
+    >
         <img
             :src="src"
             :srcset="srcset"
@@ -32,7 +34,7 @@ defineProps({
             :alt="alt"
             :loading="loading"
             decoding="async"
-            class="h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.015]"
+            class="h-full w-full object-contain object-center p-2 transition-transform duration-500 motion-safe:group-hover:scale-[1.012] sm:p-3"
         />
 
         <div
