@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
         $routePrefix = match (app()->getLocale()) {
             'nl_BE' => 'nl.',
             'en_BE' => 'en.',
+            'de_BE' => 'de.',
             default => '',
         };
 
