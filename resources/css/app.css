@@ -182,6 +182,26 @@
 }
 
 @layer components {
+    /* Shared, static stone texture for public pages. Keep the centre quiet
+       so the background never competes with product details or forms. */
+    .vvs-storefront {
+        background-color: #080a09;
+        background-image:
+            linear-gradient(
+                90deg,
+                rgb(5 7 6 / 0.08),
+                rgb(5 7 6 / 0.64) 28%,
+                rgb(5 7 6 / 0.64) 72%,
+                rgb(5 7 6 / 0.08)
+            ),
+            url('../images/black-gold-marble.svg');
+        background-position: center top;
+        background-size:
+            100% 100%,
+            100% auto;
+        background-repeat: no-repeat, repeat-y;
+    }
+
     .vvs-display-title {
         font-family: var(--font-display);
         font-weight: 600;
@@ -433,21 +453,6 @@
             opacity: 1;
             transform: scaleX(1);
         }
-    }
-
-    .guide-page {
-        background:
-            radial-gradient(
-                circle at 72% 7%,
-                rgb(251 191 36 / 0.075),
-                transparent 24rem
-            ),
-            radial-gradient(
-                circle at 12% 38%,
-                rgb(120 53 15 / 0.08),
-                transparent 28rem
-            ),
-            #030303;
     }
 
     .guide-hero::before {

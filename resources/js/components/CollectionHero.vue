@@ -12,7 +12,6 @@ const hero = page.props.landingCopy.hero;
     <section
         class="relative isolate overflow-hidden border-b border-amber-400/20"
     >
-        <div class="absolute inset-0 -z-30 bg-black"></div>
         <div
             class="hero-orb absolute top-10 -left-40 -z-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]"
         ></div>
