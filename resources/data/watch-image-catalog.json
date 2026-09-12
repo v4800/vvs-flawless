@@ -1,6 +1,6 @@
 {
     "version":  2,
-    "next_watch_id":  16,
+    "next_watch_id":  17,
     "naming_rule":  "NNN-model-slug/NN-view.ext",
     "watches":  [
                     {
@@ -209,6 +209,21 @@
                         "legacy_images":  [
                                               "/images/watches/geometrique-bicolore.webp",
                                               "/images/watches/geometrique-bicolore.png"
+                                          ]
+                    },
+                    {
+                        "id":  16,
+                        "slug":  "presidentielle-bicolore-champagne",
+                        "folder":  "016-presidentielle-bicolore-champagne",
+                        "images":  [
+                                       "01-front.webp",
+                                       "02-angle.webp"
+                                   ],
+                        "featured":  false,
+                        "card_image":  "01-front.webp",
+                        "legacy_images":  [
+                                              "/images/watches/presidentielle-or-jaune-cannelee.webp",
+                                              "/images/watches/presidentielle-or-jaune-cannelee.png"
                                           ]
                     }
                 ]
