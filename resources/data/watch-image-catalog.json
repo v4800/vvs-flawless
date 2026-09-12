@@ -185,12 +185,10 @@
             "folder": "014-presidentielle-bicolore-romains",
             "images": [
                 "01-front.webp",
-                "02-front-vertical.webp",
-                "03-side.webp",
-                "04-bracelet.webp"
+                "02-front-vertical.webp"
             ],
             "featured": false,
-            "card_image": "01-front-card.webp",
+            "card_image": "01-front.webp",
             "legacy_images": [
                 "/images/watches/presidentielle-or-jaune.webp",
                 "/images/watches/presidentielle-or-jaune.png"
