@@ -105,7 +105,7 @@ const imageAlt = (model) => {
             <h3
                 class="vvs-display-title text-center text-2xl leading-tight text-white"
             >
-                41 mm · {{ model.name }}
+                {{ model.name }}
             </h3>
 
             <p

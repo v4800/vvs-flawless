@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\Watch;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * @phpstan-type CatalogEntry array{
@@ -28,13 +29,24 @@ final class WatchCatalog
     {
         $translation = trans('watches.'.$watch->id);
 
-        if (! is_array($translation)) {
+        $entry = $this->catalogEntryForWatch($watch);
+        $catalogKey = $entry === null
+            ? null
+            : 'site.collection.catalog_names.'.$entry['slug'];
+        $catalogName = is_string($catalogKey) && Lang::has($catalogKey)
+            ? trans($catalogKey)
+            : null;
+
+        if (! is_array($translation) && ! is_string($catalogName)) {
             return $watch;
         }
 
+        $translation = is_array($translation) ? $translation : [];
         $localizedWatch = clone $watch;
 
-        if (is_string($translation['name'] ?? null)) {
+        if (is_string($catalogName)) {
+            $localizedWatch->name = $catalogName;
+        } elseif (is_string($translation['name'] ?? null)) {
             $localizedWatch->name = $translation['name'];
         }
 

@@ -26,10 +26,10 @@ class FeaturedCatalogWatchesSeeder extends Seeder
 
         $models = [
             2 => [
-                'name' => '41 mm · Bicolore, bracelet intégré',
+                'name' => '41 mm · Bicolore, cadran champagne',
                 'japanese_price' => 650,
                 'swiss_price' => 1000,
-                'description' => 'Une montre 41 mm à finition bicolore et bracelet intégré, sertie de moissanite VVS couleur D.',
+                'description' => 'Une montre 41 mm à finition bicolore, cadran champagne et bracelet intégré, sertie de moissanite VVS couleur D.',
             ],
             4 => [
                 'name' => '41 mm · Carrée noire, chiffres romains',
@@ -38,10 +38,10 @@ class FeaturedCatalogWatchesSeeder extends Seeder
                 'description' => 'Une montre 41 mm carrée noire à chiffres romains, sertie de moissanite VVS couleur D.',
             ],
             8 => [
-                'name' => '41 mm · Sportive, bracelet noir',
+                'name' => '41 mm · Chronographe, bracelet noir',
                 'japanese_price' => 650,
                 'swiss_price' => 1000,
-                'description' => 'Une montre 41 mm sportive à bracelet noir, sertie de moissanite VVS couleur D.',
+                'description' => 'Un chronographe 41 mm à bracelet noir et boîtier serti de moissanite VVS couleur D.',
             ],
         ];
 
@@ -54,11 +54,15 @@ class FeaturedCatalogWatchesSeeder extends Seeder
 
             $directory = '/images/watches/catalog/'.$entry['folder'].'/';
 
-            $alreadyExists = Watch::query()
+            $existing = Watch::query()
                 ->where('image', 'like', $directory.'%')
-                ->exists();
+                ->first();
 
-            if ($alreadyExists) {
+            if ($existing !== null) {
+                $existing->name = $model['name'];
+                $existing->description = $model['description'];
+                $existing->save();
+
                 continue;
             }
 

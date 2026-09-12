@@ -85,7 +85,7 @@ class AddWomenSquare36WatchSeeder extends Seeder
             ->first();
 
         if ($existing !== null) {
-            $existing->name = '36 mm · Femme, cadran blanc';
+            $existing->name = '36 mm · Femme carrée, cadran blanc';
             $existing->description = 'Modèle femme 36 mm à boîtier carré, cadran blanc à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.';
             $existing->image = $directory.'01-front.webp';
             $existing->save();
@@ -111,7 +111,7 @@ class AddWomenSquare36WatchSeeder extends Seeder
         }
 
         Watch::query()->create([
-            'name' => '36 mm · Femme, cadran blanc',
+            'name' => '36 mm · Femme carrée, cadran blanc',
             'price' => $japanesePrice,
             'promo_price' => $pricingSource->promo_price,
             'japanese_price' => $japanesePrice,
