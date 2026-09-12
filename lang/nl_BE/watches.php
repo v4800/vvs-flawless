@@ -37,9 +37,9 @@ return [
         'description' => 'Een tweekleurige afwerking met een heldere zonnestraalwijzerplaat. De VVS-moissanite in kleur D voegt bustdown-schittering toe zonder de verzorgde look te verliezen.',
     ],
     49 => [
-        'name' => '41 mm · Tweekleurig presidentieel, Romeinse cijfers',
-        'short_description' => 'Zilver en geelgoud bicolor met een pavé wijzerplaat en Romeinse cijfers.',
-        'description' => 'Een zilver-geelgouden tweekleurige afwerking met pavé wijzerplaat, Romeinse cijfers, bezette lunette en volledig iced-out armband in VVS-moissanite kleur D.',
+        'name' => '41 mm · Roségoud presidentieel',
+        'short_description' => 'Roségoudkleurige afwerking, pavé wijzerplaat en iced-out armband.',
+        'description' => 'Een roségoudkleurige afwerking met pavé wijzerplaat, bezette lunette en volledig iced-out armband in VVS-moissanite kleur D.',
     ],
     50 => [
         'name' => '41 mm · Geelgoud, gekartelde lunette',
