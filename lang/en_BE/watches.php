@@ -37,9 +37,9 @@ return [
         'description' => 'A two-tone finish paired with a bright sunburst dial. D-colour VVS moissanite adds a bustdown look while keeping the overall design balanced.',
     ],
     49 => [
-        'name' => '41 mm · Yellow-gold presidential',
-        'short_description' => 'Yellow-gold-tone, iced-out finish.',
-        'description' => 'A yellow-gold-tone finish for a strong wrist presence. D-colour VVS moissanite adds clear sparkle across the watch.',
+        'name' => '41 mm · Two-tone presidential, Roman numerals',
+        'short_description' => 'Silver and yellow-gold two-tone finish with a pavé Roman-numeral dial.',
+        'description' => 'A silver and yellow-gold two-tone finish with a pavé Roman-numeral dial, stone-set bezel and fully iced-out bracelet in D-colour VVS moissanite.',
     ],
     50 => [
         'name' => '41 mm · Yellow gold, fluted bezel',
