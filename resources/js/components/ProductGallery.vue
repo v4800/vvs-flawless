@@ -169,7 +169,7 @@ const handleThumbnailKeydown = (event, index) => {
                 aria-controls="product-gallery-panel"
                 :tabindex="activeImage === image ? 0 : -1"
                 :class="[
-                    'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] p-1 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                    'aspect-square overflow-hidden rounded-xl border bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.08),#090909_70%)] transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                     activeImage === image
                         ? 'border-amber-300/70 ring-1 ring-amber-300/30'
                         : 'border-white/10 hover:border-white/30',
@@ -184,7 +184,7 @@ const handleThumbnailKeydown = (event, index) => {
                     loading="lazy"
                     decoding="async"
                     draggable="false"
-                    class="h-full w-full rounded-lg object-contain"
+                    class="block h-full w-full object-cover object-center"
                 />
             </button>
         </div>
