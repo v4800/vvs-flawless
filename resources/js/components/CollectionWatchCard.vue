@@ -56,7 +56,7 @@ const formattedPrice = computed(() => {
 
         <Link
             :href="href"
-            class="relative block aspect-[4/3] w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="relative block w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.view_watch} — ${watch.name}`"
         >
             <div
@@ -79,7 +79,7 @@ const formattedPrice = computed(() => {
             />
             <div
                 v-else
-                class="flex h-full items-center justify-center text-zinc-600"
+                class="flex min-h-48 items-center justify-center text-zinc-600"
             >
                 {{ translations.collection.image_soon }}
             </div>
