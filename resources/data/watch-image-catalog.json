@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "next_watch_id": 18,
+    "next_watch_id": 19,
     "naming_rule": "NNN-model-slug/NN-view.ext",
     "watches": [
         {
@@ -204,6 +204,22 @@
             "legacy_images": [
                 "/images/watches/classique-bleu-roi.webp",
                 "/images/watches/classique-bleu-roi.png"
+            ]
+        },
+        {
+            "id": 18,
+            "slug": "chronographe-camouflage",
+            "folder": "018-chronographe-camouflage",
+            "images": [
+                "01-front.webp",
+                "02-angle.webp",
+                "03-front-horizontal.webp"
+            ],
+            "featured": false,
+            "card_image": "01-front-card.webp",
+            "legacy_images": [
+                "/images/watches/chronographe-camouflage.webp",
+                "/images/watches/chronographe-camouflage.png"
             ]
         }
     ]
