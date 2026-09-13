@@ -109,7 +109,7 @@ const handleThumbnailKeydown = (event, index) => {
                 "
                 aria-live="polite"
                 aria-atomic="true"
-                class="relative aspect-square self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)]"
+                class="relative self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)]"
             >
                 <img
                     :src="activeImage"
@@ -118,12 +118,12 @@ const handleThumbnailKeydown = (event, index) => {
                     fetchpriority="high"
                     decoding="async"
                     draggable="false"
-                    class="block h-full w-full object-contain p-3 sm:p-5"
+                    class="block h-auto w-full"
                 />
             </div>
 
             <div
-                class="absolute right-5 bottom-5 left-5 flex items-center justify-between rounded-2xl border border-white/10 bg-black/75 px-5 py-4 backdrop-blur-xl"
+                class="mt-3 flex items-center justify-between rounded-2xl border border-white/10 bg-black/75 px-5 py-4"
             >
                 <div>
                     <p
