@@ -24,7 +24,7 @@ defineProps({
 </script>
 
 <template>
-    <div class="absolute inset-0 overflow-hidden bg-[#070707]">
+    <div class="relative w-full overflow-hidden bg-[#070707]">
         <img
             :src="src"
             :srcset="srcset"
@@ -32,7 +32,7 @@ defineProps({
             :alt="alt"
             :loading="loading"
             decoding="async"
-            class="h-full w-full object-contain object-center"
+            class="block h-auto w-full"
         />
     </div>
 </template>
