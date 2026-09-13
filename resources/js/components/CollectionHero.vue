@@ -205,7 +205,7 @@ const premiumTagline = computed(() => {
                             height="1024"
                             fetchpriority="high"
                             decoding="async"
-                            class="h-full w-full object-contain p-4 transition duration-1000 group-hover:scale-[1.025] sm:p-6"
+                            class="block h-full w-full object-cover object-center"
                         />
 
                         <div
