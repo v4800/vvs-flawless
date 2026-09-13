@@ -65,7 +65,7 @@ const formatPrice = (price) => {
                     v-for="watch in watches"
                     :key="watch.id"
                     :href="`${localizedRoutes.watches}/${watch.slug}`"
-                    class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
+                    class="vvs-luxury-card vvs-luxury-card--interactive group self-start overflow-hidden rounded-2xl border"
                 >
                     <div
                         class="relative overflow-hidden bg-[#070707]"
