@@ -85,9 +85,7 @@ const imageAlt = (model) => {
             ></div>
 
             <WatchCardVisual
-                :src="model.cardImage"
-                :srcset="`${model.cardImage} 720w, ${model.image} 1448w`"
-                sizes="(min-width: 1280px) 32vw, (min-width: 640px) 48vw, 100vw"
+                :src="model.cardImage || model.image"
                 :alt="imageAlt(model)"
             />
 
