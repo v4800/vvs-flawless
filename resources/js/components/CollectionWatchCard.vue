@@ -47,7 +47,7 @@ const formattedPrice = computed(() => {
 
 <template>
     <article
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex flex-col overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group self-start relative flex flex-col overflow-hidden rounded-2xl border"
     >
         <div
             aria-hidden="true"
