@@ -65,7 +65,7 @@ const imageAlt = (model) => {
     <article
         v-for="model in displayModels"
         :key="model.reference"
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group self-stretch relative flex min-w-0 flex-col overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border"
     >
         <div
             class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
