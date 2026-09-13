@@ -65,10 +65,10 @@ const formatPrice = (price) => {
                     v-for="watch in watches"
                     :key="watch.id"
                     :href="`${localizedRoutes.watches}/${watch.slug}`"
-                    class="vvs-luxury-card vvs-luxury-card--interactive group self-start overflow-hidden rounded-2xl border"
+                    class="vvs-luxury-card vvs-luxury-card--interactive group self-stretch flex flex-col overflow-hidden rounded-2xl border"
                 >
                     <div
-                        class="relative overflow-hidden bg-[#070707]"
+                        class="relative shrink-0 overflow-hidden bg-[#070707]"
                     >
                         <WatchCardVisual
                             v-if="watch.card_image || watch.image"
@@ -78,13 +78,13 @@ const formatPrice = (price) => {
 
                         <div
                             v-else
-                            class="flex min-h-48 items-center justify-center text-sm text-zinc-700"
+                            class="flex aspect-[3/4] w-full items-center justify-center text-sm text-zinc-700"
                         >
                             {{ translations.related.image_soon }}
                         </div>
                     </div>
 
-                    <div class="p-5">
+                    <div class="flex flex-1 flex-col p-5">
                         <p
                             class="text-[9px] font-black tracking-[0.2em] text-amber-300 uppercase"
                         >
@@ -92,13 +92,13 @@ const formatPrice = (price) => {
                         </p>
 
                         <h3
-                            class="vvs-display-title mt-3 min-h-[48px] text-2xl leading-6"
+                            class="vvs-display-title mt-3 mb-5 min-h-[48px] text-2xl leading-6"
                         >
                             {{ watch.name }}
                         </h3>
 
                         <div
-                            class="mt-5 flex items-end justify-between gap-4 border-t border-white/10 pt-4"
+                            class="mt-auto flex items-end justify-between gap-4 border-t border-white/10 pt-4"
                         >
                             <div>
                                 <p
