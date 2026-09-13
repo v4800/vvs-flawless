@@ -68,17 +68,17 @@ const formatPrice = (price) => {
                     class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
                 >
                     <div
-                        class="relative aspect-[4/3] overflow-hidden bg-[#070707]"
+                        class="relative overflow-hidden bg-[#070707]"
                     >
                         <WatchCardVisual
-                            v-if="watch.image"
+                            v-if="watch.card_image || watch.image"
                             :src="watch.card_image ?? watch.image"
                             :alt="watch.name"
                         />
 
                         <div
                             v-else
-                            class="flex h-full items-center justify-center text-sm text-zinc-700"
+                            class="flex min-h-48 items-center justify-center text-sm text-zinc-700"
                         >
                             {{ translations.related.image_soon }}
                         </div>
