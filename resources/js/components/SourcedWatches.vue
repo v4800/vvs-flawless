@@ -20,25 +20,8 @@ const featuredStartingPrices = {
     'VVS-C008': 650,
 };
 
-const chronographCamouflageNames = {
-    fr_BE: '41 mm · Chronographe camouflage',
-    nl_BE: '41 mm · Camouflage chronograaf',
-    en_BE: '41 mm · Camouflage chronograph',
-};
-
 const displayModels = computed(() =>
-    props.models
-        .filter((model) => !model.watchUrl)
-        .map((model) =>
-            model.reference === 'VVS-C008'
-                ? {
-                      ...model,
-                      name:
-                          chronographCamouflageNames[page.props.locale] ??
-                          chronographCamouflageNames.fr_BE,
-                  }
-                : model,
-        ),
+    props.models.filter((model) => !model.watchUrl),
 );
 
 const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
