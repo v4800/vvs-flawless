@@ -47,7 +47,7 @@ const formattedPrice = computed(() => {
 
 <template>
     <article
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group self-start relative flex flex-col overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group self-stretch relative flex flex-col overflow-hidden rounded-2xl border"
     >
         <div
             aria-hidden="true"
@@ -79,7 +79,7 @@ const formattedPrice = computed(() => {
             />
             <div
                 v-else
-                class="flex min-h-48 items-center justify-center text-zinc-600"
+                class="flex aspect-[3/4] w-full items-center justify-center text-zinc-600"
             >
                 {{ translations.collection.image_soon }}
             </div>
@@ -105,7 +105,7 @@ const formattedPrice = computed(() => {
 
         <div class="relative flex flex-1 flex-col p-5">
             <h3
-                class="vvs-display-title text-center text-2xl leading-tight text-white"
+                class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
             >
                 {{ watch.name }}
             </h3>
