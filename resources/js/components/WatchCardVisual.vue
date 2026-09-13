@@ -32,7 +32,7 @@ defineProps({
             :alt="alt"
             :loading="loading"
             decoding="async"
-            class="absolute inset-0 block h-full w-full object-contain object-center"
+            class="absolute inset-0 block h-full w-full object-cover object-center"
         />
     </div>
 </template>
