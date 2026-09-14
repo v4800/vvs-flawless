@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Mail\AdminReservationContactMail;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Watch;
 use App\Support\ReservationWorkflow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -242,6 +244,48 @@ class AdminReservationsDashboardTest extends TestCase
             ->assertRedirect();
 
         $this->assertNull($archived->refresh()->archived_at);
+    }
+
+    public function test_admin_can_send_an_email_from_the_dashboard(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'contact-client@example.com',
+            'reservation_number' => 'VVS-EMAIL-TEST',
+        ]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.email', $reservation), [
+                'subject' => 'Votre réservation VVS-EMAIL-TEST',
+                'message' => 'Votre montre est prête.',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            AdminReservationContactMail::class,
+            fn (AdminReservationContactMail $mail): bool => $mail
+                ->hasTo('contact-client@example.com')
+                && $mail->subjectLine === 'Votre réservation VVS-EMAIL-TEST'
+                && $mail->messageBody === 'Votre montre est prête.'
+        );
+    }
+
+    public function test_non_admin_cannot_send_a_reservation_email(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch());
+
+        $this->actingAs(User::factory()->create(['is_admin' => false]))
+            ->post(route('admin.reservations.email', $reservation), [
+                'subject' => 'Tentative',
+                'message' => 'Message interdit.',
+            ])
+            ->assertForbidden();
+
+        Mail::assertNothingSent();
     }
 
     public function test_review_invitation_is_only_enabled_after_completion(): void
