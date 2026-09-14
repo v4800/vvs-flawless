@@ -243,6 +243,62 @@ const copyReference = async (reservation) => {
     }, 1800);
 };
 
+const normalizedPhoneNumber = (phone) => {
+    const raw = String(phone ?? '').trim();
+    let digits = raw.replace(/\D/g, '');
+
+    if (digits.startsWith('00')) {
+        digits = digits.slice(2);
+    } else if (digits.startsWith('0')) {
+        digits = '32' + digits.slice(1);
+    }
+
+    return digits;
+};
+
+const phoneHref = (reservation) => {
+    const phone = normalizedPhoneNumber(reservation.phone);
+
+    return phone ? 'tel:+' + phone : '#';
+};
+
+const whatsappHref = (reservation) => {
+    const phone = normalizedPhoneNumber(reservation.phone);
+    const message = encodeURIComponent(
+        'Bonjour ' +
+            reservation.customer_name +
+            ', je vous contacte au sujet de votre réservation ' +
+            reservation.reservation_number +
+            ' chez VVS FLAWLESS.',
+    );
+
+    return phone ? 'https://wa.me/' + phone + '?text=' + message : '#';
+};
+
+const gmailHref = (reservation) => {
+    const subject = encodeURIComponent(
+        'Votre réservation ' +
+            reservation.reservation_number +
+            ' — VVS FLAWLESS',
+    );
+    const body = encodeURIComponent(
+        'Bonjour ' +
+            reservation.customer_name +
+            ',\n\nJe vous contacte au sujet de votre réservation ' +
+            reservation.reservation_number +
+            '.\n\nVVS FLAWLESS',
+    );
+
+    return (
+        'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+        encodeURIComponent(reservation.email) +
+        '&su=' +
+        subject +
+        '&body=' +
+        body
+    );
+};
+
 const reviewMailto = (reservation) => {
     const subject = encodeURIComponent(
         'Votre avis sur votre expérience VVS FLAWLESS',
@@ -661,13 +717,23 @@ const logout = () => {
                                 class="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4"
                             >
                                 <a
-                                    :href="'tel:' + reservation.phone"
+                                    :href="phoneHref(reservation)"
                                     class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
                                 >
                                     Appeler
                                 </a>
                                 <a
-                                    :href="'mailto:' + reservation.email"
+                                    :href="whatsappHref(reservation)"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-200 hover:bg-emerald-500/20"
+                                >
+                                    WhatsApp
+                                </a>
+                                <a
+                                    :href="gmailHref(reservation)"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
                                 >
                                     Email
