@@ -52,8 +52,8 @@ return [
         'description' => 'Blue Roman-numeral dial, day and date display, round case and silver-tone bracelet set with moissanite.',
     ],
     52 => [
-        'name' => '41 mm · Silver, pink pavé dial',
-        'short_description' => 'Silver finish, pavé dial and pale pink baguette hour markers.',
-        'description' => 'A fully iced-out silver-tone model with a pavé dial, pale pink baguette hour markers and a stone-set jubilee bracelet in D-colour VVS moissanite.',
+        'name' => '41 mm · Blue, Roman numerals',
+        'short_description' => 'Blue dial and Roman numerals.',
+        'description' => 'The blue dial and Roman numerals give the model a more dressed-up appearance. D-colour VVS moissanite adds the iced-out finish.',
     ],
 ];
