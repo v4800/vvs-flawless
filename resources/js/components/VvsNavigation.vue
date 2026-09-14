@@ -122,9 +122,19 @@ onMounted(() => {
             >
                 <span
                     aria-hidden="true"
-                    class="flex h-10 w-10 items-center justify-center rounded-full border border-amber-300/30 bg-amber-300/[0.06] text-lg text-amber-200 transition-all duration-300 group-hover:-translate-x-1 group-hover:border-amber-300 group-hover:bg-amber-300 group-hover:text-black group-hover:shadow-[0_0_25px_rgba(252,211,77,0.25)]"
+                    class="flex h-10 w-10 items-center justify-center rounded-full border border-amber-300/30 bg-amber-300/[0.06] text-amber-200 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:border-amber-300/70 group-hover:bg-amber-300/[0.12] group-hover:shadow-[0_0_24px_rgba(252,211,77,0.18)]"
                 >
-                    ←
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+                    >
+                        <path d="m14.5 5-7 7 7 7" />
+                    </svg>
                 </span>
 
                 <div class="hidden sm:block">
@@ -250,9 +260,19 @@ onMounted(() => {
                         <span
                             v-if="index < steps.length - 1"
                             aria-hidden="true"
-                            class="mx-2 hidden text-zinc-700 sm:inline"
+                            class="mx-2 hidden items-center text-zinc-700 sm:inline-flex"
                         >
-                            ›
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="h-3 w-3"
+                            >
+                                <path d="m9.5 5 7 7-7 7" />
+                            </svg>
                         </span>
                     </template>
 
