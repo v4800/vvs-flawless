@@ -93,24 +93,28 @@ class SecurityTest extends TestCase
     public function test_password_can_be_updated()
     {
         $user = User::factory()->create();
+        $newPassword = 'VvsFlawless#2026';
 
         $response = $this
             ->actingAs($user)
             ->from(route('security.edit'))
             ->put(route('user-password.update'), [
                 'current_password' => 'password',
-                'password' => 'new-password',
-                'password_confirmation' => 'new-password',
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
             ]);
 
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect(route('security.edit'));
 
-        $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
+        $storedPassword = $user->refresh()->getRawOriginal('password');
+
+        $this->assertNotSame($newPassword, $storedPassword);
+        $this->assertTrue(Hash::check($newPassword, $storedPassword));
     }
 
-    public function test_correct_password_must_be_provided_to_update_password()
+    public function test_weak_password_cannot_be_used_to_update_password(): void
     {
         $user = User::factory()->create();
 
@@ -118,9 +122,30 @@ class SecurityTest extends TestCase
             ->actingAs($user)
             ->from(route('security.edit'))
             ->put(route('user-password.update'), [
+                'current_password' => 'password',
+                'password' => '12345678',
+                'password_confirmation' => '12345678',
+            ]);
+
+        $response
+            ->assertSessionHasErrors('password')
+            ->assertRedirect(route('security.edit'));
+
+        $this->assertTrue(Hash::check('password', $user->refresh()->password));
+    }
+
+    public function test_correct_password_must_be_provided_to_update_password()
+    {
+        $user = User::factory()->create();
+        $newPassword = 'AnotherStrong#2026';
+
+        $response = $this
+            ->actingAs($user)
+            ->from(route('security.edit'))
+            ->put(route('user-password.update'), [
                 'current_password' => 'wrong-password',
-                'password' => 'new-password',
-                'password_confirmation' => 'new-password',
+                'password' => $newPassword,
+                'password_confirmation' => $newPassword,
             ]);
 
         $response
