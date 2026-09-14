@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminOverviewController;
 use App\Http\Controllers\Admin\ReservationDashboardController;
 use App\Http\Middleware\AdminSecurityHeaders;
 use App\Http\Middleware\EnsureUserIsAdmin;
@@ -11,12 +12,15 @@ Route::middleware([
     AdminSecurityHeaders::class,
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return redirect()->route('admin.reservations.index');
+        return redirect()->route('admin.index');
     })->name('dashboard');
 
     Route::prefix('admin')
         ->name('admin.')
         ->group(function () {
+            Route::get('/', AdminOverviewController::class)
+                ->name('index');
+
             Route::get(
                 '/reservations',
                 [ReservationDashboardController::class, 'index']
