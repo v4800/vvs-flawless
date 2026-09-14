@@ -6,7 +6,7 @@ return array_replace_recursive($base, [
     'collection_seo' => [
         'title' => 'VVS-Moissanit- & Iced-Out-Uhren in Belgien | VVS FLAWLESS',
         'description' => 'Entdecke VVS-FLAWLESS-Uhren mit VVS-Moissanit in Farbe D: Iced-Out- und Full-Set-Stile für Herren, Damen und Unisex, auf Reservierung in Belgien.',
-        'product_suffix' => 'Uhr mit VVS-Moissanit in Farbe D für einen hellen Iced-Out-Look. Der Preis steht auf der Produktseite; online reservieren und nach Bestätigung persönliche Übergabe oder Versand wählen.',
+        'product_suffix' => 'Uhr mit VVS-Moissanit in Farbe D für einen hellen Iced-Out-Look. Der Preis steht auf der Produktseite; online reservieren und die persönliche Übergabe überall in Belgien nach Termin vereinbaren.',
         'image_alt' => 'VVS FLAWLESS Iced-Out-Uhren mit VVS-Moissanit in Farbe D',
     ],
     'product_bridge' => [
@@ -39,7 +39,7 @@ return array_replace_recursive($base, [
             [
                 'route' => 'belgiumGuide',
                 'title' => 'In Belgien reservieren',
-                'text' => 'Preise, Lieferzeit, Reservierung, persönliche Übergabe und Versand: So funktioniert VVS FLAWLESS.',
+                'text' => 'Preise, Lieferzeit, Anzahlung und persönliche Übergabe: So funktioniert VVS FLAWLESS.',
                 'cta' => 'Belgien-Ratgeber ansehen',
             ],
         ],
@@ -142,11 +142,11 @@ return array_replace_recursive($base, [
     ],
     'belgium' => [
         'seo_title' => 'VVS-Moissanit- & Iced-Out-Uhren in Belgien | VVS FLAWLESS',
-        'seo_description' => 'Reserviere eine VVS-Moissanit-Uhr in Farbe D in Belgien mit sichtbaren Preisen, ungefährer Lieferzeit, persönlicher Übergabe oder Versand.',
+        'seo_description' => 'Reserviere eine VVS-Moissanit-Uhr in Farbe D mit sichtbarem Preis und persönlicher Übergabe nach Termin überall in Belgien.',
         'eyebrow' => 'VVS FLAWLESS Belgien',
         'title' => 'VVS-Uhr in Belgien reservieren',
         'intro' => 'VVS FLAWLESS bietet Uhren mit VVS-Moissanit in Farbe D an, von klassischen Full-Set-Modellen bis zu auffälligen Iced-Out-Designs. Einstiegspreise sind bereits in der Kollektion sichtbar.',
-        'answer' => 'Wähle deine Uhr auf der Website und sende eine Reservierungsanfrage ohne sofortige Zahlung. VVS FLAWLESS bestätigt anschließend Modell, Preis, ungefähre Lieferzeit und Empfangsart direkt mit dir. Persönliche Übergabe kann in Belgien, Nordfrankreich sowie in Maastricht oder Gulpen vereinbart werden; Versand ist nach Bestätigung ebenfalls möglich.',
+        'answer' => 'Wähle deine Uhr auf der Website und sende eine Anfrage ohne sofortige Zahlung. VVS FLAWLESS bestätigt Modell, Preis, Lieferzeit, Adresse, Uhrzeit und mögliche Fahrtkosten vor der Anzahlung. Die persönliche Übergabe wird überall in Belgien nach Termin vereinbart, unter anderem in Lüttich, Verviers, Namur, Brüssel, Charleroi, Antwerpen und Gent.',
         'sections' => [
             [
                 'title' => 'VVS-Moissanit in Farbe D',
@@ -159,14 +159,14 @@ return array_replace_recursive($base, [
                 'title' => 'Preis und Reservierung',
                 'paragraphs' => [
                     'Die Kollektion zeigt für jedes Modell einen Einstiegspreis. Das Absenden des Reservierungsformulars löst keine Zahlung aus, sondern erfasst dein Interesse und deine Kontaktdaten.',
-                    'Nach Bestätigung der Bestellung ist der geplante Ablauf eine Anzahlung von 25 %, damit die Arbeit beginnen kann, gefolgt von den restlichen 75 %, nachdem dir die fertige Uhr per Video gezeigt wurde.',
+                    'Nach Bestätigung des Termins und der Bedingungen startet eine Anzahlung von 25 % die Bestellung. Anschließend wird ein Video der fertigen Uhr gesendet; die restlichen 75 % werden beim Termin nach Prüfung der Uhr bezahlt.',
                 ],
             ],
             [
                 'title' => 'Lieferzeit und Empfang',
                 'paragraphs' => [
                     'Die übliche unverbindliche Lieferzeit beträgt nach Bestätigung etwa 5 bis 6 Werktage, abhängig von Modellverfügbarkeit und Vorbereitung.',
-                    'Persönliche Übergabe kann in Belgien, Nordfrankreich, Maastricht oder Gulpen vereinbart werden. Bei Versand werden mögliche Kosten und Lieferzeit vor der endgültigen Bestellung bestätigt.',
+                    'Die persönliche Übergabe ist nach Termin überall in Belgien möglich. Adresse, Uhrzeit und mögliche Fahrtkosten werden vor der Anzahlung bestätigt.',
                 ],
             ],
             [
@@ -181,7 +181,7 @@ return array_replace_recursive($base, [
         'faq' => [
             ['question' => 'Was verkauft VVS FLAWLESS?', 'answer' => 'VVS FLAWLESS bietet Uhren mit VVS-Moissanit in Farbe D in verschiedenen Iced-Out- und Full-Set-Stilen an.'],
             ['question' => 'Zahle ich beim Absenden einer Reservierung?', 'answer' => 'Nein. Das Absenden des Formulars löst keine Zahlung aus. Die Bestelldetails werden anschließend mit dir bestätigt.'],
-            ['question' => 'Wo ist persönliche Übergabe möglich?', 'answer' => 'Je nach Vereinbarung kann die persönliche Übergabe in Belgien, Nordfrankreich, Maastricht oder Gulpen in den Niederlanden stattfinden.'],
+            ['question' => 'Wo ist persönliche Übergabe möglich?', 'answer' => 'Die persönliche Übergabe kann nach Termin überall in Belgien stattfinden. Adresse, Uhrzeit und mögliche Fahrtkosten werden vor der Anzahlung bestätigt.'],
             ['question' => 'Wie lang ist die Lieferzeit?', 'answer' => 'Die übliche unverbindliche Lieferzeit beträgt nach Bestätigung etwa 5 bis 6 Werktage und wird für jede Bestellung geprüft.'],
         ],
         'cta_title' => 'Verfügbare Uhren ansehen',
