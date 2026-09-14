@@ -99,36 +99,6 @@ onMounted(() => {
             '-=900',
         );
 
-    animate('.brand-shine', {
-        x: ['0%', '560%'],
-        opacity: [0, 0.9, 0],
-        duration: 1800,
-        delay: 900,
-        loop: true,
-        loopDelay: 2600,
-        ease: 'inOutQuad',
-    });
-
-    animate('.bling-sparkle', {
-        opacity: [0.08, 1, 0.08],
-        scale: [0.35, 1.55, 0.35],
-        rotate: [0, 45, 90],
-        duration: 1450,
-        delay: stagger(230),
-        loop: true,
-        loopDelay: 350,
-        ease: 'inOutQuad',
-    });
-
-    animate('.hero-orb', {
-        opacity: [0.35, 0.75],
-        scale: [0.92, 1.08],
-        duration: 3800,
-        loop: true,
-        alternate: true,
-        ease: 'inOutQuad',
-    });
-
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
     revealElements.forEach((element) => {
