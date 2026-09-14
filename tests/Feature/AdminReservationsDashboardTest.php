@@ -38,7 +38,7 @@ class AdminReservationsDashboardTest extends TestCase
             ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive')
             ->assertHeader(
                 'Cache-Control',
-                'no-store, private, max-age=0, must-revalidate'
+                'max-age=0, must-revalidate, no-store, private'
             )
             ->assertInertia(
                 fn (Assert $page) => $page
@@ -315,7 +315,7 @@ class AdminReservationsDashboardTest extends TestCase
             'city' => 'Liège',
             'delivery_method' => 'Remise en main propre',
             'status' => ReservationWorkflow::NEW,
-            'reservation_number' => 'VVS-'.str()->upper()->random(12),
+            'reservation_number' => 'VVS-'.strtoupper(str()->random(12)),
             'message' => null,
             ...$attributes,
         ]);
