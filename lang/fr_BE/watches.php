@@ -52,8 +52,8 @@ return [
         'description' => 'Cadran bleu à chiffres romains, affichage du jour et de la date, boîtier rond et bracelet argenté sertis de moissanite.',
     ],
     52 => [
-        'name' => '41 mm · Bleue, chiffres romains',
-        'short_description' => 'Cadran bleu et chiffres romains.',
-        'description' => 'Le cadran bleu et les chiffres romains donnent au modèle une allure plus habillée. Le sertissage en moissanite VVS couleur D y ajoute une finition iced-out.',
+        'name' => '41 mm · Argentée, cadran pavé rose',
+        'short_description' => 'Finition argentée, cadran pavé et index baguette roses.',
+        'description' => 'Un modèle entièrement iced-out à finition argentée, avec cadran pavé, index baguette rose pâle et bracelet jubilee serti de moissanite VVS couleur D.',
     ],
 ];

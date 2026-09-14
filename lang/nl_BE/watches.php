@@ -52,8 +52,8 @@ return [
         'description' => 'Blauwe wijzerplaat met Romeinse cijfers, dag- en datumaanduiding, ronde kast en zilverkleurige band bezet met moissaniet.',
     ],
     52 => [
-        'name' => '41 mm · Blauw, Romeinse cijfers',
-        'short_description' => 'Blauwe wijzerplaat en Romeinse cijfers.',
-        'description' => 'De blauwe wijzerplaat en Romeinse cijfers geven dit model een meer geklede uitstraling. De VVS-moissanite in kleur D voegt daar een iced-out afwerking aan toe.',
+        'name' => '41 mm · Zilverkleurig, roze pavéwijzerplaat',
+        'short_description' => 'Zilverkleurige afwerking, pavéwijzerplaat en lichtroze baguette-indexen.',
+        'description' => 'Een volledig iced-out model met zilverkleurige afwerking, pavéwijzerplaat, lichtroze baguette-indexen en een jubilee-band bezet met VVS-moissaniet in kleur D.',
     ],
 ];

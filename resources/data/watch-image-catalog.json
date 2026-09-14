@@ -266,13 +266,15 @@
         },
         {
             "id": 19,
-            "slug": "bleue-argent-romains",
+            "slug": "argentee-pave-rose",
             "folder": "019-bleue-argent-romains",
             "images": [
                 "01-front.webp",
-                "02-angle.webp",
-                "03-side.webp",
-                "04-clasp.webp"
+                "02-front-vertical.webp",
+                "03-angle.webp",
+                "04-side.webp",
+                "05-clasp.webp",
+                "06-clasp-vertical.webp"
             ],
             "featured": false,
             "card_image": "01-front-card.webp"

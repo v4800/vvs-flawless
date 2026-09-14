@@ -52,8 +52,8 @@ return [
         'description' => 'Blaues Zifferblatt mit römischen Ziffern, Tages- und Datumsanzeige, rundes Gehäuse und silberfarbenes Armband mit Moissanitbesatz.',
     ],
     52 => [
-        'name' => '41 mm · Blau, römische Ziffern',
-        'short_description' => 'Blaues Zifferblatt und römische Ziffern.',
-        'description' => 'Das blaue Zifferblatt und die römischen Ziffern geben dem Modell eine elegantere Wirkung. VVS-Moissanit in Farbe D ergänzt das Iced-Out-Finish.',
+        'name' => '41 mm · Silberfarben, roséfarbenes Pavé-Zifferblatt',
+        'short_description' => 'Silberfarbene Ausführung, Pavé-Zifferblatt und roséfarbene Baguette-Indizes.',
+        'description' => 'Ein vollständig iced-out besetztes Modell in Silberoptik mit Pavé-Zifferblatt, roséfarbenen Baguette-Indizes und einem mit VVS-Moissanit in Farbe D besetzten Jubilee-Armband.',
     ],
 ];
