@@ -24,9 +24,25 @@ return Application::configure(
 
     ->withMiddleware(
         function (Middleware $middleware): void {
+
+            /*
+            |--------------------------------------------------------------------------
+            | SECURITY HEADERS — GLOBAL
+            |--------------------------------------------------------------------------
+            |
+            | Ce middleware passe sur TOUTES les réponses HTTP.
+            |
+            */
+
             $middleware->append(
                 SecurityHeaders::class
             );
+
+            /*
+            |--------------------------------------------------------------------------
+            | COOKIES
+            |--------------------------------------------------------------------------
+            */
 
             $middleware->encryptCookies(
                 except: [
@@ -34,6 +50,12 @@ return Application::configure(
                     'sidebar_state',
                 ]
             );
+
+            /*
+            |--------------------------------------------------------------------------
+            | WEB MIDDLEWARE
+            |--------------------------------------------------------------------------
+            */
 
             $middleware->web(
                 append: [
@@ -50,6 +72,7 @@ return Application::configure(
         function (
             Exceptions $exceptions
         ): void {
+
             $exceptions->shouldRenderJsonWhen(
                 fn (Request $request) => $request->is('api/*')
                     || $request->expectsJson()

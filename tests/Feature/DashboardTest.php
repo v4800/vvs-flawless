@@ -27,7 +27,7 @@ class DashboardTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_admin_users_are_redirected_to_the_reservations_administration(): void
+    public function test_admin_users_are_redirected_to_the_admin_overview(): void
     {
         $admin = User::factory()->create([
             'is_admin' => true,
@@ -35,6 +35,6 @@ class DashboardTest extends TestCase
 
         $this->actingAs($admin)
             ->get(route('dashboard'))
-            ->assertRedirect(route('admin.reservations.index'));
+            ->assertRedirect(route('admin.index'));
     }
 }

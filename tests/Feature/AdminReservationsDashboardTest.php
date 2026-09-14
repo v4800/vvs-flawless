@@ -30,6 +30,55 @@ class AdminReservationsDashboardTest extends TestCase
             ->assertForbidden();
     }
 
+    public function test_admin_overview_is_private_and_uses_confirmed_payments_only(): void
+    {
+        $watch = $this->watch();
+
+        $this->reservation($watch, [
+            'reservation_number' => 'VVS-DEPOSIT-CONFIRMED',
+            'price' => 1000,
+            'status' => ReservationWorkflow::DEPOSIT_PAID,
+            'deposit_paid_at' => now(),
+        ]);
+
+        $this->reservation($watch, [
+            'reservation_number' => 'VVS-FULLY-PAID',
+            'price' => 800,
+            'status' => ReservationWorkflow::COMPLETED,
+            'deposit_paid_at' => now(),
+            'balance_paid_at' => now(),
+        ]);
+
+        $this->reservation($watch, [
+            'reservation_number' => 'VVS-NOT-PAID',
+            'price' => 2000,
+        ]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.index'))
+            ->assertOk()
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive')
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->component('Admin/Overview')
+                    ->where('stats.new', 1)
+                    ->where('stats.deposit_paid', 1)
+                    ->where('stats.completed', 1)
+                    ->where('stats.confirmed_revenue', 1050)
+                    ->has('recentReservations', 3)
+            );
+    }
+
+    public function test_guest_and_non_admin_cannot_access_admin_overview(): void
+    {
+        $this->get(route('admin.index'))
+            ->assertRedirect(route('login'));
+
+        $this->actingAs(User::factory()->create(['is_admin' => false]))
+            ->get(route('admin.index'))
+            ->assertForbidden();
+    }
+
     public function test_admin_page_is_private_and_not_indexable(): void
     {
         $admin = $this->admin();
