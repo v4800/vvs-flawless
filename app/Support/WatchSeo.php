@@ -99,6 +99,8 @@ final class WatchSeo
             $watch
         );
 
+        $organizationId = url('/').'#organization';
+
         $description = Str::limit(
             trim(
                 $watch->name
@@ -172,6 +174,7 @@ final class WatchSeo
                             ],
                         ],
                     ],
+                    $this->organizationSchema($organizationId),
                 ],
             ],
         ];
@@ -240,6 +243,9 @@ final class WatchSeo
                 'price' => (float) $watch->price,
                 'priceCurrency' => 'EUR',
                 'availability' => $this->structuredDataAvailability($watch),
+                'seller' => [
+                    '@id' => url('/').'#organization',
+                ],
             ]];
         }
 
@@ -280,9 +286,7 @@ final class WatchSeo
                 'itemCondition' => 'https://schema.org/NewCondition',
                 'availability' => $availability,
                 'seller' => [
-                    '@type' => 'Organization',
-                    'name' => 'VVS FLAWLESS',
-                    'url' => url('/'),
+                    '@id' => url('/').'#organization',
                 ],
             ];
         }
@@ -371,9 +375,16 @@ final class WatchSeo
             'name' => 'VVS FLAWLESS',
             'url' => url('/'),
             'logo' => url('/images/vvs-flawless-profile.webp'),
+            'description' => trans('seo_intents.collection_seo.description'),
             'sameAs' => [
                 'https://www.instagram.com/vvsflawless43/',
                 'https://www.tiktok.com/@vvsflawless43',
+            ],
+            'knowsAbout' => [
+                'Moissanite watches',
+                'VVS moissanite',
+                'Iced-out watches',
+                'Hand-delivered watch reservations',
             ],
             'areaServed' => [
                 [
@@ -381,8 +392,8 @@ final class WatchSeo
                     'name' => 'Belgium',
                 ],
                 [
-                    '@type' => 'City',
-                    'name' => 'Liège',
+                    '@type' => 'AdministrativeArea',
+                    'name' => 'Wallonia',
                     'containedInPlace' => [
                         '@type' => 'Country',
                         'name' => 'Belgium',
@@ -390,22 +401,10 @@ final class WatchSeo
                 ],
                 [
                     '@type' => 'AdministrativeArea',
-                    'name' => 'Northern France',
-                ],
-                [
-                    '@type' => 'City',
-                    'name' => 'Maastricht',
+                    'name' => 'Flanders',
                     'containedInPlace' => [
                         '@type' => 'Country',
-                        'name' => 'Netherlands',
-                    ],
-                ],
-                [
-                    '@type' => 'City',
-                    'name' => 'Gulpen',
-                    'containedInPlace' => [
-                        '@type' => 'Country',
-                        'name' => 'Netherlands',
+                        'name' => 'Belgium',
                     ],
                 ],
             ],
