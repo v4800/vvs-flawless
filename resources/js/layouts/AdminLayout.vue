@@ -16,6 +16,7 @@ defineProps({
 const page = usePage();
 const currentUrl = computed(() => page.url);
 const userName = computed(() => page.props.auth?.user?.name ?? 'Administration');
+const successMessage = computed(() => page.props.flash?.success ?? '');
 
 const links = [
     {
@@ -130,6 +131,14 @@ const logout = () => {
             </header>
 
             <main class="mx-auto max-w-[1500px] p-4 sm:p-6 lg:p-8">
+                <div
+                    v-if="successMessage"
+                    role="status"
+                    class="mb-5 rounded-xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-sm font-bold text-emerald-200"
+                >
+                    {{ successMessage }}
+                </div>
+
                 <slot />
             </main>
         </div>
