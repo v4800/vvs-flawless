@@ -48,6 +48,7 @@ const saving = reactive({});
 const saved = reactive({});
 const formErrors = reactive({});
 const copiedReference = ref(null);
+const copiedPhone = ref(null);
 
 const statCards = [
     { key: 'new', label: 'Nouvelles demandes' },
@@ -243,36 +244,21 @@ const copyReference = async (reservation) => {
     }, 1800);
 };
 
-const normalizedPhoneNumber = (phone) => {
-    const raw = String(phone ?? '').trim();
-    let digits = raw.replace(/\D/g, '');
-
-    if (digits.startsWith('00')) {
-        digits = digits.slice(2);
-    } else if (digits.startsWith('0')) {
-        digits = '32' + digits.slice(1);
-    }
-
-    return digits;
-};
-
 const phoneHref = (reservation) => {
-    const phone = normalizedPhoneNumber(reservation.phone);
+    const phone = String(reservation.phone ?? '')
+        .trim()
+        .replace(/[^\d+]/g, '');
 
-    return phone ? 'tel:+' + phone : '#';
+    return phone ? 'tel:' + phone : '#';
 };
 
-const whatsappHref = (reservation) => {
-    const phone = normalizedPhoneNumber(reservation.phone);
-    const message = encodeURIComponent(
-        'Bonjour ' +
-            reservation.customer_name +
-            ', je vous contacte au sujet de votre réservation ' +
-            reservation.reservation_number +
-            ' chez VVS FLAWLESS.',
-    );
+const copyPhone = async (reservation) => {
+    await navigator.clipboard.writeText(reservation.phone);
+    copiedPhone.value = reservation.id;
 
-    return phone ? 'https://wa.me/' + phone + '?text=' + message : '#';
+    window.setTimeout(() => {
+        copiedPhone.value = null;
+    }, 1800);
 };
 
 const gmailHref = (reservation) => {
@@ -722,14 +708,17 @@ const logout = () => {
                                 >
                                     Appeler
                                 </a>
-                                <a
-                                    :href="whatsappHref(reservation)"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="rounded-lg bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-200 hover:bg-emerald-500/20"
+                                <button
+                                    type="button"
+                                    class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
+                                    @click="copyPhone(reservation)"
                                 >
-                                    WhatsApp
-                                </a>
+                                    {{
+                                        copiedPhone === reservation.id
+                                            ? 'Téléphone copié'
+                                            : 'Copier le téléphone'
+                                    }}
+                                </button>
                                 <a
                                     :href="gmailHref(reservation)"
                                     target="_blank"
