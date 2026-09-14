@@ -121,12 +121,16 @@ class SeoTest extends TestCase
                     'https://schema.org/PreOrder'
                 )
                 ->where(
-                    'seo.structuredData.@graph.0.offers.0.seller.@type',
-                    'Organization'
+                    'seo.structuredData.@graph.0.offers.0.seller.@id',
+                    url('/').'#organization'
                 )
                 ->where(
                     'seo.structuredData.@graph.1.@type',
                     'BreadcrumbList'
+                )
+                ->where(
+                    'seo.structuredData.@graph.2.@type',
+                    'Organization'
                 )
                 ->etc()
         );
@@ -155,6 +159,7 @@ class SeoTest extends TestCase
             '/sitemap.xml'
         );
 
+        $response->assertSee('Disallow: /admin');
         $response->assertSee('Disallow: /dashboard');
         $response->assertSee('Disallow: /reservation-confirmed/');
         $response->assertSee('Disallow: /nl/reservation-confirmed/');
@@ -301,13 +306,15 @@ class SeoTest extends TestCase
         $belgiumAnswer = $frenchIntents['belgium']['answer'];
 
         $this->assertStringContainsString('Belgique', $belgiumAnswer);
-        $this->assertStringContainsString('nord de la France', $belgiumAnswer);
-        $this->assertStringContainsString('Maastricht', $belgiumAnswer);
-        $this->assertStringContainsString('Gulpen', $belgiumAnswer);
+        $this->assertStringContainsString('Liège', $belgiumAnswer);
+        $this->assertStringContainsString('Verviers', $belgiumAnswer);
+        $this->assertStringContainsString('Bruxelles', $belgiumAnswer);
+        $this->assertStringContainsString('Anvers', $belgiumAnswer);
 
         $pricingSection = $frenchIntents['belgium']['sections'][1]['paragraphs'][1];
         $this->assertStringContainsString('25 %', $pricingSection);
         $this->assertStringContainsString('75 %', $pricingSection);
+        $this->assertStringContainsString('pendant le rendez-vous', $pricingSection);
     }
 
     public function test_about_schema_describes_brand_and_service_area(): void
@@ -319,9 +326,8 @@ class SeoTest extends TestCase
                     ->where('seo.structuredData.@type', 'Organization')
                     ->where('seo.structuredData.name', 'VVS FLAWLESS')
                     ->where('seo.structuredData.areaServed.0.name', 'Belgium')
-                    ->where('seo.structuredData.areaServed.1.name', 'Northern France')
-                    ->where('seo.structuredData.areaServed.2.name', 'Maastricht')
-                    ->where('seo.structuredData.areaServed.3.name', 'Gulpen')
+                    ->where('seo.structuredData.areaServed.1.name', 'Wallonia')
+                    ->where('seo.structuredData.areaServed.2.name', 'Flanders')
                     ->etc()
             );
     }
