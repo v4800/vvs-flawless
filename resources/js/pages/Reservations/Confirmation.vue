@@ -18,12 +18,10 @@ const props = defineProps({
 const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
-const locale = computed(() =>
-    page.props.locale === 'nl_BE' ? 'nl-BE' : 'fr-BE',
-);
+const locale = computed(() => page.props.locale.replace('_', '-'));
 
 const localizedMovement = computed(() =>
-    props.reservation.movement === 'Suisse'
+    props.reservation.movement === 'Modele presente' ? 'Modèle présenté' : props.reservation.movement === 'Suisse'
         ? translations.value.movements.suisse
         : translations.value.movements.japonais,
 );
@@ -46,10 +44,12 @@ const formatPrice = (price) => {
         :back-label="translations.confirmation.view_watch"
         :watch-href="`${localizedRoutes.watches}/${watch.id}`"
     />
-    <Head :title="translations.confirmation.title" />
+    <Head :title="translations.confirmation.title">
+        <meta name="robots" content="noindex,nofollow,noarchive" />
+    </Head>
 
     <main
-        class="relative min-h-screen overflow-hidden bg-black px-5 py-12 text-white sm:px-6"
+        class="vvs-storefront relative min-h-screen overflow-hidden px-5 py-12 text-white sm:px-6"
     >
         <!-- HALO -->
         <div

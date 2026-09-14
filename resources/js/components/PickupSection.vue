@@ -35,6 +35,15 @@ const zoneCopy = computed(() => {
                 nl: 'Netherlands',
                 nlDetail: 'Maastricht • Gulpen',
             },
+            de_BE: {
+                title: 'Übergabezonen',
+                be: 'Belgien',
+                beDetail: 'Lüttich und Umgebung',
+                fr: 'Nordfrankreich',
+                frDetail: 'Nach Vereinbarung',
+                nl: 'Niederlande',
+                nlDetail: 'Maastricht • Gulpen',
+            },
         }[page.props.locale] ?? {
             title: 'Zones de remise',
             be: 'Belgique',

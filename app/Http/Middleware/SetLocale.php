@@ -14,6 +14,7 @@ class SetLocale
         $locale = match (true) {
             $request->is('nl', 'nl/*') => 'nl_BE',
             $request->is('en', 'en/*') => 'en_BE',
+            $request->is('de', 'de/*') => 'de_BE',
             default => 'fr_BE',
         };
 

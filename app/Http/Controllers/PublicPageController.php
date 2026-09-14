@@ -254,6 +254,10 @@ class PublicPageController extends Controller
                 'href' => route('en.'.$page),
             ],
             [
+                'hreflang' => 'de-BE',
+                'href' => route('de.'.$page),
+            ],
+            [
                 'hreflang' => 'x-default',
                 'href' => route($page),
             ],

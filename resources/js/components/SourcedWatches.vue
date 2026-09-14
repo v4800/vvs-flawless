@@ -2,6 +2,8 @@
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
+
 const props = defineProps({
     models: {
         type: Array,
@@ -63,7 +65,7 @@ const imageAlt = (model) => {
     <article
         v-for="model in displayModels"
         :key="model.reference"
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border"
     >
         <div
             class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
@@ -71,7 +73,7 @@ const imageAlt = (model) => {
 
         <a
             href="#contact"
-            class="relative block aspect-[4/3] w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="relative block w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.source_request} — ${model.name}`"
         >
             <div
@@ -82,16 +84,9 @@ const imageAlt = (model) => {
                 class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
             ></div>
 
-            <img
-                :src="model.cardImage"
-                :srcset="`${model.cardImage} 720w, ${model.image} 1448w`"
-                sizes="(min-width: 1280px) 32vw, (min-width: 640px) 48vw, 100vw"
+            <WatchCardVisual
+                :src="model.cardImage || model.image"
                 :alt="imageAlt(model)"
-                width="1448"
-                height="1086"
-                loading="lazy"
-                decoding="async"
-                class="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
             />
 
             <span
@@ -103,9 +98,9 @@ const imageAlt = (model) => {
 
         <div class="relative flex flex-1 flex-col p-5">
             <h3
-                class="vvs-display-title text-center text-2xl leading-tight text-white"
+                class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
             >
-                41 mm · {{ model.name }}
+                {{ model.name }}
             </h3>
 
             <p

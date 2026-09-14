@@ -67,7 +67,11 @@ Route::get(
 Route::get('/watches', [WatchController::class, 'index'])
     ->name('watches.index');
 
-Route::get('/watches/{watch}', [WatchController::class, 'show'])
+Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+    ->whereNumber('watchId')
+    ->name('watches.legacy');
+
+Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
     ->name('watches.show');
 
 Route::post('/reservations', [ReservationController::class, 'store'])
@@ -137,7 +141,11 @@ Route::prefix('nl')
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
 
-        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+        Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+            ->whereNumber('watchId')
+            ->name('watches.legacy');
+
+        Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
             ->name('watches.show');
 
         Route::post('/reservations', [ReservationController::class, 'store'])
@@ -208,7 +216,11 @@ Route::prefix('en')
         Route::get('/watches', [WatchController::class, 'index'])
             ->name('watches.index');
 
-        Route::get('/watches/{watch}', [WatchController::class, 'show'])
+        Route::get('/watches/{watchId}', [WatchController::class, 'redirectLegacy'])
+            ->whereNumber('watchId')
+            ->name('watches.legacy');
+
+        Route::get('/watches/{watch:slug}', [WatchController::class, 'show'])
             ->name('watches.show');
 
         Route::post('/reservations', [ReservationController::class, 'store'])
@@ -217,6 +229,81 @@ Route::prefix('en')
 
         Route::get(
             '/reservation-confirmed/{reservationNumber}',
+            [ReservationController::class, 'confirmation']
+        )
+            ->middleware([
+                'signed',
+                'throttle:30,1',
+            ])
+            ->name('reservations.confirmation');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| GERMAN PUBLIC ROUTES
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('de')
+    ->name('de.')
+    ->group(function () {
+        Route::get(
+            '/reservierungsbedingungen',
+            [PublicPageController::class, 'reservationTerms']
+        )->name('reservation-terms');
+
+        Route::get('/datenschutz', [PublicPageController::class, 'privacy'])
+            ->name('privacy');
+
+        Route::get('/ueber-uns', [PublicPageController::class, 'about'])
+            ->name('about');
+
+        Route::get(
+            '/ratgeber/diamantuhr-oder-moissanit',
+            [PublicPageController::class, 'diamondVsMoissanite']
+        )->name('guides.diamond-vs-moissanite');
+
+        Route::get(
+            '/ratgeber/vvs-uhr-diamant-moissanit',
+            [PublicPageController::class, 'vvsWatch']
+        )->name('guides.vvs-watch');
+
+        Route::get(
+            '/ratgeber/diamant-moissanit-uhren-herren-damen',
+            [PublicPageController::class, 'menWomen']
+        )->name('guides.men-women');
+
+        Route::get(
+            '/belgien/moissanit-vvs-uhren',
+            [PublicPageController::class, 'belgiumWatchGuide']
+        )->name('guides.belgium');
+
+        Route::get(
+            '/',
+            function (Request $request) {
+                return redirect()->route(
+                    'de.watches.index',
+                    $request->query()
+                );
+            }
+        )->name('home');
+
+        Route::get('/uhren', [WatchController::class, 'index'])
+            ->name('watches.index');
+
+        Route::get('/uhren/{watchId}', [WatchController::class, 'redirectLegacy'])
+            ->whereNumber('watchId')
+            ->name('watches.legacy');
+
+        Route::get('/uhren/{watch:slug}', [WatchController::class, 'show'])
+            ->name('watches.show');
+
+        Route::post('/reservierungen', [ReservationController::class, 'store'])
+            ->middleware('throttle:5,1')
+            ->name('reservations.store');
+
+        Route::get(
+            '/reservierung-bestaetigt/{reservationNumber}',
             [ReservationController::class, 'confirmation']
         )
             ->middleware([
@@ -244,5 +331,7 @@ Route::middleware([
         [DashboardController::class, 'updateStatus']
     )->name('dashboard.reservations.status');
 });
+
+require __DIR__.'/vvs-reviews.php';
 
 require __DIR__.'/settings.php';

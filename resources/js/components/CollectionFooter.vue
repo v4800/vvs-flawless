@@ -18,7 +18,7 @@ const guideLinks = computed(() => {
 </script>
 
 <template>
-    <footer class="border-t border-white/10 bg-black px-6 py-10">
+    <footer class="border-t border-white/10 bg-black/60 px-6 py-10">
         <div
             class="mx-auto flex max-w-[1500px] flex-col gap-5 text-center md:flex-row md:items-center md:justify-between md:text-left"
         >

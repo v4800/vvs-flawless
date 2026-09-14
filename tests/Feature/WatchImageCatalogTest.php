@@ -44,6 +44,7 @@ class WatchImageCatalogTest extends TestCase
     {
         $original = '/images/watches/presidentielle-bleu-romains.webp';
         $photo = '/images/watches/catalog/001-blue-round/07-black-marble.webp';
+        $cardPhoto = '/images/watches/catalog/001-blue-round/07-black-marble-card.webp';
         $watch = Watch::query()->create([
             'name' => 'Blue Roman dial',
             'description' => 'Original description',
@@ -59,6 +60,7 @@ class WatchImageCatalogTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->where('watches.0.image', $photo)
+                ->where('watches.0.card_image', $cardPhoto)
                 ->where('catalogModels.0.watchUrl', route('watches.show', $watch))
                 ->etc());
 
@@ -83,9 +85,10 @@ class WatchImageCatalogTest extends TestCase
                 ->assertOk()
                 ->assertInertia(fn (Assert $page) => $page
                     ->has('watches', 0)
-                    ->has('catalogModels', 4)
+                    ->has('catalogModels', 5)
                     ->where('catalogModels.0.name', trans('site.collection.catalog_names.blue-round', [], $locale))
                     ->where('catalogModels.3.name', trans('site.collection.catalog_names.sport-black-strap', [], $locale))
+                    ->where('catalogModels.4.name', trans('site.collection.catalog_names.women-pink', [], $locale))
                     ->where('catalogModels', function ($models) {
                         foreach ($models as $model) {
                             $this->assertFileExists(public_path(ltrim($model['image'], '/')));
@@ -101,6 +104,43 @@ class WatchImageCatalogTest extends TestCase
         }
 
         $this->assertDatabaseCount('watches', 0);
+    }
+
+    public function test_catalog_photo_identity_overrides_a_stale_database_title(): void
+    {
+        $watch = new Watch([
+            'name' => 'Ancien titre cadran bleu roi',
+            'description' => 'Ancienne description.',
+            'price' => 950,
+            'japanese_price' => 950,
+            'availability' => 'Sur commande',
+            'image' => '/images/watches/classique-bleu-roi.webp',
+        ]);
+        $watch->id = 45;
+        $watch->save();
+
+        foreach ([
+            'watches.show' => 'fr_BE',
+            'nl.watches.show' => 'nl_BE',
+            'en.watches.show' => 'en_BE',
+        ] as $route => $locale) {
+            $expected = trans(
+                'site.collection.catalog_names.cadran-bleu-roi',
+                [],
+                $locale
+            );
+
+            $this->get(route($route, $watch))
+                ->assertOk()
+                ->assertInertia(fn (Assert $page) => $page
+                    ->where('watch.name', $expected)
+                    ->where(
+                        'seo.title',
+                        fn (string $title) => str_contains($title, $expected)
+                    )
+                    ->where('seo.structuredData.@graph.0.name', $expected)
+                    ->etc());
+        }
     }
 
     public function test_featured_public_catalog_images_use_optimized_webp_variants(): void
@@ -134,6 +174,21 @@ class WatchImageCatalogTest extends TestCase
                     1024 * 1024,
                     filesize($path),
                     $path.' should stay below 1 MB for public delivery.'
+                );
+            }
+
+            if (isset($entry['card_image'])) {
+                $fullPath = public_path(
+                    'images/watches/catalog/'.$entry['folder'].'/'.$entry['images'][0]
+                );
+                $cardPath = public_path(
+                    'images/watches/catalog/'.$entry['folder'].'/'.$entry['card_image']
+                );
+
+                $this->assertLessThan(
+                    filesize($fullPath),
+                    filesize($cardPath),
+                    $cardPath.' should stay lighter than the product image.'
                 );
             }
         }

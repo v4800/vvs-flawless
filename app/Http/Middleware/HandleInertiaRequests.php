@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
         $routePrefix = match (app()->getLocale()) {
             'nl_BE' => 'nl.',
             'en_BE' => 'en.',
+            'de_BE' => 'de.',
             default => '',
         };
 
@@ -89,6 +90,9 @@ class HandleInertiaRequests extends Middleware
             ],
             'auth' => [
                 'user' => $request->user(),
+            ],
+            'flash' => [
+                'success' => fn () => $request->session()->get('success'),
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

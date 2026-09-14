@@ -6,6 +6,7 @@ use App\Mail\CustomerReservationMail;
 use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -28,7 +29,7 @@ class ReservationController extends Controller
             'movement' => [
                 'required',
                 'string',
-                'in:Japonais,Suisse',
+                'in:Japonais,Suisse,Modele presente',
             ],
 
             'customer_name' => [
@@ -77,7 +78,16 @@ class ReservationController extends Controller
             (int) $validated['watch_id']
         );
 
-        if ($validated['movement'] === 'Suisse') {
+        $singleOffer = \App\Support\PresentedWatch::matches($watch);
+        abort_if(
+            $singleOffer !== ($validated['movement'] === 'Modele presente'),
+            422,
+            'Version indisponible pour ce modele.'
+        );
+
+        if ($singleOffer) {
+            $price = $watch->price;
+        } elseif ($validated['movement'] === 'Suisse') {
             $price =
                 $watch->swiss_promo_price
                 ?? $watch->swiss_price;
@@ -180,6 +190,7 @@ class ReservationController extends Controller
         $confirmationRoute = match (app()->getLocale()) {
             'nl_BE' => 'nl.reservations.confirmation',
             'en_BE' => 'en.reservations.confirmation',
+            'de_BE' => 'de.reservations.confirmation',
             default => 'reservations.confirmation',
         };
 
@@ -247,7 +258,8 @@ class ReservationController extends Controller
     }
 
     public function confirmation(
-        string $reservationNumber
+        string $reservationNumber,
+        WatchCatalog $catalog
     ): SymfonyResponse {
         $reservation =
             Reservation::query()
@@ -265,20 +277,20 @@ class ReservationController extends Controller
             404
         );
 
-        $watchName = $watch->name;
-
-        $translatedWatch = trans('watches.'.$watch->id);
-
-        if (is_array($translatedWatch)
-            && is_string($translatedWatch['name'] ?? null)) {
-            $watchName = $translatedWatch['name'];
-        }
+        $watchName = $catalog->localizedWatch($watch)->name;
 
         $dateFormat = match (app()->getLocale()) {
             'nl_BE' => 'd/m/Y \\o\\m H:i',
             'en_BE' => 'd/m/Y \\a\\t H:i',
+            'de_BE' => 'd.m.Y \\u\\m H:i',
             default => 'd/m/Y à H:i',
         };
+
+        $createdAt = $reservation->created_at;
+
+        if ($createdAt === null) {
+            abort(500, 'Reservation creation date missing.');
+        }
 
         $response =
             Inertia::render(
@@ -315,8 +327,7 @@ class ReservationController extends Controller
                         'message' => $reservation
                             ->message,
 
-                        'date' => $reservation
-                            ->created_at
+                        'date' => $createdAt
                             ->copy()
                             ->timezone(
                                 'Europe/Brussels'
@@ -349,6 +360,11 @@ class ReservationController extends Controller
         $response->headers->set(
             'Expires',
             '0'
+        );
+
+        $response->headers->set(
+            'X-Robots-Tag',
+            'noindex, nofollow, noarchive'
         );
 
         return $response;

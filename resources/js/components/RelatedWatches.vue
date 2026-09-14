@@ -2,6 +2,8 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
+
 defineProps({
     watches: {
         type: Array,
@@ -62,28 +64,27 @@ const formatPrice = (price) => {
                 <Link
                     v-for="watch in watches"
                     :key="watch.id"
-                    :href="`${localizedRoutes.watches}/${watch.id}`"
-                    class="vvs-luxury-card vvs-luxury-card--interactive group overflow-hidden rounded-2xl border"
+                    :href="`${localizedRoutes.watches}/${watch.slug}`"
+                    class="vvs-luxury-card vvs-luxury-card--interactive group flex flex-col self-stretch overflow-hidden rounded-2xl border"
                 >
-                    <div class="h-[280px] overflow-hidden bg-zinc-400">
-                        <img
-                            v-if="watch.image"
-                            :src="watch.image"
+                    <div
+                        class="relative shrink-0 overflow-hidden bg-[#070707]"
+                    >
+                        <WatchCardVisual
+                            v-if="watch.card_image || watch.image"
+                            :src="watch.card_image ?? watch.image"
                             :alt="watch.name"
-                            loading="lazy"
-                            decoding="async"
-                            class="h-full w-full object-contain transition duration-500 group-hover:scale-[1.04]"
                         />
 
                         <div
                             v-else
-                            class="flex h-full items-center justify-center text-sm text-zinc-700"
+                            class="flex aspect-[3/4] w-full items-center justify-center text-sm text-zinc-700"
                         >
                             {{ translations.related.image_soon }}
                         </div>
                     </div>
 
-                    <div class="p-5">
+                    <div class="flex flex-1 flex-col p-5">
                         <p
                             class="text-[9px] font-black tracking-[0.2em] text-amber-300 uppercase"
                         >
@@ -91,13 +92,13 @@ const formatPrice = (price) => {
                         </p>
 
                         <h3
-                            class="vvs-display-title mt-3 min-h-[48px] text-2xl leading-6"
+                            class="vvs-display-title mt-3 mb-5 min-h-[48px] text-2xl leading-6"
                         >
                             {{ watch.name }}
                         </h3>
 
                         <div
-                            class="mt-5 flex items-end justify-between gap-4 border-t border-white/10 pt-4"
+                            class="mt-auto flex items-end justify-between gap-4 border-t border-white/10 pt-4"
                         >
                             <div>
                                 <p

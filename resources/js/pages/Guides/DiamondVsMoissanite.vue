@@ -24,7 +24,7 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
 <template>
     <Head :title="seo.title" />
 
-    <div class="guide-page min-h-screen bg-black text-white">
+    <div class="vvs-storefront min-h-screen text-white">
         <VvsNavigation :back-label="translations.vvs_navigation.collection" />
 
         <main id="main-content" class="overflow-hidden">

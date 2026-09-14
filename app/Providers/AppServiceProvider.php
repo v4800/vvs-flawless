@@ -37,14 +37,21 @@ class AppServiceProvider extends ServiceProvider
             app()->isProduction(),
         );
 
-        Password::defaults(fn (): ?Password => app()->isProduction()
-            ? Password::min(12)
+        Password::defaults(function (): Password {
+            $rule = Password::min(12)
                 ->mixedCase()
                 ->letters()
                 ->numbers()
-                ->symbols()
-                ->uncompromised()
-            : null,
-        );
+                ->symbols();
+
+            // Keep the same structural password policy in local/test and
+            // production so security regressions are caught before deploy.
+            // The breached-password lookup remains production-only because it
+            // depends on an external service and would make the test suite
+            // network-dependent.
+            return app()->isProduction()
+                ? $rule->uncompromised()
+                : $rule;
+        });
     }
 }

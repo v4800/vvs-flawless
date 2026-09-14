@@ -1,18 +1,29 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const emit = defineEmits(['scroll-to-collection']);
 
 const page = usePage();
 const translations = page.props.translations;
 const hero = page.props.landingCopy.hero;
+
+const premiumTagline = computed(() => {
+    return (
+        {
+            fr_BE: 'L’éclat VVS, pensé en Belgique',
+            nl_BE: 'VVS-glans, ontworpen in België',
+            en_BE: 'VVS brilliance, designed in Belgium',
+            de_BE: 'VVS-Brillanz, entwickelt in Belgien',
+        }[page.props.locale] ?? 'L’éclat VVS, pensé en Belgique'
+    );
+});
 </script>
 
 <template>
     <section
         class="relative isolate overflow-hidden border-b border-amber-400/20"
     >
-        <div class="absolute inset-0 -z-30 bg-black"></div>
         <div
             class="hero-orb absolute top-10 -left-40 -z-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]"
         ></div>
@@ -100,7 +111,7 @@ const hero = page.props.landingCopy.hero;
                     <p
                         class="vvs-display-title text-3xl leading-tight text-amber-200 sm:text-4xl"
                     >
-                        {{ translations.hero.tagline }}
+                        {{ premiumTagline }}
                     </p>
                 </div>
 
@@ -194,7 +205,7 @@ const hero = page.props.landingCopy.hero;
                             height="1024"
                             fetchpriority="high"
                             decoding="async"
-                            class="h-full w-full object-contain p-4 transition duration-1000 group-hover:scale-[1.025] sm:p-6"
+                            class="block h-full w-full object-cover object-center"
                         />
 
                         <div

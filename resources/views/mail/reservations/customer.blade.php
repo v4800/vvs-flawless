@@ -7,9 +7,15 @@
         $watchName = $translatedWatch['name'];
     }
 
-    $movement = $reservation->movement === 'Suisse'
-        ? trans('site.movements.suisse')
-        : trans('site.movements.japonais');
+    if (\App\Support\PresentedWatch::matches($reservation->watch)) {
+        $watchName = \App\Support\PresentedWatch::localize($reservation->watch)->name;
+    }
+
+    $movement = match ($reservation->movement) {
+        'Modele presente' => 'Modèle présenté',
+        'Suisse' => trans('site.movements.suisse'),
+        default => trans('site.movements.japonais'),
+    };
 
     $deliveryMethod = $reservation->delivery_method === 'Livraison'
         ? trans('site.product.delivery')
@@ -36,7 +42,7 @@
 {{ $movement }}
 
 **{{ trans('site.mail.reserved_price') }} :**
-{{ number_format($reservation->price, 0, ',', ' ') }} €
+{{ number_format($reservation->price, 0, ',', ' ') }} â‚¬
 
 **{{ trans('site.mail.name') }} :**
 {{ $reservation->customer_name }}

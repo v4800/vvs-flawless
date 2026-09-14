@@ -9,6 +9,7 @@ final class LocalizedRoute
         return match (app()->getLocale()) {
             'nl_BE' => 'nl.'.$name,
             'en_BE' => 'en.'.$name,
+            'de_BE' => 'de.'.$name,
             default => $name,
         };
     }

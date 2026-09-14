@@ -12,6 +12,7 @@ class SeoController extends Controller
         $watches = Watch::query()
             ->select([
                 'id',
+                'slug',
                 'updated_at',
             ])
             ->orderBy('id')
@@ -43,6 +44,7 @@ class SeoController extends Controller
             'Disallow: /reservation-confirmed/',
             'Disallow: /nl/reservation-confirmed/',
             'Disallow: /en/reservation-confirmed/',
+            'Disallow: /de/reservierung-bestaetigt/',
             '',
             'Sitemap: '.route('sitemap'),
             '',

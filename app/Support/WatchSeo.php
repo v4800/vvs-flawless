@@ -148,6 +148,7 @@ final class WatchSeo
                         ],
                         'material' => trans('site.product.footer_material'),
                         'image' => $structuredImages,
+                        'additionalProperty' => $this->productProperties($watch),
                         'offers' => $this->offersForWatch($watch),
                     ],
                     [
@@ -179,8 +180,69 @@ final class WatchSeo
     /**
      * @return list<array<string, mixed>>
      */
+    private function productProperties(Watch $watch): array
+    {
+        if (PresentedWatch::matches($watch)) {
+            return [
+                ['@type' => 'PropertyValue', 'name' => 'Pierre', 'value' => 'Moissanite'],
+                ['@type' => 'PropertyValue', 'name' => 'Poids total annoncé', 'value' => '20–30 ct, à confirmer pour cet exemplaire'],
+            ];
+        }
+
+        $properties = [
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.stone'),
+                'value' => 'Moissanite VVS',
+            ],
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.color'),
+                'value' => 'D',
+            ],
+            [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.movement'),
+                'value' => trans('site.movements.japonais')
+                    .' / '
+                    .trans('site.movements.suisse'),
+            ],
+        ];
+
+        if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
+            $sizeLabel = match (app()->getLocale()) {
+                'nl_BE' => 'Diameter',
+                'en_BE' => 'Case diameter',
+                'de_BE' => 'Gehäusedurchmesser',
+                default => 'Diamètre',
+            };
+
+            $properties[] = [
+                '@type' => 'PropertyValue',
+                'name' => $sizeLabel,
+                'value' => $matches[1].' mm',
+            ];
+        }
+
+        return $properties;
+    }
+
+    /**
+     * @return list<array<string, mixed>>
+     */
     private function offersForWatch(Watch $watch): array
     {
+        if (PresentedWatch::matches($watch)) {
+            return [[
+                '@type' => 'Offer',
+                'name' => $watch->name,
+                'url' => route($this->localizedRoute->name('watches.show'), $watch),
+                'price' => (float) $watch->price,
+                'priceCurrency' => 'EUR',
+                'availability' => $this->structuredDataAvailability($watch),
+            ]];
+        }
+
         $offers = [];
         $availability = $this->structuredDataAvailability($watch);
 
@@ -264,6 +326,7 @@ final class WatchSeo
             ['hreflang' => 'fr-BE', 'href' => route('watches.index')],
             ['hreflang' => 'nl-BE', 'href' => route('nl.watches.index')],
             ['hreflang' => 'en-BE', 'href' => route('en.watches.index')],
+            ['hreflang' => 'de-BE', 'href' => route('de.watches.index')],
             ['hreflang' => 'x-default', 'href' => route('watches.index')],
         ];
     }
@@ -285,6 +348,10 @@ final class WatchSeo
             [
                 'hreflang' => 'en-BE',
                 'href' => route('en.watches.show', $watch),
+            ],
+            [
+                'hreflang' => 'de-BE',
+                'href' => route('de.watches.show', $watch),
             ],
             [
                 'hreflang' => 'x-default',
