@@ -322,32 +322,19 @@ class PublicPageController extends Controller
             ],
             [
                 '@type' => 'AdministrativeArea',
-                'name' => 'Northern France',
-            ],
-            [
-                '@type' => 'City',
-                'name' => 'Maastricht',
+                'name' => 'Wallonia',
                 'containedInPlace' => [
                     '@type' => 'Country',
-                    'name' => 'Netherlands',
+                    'name' => 'Belgium',
                 ],
             ],
             [
-                '@type' => 'City',
-                'name' => 'Gulpen',
-                'containedInPlace' => [
-                    '@type' => 'Country',
-                    'name' => 'Netherlands',
-                ],
-            ],
-            [
-                '@type' => 'City',
-                'name' => 'Liège',
+                '@type' => 'AdministrativeArea',
+                'name' => 'Flanders',
                 'containedInPlace' => [
                     '@type' => 'Country',
                     'name' => 'Belgium',
                 ],
             ],
         ];
-    }
-}
+    }}
