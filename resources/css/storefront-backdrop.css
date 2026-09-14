@@ -1,11 +1,10 @@
 /*
  * VVS storefront backdrop.
- * Keep it static and sparse: luxury lighting without a repeating texture or
- * continuous animation, so product photography and conversion content stay
- * dominant while paint cost remains low.
+ * Force the public storefront to use lighting gradients only: no marble image.
  */
-.vvs-storefront {
-    background:
+.vvs-storefront.vvs-storefront {
+    background-color: #050506 !important;
+    background-image:
         radial-gradient(
             circle 680px at 12% 7%,
             rgb(217 166 46 / 0.13),
@@ -32,6 +31,9 @@
             transparent 74%
         ),
         linear-gradient(180deg, #050506 0%, #070707 46%, #050505 100%) !important;
+    background-position: center top !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important;
 }
 
 /*
