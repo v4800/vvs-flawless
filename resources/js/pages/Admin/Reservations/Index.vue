@@ -48,6 +48,7 @@ const saving = reactive({});
 const saved = reactive({});
 const formErrors = reactive({});
 const copiedReference = ref(null);
+const copiedPhone = ref(null);
 
 const statCards = [
     { key: 'new', label: 'Nouvelles demandes' },
@@ -245,6 +246,47 @@ const copyReference = async (reservation) => {
     window.setTimeout(() => {
         copiedReference.value = null;
     }, 1800);
+};
+
+const phoneHref = (reservation) => {
+    const phone = String(reservation.phone ?? '')
+        .trim()
+        .replace(/[^\d+]/g, '');
+
+    return phone ? 'tel:' + phone : '#';
+};
+
+const copyPhone = async (reservation) => {
+    await navigator.clipboard.writeText(reservation.phone);
+    copiedPhone.value = reservation.id;
+
+    window.setTimeout(() => {
+        copiedPhone.value = null;
+    }, 1800);
+};
+
+const gmailHref = (reservation) => {
+    const subject = encodeURIComponent(
+        'Votre réservation ' +
+            reservation.reservation_number +
+            ' — VVS FLAWLESS',
+    );
+    const body = encodeURIComponent(
+        'Bonjour ' +
+            reservation.customer_name +
+            ',\n\nJe vous contacte au sujet de votre réservation ' +
+            reservation.reservation_number +
+            '.\n\nVVS FLAWLESS',
+    );
+
+    return (
+        'https://mail.google.com/mail/?view=cm&fs=1&to=' +
+        encodeURIComponent(reservation.email) +
+        '&su=' +
+        subject +
+        '&body=' +
+        body
+    );
 };
 
 const reviewMailto = (reservation) => {
@@ -671,13 +713,26 @@ const logout = () => {
                                 class="mt-4 flex flex-wrap items-center gap-2 border-t border-white/10 pt-4"
                             >
                                 <a
-                                    :href="'tel:' + reservation.phone"
+                                    :href="phoneHref(reservation)"
                                     class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
                                 >
                                     Appeler
                                 </a>
+                                <button
+                                    type="button"
+                                    class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
+                                    @click="copyPhone(reservation)"
+                                >
+                                    {{
+                                        copiedPhone === reservation.id
+                                            ? 'Téléphone copié'
+                                            : 'Copier le téléphone'
+                                    }}
+                                </button>
                                 <a
-                                    :href="'mailto:' + reservation.email"
+                                    :href="gmailHref(reservation)"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
                                 >
                                     Email
