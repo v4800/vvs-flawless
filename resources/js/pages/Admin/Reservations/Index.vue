@@ -4,6 +4,7 @@ import { reactive, ref } from 'vue';
 
 import ReservationContactActions from '@/components/admin/ReservationContactActions.vue';
 import ReservationEmailComposer from '@/components/admin/ReservationEmailComposer.vue';
+import AdminLayout from '@/layouts/AdminLayout.vue';
 
 defineOptions({
     layout: null,
@@ -255,9 +256,6 @@ const paginationLabel = (label) =>
         .replace('&laquo; Previous', 'Précédent')
         .replace('Next &raquo;', 'Suivant');
 
-const logout = () => {
-    router.post('/logout');
-};
 </script>
 
 <template>
@@ -265,70 +263,19 @@ const logout = () => {
         <meta name="robots" content="noindex,nofollow,noarchive" />
     </Head>
 
-    <main class="min-h-screen bg-[#050505] text-white">
-        <header
-            class="sticky top-0 z-40 border-b border-white/10 bg-black/90 backdrop-blur-xl"
-        >
-            <div
-                class="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8"
-            >
-                <div>
-                    <p
-                        class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                    >
-                        VVS FLAWLESS
-                    </p>
-                    <p class="mt-1 text-sm font-semibold text-zinc-300">
-                        Administration
-                    </p>
-                </div>
+    <AdminLayout
+        title="Réservations"
+        subtitle="Acompte de 25 %, préparation, vidéo, rendez-vous puis solde pendant la remise en main propre."
+    >
+        <section class="flex justify-end">
+            <p class="text-sm text-zinc-400">
+                <strong class="text-white">{{ reservations.total }}</strong>
+                résultat(s)
+            </p>
+        </section>
 
-                <nav class="flex items-center gap-2" aria-label="Administration">
-                    <span
-                        class="rounded-full border border-amber-300/30 bg-amber-300/10 px-4 py-2 text-xs font-bold text-amber-200"
-                    >
-                        Réservations
-                    </span>
-                    <button
-                        type="button"
-                        class="rounded-full border border-white/10 px-4 py-2 text-xs font-bold text-zinc-300 transition hover:border-white/30 hover:text-white"
-                        @click="logout"
-                    >
-                        Déconnexion
-                    </button>
-                </nav>
-            </div>
-        </header>
-
-        <div class="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-            <section
-                class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"
-            >
-                <div>
-                    <p
-                        class="text-xs font-black tracking-[0.28em] text-zinc-500 uppercase"
-                    >
-                        Suivi commercial 25 / 75
-                    </p>
-                    <h1
-                        class="mt-2 text-3xl font-black tracking-tight sm:text-4xl"
-                    >
-                        Réservations
-                    </h1>
-                    <p class="mt-2 max-w-2xl text-sm text-zinc-400">
-                        Acompte de 25 %, préparation, vidéo, rendez-vous puis
-                        solde de 75 % pendant la remise en main propre.
-                    </p>
-                </div>
-
-                <div class="text-sm text-zinc-400">
-                    <strong class="text-white">{{ reservations.total }}</strong>
-                    résultat(s)
-                </div>
-            </section>
-
-            <section
-                class="mt-7 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7"
+        <section
+            class="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7"
                 aria-label="Résumé des réservations"
             >
                 <article
@@ -1015,8 +962,6 @@ const logout = () => {
                     {{ paginationLabel(link.label) }}
                 </component>
             </nav>
-        </div>
-
         <ReservationEmailComposer
             v-if="emailComposer.reservation"
             :key="
@@ -1028,5 +973,5 @@ const logout = () => {
             :review-invitation="emailComposer.reviewInvitation"
             @close="closeEmailComposer"
         />
-    </main>
+    </AdminLayout>
 </template>
