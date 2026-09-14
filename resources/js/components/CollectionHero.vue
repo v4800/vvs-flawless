@@ -22,13 +22,13 @@ const premiumTagline = computed(() => {
 
 <template>
     <section
-        class="relative isolate overflow-hidden border-b border-amber-400/20"
+        class="relative isolate overflow-hidden border-b border-amber-300/20 bg-[radial-gradient(circle_at_18%_12%,rgba(251,191,36,0.08),transparent_34%),linear-gradient(180deg,#080808_0%,#040404_100%)]"
     >
         <div
             class="hero-orb absolute top-10 -left-40 -z-20 h-[500px] w-[500px] rounded-full bg-amber-500/10 blur-[150px]"
         ></div>
         <div
-            class="hero-orb absolute top-0 right-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.04] blur-[160px]"
+            class="hero-orb absolute top-0 right-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.055] blur-[160px]"
         ></div>
 
         <span
@@ -195,7 +195,7 @@ const premiumTagline = computed(() => {
                 ></div>
 
                 <div
-                    class="hero-watch group relative z-10 w-full max-w-[760px] overflow-hidden rounded-[28px] border border-white/10 bg-black shadow-[0_35px_100px_rgba(0,0,0,0.7)]"
+                    class="hero-watch group relative z-10 w-full max-w-[760px] overflow-hidden rounded-[28px] border border-white/15 bg-black shadow-[0_35px_100px_rgba(0,0,0,0.7),0_0_45px_rgba(251,191,36,0.055)]"
                 >
                     <div class="relative aspect-[4/3] overflow-hidden">
                         <img
