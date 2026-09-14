@@ -4,7 +4,7 @@ return [
     'collection_seo' => [
         'title' => 'VVS-moissanite & iced-out horloges in België | VVS FLAWLESS',
         'description' => 'Ontdek VVS FLAWLESS-horloges met kleur D VVS-moissanite: iced-out en bezette modellen voor heren, dames of een uniseks stijl, op reservatie verkrijgbaar in België.',
-        'product_suffix' => 'Horloge bezet met kleur D VVS-moissanite voor een zeer heldere iced-out uitstraling. De prijs staat op de productpagina; reservatie gebeurt online, gevolgd door persoonlijke overhandiging of levering na bevestiging.',
+        'product_suffix' => 'Horloge bezet met kleur D VVS-moissanite voor een zeer heldere iced-out uitstraling. De prijs staat op de productpagina; reservatie gebeurt online en de persoonlijke overhandiging wordt overal in België op afspraak geregeld.',
         'image_alt' => 'VVS FLAWLESS iced-out horloges bezet met kleur D VVS-moissanite',
     ],
 
@@ -39,7 +39,7 @@ return [
             [
                 'route' => 'belgiumGuide',
                 'title' => 'Reserveren in België',
-                'text' => 'Prijs, termijn, reservatie, persoonlijke overhandiging en levering: zo werkt VVS FLAWLESS.',
+                'text' => 'Prijs, termijn, voorschot en persoonlijke overhandiging: zo werkt VVS FLAWLESS.',
                 'cta' => 'Bekijk de België-gids',
             ],
         ],
@@ -150,11 +150,11 @@ return [
 
     'belgium' => [
         'seo_title' => 'VVS-moissanite & iced-out horloge in België | VVS FLAWLESS',
-        'seo_description' => 'Reserveer een kleur D VVS-moissanite horloge in België: zichtbare prijzen, indicatieve termijn, persoonlijke overhandiging of levering via VVS FLAWLESS.',
+        'seo_description' => 'Reserveer een kleur D VVS-moissanite horloge met zichtbare prijs en persoonlijke overhandiging op afspraak overal in België.',
         'eyebrow' => 'VVS FLAWLESS België',
         'title' => 'Een VVS-horloge reserveren in België',
         'intro' => 'VVS FLAWLESS biedt horloges bezet met kleur D VVS-moissanite, van klassieke bezette modellen tot uitgesproken iced-out ontwerpen. De vanafprijzen staan in de collectie vóór je een aanvraag verstuurt.',
-        'answer' => 'Je kiest je horloge op de website en verstuurt een reservatieaanvraag zonder onmiddellijke betaling. Daarna bevestigt VVS FLAWLESS rechtstreeks het model, de prijs, de termijn en de ontvangstwijze. Persoonlijke overhandiging kan worden afgesproken in België, Noord-Frankrijk en in Maastricht of Gulpen in Nederland; levering is eveneens mogelijk na bevestiging.',
+        'answer' => 'Je kiest je horloge op de website en verstuurt een aanvraag zonder onmiddellijke betaling. VVS FLAWLESS bevestigt het model, de prijs, de termijn, het adres, het uur en eventuele verplaatsingskosten vóór het voorschot. Persoonlijke overhandiging wordt overal in België op afspraak geregeld, onder meer in Luik, Verviers, Namen, Brussel, Charleroi, Antwerpen en Gent.',
         'sections' => [
             [
                 'title' => 'Kleur D VVS-moissanite',
@@ -167,14 +167,14 @@ return [
                 'title' => 'Prijs en reservatie',
                 'paragraphs' => [
                     'De collectie toont voor ieder model een vanafprijs. Het reservatieformulier veroorzaakt geen betaling; het registreert alleen je interesse en contactgegevens.',
-                    'Na bevestiging van de bestelling is het voorziene proces een voorschot van 25% om het werk te starten en het saldo van 75% nadat de afgewerkte horloge op video is getoond.',
+                    'Na bevestiging van de afspraak en de voorwaarden start een voorschot van 25% de bestelling. Daarna wordt een video van het afgewerkte horloge gestuurd; het saldo van 75% wordt tijdens de afspraak betaald, na controle van het horloge.',
                 ],
             ],
             [
                 'title' => 'Termijn en ontvangst',
                 'paragraphs' => [
                     'De gebruikelijke indicatieve termijn is 5 tot 6 werkdagen na bevestiging, afhankelijk van beschikbaarheid en voorbereiding van het model.',
-                    'Persoonlijke overhandiging kan worden afgesproken in België, Noord-Frankrijk, Maastricht of Gulpen. Bij levering worden eventuele kosten en de termijn vóór de definitieve bestelling bevestigd.',
+                    'Persoonlijke overhandiging is overal in België mogelijk op afspraak. Het adres, het uur en eventuele verplaatsingskosten worden vóór de betaling van het voorschot bevestigd.',
                 ],
             ],
             [
@@ -189,7 +189,7 @@ return [
         'faq' => [
             ['question' => 'Wat verkoopt VVS FLAWLESS?', 'answer' => 'VVS FLAWLESS biedt horloges bezet met kleur D VVS-moissanite in verschillende iced-out en bezette stijlen.'],
             ['question' => 'Moet ik betalen om een reservatie te versturen?', 'answer' => 'Nee. Het formulier veroorzaakt geen betaling. De details van de bestelling worden daarna rechtstreeks met je bevestigd.'],
-            ['question' => 'Waar kan persoonlijke overhandiging plaatsvinden?', 'answer' => 'Afhankelijk van de afspraak kan dat in België, Noord-Frankrijk, Maastricht of Gulpen in Nederland.'],
+            ['question' => 'Waar kan persoonlijke overhandiging plaatsvinden?', 'answer' => 'Dat kan overal in België op afspraak. Het adres, het uur en eventuele verplaatsingskosten worden vóór het voorschot bevestigd.'],
             ['question' => 'Wat is de termijn?', 'answer' => 'De gebruikelijke indicatieve termijn is 5 tot 6 werkdagen na bevestiging, maar wordt voor iedere bestelling gecontroleerd.'],
         ],
         'cta_title' => 'Bekijk de beschikbare horloges',
