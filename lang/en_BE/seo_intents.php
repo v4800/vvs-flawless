@@ -4,7 +4,7 @@ return [
     'collection_seo' => [
         'title' => 'VVS Moissanite & Iced-Out Watches in Belgium | VVS FLAWLESS',
         'description' => 'Discover VVS FLAWLESS watches set with colour D VVS moissanite: iced-out and fully set styles for men, women or unisex wear, available by reservation in Belgium.',
-        'product_suffix' => 'Watch set with colour D VVS moissanite for a bright iced-out look. Pricing is shown on the product page; reserve online, then choose hand delivery or shipping once confirmed.',
+        'product_suffix' => 'Watch set with colour D VVS moissanite for a bright iced-out look. Pricing is shown on the product page; reserve online, then arrange hand delivery by appointment anywhere in Belgium.',
         'image_alt' => 'VVS FLAWLESS iced-out watches set with colour D VVS moissanite',
     ],
 
@@ -39,7 +39,7 @@ return [
             [
                 'route' => 'belgiumGuide',
                 'title' => 'Reserve in Belgium',
-                'text' => 'Prices, lead time, reservations, hand delivery and shipping: see how VVS FLAWLESS works.',
+                'text' => 'Prices, lead time, deposit and hand delivery: see how VVS FLAWLESS works.',
                 'cta' => 'View the Belgium guide',
             ],
         ],
@@ -150,11 +150,11 @@ return [
 
     'belgium' => [
         'seo_title' => 'VVS Moissanite & Iced-Out Watches in Belgium | VVS FLAWLESS',
-        'seo_description' => 'Reserve a colour D VVS moissanite watch in Belgium with visible pricing, an indicative lead time, hand delivery or shipping through VVS FLAWLESS.',
+        'seo_description' => 'Reserve a colour D VVS moissanite watch with visible pricing and hand delivery by appointment anywhere in Belgium.',
         'eyebrow' => 'VVS FLAWLESS Belgium',
         'title' => 'Reserve a VVS watch in Belgium',
         'intro' => 'VVS FLAWLESS offers watches set with colour D VVS moissanite, from classic fully set pieces to bolder iced-out designs. Starting prices are visible in the collection before you send a request.',
-        'answer' => 'Choose your watch on the website and submit a reservation request with no immediate payment. VVS FLAWLESS then confirms the model, price, lead time and delivery method with you directly. Hand delivery can be arranged in Belgium, Northern France and in Maastricht or Gulpen in the Netherlands; shipping is also available when confirmed.',
+        'answer' => 'Choose your watch on the website and submit a request with no immediate payment. VVS FLAWLESS confirms the model, price, lead time, address, time and any travel fee before the deposit. Hand delivery is arranged by appointment anywhere in Belgium, including Liège, Verviers, Namur, Brussels, Charleroi, Antwerp and Ghent.',
         'sections' => [
             [
                 'title' => 'Colour D VVS moissanite',
@@ -167,14 +167,14 @@ return [
                 'title' => 'Pricing and reservation',
                 'paragraphs' => [
                     'The collection displays a starting price for each model. Submitting the reservation form does not trigger a payment; it records your interest and contact details.',
-                    'Once the order is confirmed, the planned process is a 25% deposit to begin the work, followed by the remaining 75% after the finished watch is shown to you on video.',
+                    'Once the appointment and conditions are confirmed, a 25% deposit starts the order. A video of the finished watch is then sent; the remaining 75% is paid during the appointment, after the watch has been inspected.',
                 ],
             ],
             [
                 'title' => 'Lead time and delivery',
                 'paragraphs' => [
                     'The usual indicative lead time is 5 to 6 business days after confirmation, subject to model availability and preparation.',
-                    'Hand delivery can be arranged in Belgium, Northern France, Maastricht or Gulpen. For shipping, any charges and the delivery time are confirmed before the final order.',
+                    'Hand delivery is available by appointment anywhere in Belgium. The address, time and any travel fee are confirmed before the deposit is paid.',
                 ],
             ],
             [
@@ -189,7 +189,7 @@ return [
         'faq' => [
             ['question' => 'What does VVS FLAWLESS sell?', 'answer' => 'VVS FLAWLESS offers watches set with colour D VVS moissanite in a range of iced-out and fully set styles.'],
             ['question' => 'Do I pay when I submit a reservation?', 'answer' => 'No. Submitting the form does not trigger a payment. Order details are confirmed with you afterwards.'],
-            ['question' => 'Where can hand delivery take place?', 'answer' => 'Depending on the arrangement, hand delivery can take place in Belgium, Northern France, Maastricht or Gulpen in the Netherlands.'],
+            ['question' => 'Where can hand delivery take place?', 'answer' => 'Hand delivery can be arranged by appointment anywhere in Belgium. The address, time and any travel fee are confirmed before the deposit.'],
             ['question' => 'What is the lead time?', 'answer' => 'The usual indicative lead time is 5 to 6 business days after confirmation, but it is checked for each order.'],
         ],
         'cta_title' => 'View available watches',
