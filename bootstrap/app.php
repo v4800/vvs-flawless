@@ -14,32 +14,19 @@ return Application::configure(
     basePath: dirname(__DIR__)
 )
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
+        web: [
+            __DIR__.'/../routes/web.php',
+            __DIR__.'/../routes/admin.php',
+        ],
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
 
     ->withMiddleware(
         function (Middleware $middleware): void {
-
-            /*
-            |--------------------------------------------------------------------------
-            | SECURITY HEADERS — GLOBAL
-            |--------------------------------------------------------------------------
-            |
-            | Ce middleware passe sur TOUTES les réponses HTTP.
-            |
-            */
-
             $middleware->append(
                 SecurityHeaders::class
             );
-
-            /*
-            |--------------------------------------------------------------------------
-            | COOKIES
-            |--------------------------------------------------------------------------
-            */
 
             $middleware->encryptCookies(
                 except: [
@@ -47,12 +34,6 @@ return Application::configure(
                     'sidebar_state',
                 ]
             );
-
-            /*
-            |--------------------------------------------------------------------------
-            | WEB MIDDLEWARE
-            |--------------------------------------------------------------------------
-            */
 
             $middleware->web(
                 append: [
@@ -69,7 +50,6 @@ return Application::configure(
         function (
             Exceptions $exceptions
         ): void {
-
             $exceptions->shouldRenderJsonWhen(
                 fn (Request $request) => $request->is('api/*')
                     || $request->expectsJson()
