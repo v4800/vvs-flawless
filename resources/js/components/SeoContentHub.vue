@@ -21,7 +21,7 @@ const cards = computed(() => {
 <template>
     <section
         v-if="cards.length"
-        class="border-y border-white/10 bg-zinc-950/40 px-5 py-20 sm:px-6 lg:px-10"
+        class="border-y border-white/10 bg-[radial-gradient(circle_at_50%_0%,rgba(251,191,36,0.055),transparent_38%),rgba(9,9,11,0.55)] px-5 py-20 sm:px-6 lg:px-10"
     >
         <div class="mx-auto max-w-[1400px]">
             <header class="mx-auto max-w-3xl text-center">
@@ -44,16 +44,19 @@ const cards = computed(() => {
                     class="vvs-luxury-card vvs-luxury-card--interactive group flex min-h-[230px] flex-col rounded-2xl border p-6"
                 >
                     <div
-                        class="flex h-9 w-9 items-center justify-center rounded-full border border-amber-300/25 bg-amber-300/[0.05] text-amber-200"
+                        aria-hidden="true"
+                        class="flex h-9 w-9 items-center justify-center rounded-full border border-amber-300/25 bg-amber-300/[0.06]"
                     >
-                        ✦
+                        <span
+                            class="h-2.5 w-2.5 rotate-45 border border-amber-200/80"
+                        ></span>
                     </div>
 
                     <h3 class="vvs-display-title mt-5 text-2xl leading-tight">
                         {{ card.title }}
                     </h3>
 
-                    <p class="mt-3 flex-1 text-sm leading-6 text-zinc-500">
+                    <p class="mt-3 flex-1 text-sm leading-6 text-zinc-400">
                         {{ card.text }}
                     </p>
 
