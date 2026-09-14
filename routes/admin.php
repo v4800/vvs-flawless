@@ -27,6 +27,13 @@ Route::middleware([
                 [ReservationDashboardController::class, 'update']
             )->name('reservations.update');
 
+            Route::post(
+                '/reservations/{reservation}/email',
+                [ReservationDashboardController::class, 'sendEmail']
+            )
+                ->middleware('throttle:10,1')
+                ->name('reservations.email');
+
             Route::patch(
                 '/reservations/{reservation}/archive',
                 [ReservationDashboardController::class, 'archive']
