@@ -35,6 +35,7 @@ class SeoController extends Controller
         $content = implode(PHP_EOL, [
             'User-agent: *',
             'Allow: /',
+            'Disallow: /admin',
             'Disallow: /dashboard',
             'Disallow: /settings',
             'Disallow: /login',
