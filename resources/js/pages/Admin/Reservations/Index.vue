@@ -316,7 +316,10 @@ const sendReservationEmail = () => {
         },
         {
             preserveScroll: true,
-            onSuccess: () => closeEmailComposer(),
+            onSuccess: () => {
+                emailComposer.sending = false;
+                closeEmailComposer();
+            },
             onError: (errors) => {
                 emailComposer.errors = errors;
             },
