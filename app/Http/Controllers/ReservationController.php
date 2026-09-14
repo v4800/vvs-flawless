@@ -29,7 +29,7 @@ class ReservationController extends Controller
             'movement' => [
                 'required',
                 'string',
-                'in:Japonais,Suisse',
+                'in:Japonais,Suisse,Modele presente',
             ],
 
             'customer_name' => [
@@ -78,7 +78,16 @@ class ReservationController extends Controller
             (int) $validated['watch_id']
         );
 
-        if ($validated['movement'] === 'Suisse') {
+        $singleOffer = \App\Support\PresentedWatch::matches($watch);
+        abort_if(
+            $singleOffer !== ($validated['movement'] === 'Modele presente'),
+            422,
+            'Version indisponible pour ce modele.'
+        );
+
+        if ($singleOffer) {
+            $price = $watch->price;
+        } elseif ($validated['movement'] === 'Suisse') {
             $price =
                 $watch->swiss_promo_price
                 ?? $watch->swiss_price;

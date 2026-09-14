@@ -47,9 +47,9 @@ return [
         'description' => 'Eine silber- und goldfarbene Bicolor-Ausführung rund um ein Champagner-Zifferblatt, mit besetzter Lünette und Iced-Out-Armband aus VVS-Moissanit in Farbe D.',
     ],
     51 => [
-        'name' => '41 mm · Roségold, olivgrünes Zifferblatt',
-        'short_description' => 'Olivgrünes Zifferblatt und roségoldfarbene Ausführung.',
-        'description' => 'Das olivgrüne Zifferblatt kontrastiert mit der roségoldfarbenen Ausführung. VVS-Moissanit in Farbe D bringt zusätzlichen Glanz in diese markante Farbkombination.',
+        'name' => 'Blau · Römische Ziffern, silberfarbenes Armband',
+        'short_description' => 'Blaues Zifferblatt und silberfarbenes Armband mit Steinbesatz.',
+        'description' => 'Blaues Zifferblatt mit römischen Ziffern, Tages- und Datumsanzeige, rundes Gehäuse und silberfarbenes Armband mit Moissanitbesatz.',
     ],
     52 => [
         'name' => '41 mm · Blau, römische Ziffern',

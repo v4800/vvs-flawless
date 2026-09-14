@@ -21,7 +21,7 @@ const translations = computed(() => page.props.translations);
 const locale = computed(() => page.props.locale.replace('_', '-'));
 
 const localizedMovement = computed(() =>
-    props.reservation.movement === 'Suisse'
+    props.reservation.movement === 'Modele presente' ? 'Modèle présenté' : props.reservation.movement === 'Suisse'
         ? translations.value.movements.suisse
         : translations.value.movements.japonais,
 );

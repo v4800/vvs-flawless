@@ -1,13 +1,15 @@
 {
     "version": 2,
-    "next_watch_id": 19,
+    "next_watch_id": 20,
     "naming_rule": "NNN-model-slug/NN-view.ext",
     "watches": [
         {
             "id": 1,
             "slug": "blue-round",
             "folder": "001-blue-round",
-            "images": ["07-black-marble.webp"],
+            "images": [
+                "07-black-marble.webp"
+            ],
             "featured": true,
             "archived_images": [
                 "01-front.png",
@@ -51,37 +53,52 @@
             "id": 3,
             "slug": "square-roman",
             "folder": "003-square-roman",
-            "images": ["01-front.png", "02-front-variant.png"],
+            "images": [
+                "01-front.png",
+                "02-front-variant.png"
+            ],
             "featured": false
         },
         {
             "id": 4,
             "slug": "black-square",
             "folder": "004-black-square",
-            "images": ["04-black-marble.webp"],
+            "images": [
+                "04-black-marble.webp"
+            ],
             "featured": true,
-            "archived_images": ["01-front.jpg", "02-angle.jpg", "03-hand.jpg"],
+            "archived_images": [
+                "01-front.jpg",
+                "02-angle.jpg",
+                "03-hand.jpg"
+            ],
             "card_image": "04-black-marble-card.webp"
         },
         {
             "id": 5,
             "slug": "black-stainless",
             "folder": "005-black-stainless",
-            "images": ["01-front.webp"],
+            "images": [
+                "01-front.webp"
+            ],
             "featured": false
         },
         {
             "id": 6,
             "slug": "red-roman",
             "folder": "006-red-roman",
-            "images": ["01-front.webp"],
+            "images": [
+                "01-front.webp"
+            ],
             "featured": false
         },
         {
             "id": 7,
             "slug": "jubilee",
             "folder": "007-jubilee",
-            "images": ["01-front.jpg"],
+            "images": [
+                "01-front.jpg"
+            ],
             "featured": false
         },
         {
@@ -104,7 +121,11 @@
             "id": 9,
             "slug": "gold-black-daydate",
             "folder": "009-gold-black-daydate",
-            "images": ["01-front.webp", "02-angle.webp", "03-back.webp"],
+            "images": [
+                "01-front.webp",
+                "02-angle.webp",
+                "03-back.webp"
+            ],
             "featured": false,
             "card_image": "01-front-card.webp",
             "legacy_images": [
@@ -129,7 +150,11 @@
             "id": 11,
             "slug": "square-bicolor-paved",
             "folder": "011-square-bicolor-paved",
-            "images": ["01-front.webp", "02-side.webp", "03-bracelet.webp"],
+            "images": [
+                "01-front.webp",
+                "02-side.webp",
+                "03-bracelet.webp"
+            ],
             "featured": false,
             "card_image": "01-front-card.webp"
         },
@@ -149,7 +174,11 @@
             "id": 13,
             "slug": "women-square-36",
             "folder": "013-women-square-36",
-            "images": ["01-front.webp", "02-angle.webp", "03-bracelet.webp"],
+            "images": [
+                "01-front.webp",
+                "02-angle.webp",
+                "03-bracelet.webp"
+            ],
             "featured": false,
             "card_image": "01-front-card.webp"
         },
@@ -157,9 +186,12 @@
             "id": 14,
             "slug": "presidentielle-bicolore-romains",
             "folder": "014-presidentielle-bicolore-romains",
-            "images": ["01-front.webp", "02-front-vertical.webp"],
+            "images": [
+                "vvs-carree-cuir-front-v1.webp",
+                "vvs-carree-cuir-back-v1.webp"
+            ],
             "featured": false,
-            "card_image": "01-front.webp",
+            "card_image": "vvs-carree-cuir-card-v1.webp",
             "legacy_images": [
                 "/images/watches/presidentielle-or-jaune.webp",
                 "/images/watches/presidentielle-or-jaune.png"
@@ -186,9 +218,14 @@
             "id": 16,
             "slug": "presidentielle-bicolore-champagne",
             "folder": "016-presidentielle-bicolore-champagne",
-            "images": ["01-front.webp", "02-angle.webp"],
+            "images": [
+                "05-pave-front.webp",
+                "06-pave-angle.webp",
+                "07-pave-bracelet.webp",
+                "08-pave-horizontal.webp"
+            ],
             "featured": false,
-            "card_image": "01-front.webp",
+            "card_image": "05-pave-front-card.webp",
             "legacy_images": [
                 "/images/watches/presidentielle-or-jaune-cannelee.webp",
                 "/images/watches/presidentielle-or-jaune-cannelee.png"
@@ -198,7 +235,11 @@
             "id": 17,
             "slug": "cadran-bleu-roi",
             "folder": "001-blue-round",
-            "images": ["01-front.webp", "02-angle.webp", "03-bracelet.webp"],
+            "images": [
+                "01-front.webp",
+                "02-angle.webp",
+                "03-bracelet.webp"
+            ],
             "featured": false,
             "card_image": "01-front.webp",
             "legacy_images": [
@@ -213,7 +254,8 @@
             "images": [
                 "01-front.webp",
                 "02-angle.webp",
-                "03-front-horizontal.webp"
+                "03-bracelet.webp",
+                "04-back.webp"
             ],
             "featured": false,
             "card_image": "01-front-card.webp",
@@ -221,6 +263,19 @@
                 "/images/watches/chronographe-camouflage.webp",
                 "/images/watches/chronographe-camouflage.png"
             ]
+        },
+        {
+            "id": 19,
+            "slug": "bleue-argent-romains",
+            "folder": "019-bleue-argent-romains",
+            "images": [
+                "01-front.webp",
+                "02-angle.webp",
+                "03-side.webp",
+                "04-clasp.webp"
+            ],
+            "featured": false,
+            "card_image": "01-front-card.webp"
         }
     ]
 }

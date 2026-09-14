@@ -47,9 +47,9 @@ return [
         'description' => 'A silver-and-gold two-tone finish around a champagne dial, with a stone-set bezel and iced-out bracelet in D-colour VVS moissanite.',
     ],
     51 => [
-        'name' => '41 mm · Rose gold, olive dial',
-        'short_description' => 'Olive dial and rose-gold-tone finish.',
-        'description' => 'The olive dial contrasts with the rose-gold-tone finish. D-colour VVS moissanite adds light without overwhelming the colour combination.',
+        'name' => 'Blue · Roman numerals, silver-tone bracelet',
+        'short_description' => 'Blue dial and stone-set silver-tone bracelet.',
+        'description' => 'Blue Roman-numeral dial, day and date display, round case and silver-tone bracelet set with moissanite.',
     ],
     52 => [
         'name' => '41 mm · Blue, Roman numerals',

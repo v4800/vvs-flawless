@@ -1,4 +1,5 @@
 <script setup>
+import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import { onBeforeUnmount, onMounted } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
@@ -259,6 +260,7 @@ onBeforeUnmount(() => {
             <PickupSection />
             <FaqSection />
             <ContactSection />
+            <CustomerConfidence />
         </main>
 
         <CollectionFooter />

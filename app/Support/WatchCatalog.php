@@ -27,6 +27,10 @@ final class WatchCatalog
 
     public function localizedWatch(Watch $watch): Watch
     {
+        if (PresentedWatch::matches($watch)) {
+            return PresentedWatch::localize($watch);
+        }
+
         $translation = trans('watches.'.$watch->id);
 
         $entry = $this->catalogEntryForWatch($watch);

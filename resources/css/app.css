@@ -671,3 +671,36 @@
         transition-duration: 0.01ms;
     }
 }
+
+/* Remplissage des photos du catalogue */
+.watch-card > a:first-of-type {
+    display: block !important;
+    width: 100% !important;
+    padding: 0 !important;
+}
+
+.watch-card > a:first-of-type > div:has(> img) {
+    position: relative !important;
+    width: 100% !important;
+    max-width: none !important;
+    aspect-ratio: 3 / 4 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+.watch-card > a:first-of-type img {
+    position: absolute !important;
+    inset: 0 !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+}

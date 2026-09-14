@@ -182,6 +182,13 @@ final class WatchSeo
      */
     private function productProperties(Watch $watch): array
     {
+        if (PresentedWatch::matches($watch)) {
+            return [
+                ['@type' => 'PropertyValue', 'name' => 'Pierre', 'value' => 'Moissanite'],
+                ['@type' => 'PropertyValue', 'name' => 'Poids total annoncé', 'value' => '20–30 ct, à confirmer pour cet exemplaire'],
+            ];
+        }
+
         $properties = [
             [
                 '@type' => 'PropertyValue',
@@ -225,6 +232,17 @@ final class WatchSeo
      */
     private function offersForWatch(Watch $watch): array
     {
+        if (PresentedWatch::matches($watch)) {
+            return [[
+                '@type' => 'Offer',
+                'name' => $watch->name,
+                'url' => route($this->localizedRoute->name('watches.show'), $watch),
+                'price' => (float) $watch->price,
+                'priceCurrency' => 'EUR',
+                'availability' => $this->structuredDataAvailability($watch),
+            ]];
+        }
+
         $offers = [];
         $availability = $this->structuredDataAvailability($watch);
 

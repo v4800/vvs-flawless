@@ -47,9 +47,9 @@ return [
         'description' => 'Une finition bicolore argent et or autour d’un cadran champagne, avec lunette sertie et bracelet iced-out en moissanite VVS couleur D.',
     ],
     51 => [
-        'name' => '41 mm · Or rose, cadran olive',
-        'short_description' => 'Cadran olive et finition or rose.',
-        'description' => 'Le cadran vert olive contraste avec la finition couleur or rose. La moissanite VVS couleur D apporte de la lumière sans effacer cette association de couleurs.',
+        'name' => 'Bleue · Chiffres romains, bracelet argenté',
+        'short_description' => 'Cadran bleu, finition argentée et bracelet serti.',
+        'description' => 'Cadran bleu à chiffres romains, affichage du jour et de la date, boîtier rond et bracelet argenté sertis de moissanite.',
     ],
     52 => [
         'name' => '41 mm · Bleue, chiffres romains',

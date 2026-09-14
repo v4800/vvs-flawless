@@ -47,9 +47,9 @@ return [
         'description' => 'Een zilver-goudkleurige afwerking rond een champagne wijzerplaat, met bezette lunette en iced-out armband in VVS-moissanite kleur D.',
     ],
     51 => [
-        'name' => '41 mm · Roségoud, olijfgroen',
-        'short_description' => 'Olijfgroene wijzerplaat, roségoudkleurig.',
-        'description' => 'De olijfgroene wijzerplaat contrasteert met de roségoudkleurige afwerking. De VVS-moissanite in kleur D brengt licht in die opvallende kleurencombinatie.',
+        'name' => 'Blauw · Romeinse cijfers, zilverkleurige band',
+        'short_description' => 'Blauwe wijzerplaat en zilverkleurige band met stenen.',
+        'description' => 'Blauwe wijzerplaat met Romeinse cijfers, dag- en datumaanduiding, ronde kast en zilverkleurige band bezet met moissaniet.',
     ],
     52 => [
         'name' => '41 mm · Blauw, Romeinse cijfers',

@@ -332,4 +332,6 @@ Route::middleware([
     )->name('dashboard.reservations.status');
 });
 
+require __DIR__.'/vvs-reviews.php';
+
 require __DIR__.'/settings.php';

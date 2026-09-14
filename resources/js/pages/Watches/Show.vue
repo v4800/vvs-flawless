@@ -1,4 +1,6 @@
 <script setup>
+import PresentedWatchOffer from '@/components/PresentedWatchOffer.vue';
+import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
@@ -64,7 +66,7 @@ const deliveryOptions = computed(() => [
 ]);
 
 const localizedMovement = computed(() =>
-    form.movement === 'Suisse'
+    props.watch.single_offer ? 'Modèle présenté' : form.movement === 'Suisse'
         ? translations.value.movements.suisse
         : translations.value.movements.japonais,
 );
@@ -72,7 +74,7 @@ const localizedMovement = computed(() =>
 vueWatch(
     () => props.selectedMovement,
     (movement) => {
-        form.movement = movement === 'Suisse' ? 'Suisse' : 'Japonais';
+        form.movement = props.watch.single_offer ? 'Modele presente' : movement === 'Suisse' ? 'Suisse' : 'Japonais';
     },
     {
         immediate: true,
@@ -83,6 +85,7 @@ vueWatch(
     () => props.watch.id,
     (watchId) => {
         form.watch_id = watchId;
+        form.movement = props.watch.single_offer ? 'Modele presente' : props.selectedMovement === 'Suisse' ? 'Suisse' : 'Japonais';
         activeImage.value = props.gallery[0] ?? props.watch.image;
     },
 );
@@ -95,6 +98,7 @@ vueWatch(
 );
 
 const selectedPrice = computed(() => {
+    if (props.watch.single_offer) return Number(props.watch.price);
     if (form.movement === 'Suisse') {
         return Number(
             props.watch.swiss_promo_price ?? props.watch.swiss_price ?? 0,
@@ -107,6 +111,7 @@ const selectedPrice = computed(() => {
 });
 
 const selectedOldPrice = computed(() => {
+    if (props.watch.single_offer) return 0;
     if (form.movement === 'Suisse') {
         return Number(props.watch.swiss_price ?? 0);
     }
@@ -185,7 +190,9 @@ const submit = () => {
                         @select-image="activeImage = $event"
                     />
 
+                    <PresentedWatchOffer v-if="watch.single_offer" :watch="watch" />
                     <ProductConfiguration
+                        v-else
                         :watch="watch"
                         :translations="translations"
                         :localized-routes="localizedRoutes"
@@ -197,7 +204,7 @@ const submit = () => {
                 </div>
             </section>
 
-            <ProductSpecs :watch="watch" :translations="translations" />
+            <ProductSpecs v-if="!watch.single_offer" :watch="watch" :translations="translations" />
 
             <PurchaseGuide />
 
@@ -213,6 +220,7 @@ const submit = () => {
             />
 
             <RelatedWatches :watches="relatedWatches" />
+            <CustomerConfidence />
         </main>
 
         <footer class="border-t border-white/10 px-6 py-9">
@@ -270,7 +278,9 @@ const submit = () => {
             </div>
         </footer>
 
+        <a v-if="watch.single_offer" href="#reservation" class="fixed inset-x-4 bottom-4 z-40 rounded-xl bg-amber-300 p-4 text-center font-bold text-black lg:hidden">550 € · Réserver</a>
         <MobileReservationBar
+            v-else
             :movement="form.movement"
             :price="selectedPrice"
         />
