@@ -47,7 +47,7 @@ return [
         'source_details' => 'Contact us for the price, options and lead time for this model.',
         'source_view' => 'View this model',
         'catalog_names' => [
-            'blue-round' => '41 mm · Blue, Roman numerals',
+            'blue-round' => '41 mm · Silver, pink pavé dial',
             'twotone-round' => '41 mm · Two-tone, champagne dial',
             'square-roman' => '41 mm · Two-tone square, Roman numerals',
             'black-square' => '41 mm · Black square, Roman numerals',

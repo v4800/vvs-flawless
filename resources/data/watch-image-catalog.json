@@ -8,7 +8,12 @@
             "slug": "blue-round",
             "folder": "001-blue-round",
             "images": [
-                "07-black-marble.webp"
+                "08-pink-pave-front.webp",
+                "09-pink-pave-front-vertical.webp",
+                "10-pink-pave-angle.webp",
+                "11-pink-pave-side.webp",
+                "12-pink-pave-clasp.webp",
+                "13-pink-pave-clasp-vertical.webp"
             ],
             "featured": true,
             "archived_images": [
@@ -17,9 +22,11 @@
                 "03-angle-top.png",
                 "04-side-bracelet.png",
                 "05-bracelet-vertical.png",
-                "06-bracelet-clasp.png"
+                "06-bracelet-clasp.png",
+                "07-black-marble.webp",
+                "07-black-marble-card.webp"
             ],
-            "card_image": "07-black-marble-card.webp",
+            "card_image": "08-pink-pave-front-card.webp",
             "legacy_images": [
                 "/images/watches/presidentielle-bleu-romains.webp",
                 "/images/watches/presidentielle-bleu-romains.png"

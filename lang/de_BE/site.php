@@ -46,7 +46,7 @@ return array_replace_recursive($base, [
         'source_details' => 'Kontaktiere uns für Preis, Optionen und Lieferzeit dieses Modells.',
         'source_view' => 'Modell ansehen',
         'catalog_names' => [
-            'blue-round' => '41 mm · Blau, römische Ziffern',
+            'blue-round' => '41 mm · Silberfarben, roséfarbenes Pavé-Zifferblatt',
             'twotone-round' => '41 mm · Bicolor, Champagner-Zifferblatt',
             'square-roman' => '41 mm · Bicolor eckig, römische Ziffern',
             'black-square' => '41 mm · Schwarz eckig, römische Ziffern',

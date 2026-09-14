@@ -47,7 +47,7 @@ return [
         'source_details' => 'Vraag ons naar de prijs, de opties en de levertijd van dit model.',
         'source_view' => 'Bekijk het model',
         'catalog_names' => [
-            'blue-round' => '41 mm · Blauw, Romeinse cijfers',
+            'blue-round' => '41 mm · Zilverkleurig, roze pavéwijzerplaat',
             'twotone-round' => '41 mm · Tweekleurig, champagne wijzerplaat',
             'square-roman' => '41 mm · Tweekleurig vierkant, Romeinse cijfers',
             'black-square' => '41 mm · Zwart vierkant, Romeinse cijfers',

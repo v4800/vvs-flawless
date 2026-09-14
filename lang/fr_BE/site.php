@@ -48,7 +48,7 @@ return [
         'source_details' => 'Contactez-nous pour le prix, les options et le délai de ce modèle.',
         'source_view' => 'Voir le modèle',
         'catalog_names' => [
-            'blue-round' => '41 mm · Bleue, chiffres romains',
+            'blue-round' => '41 mm · Argentée, cadran pavé rose',
             'twotone-round' => '41 mm · Bicolore, cadran champagne',
             'square-roman' => '41 mm · Carrée bicolore, chiffres romains',
             'black-square' => '41 mm · Carrée noire, chiffres romains',
