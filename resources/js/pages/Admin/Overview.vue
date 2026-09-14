@@ -1,6 +1,10 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 
+defineOptions({
+    layout: null,
+});
+
 import AdminLayout from '@/layouts/AdminLayout.vue';
 
 defineProps({
