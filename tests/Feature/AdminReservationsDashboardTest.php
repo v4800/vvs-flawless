@@ -2,11 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Mail\AdminReservationContactMail;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Watch;
 use App\Support\ReservationWorkflow;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -54,7 +56,7 @@ class AdminReservationsDashboardTest extends TestCase
         ]);
 
         $watch->update([
-            'name' => 'Montre renommÃ©e',
+            'name' => 'Montre renommée',
             'image' => '/nouvelle.webp',
         ]);
 
@@ -156,9 +158,9 @@ class AdminReservationsDashboardTest extends TestCase
                     'status' => ReservationWorkflow::DEPOSIT_PAID,
                     'deposit_paid_at' => '2026-09-14 18:00:00',
                     'appointment_at' => '2026-09-16 14:30:00',
-                    'handover_address' => 'LiÃ¨ge, Belgique',
+                    'handover_address' => 'Liège, Belgique',
                     'travel_fee' => 25,
-                    'admin_notes' => 'Adresse confirmÃ©e avec le client.',
+                    'admin_notes' => 'Adresse confirmée avec le client.',
                     'is_test' => false,
                 ]
             )
@@ -167,7 +169,7 @@ class AdminReservationsDashboardTest extends TestCase
         $this->assertDatabaseHas('reservations', [
             'id' => $reservation->id,
             'status' => ReservationWorkflow::DEPOSIT_PAID,
-            'handover_address' => 'LiÃ¨ge, Belgique',
+            'handover_address' => 'Liège, Belgique',
             'travel_fee' => 25,
         ]);
 
@@ -186,7 +188,7 @@ class AdminReservationsDashboardTest extends TestCase
         $this->actingAs($this->admin())
             ->patch(
                 route('admin.reservations.update', $reservation),
-                ['status' => 'PAYÃ‰E-PAR-HACKER']
+                ['status' => 'PAYÉE-PAR-HACKER']
             )
             ->assertSessionHasErrors('status');
 
@@ -244,6 +246,48 @@ class AdminReservationsDashboardTest extends TestCase
         $this->assertNull($archived->refresh()->archived_at);
     }
 
+    public function test_admin_can_send_an_email_from_the_dashboard(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'contact-client@example.com',
+            'reservation_number' => 'VVS-EMAIL-TEST',
+        ]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.email', $reservation), [
+                'subject' => 'Votre réservation VVS-EMAIL-TEST',
+                'message' => 'Votre montre est prête.',
+            ])
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            AdminReservationContactMail::class,
+            fn (AdminReservationContactMail $mail): bool => $mail
+                ->hasTo('contact-client@example.com')
+                && $mail->subjectLine === 'Votre réservation VVS-EMAIL-TEST'
+                && $mail->messageBody === 'Votre montre est prête.'
+        );
+    }
+
+    public function test_non_admin_cannot_send_a_reservation_email(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch());
+
+        $this->actingAs(User::factory()->create(['is_admin' => false]))
+            ->post(route('admin.reservations.email', $reservation), [
+                'subject' => 'Tentative',
+                'message' => 'Message interdit.',
+            ])
+            ->assertForbidden();
+
+        Mail::assertNothingSent();
+    }
+
     public function test_review_invitation_is_only_enabled_after_completion(): void
     {
         $watch = $this->watch();
@@ -291,7 +335,7 @@ class AdminReservationsDashboardTest extends TestCase
             'japanese_promo_price' => 950,
             'swiss_price' => 1600,
             'swiss_promo_price' => 1350,
-            'description' => 'Montre utilisÃ©e pour les tests du dashboard.',
+            'description' => 'Montre utilisée pour les tests du dashboard.',
             'availability' => 'Disponible',
             'stock_quantity' => 1,
             'image' => $image,
@@ -312,7 +356,7 @@ class AdminReservationsDashboardTest extends TestCase
             'customer_name' => 'Client Dashboard',
             'email' => 'client@example.com',
             'phone' => '0470000000',
-            'city' => 'LiÃ¨ge',
+            'city' => 'Liège',
             'delivery_method' => 'Remise en main propre',
             'status' => ReservationWorkflow::NEW,
             'reservation_number' => 'VVS-'.strtoupper(str()->random(12)),

@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\SendReservationEmailRequest;
 use App\Http\Requests\Admin\UpdateReservationRequest;
+use App\Mail\AdminReservationContactMail;
 use App\Models\Reservation;
 use App\Models\Watch;
 use App\Support\ReservationWorkflow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
+use Throwable;
 use Inertia\Response;
 
 class ReservationDashboardController extends Controller
@@ -119,6 +123,29 @@ class ReservationDashboardController extends Controller
         $reservation->save();
 
         return back()->with('success', 'Réservation mise à jour.');
+    }
+
+    public function sendEmail(
+        SendReservationEmailRequest $request,
+        Reservation $reservation
+    ): RedirectResponse {
+        $validated = $request->validated();
+
+        try {
+            Mail::to($reservation->email)->send(
+                new AdminReservationContactMail(
+                    $reservation,
+                    $validated['subject'],
+                    $validated['message']
+                )
+            );
+        } catch (Throwable) {
+            return back()->withErrors([
+                'email_message' => 'L’email n’a pas pu être envoyé. Vérifie la configuration mail du site.',
+            ]);
+        }
+
+        return back()->with('success', 'Email envoyé au client.');
     }
 
     public function archive(
