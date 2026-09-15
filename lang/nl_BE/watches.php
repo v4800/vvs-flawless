@@ -27,9 +27,9 @@ return [
         'description' => 'De geometrische kast, champagne wijzerplaat en volledig bezette geïntegreerde armband vormen een helder en strak geheel.',
     ],
     47 => [
-        'name' => '41 mm · Geometrisch geelgoud, groene wijzerplaat',
-        'short_description' => 'Geelgouden afwerking, groene wijzerplaat en volledig bezette band.',
-        'description' => 'Een geometrisch model in geelgoud met een getextureerde groene wijzerplaat, bezette lunette en volledig iced-out band met VVS-moissaniet in kleur D.',
+        'name' => '41 mm · Geometrisch tapisserie',
+        'short_description' => 'Wijzerplaat met reliëf, geïntegreerde armband.',
+        'description' => 'De getextureerde tapisserie-wijzerplaat brengt reliëf in de geometrische kast. De VVS-moissanite in kleur D maakt de sportief-geklede look compleet.',
     ],
     48 => [
         'name' => '41 mm · Tweekleurig presidentieel',

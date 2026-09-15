@@ -27,9 +27,9 @@ return [
         'description' => 'The geometric case, champagne dial and fully set integrated bracelet create a clean, bright silhouette.',
     ],
     47 => [
-        'name' => '41 mm · Yellow gold geometric, green dial',
-        'short_description' => 'Yellow-gold finish, green dial and fully stone-set bracelet.',
-        'description' => 'A yellow-gold geometric design with a textured green dial, stone-set bezel and fully iced-out bracelet in D-colour VVS moissanite.',
+        'name' => '41 mm · Geometric tapisserie',
+        'short_description' => 'Textured dial and integrated bracelet.',
+        'description' => 'The textured dial adds depth to the geometric silhouette. D-colour VVS moissanite gives it a sporty yet dressed-up character.',
     ],
     48 => [
         'name' => '41 mm · Two-tone presidential',

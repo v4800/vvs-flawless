@@ -60,7 +60,7 @@ return array_replace_recursive($base, [
             'women-pink' => '36 mm · Damenuhr, rosa Zifferblatt',
             'women-square-36' => '36 mm · Eckige Damenuhr, weißes Zifferblatt',
             'presidentielle-bicolore-romains' => '41 mm · Präsidentiell Roségold',
-            'geometrique-bicolore' => '41 mm · Geometrisch in Gelbgold, grünes Zifferblatt',
+            'geometrique-bicolore' => '41 mm · Geometrisch, Champagner-Zifferblatt',
             'presidentielle-bicolore-champagne' => '41 mm · Präsidentiell bicolor, Champagner-Zifferblatt',
             'cadran-bleu-roi' => '41 mm · Bicolor, Champagner-Zifferblatt',
         ],
