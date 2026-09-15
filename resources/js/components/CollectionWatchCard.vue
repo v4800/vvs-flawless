@@ -90,17 +90,6 @@ const formattedPrice = computed(() => {
                     :availability="watch.availability"
                 />
             </div>
-
-            <span
-                aria-hidden="true"
-                class="bling-sparkle absolute top-[21%] right-[13%] text-2xl text-white"
-                >✦</span
-            >
-            <span
-                aria-hidden="true"
-                class="bling-sparkle absolute bottom-[22%] left-[13%] text-lg text-amber-200"
-                >✦</span
-            >
         </Link>
 
         <div class="relative flex flex-1 flex-col p-5">

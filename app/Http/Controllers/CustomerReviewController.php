@@ -20,6 +20,7 @@ class CustomerReviewController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
+            'watch_id' => ['nullable', 'integer', 'exists:watches,id'],
             'display_name' => ['required', 'string', 'min:2', 'max:50'],
             'rating' => ['required', 'integer', 'between:1,5'],
             'body' => ['required', 'string', 'min:20', 'max:2000'],
@@ -27,6 +28,7 @@ class CustomerReviewController extends Controller
             'website' => ['nullable', 'string', 'max:0'],
         ]);
         DB::table('vvs_customer_reviews')->insert([
+            'watch_id' => $data['watch_id'] ?? null,
             'display_name' => trim($data['display_name']),
             'rating' => (int) $data['rating'],
             'body' => trim($data['body']),
@@ -34,8 +36,13 @@ class CustomerReviewController extends Controller
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        $message = 'Merci. Votre avis a été reçu et attend la modération avant publication.';
 
-        return redirect()->route('vvs.reviews.index')->with('review_status', 'Merci. Votre avis a été reçu et attend la modération avant publication.');
+        if (filled($data['watch_id'] ?? null)) {
+            return redirect()->back()->with('review_status', $message);
+        }
+
+        return redirect('/avis-clients')->with('review_status', $message);
     }
 
     public function moderate()

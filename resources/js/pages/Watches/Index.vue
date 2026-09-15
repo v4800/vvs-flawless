@@ -1,7 +1,7 @@
 <script setup>
 import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, usePage } from '@inertiajs/vue3';
-import { onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted } from 'vue';
 import { animate, createTimeline, stagger } from 'animejs';
 
 import VvsNavigation from '@/components/VvsNavigation.vue';
@@ -17,6 +17,8 @@ import CollectionHero from '@/components/CollectionHero.vue';
 import CollectionWatchCard from '@/components/CollectionWatchCard.vue';
 import CollectionValueSections from '@/components/CollectionValueSections.vue';
 import CollectionFooter from '@/components/CollectionFooter.vue';
+import CollectionFilters from '@/components/CollectionFilters.vue';
+import CollectionPagination from '@/components/CollectionPagination.vue';
 
 const props = defineProps({
     watches: {
@@ -27,6 +29,18 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    filters: {
+        type: Object,
+        required: true,
+    },
+    filterOptions: {
+        type: Object,
+        required: true,
+    },
+    pagination: {
+        type: Object,
+        required: true,
+    },
     seo: {
         type: Object,
         required: true,
@@ -36,6 +50,20 @@ const props = defineProps({
 const page = usePage();
 const translations = page.props.translations;
 const landingCopy = page.props.landingCopy;
+
+const filtersActive = computed(() => {
+    return Object.entries(props.filters).some(([key, value]) => {
+        if (key === 'sort') {
+            return value && value !== 'newest';
+        }
+
+        return value !== '' && value !== null && value !== undefined;
+    });
+});
+
+const showSourcedModels = computed(() => {
+    return !filtersActive.value && props.pagination.currentPage === 1;
+});
 
 const scrollToCollection = () => {
     const prefersReducedMotion = window.matchMedia(
@@ -99,35 +127,8 @@ onMounted(() => {
             '-=900',
         );
 
-    animate('.brand-shine', {
-        x: ['0%', '560%'],
-        opacity: [0, 0.9, 0],
-        duration: 1800,
-        delay: 900,
-        loop: true,
-        loopDelay: 2600,
-        ease: 'inOutQuad',
-    });
 
-    animate('.bling-sparkle', {
-        opacity: [0.08, 1, 0.08],
-        scale: [0.35, 1.55, 0.35],
-        rotate: [0, 45, 90],
-        duration: 1450,
-        delay: stagger(230),
-        loop: true,
-        loopDelay: 350,
-        ease: 'inOutQuad',
-    });
 
-    animate('.hero-orb', {
-        opacity: [0.35, 0.75],
-        scale: [0.92, 1.08],
-        duration: 3800,
-        loop: true,
-        alternate: true,
-        ease: 'inOutQuad',
-    });
 
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
@@ -237,8 +238,20 @@ onBeforeUnmount(() => {
                         </p>
                     </header>
 
-                    <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                        <SourcedWatches :models="catalogModels" />
+                    <CollectionFilters
+                        :filters="props.filters"
+                        :options="props.filterOptions"
+                        :total="props.pagination.total"
+                    />
+
+                    <div
+                        v-if="showSourcedModels || props.watches.length"
+                        class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+                    >
+                        <SourcedWatches
+                            v-if="showSourcedModels"
+                            :models="catalogModels"
+                        />
 
                         <CollectionWatchCard
                             v-for="watch in props.watches"
@@ -246,6 +259,21 @@ onBeforeUnmount(() => {
                             :watch="watch"
                         />
                     </div>
+
+                    <div
+                        v-else
+                        class="vvs-luxury-card rounded-2xl border px-6 py-14 text-center"
+                        role="status"
+                    >
+                        <p class="vvs-display-title text-3xl text-white">
+                            Aucun modÃ¨le ne correspond Ã  ces critÃ¨res
+                        </p>
+                        <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
+                            Modifiez la recherche ou rÃ©initialisez les filtres pour retrouver toute la collection.
+                        </p>
+                    </div>
+
+                    <CollectionPagination :pagination="props.pagination" />
                 </div>
             </section>
 

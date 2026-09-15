@@ -43,6 +43,10 @@
                 ? $seo['type']
                 : 'website';
 
+            $seoRobots = is_string($seo['robots'] ?? null)
+                ? $seo['robots']
+                : 'index,follow';
+
             $structuredData = is_array($seo['structuredData'] ?? null)
                 ? $seo['structuredData']
                 : null;
@@ -62,6 +66,11 @@
         <meta
             name="description"
             content="{{ $seoDescription }}"
+        >
+
+        <meta
+            name="robots"
+            content="{{ $seoRobots }}"
         >
 
         <meta

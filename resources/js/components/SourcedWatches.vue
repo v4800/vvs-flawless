@@ -35,6 +35,7 @@ const startingAtLabel = computed(() => {
             fr_BE: 'À partir de',
             nl_BE: 'Vanaf',
             en_BE: 'From',
+            de_BE: 'Ab',
         }[page.props.locale] ?? 'À partir de'
     );
 });
@@ -42,9 +43,10 @@ const startingAtLabel = computed(() => {
 const detailsLabel = computed(() => {
     return (
         {
-            fr_BE: 'Options à confirmer ensemble.',
-            nl_BE: 'Opties in overleg.',
-            en_BE: 'Options confirmed with you.',
+            fr_BE: 'Prix et options à confirmer avec vous.',
+            nl_BE: 'Prijs en opties worden samen bevestigd.',
+            en_BE: 'Price and options are confirmed with you.',
+            de_BE: 'Preis und Optionen werden gemeinsam bestätigt.',
         }[page.props.locale] ?? 'Options à confirmer ensemble.'
     );
 });
@@ -55,6 +57,7 @@ const imageAlt = (model) => {
             fr_BE: `${model.name}, montre sertie de moissanite VVS couleur D`,
             nl_BE: `${model.name}, horloge bezet met kleur D VVS-moissanite`,
             en_BE: `${model.name}, watch set with colour D VVS moissanite`,
+            de_BE: `${model.name}, Uhr mit VVS-Moissanit in Farbe D`,
         }[page.props.locale] ??
         `${model.name}, montre sertie de moissanite VVS couleur D`
     );

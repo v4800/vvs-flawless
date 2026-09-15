@@ -16,10 +16,41 @@ final class WatchSeo
      * @param  Collection<int, Watch>  $watches
      * @return array<string, mixed>
      */
-    public function collection(Collection $watches): array
+    public function collection(
+        Collection $watches,
+        int $currentPage = 1,
+        int $perPage = 12,
+        bool $hasFilters = false
+    ): array
     {
-        $collectionUrl = route(
+        $baseCollectionUrl = route(
             $this->localizedRoute->name('watches.index')
+        );
+
+        $collectionUrl = ! $hasFilters && $currentPage > 1
+            ? $baseCollectionUrl.'?page='.$currentPage
+            : $baseCollectionUrl;
+
+        $alternates = $this->collectionAlternates();
+
+        if (! $hasFilters && $currentPage > 1) {
+            $alternates = array_map(
+                static function (array $alternate) use ($currentPage): array {
+                    $separator = str_contains($alternate['href'], '?')
+                        ? '&'
+                        : '?';
+
+                    $alternate['href'] .= $separator.'page='.$currentPage;
+
+                    return $alternate;
+                },
+                $alternates
+            );
+        }
+
+        $positionOffset = max(
+            0,
+            ($currentPage - 1) * $perPage
         );
 
         $organizationId = url('/').'#organization';
@@ -30,7 +61,8 @@ final class WatchSeo
                 'seo_intents.collection_seo.description'
             ),
             'canonical' => $collectionUrl,
-            'alternates' => $this->collectionAlternates(),
+            'robots' => $hasFilters ? 'noindex,follow' : 'index,follow',
+            'alternates' => $alternates,
             'locale' => app()->getLocale(),
             'image' => url('/images/vvs-flawless-profile.webp'),
             'imageAlt' => trans('seo_intents.collection_seo.image_alt'),
@@ -69,7 +101,7 @@ final class WatchSeo
                                 ->map(
                                     fn (Watch $watch, int $index) => [
                                         '@type' => 'ListItem',
-                                        'position' => $index + 1,
+                                        'position' => $positionOffset + $index + 1,
                                         'name' => $watch->name,
                                         'url' => route(
                                             $this->localizedRoute->name(

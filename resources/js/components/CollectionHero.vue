@@ -31,27 +31,6 @@ const premiumTagline = computed(() => {
             class="hero-orb absolute top-0 right-0 -z-20 h-[650px] w-[650px] rounded-full bg-white/[0.055] blur-[160px]"
         ></div>
 
-        <span
-            class="bling-sparkle absolute top-[19%] left-[5%] text-3xl text-amber-200"
-        >
-            ✦
-        </span>
-        <span
-            class="bling-sparkle absolute top-[29%] left-[35%] text-xl text-white"
-        >
-            ✦
-        </span>
-        <span
-            class="bling-sparkle absolute top-[14%] right-[10%] text-3xl text-white"
-        >
-            ✦
-        </span>
-        <span
-            class="bling-sparkle absolute right-[42%] bottom-[20%] text-xl text-amber-300"
-        >
-            ✦
-        </span>
-
         <div class="absolute top-0 right-0 hidden h-full w-1.5 lg:flex">
             <div class="h-full flex-1 bg-black"></div>
             <div class="h-full flex-1 bg-yellow-400"></div>
@@ -94,14 +73,6 @@ const premiumTagline = computed(() => {
                     <span class="vvs-gradient-text vvs-gradient-text--hero">
                         FLAWLESS
                     </span>
-                    <span
-                        class="absolute top-2 -right-2 hidden text-3xl text-amber-200 sm:block"
-                    >
-                        ✦
-                    </span>
-                    <span
-                        class="brand-shine pointer-events-none absolute top-0 -left-[30%] h-full w-[18%] -skew-x-12 bg-gradient-to-r from-transparent via-white/70 to-transparent blur-sm"
-                    ></span>
                 </h1>
 
                 <div class="hero-animate mt-8 flex max-w-xl items-center gap-4">
@@ -125,7 +96,6 @@ const premiumTagline = computed(() => {
                     class="hero-animate mt-8 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4"
                 >
                     <div class="vvs-choice-card rounded-xl border p-3">
-                        <div class="text-xl text-amber-300">◇</div>
                         <p
                             class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                         >
@@ -136,7 +106,6 @@ const premiumTagline = computed(() => {
                         </p>
                     </div>
                     <div class="vvs-choice-card rounded-xl border p-3">
-                        <div class="text-lg text-amber-300">✦</div>
                         <p
                             class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                         >
@@ -147,7 +116,6 @@ const premiumTagline = computed(() => {
                         </p>
                     </div>
                     <div class="vvs-choice-card rounded-xl border p-3">
-                        <div class="text-lg text-amber-300">◷</div>
                         <p
                             class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                         >
@@ -158,7 +126,6 @@ const premiumTagline = computed(() => {
                         </p>
                     </div>
                     <div class="vvs-choice-card rounded-xl border p-3">
-                        <div class="text-lg text-amber-300">↗</div>
                         <p
                             class="mt-2 text-[10px] font-bold tracking-wider uppercase"
                         >

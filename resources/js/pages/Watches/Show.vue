@@ -6,6 +6,7 @@ import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
+import ProductReviews from '@/components/ProductReviews.vue';
 import ProductReservationSection from '@/components/ProductReservationSection.vue';
 import ProductSpecs from '@/components/ProductSpecs.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
@@ -28,6 +29,14 @@ const props = defineProps({
     relatedWatches: {
         type: Array,
         default: () => [],
+    },
+    reviews: {
+        type: Array,
+        default: () => [],
+    },
+    reviewRoutes: {
+        type: Object,
+        required: true,
     },
     seo: {
         type: Object,
@@ -217,6 +226,12 @@ const submit = () => {
                 :delivery-options="deliveryOptions"
                 :translations="translations"
                 @submit="submit"
+            />
+
+            <ProductReviews
+                :watch="watch"
+                :reviews="reviews"
+                :review-routes="reviewRoutes"
             />
 
             <RelatedWatches :watches="relatedWatches" />
