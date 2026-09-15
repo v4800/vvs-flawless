@@ -27,8 +27,8 @@ class WatchController extends Controller
         $watches = Watch::latest()
             ->get()
             ->map(
-                fn (Watch $watch) => $this->catalog->applyCover(
-                    $this->catalog->localizedWatch($watch)
+                fn (Watch $watch) => $this->catalog->localizedWatch(
+                    $this->catalog->applyCover($watch)
                 )
             );
 
@@ -87,8 +87,8 @@ class WatchController extends Controller
             ->limit(3)
             ->get()
             ->map(
-                fn (Watch $relatedWatch) => $this->catalog->applyCover(
-                    $this->catalog->localizedWatch($relatedWatch)
+                fn (Watch $relatedWatch) => $this->catalog->localizedWatch(
+                    $this->catalog->applyCover($relatedWatch)
                 )
             );
 
