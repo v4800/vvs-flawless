@@ -69,7 +69,7 @@ const scrollToCollection = () => {
             @success="scrollToCollection"
             class="vvs-button-secondary flex min-h-11 min-w-36 items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
         >
-            â† {{ copy.previous }}
+            ← {{ copy.previous }}
         </Link>
         <span v-else class="hidden min-w-36 sm:block"></span>
 
@@ -79,7 +79,7 @@ const scrollToCollection = () => {
                 {{ pagination.lastPage }}
             </span>
             <span class="mt-1 block text-xs text-zinc-600">
-                {{ pagination.from }}â€“{{ pagination.to }} /
+                {{ pagination.from }}–{{ pagination.to }} /
                 {{ pagination.total }} {{ copy.shown }}
             </span>
         </p>
@@ -91,7 +91,7 @@ const scrollToCollection = () => {
             @success="scrollToCollection"
             class="vvs-button-secondary flex min-h-11 min-w-36 items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
         >
-            {{ copy.next }} â†’
+            {{ copy.next }} →
         </Link>
         <span v-else class="hidden min-w-36 sm:block"></span>
     </nav>

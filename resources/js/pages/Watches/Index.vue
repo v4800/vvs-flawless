@@ -266,10 +266,10 @@ onBeforeUnmount(() => {
                         role="status"
                     >
                         <p class="vvs-display-title text-3xl text-white">
-                            Aucun modÃ¨le ne correspond Ã  ces critÃ¨res
+                            Aucun modèle ne correspond à ces critères
                         </p>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
-                            Modifiez la recherche ou rÃ©initialisez les filtres pour retrouver toute la collection.
+                            Modifiez la recherche ou réinitialisez les filtres pour retrouver toute la collection.
                         </p>
                     </div>
 
