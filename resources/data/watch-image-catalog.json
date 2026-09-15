@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "next_watch_id": 20,
+    "next_watch_id": 21,
     "naming_rule": "NNN-model-slug/NN-view.ext",
     "watches": [
         {
@@ -209,24 +209,16 @@
             "slug": "geometrique-bicolore",
             "folder": "015-geometrique-bicolore",
             "images": [
-                "05-green-gold-front.webp",
-                "06-green-gold-angle.webp",
-                "07-green-gold-front-vertical.webp",
-                "08-green-gold-side.webp",
-                "09-green-gold-clasp-vertical.webp",
-                "10-green-gold-clasp.webp"
-            ],
-            "featured": false,
-            "card_image": "05-green-gold-front-card.webp",
-            "legacy_images": [
-                "/images/watches/geometrique-bicolore.webp",
-                "/images/watches/geometrique-bicolore.png"
-            ],
-            "archived_images": [
                 "01-front.webp",
                 "02-angle.webp",
                 "03-side.webp",
                 "04-bracelet.webp"
+            ],
+            "featured": false,
+            "card_image": "01-front.webp",
+            "legacy_images": [
+                "/images/watches/geometrique-bicolore.webp",
+                "/images/watches/geometrique-bicolore.png"
             ]
         },
         {
@@ -291,6 +283,22 @@
             ],
             "featured": false,
             "card_image": "01-front-card.webp"
+        },
+        {
+            "id": 20,
+            "watch_id": 47,
+            "slug": "geometrique-or-jaune-cadran-vert",
+            "folder": "015-geometrique-bicolore",
+            "images": [
+                "05-green-gold-front.webp",
+                "06-green-gold-angle.webp",
+                "07-green-gold-front-vertical.webp",
+                "08-green-gold-side.webp",
+                "09-green-gold-clasp-vertical.webp",
+                "10-green-gold-clasp.webp"
+            ],
+            "featured": false,
+            "card_image": "05-green-gold-front-card.webp"
         }
     ]
 }

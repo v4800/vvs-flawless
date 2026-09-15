@@ -20,7 +20,7 @@ class WatchImageCatalogTest extends TestCase
 
     public function test_row_numbers_do_not_assign_another_models_photos(): void
     {
-        foreach ([46, 47, 48, 52] as $id) {
+        foreach ([46, 48, 52] as $id) {
             $watch = new Watch([
                 'name' => 'Original model',
                 'description' => 'Original description',
@@ -38,6 +38,51 @@ class WatchImageCatalogTest extends TestCase
                     ->has('gallery', 0)
                     ->etc());
         }
+    }
+
+    public function test_geometric_green_gold_gallery_is_assigned_only_to_watch_47(): void
+    {
+        $target = new Watch([
+            'name' => 'Ancien titre tapisserie',
+            'description' => 'Ancienne description.',
+            'price' => 900,
+            'japanese_price' => 900,
+            'availability' => 'Sur commande',
+            'image' => '/images/watches/original-47.webp',
+        ]);
+        $target->id = 47;
+        $target->save();
+
+        $other = new Watch([
+            'name' => 'Autre montre géométrique',
+            'description' => 'Description distincte.',
+            'price' => 900,
+            'japanese_price' => 900,
+            'availability' => 'Sur commande',
+            'image' => '/images/watches/catalog/015-geometrique-bicolore/01-front.webp',
+        ]);
+        $other->id = 46;
+        $other->save();
+
+        $newPhoto = '/images/watches/catalog/015-geometrique-bicolore/05-green-gold-front.webp';
+        $oldPhoto = '/images/watches/catalog/015-geometrique-bicolore/01-front.webp';
+
+        $this->get(route('watches.show', $target))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('watch.id', 47)
+                ->where('watch.name', trans('watches.47.name'))
+                ->where('watch.image', $newPhoto)
+                ->where('gallery.0', $newPhoto)
+                ->etc());
+
+        $this->get(route('watches.show', $other))
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->where('watch.id', 46)
+                ->where('watch.image', $oldPhoto)
+                ->where('gallery.0', $oldPhoto)
+                ->etc());
     }
 
     public function test_blue_photo_updates_the_collection_product_and_seo_without_writing_to_database(): void

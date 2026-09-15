@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Lang;
 /**
  * @phpstan-type CatalogEntry array{
  *     id: int,
+ *     watch_id?: int,
  *     slug: string,
  *     folder: string,
  *     images: list<string>,
  *     featured?: bool,
  *     card_image?: string,
- *     legacy_images?: list<string>
+ *     legacy_images?: list<string>,
+ *     archived_images?: list<string>
  * }
  */
 final class WatchCatalog
@@ -191,9 +193,19 @@ final class WatchCatalog
             return null;
         }
 
+        foreach ($this->catalogEntries() as $entry) {
+            if (($entry['watch_id'] ?? null) === $watch->id) {
+                return $entry;
+            }
+        }
+
         $image = '/'.ltrim($watch->image, '/');
 
         foreach ($this->catalogEntries() as $entry) {
+            if (isset($entry['watch_id'])) {
+                continue;
+            }
+
             $directory = '/images/watches/catalog/'.$entry['folder'].'/';
 
             if (str_starts_with($image, $directory)
