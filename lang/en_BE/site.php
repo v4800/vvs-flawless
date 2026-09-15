@@ -61,7 +61,7 @@ return [
             'women-pink' => '36 mm · Women’s watch, pink dial',
             'women-square-36' => '36 mm · Square women’s watch, white dial',
             'presidentielle-bicolore-romains' => '41 mm · Rose-gold presidential',
-            'geometrique-bicolore' => '41 mm · Geometric, champagne dial',
+            'geometrique-bicolore' => '41 mm · Yellow gold geometric, green dial',
             'presidentielle-bicolore-champagne' => '41 mm · Two-tone presidential, champagne dial',
             'cadran-bleu-roi' => '41 mm · Two-tone, champagne dial',
         ],

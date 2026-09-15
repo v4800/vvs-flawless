@@ -27,9 +27,9 @@ return [
         'description' => 'Das geometrische Gehäuse, das Champagner-Zifferblatt und das vollständig besetzte integrierte Armband ergeben eine klare, helle Silhouette.',
     ],
     47 => [
-        'name' => '41 mm · Geometrisch, Tapisserie-Zifferblatt',
-        'short_description' => 'Strukturiertes Zifferblatt und integriertes Armband.',
-        'description' => 'Das strukturierte Zifferblatt verleiht der geometrischen Silhouette zusätzliche Tiefe. VVS-Moissanit in Farbe D verbindet sportliche Optik mit einem eleganten Finish.',
+        'name' => '41 mm · Geometrisch in Gelbgold, grünes Zifferblatt',
+        'short_description' => 'Gelbgold-Finish, grünes Zifferblatt und vollständig besetztes Armband.',
+        'description' => 'Ein geometrisches Modell in Gelbgold mit strukturiertem grünem Zifferblatt, besetzter Lünette und vollständig iced-out Armband mit VVS-Moissanit in Farbe D.',
     ],
     48 => [
         'name' => '41 mm · Präsidentiell bicolor',
