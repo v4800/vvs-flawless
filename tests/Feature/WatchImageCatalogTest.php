@@ -85,11 +85,19 @@ class WatchImageCatalogTest extends TestCase
                 ->etc());
     }
 
-    public function test_blue_photo_updates_the_collection_product_and_seo_without_writing_to_database(): void
+    public function test_pink_pave_photo_updates_the_collection_product_and_seo_without_writing_to_database(): void
     {
         $original = '/images/watches/presidentielle-bleu-romains.webp';
-        $photo = '/images/watches/catalog/001-blue-round/07-black-marble.webp';
-        $cardPhoto = '/images/watches/catalog/001-blue-round/07-black-marble-card.webp';
+        $gallery = [
+            '/images/watches/catalog/001-blue-round/08-pink-pave-front.webp',
+            '/images/watches/catalog/001-blue-round/09-pink-pave-front-vertical.webp',
+            '/images/watches/catalog/001-blue-round/10-pink-pave-angle.webp',
+            '/images/watches/catalog/001-blue-round/11-pink-pave-side.webp',
+            '/images/watches/catalog/001-blue-round/12-pink-pave-clasp.webp',
+            '/images/watches/catalog/001-blue-round/13-pink-pave-clasp-vertical.webp',
+        ];
+        $photo = $gallery[0];
+        $cardPhoto = '/images/watches/catalog/001-blue-round/08-pink-pave-front-card.webp';
         $watch = Watch::query()->create([
             'name' => 'Blue Roman dial',
             'description' => 'Original description',
@@ -113,9 +121,12 @@ class WatchImageCatalogTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->where('watch.image', $photo)
-                ->where('gallery', [$photo])
+                ->where('gallery', $gallery)
                 ->where('seo.image', url($photo))
-                ->where('seo.structuredData.@graph.0.image', [url($photo)])
+                ->where(
+                    'seo.structuredData.@graph.0.image',
+                    array_map(fn (string $image): string => url($image), $gallery)
+                )
                 ->where('seo.structuredData.@graph.0.offers.0.availability', 'https://schema.org/PreOrder')
                 ->etc());
 
