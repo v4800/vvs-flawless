@@ -62,7 +62,7 @@ return [
             'women-pink' => '36 mm · Femme, cadran rose',
             'women-square-36' => '36 mm · Femme carrée, cadran blanc',
             'presidentielle-bicolore-romains' => '41 mm · Présidentielle or rose',
-            'geometrique-bicolore' => '41 mm · Géométrique, cadran champagne',
+            'geometrique-bicolore' => '41 mm · Géométrique or jaune, cadran vert',
             'presidentielle-bicolore-champagne' => '41 mm · Présidentielle bicolore, cadran champagne',
             'cadran-bleu-roi' => '41 mm · Bicolore, cadran champagne',
         ],

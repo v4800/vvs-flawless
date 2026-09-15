@@ -27,9 +27,9 @@ return [
         'description' => 'La carrure géométrique, le cadran champagne et le bracelet intégré entièrement serti composent une silhouette nette et lumineuse.',
     ],
     47 => [
-        'name' => '41 mm · Géométrique tapisserie',
-        'short_description' => 'Cadran texturé, bracelet intégré.',
-        'description' => 'Le cadran texturé apporte du relief à cette silhouette géométrique. La moissanite VVS couleur D renforce son caractère sport et habillé.',
+        'name' => '41 mm · Géométrique or jaune, cadran vert',
+        'short_description' => 'Finition or jaune, cadran vert et bracelet entièrement serti.',
+        'description' => 'Une silhouette géométrique en or jaune avec cadran vert texturé, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.',
     ],
     48 => [
         'name' => '41 mm · Présidentielle bicolore',

@@ -61,7 +61,7 @@ return [
             'women-pink' => '36 mm · Damesmodel, roze wijzerplaat',
             'women-square-36' => '36 mm · Vierkant damesmodel, witte wijzerplaat',
             'presidentielle-bicolore-romains' => '41 mm · Roségoud presidentieel',
-            'geometrique-bicolore' => '41 mm · Geometrisch, champagne wijzerplaat',
+            'geometrique-bicolore' => '41 mm · Geometrisch geelgoud, groene wijzerplaat',
             'presidentielle-bicolore-champagne' => '41 mm · Tweekleurig presidentieel, champagne wijzerplaat',
             'cadran-bleu-roi' => '41 mm · Tweekleurig, champagne wijzerplaat',
         ],
