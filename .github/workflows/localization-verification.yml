@@ -42,11 +42,11 @@ jobs:
       - name: Install frontend dependencies
         run: npm ci
 
-      - name: Type check
-        run: npm run types:check
-
       - name: Build production assets
         run: npm run build
+
+      - name: Type check
+        run: npm run types:check
 
       - name: Check translation diff whitespace
         run: git diff --check 3a6568f8d81e19c657ab641899c114fe9ebf212b HEAD --
