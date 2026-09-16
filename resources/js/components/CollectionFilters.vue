@@ -7,125 +7,92 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    options: {
-        type: Object,
-        required: true,
-    },
-    total: {
-        type: Number,
-        default: 0,
-    },
 });
 
 const page = usePage();
 
 const copy = computed(() => {
-    const locale = page.props.locale;
-
     return (
         {
             fr_BE: {
-                title: 'Trouver une montre',
-                search: 'Recherche',
-                searchPlaceholder: 'Nom, référence, cadran, style…',
-                model: 'Modèle',
-                allModels: 'Tous les modèles',
-                minPrice: 'Prix min.',
-                maxPrice: 'Prix max.',
-                movement: 'Mouvement',
-                allMovements: 'Tous',
-                availability: 'Disponibilité',
-                allAvailability: 'Toutes',
-                sort: 'Trier par',
+                search: 'Rechercher une montre',
+                placeholder: 'Rechercher un modèle, une référence…',
+                searchAction: 'Rechercher',
+                sort: 'Trier',
                 newest: 'Nouveautés',
                 priceAsc: 'Prix croissant',
                 priceDesc: 'Prix décroissant',
                 name: 'Nom A–Z',
-                apply: 'Afficher',
-                reset: 'Réinitialiser',
-                results: 'modèles',
+                reset: 'Effacer la recherche et le tri',
             },
             nl_BE: {
-                title: 'Een horloge vinden',
-                search: 'Zoeken',
-                searchPlaceholder: 'Naam, referentie, wijzerplaat, stijl…',
-                model: 'Model',
-                allModels: 'Alle modellen',
-                minPrice: 'Min. prijs',
-                maxPrice: 'Max. prijs',
-                movement: 'Uurwerk',
-                allMovements: 'Alle',
-                availability: 'Beschikbaarheid',
-                allAvailability: 'Alle',
-                sort: 'Sorteren op',
+                search: 'Horloge zoeken',
+                placeholder: 'Zoek een model of referentie…',
+                searchAction: 'Zoeken',
+                sort: 'Sorteren',
                 newest: 'Nieuwste',
                 priceAsc: 'Prijs oplopend',
                 priceDesc: 'Prijs aflopend',
                 name: 'Naam A–Z',
-                apply: 'Tonen',
-                reset: 'Resetten',
-                results: 'modellen',
+                reset: 'Zoeken en sorteren wissen',
             },
             en_BE: {
-                title: 'Find a watch',
-                search: 'Search',
-                searchPlaceholder: 'Name, reference, dial, style…',
-                model: 'Model',
-                allModels: 'All models',
-                minPrice: 'Min. price',
-                maxPrice: 'Max. price',
-                movement: 'Movement',
-                allMovements: 'All',
-                availability: 'Availability',
-                allAvailability: 'All',
-                sort: 'Sort by',
+                search: 'Search watches',
+                placeholder: 'Search a model or reference…',
+                searchAction: 'Search',
+                sort: 'Sort',
                 newest: 'Newest',
                 priceAsc: 'Price low to high',
                 priceDesc: 'Price high to low',
                 name: 'Name A–Z',
-                apply: 'Show',
-                reset: 'Reset',
-                results: 'models',
+                reset: 'Clear search and sorting',
             },
             de_BE: {
-                title: 'Eine Uhr finden',
-                search: 'Suche',
-                searchPlaceholder: 'Name, Referenz, Zifferblatt, Stil…',
-                model: 'Modell',
-                allModels: 'Alle Modelle',
-                minPrice: 'Min. Preis',
-                maxPrice: 'Max. Preis',
-                movement: 'Uhrwerk',
-                allMovements: 'Alle',
-                availability: 'Verfügbarkeit',
-                allAvailability: 'Alle',
-                sort: 'Sortieren nach',
+                search: 'Uhr suchen',
+                placeholder: 'Modell oder Referenz suchen…',
+                searchAction: 'Suchen',
+                sort: 'Sortieren',
                 newest: 'Neueste',
                 priceAsc: 'Preis aufsteigend',
                 priceDesc: 'Preis absteigend',
                 name: 'Name A–Z',
-                apply: 'Anzeigen',
-                reset: 'Zurücksetzen',
-                results: 'Modelle',
+                reset: 'Suche und Sortierung löschen',
             },
-        }[locale] ?? null
+        }[page.props.locale] ?? {
+            search: 'Rechercher une montre',
+            placeholder: 'Rechercher un modèle, une référence…',
+            searchAction: 'Rechercher',
+            sort: 'Trier',
+            newest: 'Nouveautés',
+            priceAsc: 'Prix croissant',
+            priceDesc: 'Prix décroissant',
+            name: 'Nom A–Z',
+            reset: 'Effacer la recherche et le tri',
+        }
     );
 });
 
 const form = reactive({
     q: props.filters.q ?? '',
-    model: props.filters.model ?? '',
-    price_min: props.filters.price_min ?? '',
-    price_max: props.filters.price_max ?? '',
-    movement: props.filters.movement ?? '',
-    availability: props.filters.availability ?? '',
     sort: props.filters.sort ?? 'newest',
 });
 
+const hasActiveSearch = computed(() => {
+    return form.q.trim() !== '' || form.sort !== 'newest';
+});
+
 const requestParams = () => {
-    return Object.fromEntries(
-        Object.entries(form).filter(([, value]) => value !== '' && value !== null),
-    );
+    const params = {};
+
+    if (form.q.trim() !== '') {
+        params.q = form.q.trim();
+    }
+
+    if (form.sort !== 'newest') {
+        params.sort = form.sort;
+    }
+
+    return params;
 };
 
 const scrollToCollection = () => {
@@ -146,12 +113,16 @@ const apply = () => {
 };
 
 const reset = () => {
+    form.q = '';
+    form.sort = 'newest';
+
     router.get(
         page.props.localizedRoutes.watches,
         {},
         {
             preserveScroll: true,
             preserveState: false,
+            onSuccess: scrollToCollection,
         },
     );
 };
@@ -159,166 +130,87 @@ const reset = () => {
 
 <template>
     <section
-        aria-labelledby="catalog-filters-title"
-        class="vvs-luxury-card mb-8 rounded-2xl border p-4 sm:p-5"
+        class="sticky top-0 z-40 relative z-30 border-b border-white/10 bg-[#070707]"
+        :aria-label="copy.search"
     >
         <div
-            class="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+            class="mx-auto flex max-w-[1500px] flex-col gap-3 px-5 py-4 sm:px-6 md:flex-row md:items-center lg:px-10"
         >
-            <div>
-                <h3
-                    id="catalog-filters-title"
-                    class="text-base font-semibold text-white"
-                >
-                    {{ copy.title }}
-                </h3>
-                <p class="mt-1 text-sm text-zinc-500">
-                    {{ total }} {{ copy.results }}
-                </p>
-            </div>
-
-            <button
-                type="button"
-                class="min-h-11 self-start rounded-lg px-3 text-sm font-semibold text-zinc-400 underline decoration-white/20 underline-offset-4 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 sm:self-auto"
-                @click="reset"
+            <form
+                role="search"
+                class="flex min-w-0 flex-1"
+                @submit.prevent="apply"
             >
-                {{ copy.reset }}
-            </button>
-        </div>
+                <div class="relative w-full">
+                    <label for="collection-search" class="sr-only">
+                        {{ copy.search }}
+                    </label>
 
-        <form
-            class="grid gap-3 md:grid-cols-2 xl:grid-cols-12"
-            role="search"
-            @submit.prevent="apply"
-        >
-            <label class="xl:col-span-4">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.search }}
-                </span>
-                <input
-                    v-model.trim="form.q"
-                    type="search"
-                    name="q"
-                    autocomplete="off"
-                    :placeholder="copy.searchPlaceholder"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-4 text-base text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                />
-            </label>
+                    <input
+                        id="collection-search"
+                        v-model="form.q"
+                        type="search"
+                        name="q"
+                        autocomplete="off"
+                        :placeholder="copy.placeholder"
+                        class="h-12 w-full rounded-xl border border-white/10 bg-[#0b0b0b] px-4 pr-14 text-base text-white outline-none transition placeholder:text-zinc-600 focus:border-amber-300/50 focus:ring-2 focus:ring-amber-300/10"
+                    />
 
-            <label class="xl:col-span-3">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.model }}
-                </span>
-                <select
-                    v-model="form.model"
-                    name="model"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-3 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                >
-                    <option value="">{{ copy.allModels }}</option>
-                    <option
-                        v-for="model in options.models"
-                        :key="model.value"
-                        :value="model.value"
+                    <button
+                        type="submit"
+                        :aria-label="copy.searchAction"
+                        class="absolute top-1/2 right-2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-lg text-zinc-400 transition hover:bg-white/5 hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-amber-300"
                     >
-                        {{ model.label }} · {{ model.reference }}
-                    </option>
-                </select>
-            </label>
+                        <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            class="h-5 w-5"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <circle cx="11" cy="11" r="6.5" />
+                            <path d="m16 16 4 4" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
 
-            <label class="xl:col-span-2">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.movement }}
-                </span>
-                <select
-                    v-model="form.movement"
-                    name="movement"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-3 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
+            <div class="flex min-w-0 items-center gap-2 md:shrink-0">
+                <div
+                    class="flex h-12 min-w-0 flex-1 items-center rounded-xl border border-white/10 bg-[#0b0b0b] px-3 md:flex-none"
                 >
-                    <option value="">{{ copy.allMovements }}</option>
-                    <option
-                        v-for="movement in options.movements"
-                        :key="movement.value"
-                        :value="movement.value"
+                    <label
+                        for="collection-sort"
+                        class="mr-2 text-xs font-bold tracking-[0.08em] text-zinc-500 uppercase"
                     >
-                        {{ movement.label }}
-                    </option>
-                </select>
-            </label>
+                        {{ copy.sort }}
+                    </label>
 
-            <label class="xl:col-span-3">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.availability }}
-                </span>
-                <select
-                    v-model="form.availability"
-                    name="availability"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-3 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                >
-                    <option value="">{{ copy.allAvailability }}</option>
-                    <option
-                        v-for="availability in options.availability"
-                        :key="availability"
-                        :value="availability"
+                    <select
+                        id="collection-sort"
+                        v-model="form.sort"
+                        name="sort"
+                        class="min-w-0 flex-1 bg-transparent text-sm font-semibold text-zinc-200 outline-none md:min-w-36"
+                        @change="apply"
                     >
-                        {{ availability }}
-                    </option>
-                </select>
-            </label>
+                        <option value="newest">{{ copy.newest }}</option>
+                        <option value="price_asc">{{ copy.priceAsc }}</option>
+                        <option value="price_desc">{{ copy.priceDesc }}</option>
+                        <option value="name">{{ copy.name }}</option>
+                    </select>
+                </div>
 
-            <label class="xl:col-span-2">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.minPrice }}
-                </span>
-                <input
-                    v-model="form.price_min"
-                    type="number"
-                    inputmode="numeric"
-                    min="0"
-                    step="10"
-                    name="price_min"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-4 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                />
-            </label>
-
-            <label class="xl:col-span-2">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.maxPrice }}
-                </span>
-                <input
-                    v-model="form.price_max"
-                    type="number"
-                    inputmode="numeric"
-                    min="0"
-                    step="10"
-                    name="price_max"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-4 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                />
-            </label>
-
-            <label class="xl:col-span-4">
-                <span class="mb-1.5 block text-xs font-semibold text-zinc-300">
-                    {{ copy.sort }}
-                </span>
-                <select
-                    v-model="form.sort"
-                    name="sort"
-                    class="min-h-11 w-full rounded-xl border border-white/10 bg-black/55 px-3 text-base text-white outline-none transition focus:border-amber-300/60 focus:ring-2 focus:ring-amber-300/10"
-                >
-                    <option value="newest">{{ copy.newest }}</option>
-                    <option value="price_asc">{{ copy.priceAsc }}</option>
-                    <option value="price_desc">{{ copy.priceDesc }}</option>
-                    <option value="name">{{ copy.name }}</option>
-                </select>
-            </label>
-
-            <div class="flex items-end xl:col-span-4">
                 <button
-                    type="submit"
-                    class="vvs-button-primary min-h-11 w-full rounded-xl px-5 py-3 text-sm font-bold tracking-[0.08em] uppercase focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                    v-if="hasActiveSearch"
+                    type="button"
+                    :aria-label="copy.reset"
+                    class="flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-[#0b0b0b] text-xl text-zinc-500 transition hover:border-white/20 hover:text-white focus-visible:outline-2 focus-visible:outline-amber-300"
+                    @click="reset"
                 >
-                    {{ copy.apply }}
+                    ×
                 </button>
             </div>
-        </form>
+        </div>
     </section>
 </template>

@@ -36,13 +36,13 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 </script>
 
 <template>
-    <div class="lg:pt-5">
+    <div class="min-w-0 lg:pt-5">
         <div class="flex items-center gap-3">
             <span aria-hidden="true" class="h-px w-8 bg-amber-300"></span>
             <p class="vvs-eyebrow">VVS FLAWLESS</p>
         </div>
 
-        <h1 class="vvs-display-title mt-6 max-w-2xl text-5xl sm:text-6xl">
+        <h1 class="vvs-display-title mt-6 max-w-full break-words text-[2.5rem] leading-[0.98] sm:max-w-2xl sm:text-6xl">
             {{ watch.name }}
         </h1>
 
@@ -88,14 +88,14 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     preserve-scroll
                     :aria-current="movement === 'Japonais' ? 'true' : undefined"
                     :class="[
-                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        'vvs-choice-card group relative min-w-0 overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                         movement === 'Japonais'
                             ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                             : '',
                     ]"
                 >
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
+                    <div class="flex min-w-0 items-start justify-between gap-4">
+                        <div class="min-w-0">
                             <p
                                 class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
                             >
@@ -150,14 +150,14 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     preserve-scroll
                     :aria-current="movement === 'Suisse' ? 'true' : undefined"
                     :class="[
-                        'vvs-choice-card group relative overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        'vvs-choice-card group relative min-w-0 overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                         movement === 'Suisse'
                             ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
                             : '',
                     ]"
                 >
-                    <div class="flex items-start justify-between gap-4">
-                        <div>
+                    <div class="flex min-w-0 items-start justify-between gap-4">
+                        <div class="min-w-0">
                             <p
                                 class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
                             >
@@ -210,9 +210,9 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
         </div>
 
         <div
-            class="vvs-choice-card vvs-choice-card--featured mt-5 flex items-center justify-between gap-5 rounded-2xl border p-5"
+            class="vvs-choice-card vvs-choice-card--featured mt-5 flex min-w-0 flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
         >
-            <div>
+            <div class="min-w-0">
                 <p
                     class="text-[9px] font-black tracking-[0.25em] text-zinc-400 uppercase"
                 >
@@ -224,7 +224,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                 </p>
             </div>
 
-            <div class="text-right">
+            <div class="self-end shrink-0 text-right sm:self-auto">
                 <p
                     v-if="selectedOldPrice > selectedPrice"
                     class="text-xs text-zinc-400 line-through"
@@ -266,10 +266,10 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
         <a
             href="#reservation"
-            class="vvs-button-primary mt-6 flex w-full items-center justify-between rounded-2xl px-6 py-5 font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
+            class="vvs-button-primary mt-6 flex w-full min-w-0 items-center justify-between gap-4 rounded-2xl px-5 py-5 font-bold tracking-[0.08em] uppercase focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:px-6 sm:tracking-[0.1em]"
         >
-            <span>{{ translations.product.reserve_watch }}</span>
-            <span aria-hidden="true" class="text-xl"> ↓ </span>
+            <span class="min-w-0">{{ translations.product.reserve_watch }}</span>
+            <span aria-hidden="true" class="shrink-0 text-xl"> ↓ </span>
         </a>
     </div>
 </template>

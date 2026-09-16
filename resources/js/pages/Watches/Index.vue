@@ -33,10 +33,6 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-    filterOptions: {
-        type: Object,
-        required: true,
-    },
     pagination: {
         type: Object,
         required: true,
@@ -51,18 +47,64 @@ const page = usePage();
 const translations = page.props.translations;
 const landingCopy = page.props.landingCopy;
 
-const filtersActive = computed(() => {
-    return Object.entries(props.filters).some(([key, value]) => {
-        if (key === 'sort') {
-            return value && value !== 'newest';
-        }
+const normalizeSearchText = (value) => {
+    return String(value ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+};
+
+const hiddenFiltersActive = computed(() => {
+    return [
+        'model',
+        'price_min',
+        'price_max',
+        'movement',
+        'availability',
+    ].some((key) => {
+        const value = props.filters[key];
 
         return value !== '' && value !== null && value !== undefined;
     });
 });
 
+const visibleSourcedModels = computed(() => {
+    const needle = normalizeSearchText(props.filters.q);
+
+    let models = props.catalogModels.filter((model) => !model.watchUrl);
+
+    if (needle !== '') {
+        models = models.filter((model) => {
+            return normalizeSearchText(
+                `${model.name} ${model.reference}`,
+            ).includes(needle);
+        });
+    }
+
+    const sort = props.filters.sort ?? 'newest';
+
+    if (sort === 'name') {
+        return [...models].sort((a, b) =>
+            a.name.localeCompare(b.name, undefined, {
+                sensitivity: 'base',
+            }),
+        );
+    }
+
+    if (sort === 'price_asc' || sort === 'price_desc') {
+        return [];
+    }
+
+    return models;
+});
+
 const showSourcedModels = computed(() => {
-    return !filtersActive.value && props.pagination.currentPage === 1;
+    return (
+        props.pagination.currentPage === 1 &&
+        !hiddenFiltersActive.value &&
+        visibleSourcedModels.value.length > 0
+    );
 });
 
 const scrollToCollection = () => {
@@ -187,10 +229,14 @@ onBeforeUnmount(() => {
         <CollectionSiteHeader :seo="seo" />
 
         <main id="main-content" tabindex="-1">
+            <div class="collection-toolbar-shell pt-5 pb-5 sm:pt-6 sm:pb-6">
+                <CollectionFilters :filters="props.filters" />
+            </div>
+
             <VvsNavigation
                 current="collection"
                 :show-back="false"
-                class="!top-24"
+                class="!static !mt-3 !mb-8 md:!sticky md:!top-24"
             />
 
             <CollectionHero @scroll-to-collection="scrollToCollection" />
@@ -224,7 +270,7 @@ onBeforeUnmount(() => {
                             ></span>
                         </div>
 
-                        <h2 class="vvs-display-title text-5xl sm:text-6xl">
+                        <h2 class="vvs-display-title min-w-0 max-w-full break-words text-4xl leading-[0.96] sm:text-5xl lg:text-6xl">
                             {{ translations.collection.title_before }}
                             <span class="vvs-gradient-text">
                                 {{ translations.collection.title_highlight }}
@@ -238,19 +284,13 @@ onBeforeUnmount(() => {
                         </p>
                     </header>
 
-                    <CollectionFilters
-                        :filters="props.filters"
-                        :options="props.filterOptions"
-                        :total="props.pagination.total"
-                    />
-
                     <div
                         v-if="showSourcedModels || props.watches.length"
                         class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
                     >
                         <SourcedWatches
                             v-if="showSourcedModels"
-                            :models="catalogModels"
+                            :models="visibleSourcedModels"
                         />
 
                         <CollectionWatchCard
@@ -266,10 +306,10 @@ onBeforeUnmount(() => {
                         role="status"
                     >
                         <p class="vvs-display-title text-3xl text-white">
-                            Aucun modèle ne correspond à ces critères
+                            Aucune montre ne correspond à votre recherche
                         </p>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
-                            Modifiez la recherche ou réinitialisez les filtres pour retrouver toute la collection.
+                            Essayez un autre nom, une autre référence ou effacez la recherche.
                         </p>
                     </div>
 

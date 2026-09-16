@@ -47,6 +47,39 @@ const props = defineProps({
 const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
+
+const reserveLabel = computed(() => {
+    return (
+        {
+            fr_BE: 'Réserver',
+            nl_BE: 'Reserveren',
+            en_BE: 'Reserve',
+            de_BE: 'Reservieren',
+        }[page.props.locale] ?? 'Réserver'
+    );
+});
+
+const singleOfferPrice = computed(() => {
+    const price = Number(props.watch.price);
+
+    if (!Number.isFinite(price) || price <= 0) {
+        return '—';
+    }
+
+    const locale =
+        {
+            fr_BE: 'fr-BE',
+            nl_BE: 'nl-BE',
+            en_BE: 'en-BE',
+            de_BE: 'de-BE',
+        }[page.props.locale] ?? 'fr-BE';
+
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: 0,
+    }).format(price);
+});
 const activeImage = ref(props.gallery[0] ?? props.watch.image);
 
 const form = useForm({
@@ -159,7 +192,7 @@ const submit = () => {
 <template>
     <Head :title="seo.title" />
 
-    <div class="vvs-storefront min-h-screen pb-24 text-white lg:pb-0">
+    <div class="vvs-storefront min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
@@ -173,7 +206,7 @@ const submit = () => {
             :watch-href="`${localizedRoutes.watches}/${watch.slug}`"
         />
 
-        <main id="main-content" tabindex="-1">
+        <main id="main-content" tabindex="-1" class="w-full min-w-0 max-w-full">
             <section
                 id="model"
                 class="relative scroll-mt-28 overflow-hidden px-5 pt-10 pb-20 sm:px-6 lg:px-10 lg:pt-14"
@@ -189,7 +222,7 @@ const submit = () => {
                 ></div>
 
                 <div
-                    class="mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16"
+                    class="mx-auto grid min-w-0 max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-16"
                 >
                     <ProductGallery
                         :watch="watch"
@@ -293,7 +326,13 @@ const submit = () => {
             </div>
         </footer>
 
-        <a v-if="watch.single_offer" href="#reservation" class="fixed inset-x-4 bottom-4 z-40 rounded-xl bg-amber-300 p-4 text-center font-bold text-black lg:hidden">550 € · Réserver</a>
+        <a
+            v-if="watch.single_offer"
+            href="#reservation"
+            class="fixed inset-x-4 bottom-4 z-40 rounded-xl bg-amber-300 p-4 text-center font-bold text-black lg:hidden"
+        >
+            {{ singleOfferPrice }} · {{ reserveLabel }}
+        </a>
         <MobileReservationBar
             v-else
             :movement="form.movement"

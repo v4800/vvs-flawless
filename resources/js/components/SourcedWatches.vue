@@ -20,10 +20,6 @@ const featuredStartingPrices = {
     'VVS-C008': 650,
 };
 
-const displayModels = computed(() =>
-    props.models.filter((model) => !model.watchUrl),
-);
-
 const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
 
 const startingPrice = (model) =>
@@ -66,40 +62,28 @@ const imageAlt = (model) => {
 
 <template>
     <article
-        v-for="model in displayModels"
+        v-for="model in models"
         :key="model.reference"
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border border-white/10 bg-[#090909] transition duration-300 hover:border-amber-300/25"
     >
-        <div
-            class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
-        ></div>
-
         <a
             href="#contact"
-            class="relative block w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="relative block w-full shrink-0 overflow-hidden bg-[#070707] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.source_request} — ${model.name}`"
         >
-            <div
-                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-            ></div>
-
-            <div
-                class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
-            ></div>
-
             <WatchCardVisual
                 :src="model.cardImage || model.image"
                 :alt="imageAlt(model)"
             />
 
             <span
-                class="absolute top-4 left-4 z-20 rounded-full border border-amber-300/25 bg-black/75 px-3 py-2 text-[8px] font-black tracking-[0.18em] text-amber-200 uppercase backdrop-blur-md"
+                class="absolute top-4 left-4 z-20 rounded-full border border-amber-300/20 bg-black/80 px-3 py-2 text-[8px] font-black tracking-[0.18em] text-amber-200 uppercase"
             >
                 {{ translations.collection.source_eyebrow }}
             </span>
         </a>
 
-        <div class="relative flex flex-1 flex-col p-5">
+        <div class="flex flex-1 flex-col p-5">
             <h3
                 class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
             >
@@ -114,14 +98,15 @@ const imageAlt = (model) => {
 
             <div
                 v-if="startingPrice(model)"
-                class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-xl border px-4 py-3 text-center"
+                class="mt-4 rounded-xl border border-white/10 bg-black/35 px-4 py-3 text-center"
             >
                 <p
                     class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
                 >
                     {{ startingAtLabel }}
                 </p>
-                <p class="vvs-price mt-1 text-2xl font-black">
+
+                <p class="mt-1 text-2xl font-black text-amber-200">
                     {{ formatPrice(startingPrice(model)) }}
                 </p>
             </div>
@@ -132,11 +117,12 @@ const imageAlt = (model) => {
 
             <div class="mt-auto pt-4">
                 <div
-                    class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3 text-xs"
+                    class="flex min-w-0 flex-col items-start gap-1 border-t border-white/10 pt-3 text-xs min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between"
                 >
                     <span class="text-zinc-600">
                         {{ translations.collection.delivery }}
                     </span>
+
                     <span class="font-semibold text-zinc-300">
                         {{ translations.collection.delay }}
                     </span>
@@ -147,7 +133,7 @@ const imageAlt = (model) => {
                     class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase"
                 >
                     {{ translations.collection.source_request }}
-                    <span>→</span>
+                    <span aria-hidden="true">→</span>
                 </a>
             </div>
         </div>

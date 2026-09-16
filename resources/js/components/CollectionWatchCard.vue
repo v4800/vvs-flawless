@@ -47,36 +47,19 @@ const formattedPrice = computed(() => {
 
 <template>
     <article
-        class="watch-card reveal-on-scroll vvs-luxury-card vvs-luxury-card--interactive group relative flex flex-col self-stretch overflow-hidden rounded-2xl border"
+        class="watch-card reveal-on-scroll group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border border-white/10 bg-[#090909] transition duration-300 hover:border-amber-300/25"
     >
-        <div
-            aria-hidden="true"
-            class="absolute top-0 left-1/2 z-20 h-px w-0 -translate-x-1/2 bg-gradient-to-r from-transparent via-amber-300 to-transparent transition-all duration-500 group-hover:w-[85%]"
-        ></div>
-
         <Link
             :href="href"
-            class="relative block w-full shrink-0 overflow-hidden bg-[radial-gradient(circle_at_50%_35%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_45%,#050505_78%)] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="relative block w-full shrink-0 overflow-hidden bg-[#070707] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
             :aria-label="`${translations.collection.view_watch} — ${watch.name}`"
         >
-            <div
-                aria-hidden="true"
-                class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"
-            ></div>
-            <div
-                aria-hidden="true"
-                class="absolute top-1/2 left-1/2 h-60 w-60 -translate-x-1/2 -translate-y-1/2 rounded-full bg-amber-400/[0.04] blur-[70px]"
-            ></div>
-            <div
-                aria-hidden="true"
-                class="pointer-events-none absolute top-0 -left-1/2 z-10 h-full w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-all duration-700 group-hover:left-[120%] group-hover:opacity-100"
-            ></div>
-
             <WatchCardVisual
                 v-if="displayImage"
                 :src="displayImage"
                 :alt="watch.name"
             />
+
             <div
                 v-else
                 class="flex aspect-[3/4] w-full items-center justify-center text-zinc-600"
@@ -92,7 +75,7 @@ const formattedPrice = computed(() => {
             </div>
         </Link>
 
-        <div class="relative flex flex-1 flex-col p-5">
+        <div class="flex flex-1 flex-col p-5">
             <h3
                 class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
             >
@@ -107,14 +90,15 @@ const formattedPrice = computed(() => {
 
             <Link
                 :href="href"
-                class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-xl border px-4 py-3 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                class="mt-4 rounded-xl border border-white/10 bg-black/35 px-4 py-3 text-center transition hover:border-amber-300/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
             >
                 <p
                     class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
                 >
                     {{ landingCopy.starting_at }}
                 </p>
-                <p class="vvs-price mt-1 text-2xl font-black">
+
+                <p class="mt-1 text-2xl font-black text-amber-200">
                     {{ formattedPrice }}
                 </p>
             </Link>
@@ -128,11 +112,12 @@ const formattedPrice = computed(() => {
 
             <div class="mt-auto pt-4">
                 <div
-                    class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 border-t border-white/10 pt-3 text-xs"
+                    class="flex min-w-0 flex-col items-start gap-1 border-t border-white/10 pt-3 text-xs min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between"
                 >
                     <span class="text-zinc-600">
                         {{ translations.collection.delivery }}
                     </span>
+
                     <span class="font-semibold text-zinc-300">
                         {{ translations.collection.delay }}
                     </span>
