@@ -22,7 +22,7 @@ class ProductPageRegressionTest extends TestCase
 
     private function createWatch(array $overrides = []): Watch
     {
-        return Watch::query()->create(array_merge([
+        $watch = new Watch(array_merge([
             'name' => 'Montre régression VVS',
             'price' => 1290,
             'promo_price' => 990,
@@ -35,6 +35,12 @@ class ProductPageRegressionTest extends TestCase
             'swiss_promo_price' => 1290,
             'stock_quantity' => 2,
         ], $overrides));
+
+        // Foreign-locale regression tests must use a real translated product.
+        $watch->id = 42;
+        $watch->save();
+
+        return $watch;
     }
 
     public function test_product_page_contract_is_stable_in_all_locales_and_for_both_movements(): void
