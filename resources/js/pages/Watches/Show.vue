@@ -48,16 +48,7 @@ const page = usePage();
 const localizedRoutes = page.props.localizedRoutes;
 const translations = computed(() => page.props.translations);
 
-const reserveLabel = computed(() => {
-    return (
-        {
-            fr_BE: 'Réserver',
-            nl_BE: 'Reserveren',
-            en_BE: 'Reserve',
-            de_BE: 'Reservieren',
-        }[page.props.locale] ?? 'Réserver'
-    );
-});
+const reserveLabel = computed(() => translations.value.product.reserve_watch);
 
 const singleOfferPrice = computed(() => {
     const price = Number(props.watch.price);
@@ -108,15 +99,21 @@ const deliveryOptions = computed(() => [
 ]);
 
 const localizedMovement = computed(() =>
-    props.watch.single_offer ? 'Modèle présenté' : form.movement === 'Suisse'
-        ? translations.value.movements.suisse
-        : translations.value.movements.japonais,
+    props.watch.single_offer
+        ? props.watch.presented_copy.model_label
+        : form.movement === 'Suisse'
+          ? translations.value.movements.suisse
+          : translations.value.movements.japonais,
 );
 
 vueWatch(
     () => props.selectedMovement,
     (movement) => {
-        form.movement = props.watch.single_offer ? 'Modele presente' : movement === 'Suisse' ? 'Suisse' : 'Japonais';
+        form.movement = props.watch.single_offer
+            ? 'Modele presente'
+            : movement === 'Suisse'
+              ? 'Suisse'
+              : 'Japonais';
     },
     {
         immediate: true,
@@ -127,7 +124,11 @@ vueWatch(
     () => props.watch.id,
     (watchId) => {
         form.watch_id = watchId;
-        form.movement = props.watch.single_offer ? 'Modele presente' : props.selectedMovement === 'Suisse' ? 'Suisse' : 'Japonais';
+        form.movement = props.watch.single_offer
+            ? 'Modele presente'
+            : props.selectedMovement === 'Suisse'
+              ? 'Suisse'
+              : 'Japonais';
         activeImage.value = props.gallery[0] ?? props.watch.image;
     },
 );
@@ -232,7 +233,10 @@ const submit = () => {
                         @select-image="activeImage = $event"
                     />
 
-                    <PresentedWatchOffer v-if="watch.single_offer" :watch="watch" />
+                    <PresentedWatchOffer
+                        v-if="watch.single_offer"
+                        :watch="watch"
+                    />
                     <ProductConfiguration
                         v-else
                         :watch="watch"
@@ -246,7 +250,11 @@ const submit = () => {
                 </div>
             </section>
 
-            <ProductSpecs v-if="!watch.single_offer" :watch="watch" :translations="translations" />
+            <ProductSpecs
+                v-if="!watch.single_offer"
+                :watch="watch"
+                :translations="translations"
+            />
 
             <PurchaseGuide />
 
