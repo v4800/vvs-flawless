@@ -13,9 +13,18 @@
                 ? $seo['title']
                 : config('app.name', 'VVS FLAWLESS');
 
+            $localizedSeoFallback = \Illuminate\Support\Facades\Lang::get(
+                'site.seo.collection_description',
+                [],
+                app()->getLocale(),
+                false
+            );
+
             $seoDescription = is_string($seo['description'] ?? null)
                 ? $seo['description']
-                : 'VVS FLAWLESS — Montres iced-out en moissanite VVS couleur D en Belgique.';
+                : (is_string($localizedSeoFallback)
+                    ? $localizedSeoFallback
+                    : 'VVS FLAWLESS');
 
             $seoCanonical = is_string($seo['canonical'] ?? null)
                 ? $seo['canonical']
