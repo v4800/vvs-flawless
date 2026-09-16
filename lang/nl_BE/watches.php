@@ -1,6 +1,62 @@
 <?php
 
 return [
+    'presented' => [
+        'name' => 'Vierkant · Witte wijzerplaat, zwarte leren band',
+        'short_description' => 'Vierkante bezette kast, Romeinse cijfers en zwarte leren band.',
+        'description' => 'Vierkante kast met moissaniet, Romeinse cijfers en een zwarte leren band. Opgegeven totaal steengewicht: 20–30 ct, te bevestigen voor dit exemplaar.',
+        'ui' => [
+            'model_label' => 'Getoond model',
+            'price_label' => 'Prijs van het getoonde model',
+            'stone_weight_label' => 'Opgegeven totaal steengewicht',
+            'stone_weight_value' => '20–30 ct, te bevestigen voor dit exemplaar',
+            'confirm_title' => 'Te bevestigen vóór bestelling',
+            'confirm_details' => 'Steengewicht van dit exemplaar, afmetingen en referentie van het uurwerk.',
+            'visual_note' => 'De achtergrond van de foto’s is bijgewerkt. Vraag een video van het aangeboden exemplaar voordat je je keuze bevestigt.',
+        ],
+    ],
+    'catalog' => [
+        'twotone-round' => [
+            'name' => '41 mm · Tweekleurig, champagne wijzerplaat',
+            'short_description' => 'Tweekleurige afwerking, champagne wijzerplaat en geïntegreerde band.',
+            'description' => 'Een 41 mm horloge met tweekleurige afwerking, champagne wijzerplaat en geïntegreerde band, bezet met VVS-moissaniet in kleur D.',
+        ],
+        'black-square' => [
+            'name' => '41 mm · Zwart vierkant, Romeinse cijfers',
+            'short_description' => 'Zwarte vierkante kast, Romeinse cijfers en VVS-bezetting.',
+            'description' => 'Een zwart vierkant horloge van 41 mm met Romeinse cijfers, bezet met VVS-moissaniet in kleur D.',
+        ],
+        'sport-black-strap' => [
+            'name' => '41 mm · Chronograaf, zwarte band',
+            'short_description' => 'Chronograaf, zwarte band en pavéwijzerplaat.',
+            'description' => '41 mm chronograaf met zwarte band, volledig bezette kast en pavéwijzerplaat in VVS-moissaniet kleur D. De zwarte drukknoppen versterken het sportieve contrast.',
+        ],
+        'gold-black-daydate' => [
+            'name' => '41 mm · Geelgoud, zwarte wijzerplaat',
+            'short_description' => 'Geelgoudkleurige afwerking, zwarte wijzerplaat en contrasterende band.',
+            'description' => 'Geelgoudkleurige afwerking, zwarte wijzerplaat en VVS-moissaniet kleur D. De band behoudt gepolijste middenschakels met bezette buitenste schakels voor een duidelijk contrast.',
+        ],
+        'rose-skeleton' => [
+            'name' => '41 mm · Tweekleurig skelet, roségoud',
+            'short_description' => 'Skeletwijzerplaat met roségoudkleurige accenten.',
+            'description' => 'Skeletwijzerplaat, stalen afwerking met roségoudkleurige accenten en bezetting in VVS-moissaniet kleur D. De geïntegreerde band neemt de tweekleurige details van de kast over.',
+        ],
+        'square-bicolor-paved' => [
+            'name' => '41 mm · Tweekleurig vierkant, pavé wijzerplaat',
+            'short_description' => 'Vierkante kast, pavéwijzerplaat en tweekleurige afwerking.',
+            'description' => 'Vierkante kast, pavéwijzerplaat met Romeinse cijfers en tweekleurige afwerking met geelgoudkleurige accenten. De VVS-moissaniet in kleur D loopt door over de geïntegreerde band.',
+        ],
+        'women-pink' => [
+            'name' => '36 mm · Damesmodel, roze wijzerplaat',
+            'short_description' => 'Roze wijzerplaat, pavéband en 36 mm formaat.',
+            'description' => 'Damesmodel van 36 mm met roze wijzerplaat, volledig pavébezette band en VVS-moissaniet in kleur D.',
+        ],
+        'women-square-36' => [
+            'name' => '36 mm · Vierkant damesmodel, witte wijzerplaat',
+            'short_description' => 'Vierkante kast, witte wijzerplaat en pavéband.',
+            'description' => 'Vierkant damesmodel van 36 mm met witte wijzerplaat en Romeinse cijfers, pavéband en VVS-moissaniet in kleur D.',
+        ],
+    ],
     42 => [
         'name' => '41 mm · Camouflagechronograaf',
         'short_description' => 'Camouflagewijzerplaat, sportieve stijl.',
