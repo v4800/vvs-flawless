@@ -18,9 +18,11 @@ class WatchSlugTest extends TestCase
         $this->withoutVite();
     }
 
-    private function createWatch(string $name = '41 mm · Bleue, chiffres romains'): Watch
-    {
-        return Watch::query()->create([
+    private function createWatch(
+        string $name = '41 mm · Bleue, chiffres romains',
+        ?int $id = null
+    ): Watch {
+        $watch = new Watch([
             'name' => $name,
             'price' => 950,
             'description' => 'Montre de test pour les URLs publiques.',
@@ -28,6 +30,14 @@ class WatchSlugTest extends TestCase
             'japanese_price' => 950,
             'swiss_price' => 1250,
         ]);
+
+        if ($id !== null) {
+            $watch->id = $id;
+        }
+
+        $watch->save();
+
+        return $watch;
     }
 
     public function test_watch_gets_a_stable_unique_slug(): void
@@ -58,7 +68,7 @@ class WatchSlugTest extends TestCase
 
     public function test_slug_routes_are_canonical_in_all_locales(): void
     {
-        $watch = $this->createWatch();
+        $watch = $this->createWatch(id: 42);
 
         foreach ([
             'watches.show',
