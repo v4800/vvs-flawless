@@ -132,18 +132,7 @@ final class WatchSeo
         );
 
         $organizationId = url('/').'#organization';
-
-        $description = Str::limit(
-            trim(
-                $watch->name
-                .'. '
-                .$watch->description
-                .' '
-                .trans('seo_intents.collection_seo.product_suffix')
-            ),
-            160,
-            '…'
-        );
+        $description = $this->productMetaDescription($watch);
 
         $structuredImages = $gallery !== []
             ? array_map(
@@ -218,9 +207,27 @@ final class WatchSeo
     private function productProperties(Watch $watch): array
     {
         if (PresentedWatch::matches($watch)) {
+            $presentedCopy = $watch->getAttribute('presented_copy');
+
+            if (! is_array($presentedCopy)
+                || ! is_string($presentedCopy['stone_weight_label'] ?? null)
+                || ! is_string($presentedCopy['stone_weight_value'] ?? null)) {
+                throw new \LogicException(
+                    'Missing localized presented watch schema copy.'
+                );
+            }
+
             return [
-                ['@type' => 'PropertyValue', 'name' => 'Pierre', 'value' => 'Moissanite'],
-                ['@type' => 'PropertyValue', 'name' => 'Poids total annoncé', 'value' => '20–30 ct, à confirmer pour cet exemplaire'],
+                [
+                    '@type' => 'PropertyValue',
+                    'name' => trans('site.product.stone'),
+                    'value' => 'Moissanite',
+                ],
+                [
+                    '@type' => 'PropertyValue',
+                    'name' => $presentedCopy['stone_weight_label'],
+                    'value' => $presentedCopy['stone_weight_value'],
+                ],
             ];
         }
 
@@ -324,6 +331,88 @@ final class WatchSeo
         }
 
         return $offers;
+    }
+
+    private function productMetaDescription(Watch $watch): string
+    {
+        $description = trim((string) $watch->description);
+        $shortDescription = trim((string) $watch->getAttribute(
+            'short_description'
+        ));
+        $name = trim((string) $watch->name);
+
+        $completeDescription = $this->fitCompleteSentences(
+            $description,
+            160
+        );
+
+        $candidates = array_values(array_unique(array_filter([
+            $name !== '' && $shortDescription !== ''
+                ? rtrim($name, '. ').'. '.rtrim($shortDescription, '. ').'.'
+                : null,
+            $description !== '' && Str::length($description) <= 160
+                ? $description
+                : null,
+            $completeDescription !== ''
+                ? $completeDescription
+                : null,
+            $shortDescription !== '' && Str::length($shortDescription) <= 160
+                ? $shortDescription
+                : null,
+        ], static fn ($value): bool => is_string($value) && trim($value) !== '')));
+
+        if ($candidates !== []) {
+            usort(
+                $candidates,
+                static fn (string $a, string $b): int =>
+                    abs(Str::length($a) - 150)
+                    <=> abs(Str::length($b) - 150)
+            );
+
+            return $candidates[0];
+        }
+
+        $fallback = trim((string) trans(
+            'seo_intents.collection_seo.description'
+        ));
+
+        return $this->fitCompleteSentences($fallback, 160) ?: $fallback;
+    }
+
+    private function fitCompleteSentences(string $text, int $limit): string
+    {
+        $text = trim($text);
+
+        if ($text === '' || Str::length($text) <= $limit) {
+            return $text;
+        }
+
+        $sentences = preg_split(
+            '/(?<=[.!?])\s+/u',
+            $text,
+            -1,
+            PREG_SPLIT_NO_EMPTY
+        );
+
+        if (! is_array($sentences)) {
+            return '';
+        }
+
+        $result = '';
+
+        foreach ($sentences as $sentence) {
+            $candidate = $result === ''
+                ? trim($sentence)
+                : $result.' '.trim($sentence);
+
+            if (Str::length($candidate) > $limit) {
+                break;
+            }
+
+            $result = $candidate;
+        }
+
+        return $result;
     }
 
     private function structuredDataAvailability(Watch $watch): string
