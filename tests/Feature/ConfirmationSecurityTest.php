@@ -21,7 +21,10 @@ class ConfirmationSecurityTest extends TestCase
 
     private function createReservation(): string
     {
-        $watchId = DB::table('watches')->insertGetId([
+        $watchId = 42;
+
+        DB::table('watches')->insert([
+            'id' => $watchId,
             'name' => 'Montre Confirmation Test',
             'price' => 1500.00,
             'promo_price' => 950.00,
