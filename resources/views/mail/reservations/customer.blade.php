@@ -1,18 +1,10 @@
 @php
-    $watchName = $reservation->watch->name;
-
-    $translatedWatch = trans('watches.'.$reservation->watch->id);
-
-    if (is_array($translatedWatch) && is_string($translatedWatch['name'] ?? null)) {
-        $watchName = $translatedWatch['name'];
-    }
-
-    if (\App\Support\PresentedWatch::matches($reservation->watch)) {
-        $watchName = \App\Support\PresentedWatch::localize($reservation->watch)->name;
-    }
+    $localizedWatch = app(\App\Support\WatchCatalog::class)
+        ->localizedWatch($reservation->watch);
+    $watchName = $localizedWatch->name;
 
     $movement = match ($reservation->movement) {
-        'Modele presente' => 'Modèle présenté',
+        'Modele presente' => $localizedWatch->getAttribute('presented_copy')['model_label'],
         'Suisse' => trans('site.movements.suisse'),
         default => trans('site.movements.japonais'),
     };
@@ -42,7 +34,7 @@
 {{ $movement }}
 
 **{{ trans('site.mail.reserved_price') }} :**
-{{ number_format($reservation->price, 0, ',', ' ') }} â‚¬
+{{ number_format($reservation->price, 0, ',', ' ') }} €
 
 **{{ trans('site.mail.name') }} :**
 {{ $reservation->customer_name }}
