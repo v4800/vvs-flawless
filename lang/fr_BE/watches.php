@@ -1,6 +1,62 @@
 <?php
 
 return [
+    'presented' => [
+        'name' => 'Carrée · Cadran blanc, bracelet cuir noir',
+        'short_description' => 'Boîtier carré serti, chiffres romains et bracelet cuir noir.',
+        'description' => 'Boîtier carré serti de moissanite, chiffres romains et bracelet en cuir noir. Poids total annoncé des pierres : 20–30 ct, à confirmer pour cet exemplaire.',
+        'ui' => [
+            'model_label' => 'Modèle présenté',
+            'price_label' => 'Prix du modèle présenté',
+            'stone_weight_label' => 'Poids total annoncé',
+            'stone_weight_value' => '20–30 ct, à confirmer pour cet exemplaire',
+            'confirm_title' => 'À confirmer avant commande',
+            'confirm_details' => 'Poids des pierres de cet exemplaire, dimensions et référence du mouvement.',
+            'visual_note' => 'Décor des photos retouché. Demandez une vidéo de l’exemplaire proposé avant de confirmer votre choix.',
+        ],
+    ],
+    'catalog' => [
+        'twotone-round' => [
+            'name' => '41 mm · Bicolore, cadran champagne',
+            'short_description' => 'Finition bicolore, cadran champagne et bracelet intégré.',
+            'description' => 'Une montre 41 mm à finition bicolore, cadran champagne et bracelet intégré, sertie de moissanite VVS couleur D.',
+        ],
+        'black-square' => [
+            'name' => '41 mm · Carrée noire, chiffres romains',
+            'short_description' => 'Carrure noire, chiffres romains et sertissage VVS.',
+            'description' => 'Une montre 41 mm carrée noire à chiffres romains, sertie de moissanite VVS couleur D.',
+        ],
+        'sport-black-strap' => [
+            'name' => '41 mm · Chronographe, bracelet noir',
+            'short_description' => 'Chronographe, bracelet noir et cadran pavé.',
+            'description' => 'Chronographe 41 mm à bracelet noir, boîtier entièrement serti et cadran pavé en moissanite VVS couleur D. Les poussoirs noirs renforcent le contraste sportif du modèle.',
+        ],
+        'gold-black-daydate' => [
+            'name' => '41 mm · Or jaune, cadran noir',
+            'short_description' => 'Finition or jaune, cadran noir et bracelet contrasté.',
+            'description' => 'Finition or jaune, cadran noir et sertissage en moissanite VVS couleur D. Le bracelet conserve un centre poli avec des maillons extérieurs sertis pour un contraste net.',
+        ],
+        'rose-skeleton' => [
+            'name' => '41 mm · Squelette bicolore, or rose',
+            'short_description' => 'Cadran squelette et accents couleur or rose.',
+            'description' => 'Cadran squelette, finition acier avec accents couleur or rose et sertissage en moissanite VVS couleur D. Le bracelet intégré reprend les détails bicolores du boîtier.',
+        ],
+        'square-bicolor-paved' => [
+            'name' => '41 mm · Carrée bicolore, cadran pavé',
+            'short_description' => 'Boîtier carré, cadran pavé et finition bicolore.',
+            'description' => 'Boîtier carré, cadran pavé à chiffres romains et finition bicolore avec accents couleur or jaune. Le sertissage en moissanite VVS couleur D se prolonge sur le bracelet intégré.',
+        ],
+        'women-pink' => [
+            'name' => '36 mm · Femme, cadran rose',
+            'short_description' => 'Cadran rose, bracelet pavé et format 36 mm.',
+            'description' => 'Modèle femme 36 mm avec cadran rose, bracelet entièrement pavé et sertissage en moissanite VVS couleur D.',
+        ],
+        'women-square-36' => [
+            'name' => '36 mm · Femme carrée, cadran blanc',
+            'short_description' => 'Boîtier carré, cadran blanc et bracelet pavé.',
+            'description' => 'Modèle femme 36 mm à boîtier carré, cadran blanc à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.',
+        ],
+    ],
     42 => [
         'name' => '41 mm · Chronographe camouflage',
         'short_description' => 'Cadran camouflage, esprit sportif.',
