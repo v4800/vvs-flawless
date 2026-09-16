@@ -47,6 +47,32 @@ const page = usePage();
 const translations = page.props.translations;
 const landingCopy = page.props.landingCopy;
 
+const noResultsCopy = computed(() => {
+    return (
+        {
+            fr_BE: {
+                title: 'Aucune montre ne correspond à votre recherche',
+                text: 'Essayez un autre nom, une autre référence ou effacez la recherche.',
+            },
+            nl_BE: {
+                title: 'Geen horloge komt overeen met je zoekopdracht',
+                text: 'Probeer een andere naam of referentie, of wis de zoekopdracht.',
+            },
+            en_BE: {
+                title: 'No watch matches your search',
+                text: 'Try another name or reference, or clear the search.',
+            },
+            de_BE: {
+                title: 'Keine Uhr entspricht deiner Suche',
+                text: 'Versuche einen anderen Namen oder eine andere Referenz oder lösche die Suche.',
+            },
+        }[page.props.locale] ?? {
+            title: 'No watch matches your search',
+            text: 'Try another name or reference, or clear the search.',
+        }
+    );
+});
+
 const normalizeSearchText = (value) => {
     return String(value ?? '')
         .normalize('NFD')
@@ -168,9 +194,6 @@ onMounted(() => {
             },
             '-=900',
         );
-
-
-
 
     const revealElements = document.querySelectorAll('.reveal-on-scroll');
 
@@ -306,10 +329,10 @@ onBeforeUnmount(() => {
                         role="status"
                     >
                         <p class="vvs-display-title text-3xl text-white">
-                            Aucune montre ne correspond à votre recherche
+                            {{ noResultsCopy.title }}
                         </p>
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
-                            Essayez un autre nom, une autre référence ou effacez la recherche.
+                            {{ noResultsCopy.text }}
                         </p>
                     </div>
 
