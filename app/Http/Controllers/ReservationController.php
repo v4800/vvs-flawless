@@ -277,7 +277,8 @@ class ReservationController extends Controller
             404
         );
 
-        $watchName = $catalog->localizedWatch($watch)->name;
+        $localizedWatch = $catalog->localizedWatch($watch);
+        $watchName = $localizedWatch->name;
 
         $dateFormat = match (app()->getLocale()) {
             'nl_BE' => 'd/m/Y \\o\\m H:i',
@@ -341,6 +342,9 @@ class ReservationController extends Controller
                         'id' => $watch->id,
                         'name' => $watchName,
                         'image' => $watch->image,
+                        'presented_copy' => $localizedWatch->getAttribute(
+                            'presented_copy'
+                        ),
                     ],
                 ]
             )->toResponse(
