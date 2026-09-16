@@ -321,6 +321,10 @@ class WatchController extends Controller
                     $watch->name
                     .' '
                     .$watch->slug
+                    .' '
+                    .$watch->description
+                    .' '
+                    .$watch->getAttribute('short_description')
                     .' VVS-'
                     .$watch->id
                 ));
