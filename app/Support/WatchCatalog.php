@@ -33,14 +33,15 @@ final class WatchCatalog
             return PresentedWatch::localize($watch);
         }
 
-        $translation = trans('watches.'.$watch->id);
-
         $entry = $this->catalogEntryForWatch($watch);
+        $translation = $this->translationForWatch($watch, $entry);
         $catalogKey = $entry === null
             ? null
             : 'site.collection.catalog_names.'.$entry['slug'];
-        $catalogName = is_string($catalogKey) && Lang::has($catalogKey)
-            ? trans($catalogKey)
+        $locale = app()->getLocale();
+        $catalogName = is_string($catalogKey)
+            && Lang::has($catalogKey, $locale, false)
+            ? Lang::get($catalogKey, [], $locale, false)
             : null;
 
         if (! is_array($translation) && ! is_string($catalogName)) {
@@ -48,12 +49,26 @@ final class WatchCatalog
         }
 
         $translation = is_array($translation) ? $translation : [];
+
+        if ($locale !== 'fr_BE') {
+            foreach (['description', 'short_description'] as $field) {
+                if (! is_string($translation[$field] ?? null)) {
+                    throw new \LogicException(sprintf(
+                        'Missing %s translation for watch #%d in locale %s.',
+                        $field,
+                        $watch->id,
+                        $locale
+                    ));
+                }
+            }
+        }
+
         $localizedWatch = clone $watch;
 
-        if (is_string($catalogName)) {
-            $localizedWatch->name = $catalogName;
-        } elseif (is_string($translation['name'] ?? null)) {
+        if (is_string($translation['name'] ?? null)) {
             $localizedWatch->name = $translation['name'];
+        } elseif (is_string($catalogName)) {
+            $localizedWatch->name = $catalogName;
         }
 
         if (is_string($translation['description'] ?? null)) {
@@ -152,6 +167,45 @@ final class WatchCatalog
         }
 
         return $models;
+    }
+
+    /**
+     * Resolve only the requested locale. Never let Laravel silently fall back
+     * to fr_BE for public product copy in NL/EN/DE.
+     *
+     * @param  CatalogEntry|null  $entry
+     * @return array<string, mixed>
+     */
+    private function translationForWatch(Watch $watch, ?array $entry): array
+    {
+        $locale = app()->getLocale();
+        $keys = ['watches.'.$watch->id];
+
+        if ($entry !== null) {
+            $keys[] = 'watches.catalog.'.$entry['slug'];
+        }
+
+        foreach ($keys as $key) {
+            if (! Lang::has($key, $locale, false)) {
+                continue;
+            }
+
+            $translation = Lang::get($key, [], $locale, false);
+
+            if (is_array($translation)) {
+                return $translation;
+            }
+        }
+
+        if ($locale === 'fr_BE') {
+            return [];
+        }
+
+        throw new \LogicException(sprintf(
+            'Missing localized watch copy for watch #%d in locale %s.',
+            $watch->id,
+            $locale
+        ));
     }
 
     /**
