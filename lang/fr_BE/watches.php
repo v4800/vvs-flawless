@@ -97,10 +97,10 @@ return [
         'short_description' => 'Finition or rose, cadran pavé et bracelet iced-out.',
         'description' => 'Une finition or rose avec cadran pavé, lunette sertie et bracelet entièrement iced-out en moissanite VVS couleur D.',
     ],
-    50 => [
-        'name' => '41 mm · Présidentielle bicolore, cadran champagne',
-        'short_description' => 'Finition bicolore, cadran champagne et bracelet iced-out.',
-        'description' => 'Une finition bicolore argent et or autour d’un cadran champagne, avec lunette sertie et bracelet iced-out en moissanite VVS couleur D.',
+50 => [
+        'name' => '41 mm · Présidentielle bicolore',
+        'short_description' => 'Finition bicolore et cadran solaire.',
+        'description' => 'Une finition bicolore associée à un cadran solaire lumineux. La moissanite VVS couleur D ajoute l’éclat bustdown tout en gardant une allure soignée.',
     ],
     51 => [
         'name' => 'Bleue · Chiffres romains, bracelet argenté',

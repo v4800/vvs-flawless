@@ -174,6 +174,15 @@
     * {
         @apply border-border outline-ring/50;
     }
+    html,
+    body,
+    #app {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+        overscroll-behavior-x: none;
+    }
+
     body {
         @apply bg-background text-foreground;
         font-synthesis: none;
@@ -706,4 +715,560 @@
     object-fit: cover !important;
     object-position: center !important;
     transform: none !important;
+}
+@layer utilities {
+    .vvs-gold-text {
+        color: #f2d58a;
+        background-image: linear-gradient(
+            110deg,
+            #b9782a 0%,
+            #f4d58a 48%,
+            #e0a23a 82%,
+            #e8987a 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+/* VVS SAFE MOTION PACK - CSS ONLY */
+
+.site-header {
+    isolation: isolate;
+}
+
+.site-header::after {
+    content: '';
+    position: absolute;
+    right: 12%;
+    bottom: -1px;
+    left: 12%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.10) 24%,
+        rgb(255 248 223 / 0.34) 50%,
+        rgb(242 213 138 / 0.10) 76%,
+        transparent
+    );
+    opacity: 0.72;
+}
+
+.watch-card {
+    isolation: isolate;
+    transition:
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 320ms ease,
+        box-shadow 420ms ease;
+}
+
+.watch-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 50% -14%,
+            rgb(255 248 223 / 0.13),
+            transparent 36%
+        ),
+        linear-gradient(
+            115deg,
+            transparent 34%,
+            rgb(242 213 138 / 0.035) 50%,
+            transparent 66%
+        );
+    opacity: 0;
+    transition: opacity 380ms ease;
+}
+
+.guide-comparison-card,
+.guide-info-card,
+.guide-choice-card,
+.guide-report {
+    transition:
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 320ms ease,
+        box-shadow 420ms ease;
+}
+
+.guide-report-mark {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.guide-report-mark::after {
+    content: '';
+    position: absolute;
+    top: -35%;
+    bottom: -35%;
+    left: -22%;
+    width: 15%;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 248 223 / 0.08),
+        rgb(255 255 255 / 0.28),
+        rgb(242 213 138 / 0.08),
+        transparent
+    );
+    filter: blur(2px);
+    opacity: 0;
+    transform: translateX(-220%) skewX(-18deg);
+}
+
+.vvs-button-primary > [aria-hidden='true'],
+.vvs-button-secondary > [aria-hidden='true'] {
+    display: inline-block;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .watch-card:hover {
+        border-color: rgb(242 213 138 / 0.26);
+        box-shadow:
+            0 30px 70px rgb(0 0 0 / 0.34),
+            0 0 38px rgb(217 166 46 / 0.045),
+            inset 0 1px 0 rgb(255 255 255 / 0.04);
+        transform: translateY(-4px);
+    }
+
+    .watch-card:hover::after {
+        opacity: 1;
+    }
+
+    .guide-comparison-card:hover,
+    .guide-info-card:hover,
+    .guide-choice-card:hover {
+        border-color: rgb(242 213 138 / 0.20);
+        box-shadow:
+            0 28px 72px rgb(0 0 0 / 0.30),
+            0 0 34px rgb(217 166 46 / 0.035),
+            inset 0 1px 0 rgb(255 255 255 / 0.035);
+        transform: translateY(-3px);
+    }
+
+    .guide-report:hover {
+        box-shadow:
+            0 50px 120px rgb(0 0 0 / 0.46),
+            0 0 42px rgb(217 166 46 / 0.045),
+            inset 0 1px 0 rgb(254 240 138 / 0.08);
+        transform: translateY(-2px);
+    }
+
+    .guide-report-mark:hover::after {
+        opacity: 1;
+        transform: translateX(850%) skewX(-18deg);
+        transition:
+            transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease;
+    }
+
+    .vvs-button-primary:hover > [aria-hidden='true'],
+    .vvs-button-secondary:hover > [aria-hidden='true'] {
+        transform: translateX(3px);
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .watch-card,
+    .guide-comparison-card,
+    .guide-info-card,
+    .guide-choice-card,
+    .guide-report {
+        transform: none;
+    }
+
+    .watch-card::after,
+    .guide-report-mark::after {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .watch-card,
+    .watch-card::after,
+    .guide-comparison-card,
+    .guide-info-card,
+    .guide-choice-card,
+    .guide-report,
+    .guide-report-mark::after,
+    .vvs-button-primary > [aria-hidden='true'],
+    .vvs-button-secondary > [aria-hidden='true'] {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        transform: none !important;
+    }
+
+    .watch-card::after,
+    .guide-report-mark::after {
+        display: none !important;
+    }
+}
+/* VVS SAFE MOTION 2 - CSS AND NATIVE JS
+   Safe layer only: transform, opacity, gradients and native IntersectionObserver.
+   No layout sizes, breakpoints, grid rules or responsive page structure are changed.
+*/
+
+/* Scroll reveal: only active when JS marks the document as motion-ready. */
+html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    transition:
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+}
+
+/* Editorial images: one slow champagne reflection, not a permanent flashy loop. */
+.vvs-editorial-shimmer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.vvs-editorial-shimmer::after {
+    content: '';
+    position: absolute;
+    z-index: 25;
+    top: -30%;
+    bottom: -30%;
+    left: -24%;
+    width: 14%;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 248 223 / 0.06),
+        rgb(255 255 255 / 0.26),
+        rgb(217 166 46 / 0.10),
+        transparent
+    );
+    filter: blur(2px);
+    opacity: 0;
+    transform: translateX(-220%) skewX(-18deg);
+}
+
+/* Diamond vs moissanite: subtle spectral light reserved to the right side. */
+.vvs-spectrum-visual {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.vvs-spectrum-visual::before {
+    content: '';
+    position: absolute;
+    z-index: 24;
+    top: 8%;
+    right: -8%;
+    bottom: 8%;
+    width: 58%;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at 48% 52%,
+            rgb(255 255 255 / 0.11) 0%,
+            transparent 29%
+        ),
+        conic-gradient(
+            from 190deg at 48% 52%,
+            transparent 0deg,
+            rgb(255 82 82 / 0.07) 22deg,
+            rgb(255 210 92 / 0.08) 40deg,
+            rgb(91 255 184 / 0.07) 60deg,
+            rgb(100 202 255 / 0.09) 82deg,
+            rgb(174 126 255 / 0.08) 104deg,
+            transparent 132deg
+        );
+    mix-blend-mode: screen;
+    opacity: 0.46;
+    transform: scale(0.985);
+    transform-origin: 50% 50%;
+    animation: vvs-spectrum-breathe-safe 5.4s ease-in-out infinite;
+}
+
+@keyframes vvs-spectrum-breathe-safe {
+    0%,
+    100% {
+        opacity: 0.34;
+        transform: scale(0.985) translate3d(-2px, 1px, 0);
+    }
+
+    50% {
+        opacity: 0.54;
+        transform: scale(1.01) translate3d(2px, -1px, 0);
+    }
+}
+
+/* Pointer light: desktop only. Uses CSS variables written by native JS. */
+@media (hover: hover) and (pointer: fine) {
+    .watch-card {
+        --vvs-pointer-x: 50%;
+        --vvs-pointer-y: 24%;
+    }
+
+    .watch-card::after {
+        background:
+            radial-gradient(
+                circle at var(--vvs-pointer-x) var(--vvs-pointer-y),
+                rgb(255 248 223 / 0.16),
+                rgb(217 166 46 / 0.055) 18%,
+                transparent 42%
+            ),
+            linear-gradient(
+                115deg,
+                transparent 34%,
+                rgb(242 213 138 / 0.03) 50%,
+                transparent 66%
+            );
+    }
+
+    .vvs-editorial-shimmer:hover::after {
+        opacity: 1;
+        transform: translateX(900%) skewX(-18deg);
+        transition:
+            transform 1050ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease;
+    }
+}
+
+/* Secondary button gets the same restrained light language as the primary CTA. */
+.vvs-button-secondary::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        110deg,
+        transparent 25%,
+        rgb(255 248 223 / 0.18) 48%,
+        transparent 72%
+    );
+    content: '';
+    opacity: 0;
+    transform: translateX(-90%);
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-button-secondary:hover::after {
+        opacity: 1;
+        transform: translateX(90%);
+    }
+}
+
+/* Touch devices: no pointer tracking or moving shimmer. */
+@media (hover: none), (pointer: coarse) {
+    .vvs-editorial-shimmer::after {
+        display: none;
+    }
+
+    .vvs-spectrum-visual::before {
+        animation: none;
+        opacity: 0.32;
+        transform: none;
+    }
+}
+
+/* Accessibility: all decorative motion becomes static. */
+@media (prefers-reduced-motion: reduce) {
+    .vvs-reveal-ready,
+    .vvs-reveal-ready.vvs-in-view {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+    }
+
+    .vvs-editorial-shimmer::after {
+        display: none !important;
+    }
+
+    .vvs-spectrum-visual::before {
+        animation: none !important;
+        opacity: 0.28 !important;
+        transform: none !important;
+    }
+
+    .vvs-button-secondary::after {
+        display: none !important;
+    }
+}
+/* VVS SAFE MOTION 3 - CSS ONLY EXTENSIONS
+   Adds premium micro-interactions without changing responsive layout.
+*/
+
+/* Skeleton shimmer, only applied when JS marks an element as loading. */
+@keyframes vvs-skeleton-shimmer-safe {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+.vvs-skeleton-safe {
+    background:
+        linear-gradient(
+            100deg,
+            rgb(255 255 255 / 0.035) 20%,
+            rgb(255 255 255 / 0.085) 38%,
+            rgb(255 255 255 / 0.035) 56%
+        );
+    background-size: 220% 100%;
+    animation: vvs-skeleton-shimmer-safe 1.8s linear infinite;
+}
+
+/* Headings: subtle underline light, no layout change. */
+.vvs-title-accent {
+    position: relative;
+}
+
+.vvs-title-accent::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.55rem;
+    width: min(7rem, 42%);
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.46),
+        transparent
+    );
+    opacity: 0.72;
+    transform: translateX(-50%) scaleX(0.72);
+    transform-origin: center;
+    transition:
+        opacity 420ms ease,
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vvs-title-accent.vvs-in-view::after {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Filter controls: a restrained active/focus glow without touching spacing. */
+.vvs-filter-active {
+    border-color: rgb(242 213 138 / 0.38) !important;
+    box-shadow:
+        0 0 0 1px rgb(242 213 138 / 0.08),
+        0 10px 28px rgb(0 0 0 / 0.18),
+        0 0 24px rgb(217 166 46 / 0.05);
+}
+
+/* Product gallery: tiny depth response on desktop, never changes dimensions. */
+#product-gallery-panel {
+    isolation: isolate;
+}
+
+#product-gallery-panel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+        linear-gradient(
+            180deg,
+            rgb(255 255 255 / 0.025),
+            transparent 22%,
+            transparent 76%,
+            rgb(0 0 0 / 0.10)
+        );
+    opacity: 0.85;
+}
+
+/* Reservation confirmation check: one restrained entrance pulse. */
+@keyframes vvs-confirm-safe {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+        box-shadow: 0 0 0 rgb(217 166 46 / 0);
+    }
+
+    55% {
+        opacity: 1;
+        transform: scale(1.025);
+        box-shadow: 0 0 34px rgb(217 166 46 / 0.12);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 0 rgb(217 166 46 / 0);
+    }
+}
+
+.vvs-confirm-icon-safe {
+    animation: vvs-confirm-safe 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Desktop-only micro zoom for editorial/product images, max 1.015. */
+@media (hover: hover) and (pointer: fine) {
+    .vvs-soft-zoom img {
+        transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .vvs-soft-zoom:hover img {
+        transform: scale(1.015);
+    }
+
+    #product-gallery-panel:hover > img {
+        transform: scale(1.008);
+    }
+}
+
+/* Touch devices: keep all extra Motion 3 effects static. */
+@media (hover: none), (pointer: coarse) {
+    .vvs-soft-zoom img,
+    #product-gallery-panel > img {
+        transform: none !important;
+    }
+}
+
+/* Reduced motion: all Motion 3 decorative movement becomes static. */
+@media (prefers-reduced-motion: reduce) {
+    .vvs-skeleton-safe {
+        animation: none !important;
+        background: rgb(255 255 255 / 0.05) !important;
+    }
+
+    .vvs-title-accent::after {
+        transition: none !important;
+        transform: translateX(-50%) scaleX(1) !important;
+    }
+
+    .vvs-confirm-icon-safe {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .vvs-soft-zoom img,
+    #product-gallery-panel > img {
+        transition: none !important;
+        transform: none !important;
+    }
 }

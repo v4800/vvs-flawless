@@ -72,6 +72,11 @@ class WatchLocalizationTest extends TestCase
                 $expectedMeta = app(WatchSeo::class)
                     ->product($localizedWatch, [])['description'];
 
+                // Each HTTP request gets a fresh SSR scope in production.
+                // PHPUnit reuses the application container inside this test,
+                // so forget the previous scoped SSR state before the next request.
+                app()->forgetInstance(\Inertia\Ssr\SsrState::class);
+
                 $response = $this->get(route($routeName, $watch));
 
                 $response

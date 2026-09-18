@@ -218,10 +218,10 @@ onBeforeUnmount(() => {
 
 <template>
     <div
-        class="mx-auto w-full min-w-0 max-w-full sm:max-w-[520px] md:max-w-[459.75px] lg:max-w-none"
+        class="mx-auto w-full min-w-0 max-w-[520px] lg:max-w-none"
     >
         <div class="relative">
-            <div class="absolute top-5 left-5 z-20">
+            <div class="absolute top-3 left-3 z-20 sm:top-5 sm:left-5">
                 <StockBadge
                     :quantity="watch.stock_quantity"
                     :availability="watch.availability"
@@ -240,7 +240,7 @@ onBeforeUnmount(() => {
                 :aria-label="`${watch.name} — agrandir l’image`"
                 aria-live="polite"
                 aria-atomic="true"
-                class="relative aspect-[3/4] w-full touch-pan-y self-start overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)] select-none md:max-h-[613px] lg:max-h-none"
+                class="relative aspect-[3/4] w-full max-w-full touch-pan-y self-start overflow-hidden rounded-2xl border border-white/10 bg-[radial-gradient(circle_at_50%_38%,rgba(251,191,36,0.12),rgba(12,10,8,0.96)_48%,#050505_80%)] select-none sm:rounded-3xl lg:max-h-none"
                 @pointerdown="handlePointerDown"
                 @pointerup="handlePointerUp"
                 @pointercancel="handlePointerCancel"
@@ -264,7 +264,7 @@ onBeforeUnmount(() => {
                     fetchpriority="high"
                     decoding="async"
                     draggable="false"
-                    class="absolute inset-0 block h-full w-full cursor-zoom-in object-cover object-center"
+                    class="absolute inset-0 block h-full w-full max-w-full cursor-zoom-in object-contain object-center p-3 sm:p-4"
                 />
                 </Transition>
 
@@ -333,7 +333,7 @@ onBeforeUnmount(() => {
             v-if="gallery.length > 1"
             role="tablist"
             :aria-label="watch.name"
-            class="mt-4 grid min-w-0 grid-cols-4 gap-3 sm:grid-cols-6"
+            class="mt-3 grid min-w-0 grid-cols-4 gap-2 sm:mt-4 sm:grid-cols-6 sm:gap-3"
         >
             <button
                 v-for="(image, index) in gallery"
@@ -362,13 +362,13 @@ onBeforeUnmount(() => {
                     loading="lazy"
                     decoding="async"
                     draggable="false"
-                    class="block h-full w-full object-cover object-center"
+                    class="block h-full w-full object-contain object-center p-1"
                 />
             </button>
         </div>
 
         <div
-            class="mt-3 grid min-w-0 grid-cols-2 gap-2 sm:mt-4 sm:grid-cols-3 sm:gap-3"
+            class="mt-3 grid min-w-0 grid-cols-1 gap-2 min-[360px]:grid-cols-2 sm:mt-4 sm:grid-cols-3 sm:gap-3"
         >
             <div
                 class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4"
@@ -395,7 +395,7 @@ onBeforeUnmount(() => {
             </div>
 
             <div
-                class="vvs-choice-card col-span-2 min-w-0 rounded-2xl border p-3 sm:col-span-1 sm:p-4"
+                class="vvs-choice-card min-w-0 rounded-2xl border p-3 min-[360px]:col-span-2 sm:col-span-1 sm:p-4"
             >
                 <p
                     class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
@@ -417,7 +417,7 @@ onBeforeUnmount(() => {
                 aria-modal="true"
                 tabindex="-1"
                 :aria-label="`${watch.name} — image agrandie`"
-                class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-3 outline-none sm:p-6"
+                class="fixed inset-0 z-[100] flex min-w-0 items-center justify-center overflow-hidden bg-black/95 p-2 outline-none sm:p-6"
                 @click.self="closeLightbox"
                 @keydown.esc.stop.prevent="closeLightbox"
             >
@@ -447,7 +447,7 @@ onBeforeUnmount(() => {
                     :src="activeImage"
                     :alt="`${watch.name} — ${imagePosition}`"
                     draggable="false"
-                    class="max-h-[calc(100dvh-2rem)] max-w-[calc(100vw-2rem)] object-contain sm:max-h-[calc(100dvh-4rem)] sm:max-w-[calc(100vw-6rem)]"
+                    class="block max-h-[calc(100dvh-1rem)] max-w-[calc(100vw-1rem)] object-contain sm:max-h-[calc(100dvh-4rem)] sm:max-w-[calc(100vw-6rem)]"
                     @click.stop
                 />
 

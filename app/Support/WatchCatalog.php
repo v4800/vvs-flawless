@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\Watch;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Lang;
 
 /**
@@ -85,6 +86,31 @@ final class WatchCatalog
         return $localizedWatch;
     }
 
+    /**
+     * Localize every Watch model found inside Inertia props.
+     */
+    public function localizeNestedWatches(mixed $value): mixed
+    {
+        if ($value instanceof Watch) {
+            return $this->localizedWatch($value)->toArray();
+        }
+
+        if ($value instanceof Collection) {
+            return $value->map(
+                fn (mixed $item): mixed => $this->localizeNestedWatches($item)
+            );
+        }
+
+        if (is_array($value)) {
+            foreach ($value as $key => $item) {
+                $value[$key] = $this->localizeNestedWatches($item);
+            }
+
+            return $value;
+        }
+
+        return $value;
+    }
     public function applyCover(Watch $watch): Watch
     {
         $entry = $this->catalogEntryForWatch($watch);
@@ -156,7 +182,6 @@ final class WatchCatalog
 
             $name = trans('site.collection.catalog_names.'.$entry['slug']);
             $name = is_string($name) ? $name : $entry['slug'];
-
             $models[] = [
                 'reference' => sprintf('VVS-C%03d', $entry['id']),
                 'name' => $name,
@@ -167,6 +192,73 @@ final class WatchCatalog
         }
 
         return $models;
+    }
+
+    /**
+     * @return array{
+     *     families: list<array{value: string, label: string}>,
+     *     aliases: list<string>,
+     *     keywords: list<string>
+     * }
+     */
+    public function searchMetadataForWatch(Watch $watch): array
+    {
+        $entry = $this->catalogEntryForWatch($watch);
+
+        if ($entry === null) {
+            return [
+                'families' => [],
+                'aliases' => [],
+                'keywords' => [],
+            ];
+        }
+
+        return $this->searchMetadataForSlug($entry['slug']);
+    }
+
+
+    /**
+     * @return array{
+     *     families: list<array{value: string, label: string}>,
+     *     aliases: list<string>,
+     *     keywords: list<string>
+     * }
+     */
+    private function searchMetadataForSlug(string $slug): array
+    {
+        $models = config('watch_search.models', []);
+        $metadata = is_array($models)
+            && is_array($models[$slug] ?? null)
+            ? $models[$slug]
+            : [];
+
+        $families = array_values(array_filter(
+            $metadata['families'] ?? [],
+            static fn (mixed $family): bool =>
+                is_array($family)
+                && is_string($family['value'] ?? null)
+                && trim($family['value']) !== ''
+                && is_string($family['label'] ?? null)
+                && trim($family['label']) !== ''
+        ));
+
+        $aliases = array_values(array_filter(
+            $metadata['aliases'] ?? [],
+            static fn (mixed $alias): bool =>
+                is_string($alias) && trim($alias) !== ''
+        ));
+
+        $keywords = array_values(array_filter(
+            $metadata['keywords'] ?? [],
+            static fn (mixed $keyword): bool =>
+                is_string($keyword) && trim($keyword) !== ''
+        ));
+
+        return [
+            'families' => $families,
+            'aliases' => $aliases,
+            'keywords' => $keywords,
+        ];
     }
 
     /**

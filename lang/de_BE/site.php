@@ -6,6 +6,7 @@ return array_replace_recursive($base, [
     'navigation' => [
         'main_label' => 'Hauptnavigation',
         'watches' => 'Uhren',
+        'catalogue_description' => 'Entdecke die gesamte VVS FLAWLESS-Kollektion.',
         'about' => 'Über uns',
         'delivery' => 'Lieferung & Übergabe',
         'country' => 'Belgien',
@@ -112,8 +113,8 @@ return array_replace_recursive($base, [
         'about_description' => 'VVS FLAWLESS ist ein belgisches Projekt rund um Iced-Out-Uhren mit VVS-Moissanit, erhältlich auf Reservierung.',
     ],
     'movements' => [
-        'japonais' => 'Japanisch',
-        'suisse' => 'Schweizerisch',
+        'japonais' => 'Japanisches Automatikwerk',
+        'suisse' => 'Schweizer Automatikwerk',
     ],
     'product' => [
         'stone' => 'Stein',

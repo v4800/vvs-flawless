@@ -4,6 +4,7 @@ return [
     'navigation' => [
         'main_label' => 'Main navigation',
         'watches' => 'Watches',
+        'catalogue_description' => 'Explore the full VVS FLAWLESS collection.',
         'about' => 'About',
         'delivery' => 'Delivery & Handover',
         'country' => 'Belgium',
@@ -118,8 +119,8 @@ return [
     ],
 
     'movements' => [
-        'japonais' => 'Japanese',
-        'suisse' => 'Swiss',
+        'japonais' => 'Japanese automatic',
+        'suisse' => 'Swiss automatic',
     ],
 
     'product' => [

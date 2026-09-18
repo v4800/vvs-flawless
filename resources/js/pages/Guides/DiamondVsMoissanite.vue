@@ -83,6 +83,20 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                             </p>
                         </header>
 
+                        <figure
+                            class="mt-8 overflow-hidden rounded-3xl border border-amber-200/15 bg-black shadow-[0_28px_80px_rgba(0,0,0,0.35)] sm:mt-10"
+                        >
+                            <img
+                                src="/images/editorial/diamond-vs-moissanite.webp"
+                                alt="Diamant vs moissanite"
+                                width="1672"
+                                height="941"
+                                loading="lazy"
+                                decoding="async"
+                                class="block h-auto w-full object-cover"
+                            />
+                        </figure>
+
                         <div class="mt-10 grid gap-4 md:hidden">
                             <article
                                 v-for="row in guide.rows"
@@ -245,37 +259,19 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                                 >
                                     {{ guide.report_intro }}
                                 </p>
-
-                                <div
-                                    class="guide-report-mark mt-9 flex aspect-[4/3] items-center justify-center rounded-2xl border border-amber-100/10"
-                                    aria-hidden="true"
+                                <figure
+                                    class="guide-report-mark mt-9 overflow-hidden rounded-2xl border border-amber-100/10 bg-black"
                                 >
-                                    <svg
-                                        viewBox="0 0 180 150"
-                                        class="h-36 w-44 text-amber-200 sm:h-44 sm:w-52"
-                                        fill="none"
-                                    >
-                                        <path
-                                            d="M38 54 64 25h52l26 29-52 70L38 54Z"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                        />
-                                        <path
-                                            d="m38 54 52 70 52-70M38 54h104M64 25l26 29 26-29M64 25 38 54m78-29 26 29M90 54v70"
-                                            stroke="currentColor"
-                                            stroke-width="1"
-                                            opacity=".58"
-                                        />
-                                        <circle
-                                            cx="90"
-                                            cy="74"
-                                            r="66"
-                                            stroke="currentColor"
-                                            stroke-dasharray="2 7"
-                                            opacity=".2"
-                                        />
-                                    </svg>
-                                </div>
+                                    <img
+                                        src="/images/editorial/gra-moissanite-guide.webp"
+                                        alt=""
+                                        width="1448"
+                                        height="1086"
+                                        loading="lazy"
+                                        decoding="async"
+                                        class="block aspect-[4/3] h-full w-full object-cover"
+                                    />
+                                </figure>
 
                                 <p
                                     class="mt-5 inline-flex rounded-full border border-amber-200/20 bg-amber-200/[0.06] px-4 py-2 text-[10px] font-bold tracking-[0.12em] text-amber-200 uppercase"

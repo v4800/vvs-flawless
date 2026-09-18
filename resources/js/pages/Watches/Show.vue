@@ -207,10 +207,10 @@ const submit = () => {
             :watch-href="`${localizedRoutes.watches}/${watch.slug}`"
         />
 
-        <main id="main-content" tabindex="-1" class="w-full min-w-0 max-w-full">
+        <main id="main-content" tabindex="-1" class="w-full min-w-0 max-w-full overflow-x-clip">
             <section
                 id="model"
-                class="relative scroll-mt-28 overflow-hidden px-5 pt-10 pb-20 sm:px-6 lg:px-10 lg:pt-14"
+                class="relative scroll-mt-28 overflow-hidden px-4 pt-8 pb-16 sm:px-6 sm:pt-10 sm:pb-20 lg:px-10 lg:pt-14"
             >
                 <div
                     aria-hidden="true"
@@ -223,7 +223,7 @@ const submit = () => {
                 ></div>
 
                 <div
-                    class="mx-auto grid min-w-0 max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-16"
+                    class="mx-auto grid w-full min-w-0 max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-16"
                 >
                     <ProductGallery
                         :watch="watch"
@@ -279,7 +279,7 @@ const submit = () => {
             <CustomerConfidence />
         </main>
 
-        <footer class="border-t border-white/10 px-6 py-9">
+        <footer class="min-w-0 border-t border-white/10 px-4 py-8 sm:px-6 sm:py-9">
             <div
                 class="mx-auto flex max-w-[1400px] flex-col gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
             >
@@ -337,7 +337,7 @@ const submit = () => {
         <a
             v-if="watch.single_offer"
             href="#reservation"
-            class="fixed inset-x-4 bottom-4 z-40 rounded-xl bg-amber-300 p-4 text-center font-bold text-black lg:hidden"
+            class="fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black lg:hidden sm:inset-x-4 sm:bottom-4 sm:p-4"
         >
             {{ singleOfferPrice }} · {{ reserveLabel }}
         </a>

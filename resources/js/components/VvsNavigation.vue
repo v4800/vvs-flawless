@@ -46,12 +46,12 @@ const resolvedBackLabel = computed(
 
 const languageLinks = computed(() => {
     const alternates = page.props.seo?.alternates ?? [];
-    const languages = [
-        { code: 'FR', locale: 'fr_BE', hreflang: 'fr-BE' },
-        { code: 'NL', locale: 'nl_BE', hreflang: 'nl-BE' },
-        { code: 'EN', locale: 'en_BE', hreflang: 'en-BE' },
-        { code: 'DE', locale: 'de_BE', hreflang: 'de-BE' },
-    ];
+   const languages = [
+    { code: 'FR', flag: '🇫🇷', locale: 'fr_BE', hreflang: 'fr-BE' },
+    { code: 'NL', flag: '🇳🇱', locale: 'nl_BE', hreflang: 'nl-BE' },
+    { code: 'EN', flag: '🇬🇧', locale: 'en_BE', hreflang: 'en-BE' },
+    { code: 'DE', flag: '🇩🇪', locale: 'de_BE', hreflang: 'de-BE' },
+];
 
     return languages
         .map((language) => ({
@@ -109,10 +109,10 @@ onMounted(() => {
 <template>
     <div
         ref="navigation"
-        class="sticky top-4 z-40 mx-auto mb-8 max-w-6xl px-4 opacity-0 sm:px-0"
+        class="sticky top-20 z-40 sm:top-24 mx-auto mb-8 max-w-6xl px-4 opacity-0 sm:px-0"
     >
         <div
-            class="vvs-luxury-card flex min-h-[64px] items-center justify-between gap-3 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:px-5"
+            class="vvs-luxury-card flex min-h-[64px] flex-col items-stretch gap-3 rounded-2xl border px-4 py-3 backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between sm:px-5"
         >
             <Link
                 v-if="showBack"
@@ -155,7 +155,7 @@ onMounted(() => {
                 </span>
             </div>
 
-            <div class="flex min-w-0 items-center justify-end gap-3">
+            <div class="flex min-w-0 w-full flex-col items-stretch gap-3 sm:w-auto sm:flex-row sm:items-center sm:justify-end">
                 <nav
                     class="hidden shrink-0 items-center gap-3 lg:flex"
                     :aria-label="translations.navigation.main_label"
@@ -204,7 +204,7 @@ onMounted(() => {
                 </nav>
 
                 <nav
-                    class="hidden min-w-0 items-center justify-end overflow-hidden sm:flex"
+                    class="flex min-w-0 w-full items-center justify-between gap-2 overflow-hidden border-t border-white/10 pt-3 sm:w-auto sm:justify-end sm:border-t-0 sm:pt-0"
                     :aria-label="translations.vvs_navigation.label"
                 >
                     <template v-for="(step, index) in steps" :key="step.key">
@@ -215,7 +215,7 @@ onMounted(() => {
                                 step.key === current ? 'location' : undefined
                             "
                             :class="[
-                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                'inline-flex min-w-0 flex-1 items-center justify-center rounded px-1 py-1 text-[10px] font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:flex-none sm:text-xs',
                                 step.key === current
                                     ? 'text-amber-200'
                                     : 'text-zinc-400 hover:text-amber-200',
@@ -231,7 +231,7 @@ onMounted(() => {
                                 step.key === current ? 'page' : undefined
                             "
                             :class="[
-                                'hidden rounded text-xs font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:inline',
+                                'inline-flex min-w-0 flex-1 items-center justify-center rounded px-1 py-1 text-[10px] font-medium whitespace-nowrap transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:flex-none sm:text-xs',
                                 step.key === current
                                     ? 'text-amber-200'
                                     : 'text-zinc-400 hover:text-amber-200',
@@ -242,7 +242,7 @@ onMounted(() => {
 
                         <span
                             v-else
-                            class="hidden text-xs font-semibold whitespace-nowrap text-zinc-500 sm:inline"
+                            class="inline-flex min-w-0 flex-1 items-center justify-center text-[10px] font-semibold whitespace-nowrap text-zinc-500 sm:flex-none sm:text-xs"
                         >
                             {{ step.label }}
                         </span>
@@ -250,7 +250,7 @@ onMounted(() => {
                         <span
                             v-if="index < steps.length - 1"
                             aria-hidden="true"
-                            class="mx-2 hidden text-zinc-700 sm:inline"
+                            class="shrink-0 text-[10px] text-zinc-700 sm:mx-2 sm:text-xs"
                         >
                             ›
                         </span>

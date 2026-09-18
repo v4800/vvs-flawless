@@ -33,6 +33,14 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    filterOptions: {
+        type: Object,
+        default: () => ({
+            models: [],
+            availability: [],
+            movements: [],
+        }),
+    },
     pagination: {
         type: Object,
         required: true,
@@ -124,7 +132,6 @@ const visibleSourcedModels = computed(() => {
 
     return models;
 });
-
 const showSourcedModels = computed(() => {
     return (
         props.pagination.currentPage === 1 &&
@@ -252,14 +259,14 @@ onBeforeUnmount(() => {
         <CollectionSiteHeader :seo="seo" />
 
         <main id="main-content" tabindex="-1">
-            <div class="collection-toolbar-shell pt-5 pb-5 sm:pt-6 sm:pb-6">
-                <CollectionFilters :filters="props.filters" />
+            <div class="collection-toolbar-shell pt-6 pb-8 sm:pt-7 sm:pb-10">
+                <CollectionFilters :filters="props.filters" :options="props.filterOptions" />
             </div>
 
             <VvsNavigation
                 current="collection"
                 :show-back="false"
-                class="!static !mt-3 !mb-8 md:!sticky md:!top-24"
+                class="hidden md:block md:!sticky md:!top-24 md:!mt-4 md:!mb-10"
             />
 
             <CollectionHero @scroll-to-collection="scrollToCollection" />

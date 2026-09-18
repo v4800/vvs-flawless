@@ -32,3 +32,9 @@ database/migration-backups/
 /.history/
 *.BACKUP
 /database/migration-backups/
+/_local-backups/
+/responsive-final-*/
+*.backup-*
+/_local-backups/
+/responsive-final-*/
+*.backup-*

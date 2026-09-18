@@ -45,6 +45,20 @@ const translations = computed(() => page.props.translations);
                     <span class="flex-1 bg-yellow-400"></span>
                     <span class="flex-1 bg-red-600"></span>
                 </div>
+
+                <figure
+                    class="mt-8 overflow-hidden rounded-3xl border border-amber-200/15 bg-black shadow-[0_28px_80px_rgba(0,0,0,0.3)]"
+                >
+                    <img
+                        src="/images/editorial/vvs-lifestyle-watch.webp"
+                        alt=""
+                        width="1448"
+                        height="1086"
+                        loading="lazy"
+                        decoding="async"
+                        class="block aspect-[4/3] h-full w-full object-cover"
+                    />
+                </figure>
             </div>
 
             <div class="vvs-luxury-card rounded-3xl border p-7 sm:p-9">

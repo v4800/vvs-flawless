@@ -11,6 +11,17 @@
             'nl-BE' => route('nl.about'),
             'en-BE' => route('en.about'),
             'de-BE' => route('de.about'),
+        ],        [
+            'fr-BE' => route('privacy'),
+            'nl-BE' => route('nl.privacy'),
+            'en-BE' => route('en.privacy'),
+            'de-BE' => route('de.privacy'),
+        ],
+        [
+            'fr-BE' => route('reservation-terms'),
+            'nl-BE' => route('nl.reservation-terms'),
+            'en-BE' => route('en.reservation-terms'),
+            'de-BE' => route('de.reservation-terms'),
         ],
         [
             'fr-BE' => route('guides.diamond-vs-moissanite'),

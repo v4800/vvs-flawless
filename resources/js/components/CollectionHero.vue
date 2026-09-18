@@ -13,14 +13,9 @@ const hero = page.props.landingCopy.hero;
     <section
         class="relative isolate overflow-hidden border-b border-white/10 bg-[#060606]"
     >
-        <div class="absolute top-0 right-0 hidden h-full w-1.5 lg:flex">
-            <div class="h-full flex-1 bg-black"></div>
-            <div class="h-full flex-1 bg-yellow-400"></div>
-            <div class="h-full flex-1 bg-red-600"></div>
-        </div>
 
         <div
-            class="mx-auto grid min-h-[650px] max-w-[1500px] items-center gap-12 px-6 py-16 lg:grid-cols-[0.92fr_1.08fr] lg:px-10 lg:py-20"
+            class="mx-auto grid max-w-[1500px] items-center gap-10 px-6 py-10 sm:gap-12 sm:py-12 lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:px-10 lg:py-20"
         >
             <div class="relative z-10">
                 <p
@@ -72,7 +67,7 @@ const hero = page.props.landingCopy.hero;
             </div>
 
             <div
-                class="relative flex min-h-[440px] items-center justify-center lg:min-h-[600px]"
+                class="relative mt-2 flex min-h-0 items-center justify-center sm:mt-4 lg:mt-0 lg:min-h-[600px]"
             >
                 <div
                     class="hero-watch relative z-10 w-full max-w-[760px] overflow-hidden rounded-[24px] border border-white/10 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.55)]"

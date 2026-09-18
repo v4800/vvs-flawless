@@ -59,24 +59,17 @@ class WatchController extends Controller
                 $search
             );
 
-            $query->where(function (Builder $builder) use (
-                $search,
-                $matchingLocalizedIds
-            ): void {
-                $builder
-                    ->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('slug', 'like', '%'.$search.'%')
-                    ->orWhere('description', 'like', '%'.$search.'%');
-
-                if ($matchingLocalizedIds !== []) {
-                    $builder->orWhereIn('id', $matchingLocalizedIds);
-                }
-            });
+            if ($matchingLocalizedIds === []) {
+                $query->whereRaw('1 = 0');
+            } else {
+                $query->whereIn('id', $matchingLocalizedIds);
+            }
         }
 
         if (isset($filters['model'])) {
             $query->whereKey((int) $filters['model']);
         }
+
 
         if (isset($filters['movement'])) {
             $movement = $filters['movement'];
@@ -291,7 +284,7 @@ class WatchController extends Controller
             ->limit(6)
             ->get();
 
-        return inertia('Watches/Show', [
+        $props = [
             'watch' => $watch,
             'gallery' => $gallery,
             'selectedMovement' => $selectedMovement,
@@ -302,7 +295,12 @@ class WatchController extends Controller
                 'store' => route('vvs.reviews.store'),
             ],
             'seo' => $this->seo->product($watch, $gallery),
-        ]);
+        ];
+
+        return inertia(
+            'Watches/Show',
+            $this->catalog->localizeNestedWatches($props)
+        );
     }
 
     /**
@@ -313,28 +311,72 @@ class WatchController extends Controller
         Collection $inventory,
         string $search
     ): array {
-        $needle = Str::lower(Str::ascii($search));
+        $needle = $this->normalizeSearchText($search);
+        $tokens = array_values(array_filter(explode(' ', $needle)));
+
+        if ($tokens === []) {
+            return [];
+        }
 
         return $inventory
-            ->filter(function (Watch $watch) use ($needle): bool {
-                $haystack = Str::lower(Str::ascii(
-                    $watch->name
+            ->filter(function (Watch $watch) use ($tokens): bool {
+                $metadata = $this->catalog->searchMetadataForWatch($watch);
+                $familyLabels = collect($metadata['families'])
+                    ->pluck('label')
+                    ->implode(' ');
+
+                $haystack = $this->normalizeSearchText(
+                    (string) $watch->name
                     .' '
-                    .$watch->slug
+                    .(string) $watch->slug
                     .' '
-                    .$watch->description
+                    .(string) $watch->description
                     .' '
-                    .$watch->getAttribute('short_description')
+                    .(string) $watch->getAttribute('short_description')
                     .' VVS-'
                     .$watch->id
-                ));
+                    .' '
+                    .$familyLabels
+                    .' '
+                    .implode(' ', $metadata['aliases'])
+                    .' '
+                    .implode(' ', $metadata['keywords'])
+                );
 
-                return Str::contains($haystack, $needle);
+                foreach ($tokens as $token) {
+                    if (! $this->searchTokenMatches($haystack, $token)) {
+                        return false;
+                    }
+                }
+
+                return true;
             })
             ->pluck('id')
             ->map(fn ($id) => (int) $id)
             ->values()
             ->all();
+    }
+
+
+    private function normalizeSearchText(string $value): string
+    {
+        $value = Str::lower(Str::ascii($value));
+        $value = preg_replace('/[^a-z0-9]+/', ' ', $value) ?? '';
+        $value = preg_replace('/\s+/', ' ', $value) ?? '';
+
+        return trim($value);
+    }
+
+    private function searchTokenMatches(string $haystack, string $token): bool
+    {
+        if (strlen($token) <= 2) {
+            return preg_match(
+                '/(?:^| )'.preg_quote($token, '/').'(?: |$)/',
+                $haystack
+            ) === 1;
+        }
+
+        return Str::contains($haystack, $token);
     }
 
     private function movementExists(string $movement): bool

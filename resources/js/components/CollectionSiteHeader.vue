@@ -16,16 +16,41 @@ const localizedRoutes = page.props.localizedRoutes;
 const isScrolled = ref(false);
 const mobileMenuOpen = ref(false);
 const catalogueOpen = ref(false);
+
 let scrollFrame = null;
 
 const languages = [
-    { code: 'FR', locale: 'fr_BE', hreflang: 'fr-BE' },
-    { code: 'NL', locale: 'nl_BE', hreflang: 'nl-BE' },
-    { code: 'EN', locale: 'en_BE', hreflang: 'en-BE' },
-    { code: 'DE', locale: 'de_BE', hreflang: 'de-BE' },
+    {
+        code: 'FR',
+        locale: 'fr_BE',
+        hreflang: 'fr-BE',
+        flag: '🇫🇷',
+        label: 'Français',
+    },
+    {
+        code: 'NL',
+        locale: 'nl_BE',
+        hreflang: 'nl-BE',
+        flag: '🇳🇱',
+        label: 'Nederlands',
+    },
+    {
+        code: 'EN',
+        locale: 'en_BE',
+        hreflang: 'en-BE',
+        flag: '🇬🇧',
+        label: 'English',
+    },
+    {
+        code: 'DE',
+        locale: 'de_BE',
+        hreflang: 'de-BE',
+        flag: '🇩🇪',
+        label: 'Deutsch',
+    },
 ];
 
-const languageLinks = computed(() => {
+const languageOptions = computed(() => {
     const alternates = props.seo.alternates ?? [];
 
     return languages
@@ -37,6 +62,21 @@ const languageLinks = computed(() => {
         }))
         .filter((language) => language.href);
 });
+
+const currentLanguage = computed(
+    () =>
+        languageOptions.value.find(
+            (language) => language.locale === page.props.locale,
+        ) ??
+        languages.find((language) => language.locale === page.props.locale) ??
+        languages[0],
+);
+
+const catalogueDescription = computed(
+    () =>
+        translations.navigation.catalogue_description ??
+        translations.collection.description,
+);
 
 const syncScrollState = () => {
     isScrolled.value = window.scrollY > 56;
@@ -60,7 +100,10 @@ const closeNavigationPanels = () => {
 
 onMounted(() => {
     syncScrollState();
-    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    window.addEventListener('scroll', handleScroll, {
+        passive: true,
+    });
 });
 
 onBeforeUnmount(() => {
@@ -84,10 +127,11 @@ onBeforeUnmount(() => {
                     : 'min-h-[72px] lg:min-h-[88px]',
             ]"
         >
+            <!-- GAUCHE : menu mobile / navigation desktop -->
             <div class="relative z-20 flex min-w-0 items-center">
                 <button
                     type="button"
-                    class="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] text-zinc-200 transition hover:border-amber-300/40 hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none lg:hidden"
+                    class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/[0.035] text-zinc-200 transition hover:border-amber-300/40 hover:text-amber-200 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none lg:hidden"
                     :aria-label="translations.navigation.main_label"
                     aria-controls="vvs-mobile-menu"
                     :aria-expanded="mobileMenuOpen"
@@ -119,6 +163,7 @@ onBeforeUnmount(() => {
                             @click="catalogueOpen = !catalogueOpen"
                         >
                             {{ translations.navigation.watches }}
+
                             <span
                                 aria-hidden="true"
                                 :class="[
@@ -133,7 +178,7 @@ onBeforeUnmount(() => {
                         <div
                             v-if="catalogueOpen"
                             id="vvs-catalogue-menu"
-                            class="absolute top-full left-0 mt-4 w-80 rounded-2xl border border-white/10 bg-zinc-950/95 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
+                            class="absolute top-full left-0 mt-4 w-72 rounded-2xl border border-white/10 bg-zinc-950/95 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl"
                         >
                             <a
                                 href="#collection"
@@ -145,10 +190,11 @@ onBeforeUnmount(() => {
                                 >
                                     {{ translations.navigation.watches }}
                                 </span>
+
                                 <span
                                     class="mt-1.5 block text-[11px] leading-5 text-zinc-400"
                                 >
-                                    {{ translations.collection.description }}
+                                    {{ catalogueDescription }}
                                 </span>
                             </a>
                         </div>
@@ -160,6 +206,7 @@ onBeforeUnmount(() => {
                     >
                         {{ translations.navigation.about }}
                     </a>
+
                     <a
                         href="#services"
                         class="vvs-nav-link rounded focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none"
@@ -169,6 +216,7 @@ onBeforeUnmount(() => {
                 </nav>
             </div>
 
+            <!-- CENTRE : logo VVS -->
             <Link
                 :href="localizedRoutes.watches"
                 :class="[
@@ -192,13 +240,69 @@ onBeforeUnmount(() => {
                 />
             </Link>
 
+            <!-- DROITE MOBILE : langue compacte -->
+            <details
+                class="group relative z-20 shrink-0 lg:hidden"
+            >
+                <summary
+                    class="flex cursor-pointer list-none items-center gap-1.5 rounded-full border border-white/10 bg-black/30 px-2.5 py-2 text-[10px] font-bold text-zinc-200 transition hover:border-amber-300/30 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:outline-none [&::-webkit-details-marker]:hidden"
+                    :aria-label="translations.language.label"
+                >
+                    <span aria-hidden="true">
+                        {{ currentLanguage.flag }}
+                    </span>
+
+                    <span>
+                        {{ currentLanguage.code }}
+                    </span>
+
+                    <span
+                        aria-hidden="true"
+                        class="text-[8px] text-zinc-500 transition-transform group-open:rotate-180"
+                    >
+                        ▾
+                    </span>
+                </summary>
+
+                <div
+                    class="absolute top-full right-0 mt-3 w-44 rounded-2xl border border-white/10 bg-zinc-950/95 p-1.5 shadow-2xl shadow-black/50 backdrop-blur-xl"
+                >
+                    <Link
+                        v-for="language in languageOptions"
+                        :key="language.hreflang"
+                        :href="language.href"
+                        :hreflang="language.hreflang"
+                        :aria-current="
+                            page.props.locale === language.locale
+                                ? 'page'
+                                : undefined
+                        "
+                        :class="[
+                            'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:outline-none',
+                            page.props.locale === language.locale
+                                ? 'bg-amber-300 text-black'
+                                : 'text-zinc-300 hover:bg-white/[0.05] hover:text-white',
+                        ]"
+                    >
+                        <span aria-hidden="true">
+                            {{ language.flag }}
+                        </span>
+
+                        <span class="font-semibold">
+                            {{ language.label }}
+                        </span>
+                    </Link>
+                </div>
+            </details>
+
+            <!-- DROITE DESKTOP : langues horizontales -->
             <nav
-                v-if="languageLinks.length"
-                class="relative z-20 flex shrink-0 items-center rounded-full border border-white/10 bg-black/20 p-0.5 text-[8px] font-bold tracking-wide sm:text-[9px]"
+                v-if="languageOptions.length"
+                class="relative z-20 hidden shrink-0 items-center rounded-full border border-white/10 bg-black/20 p-1 text-[9px] font-bold tracking-wide lg:flex"
                 :aria-label="translations.language.label"
             >
                 <Link
-                    v-for="language in languageLinks"
+                    v-for="language in languageOptions"
                     :key="language.hreflang"
                     :href="language.href"
                     :hreflang="language.hreflang"
@@ -208,7 +312,7 @@ onBeforeUnmount(() => {
                             : undefined
                     "
                     :class="[
-                        'rounded-full px-1.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:px-2',
+                        'rounded-full px-2.5 py-1.5 transition focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
                         page.props.locale === language.locale
                             ? 'bg-amber-300 text-black'
                             : 'text-zinc-400 hover:text-white',
@@ -219,6 +323,7 @@ onBeforeUnmount(() => {
             </nav>
         </div>
 
+        <!-- MENU MOBILE -->
         <div
             v-if="mobileMenuOpen"
             id="vvs-mobile-menu"
@@ -236,10 +341,11 @@ onBeforeUnmount(() => {
                     <span class="block text-sm font-semibold text-white">
                         {{ translations.navigation.watches }}
                     </span>
+
                     <span
-                        class="mt-1 block max-w-2xl text-[11px] leading-5 text-zinc-400"
+                        class="mt-1 block max-w-xl text-[11px] leading-5 text-zinc-400"
                     >
-                        {{ translations.collection.description }}
+                        {{ catalogueDescription }}
                     </span>
                 </a>
 
