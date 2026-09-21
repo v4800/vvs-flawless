@@ -4,9 +4,6 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
-if (typeof window !== 'undefined') {
-    void import('@/lib/vvsSafeMotion');
-}
 
 const appName = import.meta.env.VITE_APP_NAME || 'VVS FLAWLESS';
 
@@ -24,9 +21,7 @@ void createInertiaApp({
                 return AppLayout;
         }
     },
-    progress: {
-        color: '#4B5563',
-    },
+    progress: false,
 });
 
 // This will set light / dark mode on page load...

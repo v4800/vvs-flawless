@@ -33,7 +33,10 @@ const startingPrice = computed(() => {
         .map((price) => Number(price))
         .filter((price) => Number.isFinite(price) && price > 0);
 
-    return prices.length ? Math.min(...prices) : null;
+    if (prices.length) return Math.min(...prices);
+
+    const singlePrice = Number(props.watch.promo_price ?? props.watch.price);
+    return Number.isFinite(singlePrice) && singlePrice > 0 ? singlePrice : null;
 });
 
 const formattedPrice = computed(() => {
@@ -77,7 +80,7 @@ const formattedPrice = computed(() => {
 
         <div class="flex flex-1 flex-col p-5">
             <h3
-                class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
+                class="vvs-watch-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
             >
                 {{ watch.name }}
             </h3>
@@ -98,7 +101,7 @@ const formattedPrice = computed(() => {
                     {{ landingCopy.starting_at }}
                 </p>
 
-                <p class="mt-1 text-2xl font-black text-amber-200">
+                <p class="vvs-price mt-1 inline-block text-2xl font-black">
                     {{ formattedPrice }}
                 </p>
             </Link>

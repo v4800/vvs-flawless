@@ -41,28 +41,29 @@ const formatPrice = (price) => {
 
 <template>
     <VvsNavigation
+        class="!top-3 !mb-5 sm:!top-4"
         current="reservation"
-        :back-href="`${localizedRoutes.watches}/${watch.id}`"
+        :back-href="`${localizedRoutes.watches}/${watch.slug}`"
         :back-label="translations.confirmation.view_watch"
-        :watch-href="`${localizedRoutes.watches}/${watch.id}`"
+        :watch-href="`${localizedRoutes.watches}/${watch.slug}`"
     />
     <Head :title="translations.confirmation.title">
         <meta name="robots" content="noindex,nofollow,noarchive" />
     </Head>
 
     <main
-        class="vvs-storefront relative min-h-screen overflow-hidden px-5 py-12 text-white sm:px-6"
+        class="vvs-confirmation-page vvs-storefront relative min-h-screen overflow-hidden px-5 pt-28 pb-14 text-white sm:px-6 sm:pt-32"
     >
         <!-- HALO -->
         <div
             class="pointer-events-none absolute top-0 left-1/2 h-[500px] w-[900px] -translate-x-1/2 rounded-full bg-amber-400/[0.06] blur-[140px]"
         ></div>
 
-        <div class="relative z-10 mx-auto max-w-4xl">
+        <div class="relative z-10 mx-auto max-w-5xl">
             <!-- CONFIRMATION -->
-            <div class="mb-8 text-center">
+            <div class="vvs-confirmation-intro mb-10 text-center">
                 <div
-                    class="mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/[0.08] text-2xl font-black text-amber-200"
+                    class="vvs-confirmation-check mx-auto flex h-16 w-16 items-center justify-center rounded-full border border-amber-300/40 bg-amber-300/[0.08] text-2xl font-black text-amber-200"
                 >
                     ✓
                 </div>
@@ -86,7 +87,7 @@ const formatPrice = (price) => {
 
             <!-- BON -->
             <section
-                class="overflow-hidden rounded-3xl border border-amber-300/20 bg-zinc-950 shadow-[0_30px_100px_rgba(0,0,0,0.6)]"
+                class="vvs-confirmation-receipt overflow-hidden rounded-3xl border border-amber-300/20 bg-zinc-950"
             >
                 <!-- EN-TÊTE -->
                 <div
@@ -111,7 +112,9 @@ const formatPrice = (price) => {
                             {{ translations.confirmation.summary }}
                         </p>
 
-                        <p class="mt-1 text-lg font-black text-amber-200">
+                        <p
+                            class="vvs-gradient-text mt-1 text-lg font-black break-all"
+                        >
                             {{ reservation.reservation_number }}
                         </p>
 
@@ -141,7 +144,7 @@ const formatPrice = (price) => {
                         </p>
 
                         <h2
-                            class="vvs-display-title mt-3 text-3xl leading-tight"
+                            class="vvs-watch-title mt-3 text-3xl leading-tight"
                         >
                             {{ watch.name }}
                         </h2>
@@ -165,7 +168,7 @@ const formatPrice = (price) => {
                                 </p>
 
                                 <p
-                                    class="mt-1 text-3xl font-black text-amber-200"
+                                    class="vvs-gradient-text mt-1 inline-block text-3xl font-black"
                                 >
                                     {{ formatPrice(reservation.price) }}
                                 </p>
@@ -199,7 +202,9 @@ const formatPrice = (price) => {
                             </p>
 
                             <p class="mt-1 font-semibold">
-                                {{ reservation.email }}
+                                <span class="break-all">{{
+                                    reservation.email
+                                }}</span>
                             </p>
                         </div>
 
@@ -291,14 +296,14 @@ const formatPrice = (price) => {
                     <div class="mt-8 grid gap-3 sm:grid-cols-2">
                         <Link
                             :href="localizedRoutes.watches"
-                            class="flex items-center justify-center rounded-xl bg-amber-300 px-5 py-4 text-xs font-black tracking-[0.12em] text-black uppercase transition hover:bg-amber-200"
+                            class="vvs-button-primary flex items-center justify-center rounded-xl px-5 py-4 text-xs font-black tracking-[0.12em] uppercase"
                         >
                             {{ translations.confirmation.back_collection }}
                         </Link>
 
                         <Link
-                            :href="`${localizedRoutes.watches}/${watch.id}?movement=${reservation.movement}`"
-                            class="flex items-center justify-center rounded-xl border border-amber-300/30 px-5 py-4 text-xs font-black tracking-[0.12em] text-amber-200 uppercase transition hover:bg-amber-300/[0.05]"
+                            :href="`${localizedRoutes.watches}/${watch.slug}?movement=${encodeURIComponent(reservation.movement)}`"
+                            class="vvs-button-secondary flex items-center justify-center rounded-xl px-5 py-4 text-xs font-black tracking-[0.12em] uppercase"
                         >
                             {{ translations.confirmation.review_watch }}
                         </Link>

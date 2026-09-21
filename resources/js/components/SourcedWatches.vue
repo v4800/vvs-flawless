@@ -106,7 +106,7 @@ const imageAlt = (model) => {
                     {{ startingAtLabel }}
                 </p>
 
-                <p class="mt-1 text-2xl font-black text-amber-200">
+                <p class="vvs-price mt-1 inline-block text-2xl font-black">
                     {{ formatPrice(startingPrice(model)) }}
                 </p>
             </div>

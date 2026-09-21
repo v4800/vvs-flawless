@@ -1,10 +1,5 @@
 <script setup>
-import {
-    computed,
-    nextTick,
-    onBeforeUnmount,
-    ref,
-} from 'vue';
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue';
 
 import StockBadge from '@/components/StockBadge.vue';
 
@@ -32,6 +27,7 @@ const emit = defineEmits(['select-image']);
 const thumbnailButtons = ref([]);
 const lightboxOpen = ref(false);
 const lightboxDialog = ref(null);
+const isMounted = ref(false);
 
 const pointerStart = ref(null);
 const ignoreNextClick = ref(false);
@@ -39,6 +35,10 @@ const ignoreNextClick = ref(false);
 let previousBodyOverflow = '';
 let previousFocusedElement = null;
 let swipeResetTimer = null;
+
+onMounted(() => {
+    isMounted.value = true;
+});
 
 const activeIndex = computed(() => {
     const index = props.gallery.indexOf(props.activeImage);
@@ -217,9 +217,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div
-        class="mx-auto w-full min-w-0 max-w-[520px] lg:max-w-none"
-    >
+    <div class="mx-auto w-full max-w-[520px] min-w-0 lg:max-w-none">
         <div class="relative">
             <div class="absolute top-3 left-3 z-20 sm:top-5 sm:left-5">
                 <StockBadge
@@ -248,15 +246,7 @@ onBeforeUnmount(() => {
                 @keydown.enter.prevent="openLightbox"
                 @keydown.space.prevent="openLightbox"
             >
-                <Transition
-                    enter-active-class="transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none"
-                    enter-from-class="opacity-0 scale-[1.01]"
-                    enter-to-class="opacity-100 scale-100"
-                    leave-active-class="transition-[opacity,transform] duration-200 ease-in motion-reduce:transition-none"
-                    leave-from-class="opacity-100 scale-100"
-                    leave-to-class="opacity-0 scale-[0.995]"
-                >
-                    <img
+                <img
                     :key="activeImage"
                     :src="activeImage"
                     :alt="`${watch.name} — ${imagePosition}`"
@@ -266,7 +256,6 @@ onBeforeUnmount(() => {
                     draggable="false"
                     class="absolute inset-0 block h-full w-full max-w-full cursor-zoom-in object-contain object-center p-3 sm:p-4"
                 />
-                </Transition>
 
                 <button
                     v-if="gallery.length > 1"
@@ -286,8 +275,7 @@ onBeforeUnmount(() => {
                     v-if="gallery.length > 1"
                     type="button"
                     :aria-label="
-                        translations.product.next_image ??
-                        'Image suivante'
+                        translations.product.next_image ?? 'Image suivante'
                     "
                     class="absolute top-1/2 right-3 z-30 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/65 text-2xl text-white backdrop-blur-sm transition hover:border-amber-300/40 hover:bg-black/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 sm:right-4"
                     @pointerdown.stop
@@ -370,9 +358,7 @@ onBeforeUnmount(() => {
         <div
             class="mt-3 grid min-w-0 grid-cols-1 gap-2 min-[360px]:grid-cols-2 sm:mt-4 sm:grid-cols-3 sm:gap-3"
         >
-            <div
-                class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4"
-            >
+            <div class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4">
                 <p
                     class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
@@ -382,9 +368,7 @@ onBeforeUnmount(() => {
                 <p class="vvs-price mt-2 font-black">VVS</p>
             </div>
 
-            <div
-                class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4"
-            >
+            <div class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4">
                 <p
                     class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
                 >
@@ -409,7 +393,7 @@ onBeforeUnmount(() => {
             </div>
         </div>
 
-        <Teleport to="body">
+        <Teleport v-if="isMounted" to="body">
             <div
                 v-if="lightboxOpen"
                 ref="lightboxDialog"
@@ -455,8 +439,7 @@ onBeforeUnmount(() => {
                     v-if="gallery.length > 1"
                     type="button"
                     :aria-label="
-                        translations.product.next_image ??
-                        'Image suivante'
+                        translations.product.next_image ?? 'Image suivante'
                     "
                     class="absolute top-1/2 right-3 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/75 text-2xl text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 sm:right-6"
                     @click.stop="moveToImage(activeIndex + 1, false)"

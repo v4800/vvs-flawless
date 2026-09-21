@@ -32,7 +32,13 @@ defineProps({
     },
 });
 
-const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
+const formatPrice = (price) => {
+    const numericPrice = Number(price);
+
+    return Number.isFinite(numericPrice) && numericPrice > 0
+        ? `${numericPrice.toFixed(0)} €`
+        : '—';
+};
 </script>
 
 <template>
@@ -42,7 +48,7 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
             <p class="vvs-eyebrow">VVS FLAWLESS</p>
         </div>
 
-        <h1 class="vvs-display-title mt-6 max-w-full break-words text-[clamp(2rem,9.5vw,2.5rem)] leading-[1.02] sm:max-w-2xl sm:text-6xl sm:leading-[0.98]">
+        <h1 class="vvs-watch-title mt-6 max-w-full break-words text-[clamp(2rem,9.5vw,2.5rem)] leading-[1.08] sm:max-w-2xl sm:text-6xl sm:leading-[1.02]">
             {{ watch.name }}
         </h1>
 
@@ -77,136 +83,43 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     </h2>
                 </div>
 
-                <p class="hidden text-xs text-zinc-400 sm:block">
+                <p v-if="Number(watch.swiss_promo_price ?? watch.swiss_price ?? 0) > 0" class="hidden text-xs text-zinc-400 sm:block">
                     {{ translations.product.two_versions }}
                 </p>
             </div>
 
-            <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <nav
+                v-if="Number(watch.swiss_promo_price ?? watch.swiss_price ?? 0) > 0"
+                class="vvs-movement-switch mt-5 inline-flex w-full max-w-md gap-1 rounded-2xl border border-[#b9a17b]/45 bg-[#191917] p-1.5 sm:w-auto"
+                :aria-label="translations.product.choose_movement"
+            >
                 <Link
                     :href="`${localizedRoutes.watches}/${watch.slug}?movement=Japonais`"
                     preserve-scroll
-                    :aria-current="movement === 'Japonais' ? 'true' : undefined"
+                    :aria-current="movement === 'Japonais' ? 'page' : undefined"
                     :class="[
-                        'vvs-choice-card group relative min-w-0 overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        'flex min-h-11 flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-center text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4bf99] sm:flex-none',
                         movement === 'Japonais'
-                            ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
-                            : '',
+                            ? 'bg-[#d4bf99] text-[#191714]'
+                            : 'text-zinc-300 hover:bg-white/5 hover:text-white',
                     ]"
                 >
-                    <div class="flex min-w-0 items-start justify-between gap-4">
-                        <div class="min-w-0">
-                            <p
-                                class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
-                            >
-                                {{ translations.product.version }}
-                            </p>
-
-                            <p class="mt-2 text-lg font-black">
-                                {{ translations.movements.japonais }}
-                            </p>
-                        </div>
-
-                        <div
-                            aria-hidden="true"
-                            :class="[
-                                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[10px] font-black transition',
-                                movement === 'Japonais'
-                                    ? 'border-amber-300 bg-amber-300 text-black'
-                                    : 'border-white/15 text-transparent',
-                            ]"
-                        >
-                            ✓
-                        </div>
-                    </div>
-
-                    <div class="mt-7">
-                        <p
-                            v-if="watch.japanese_promo_price"
-                            class="text-xs text-zinc-400 line-through"
-                        >
-                            {{ formatPrice(watch.japanese_price) }}
-                        </p>
-
-                        <p class="vvs-price mt-1 whitespace-nowrap text-3xl font-black">
-                            {{
-                                formatPrice(
-                                    watch.japanese_promo_price ??
-                                        watch.japanese_price,
-                                )
-                            }}
-                        </p>
-                    </div>
-
-                    <p
-                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-400 uppercase"
-                    >
-                        {{ translations.product.select }}
-                    </p>
+                    {{ translations.movements.japonais }}
                 </Link>
-
                 <Link
                     :href="`${localizedRoutes.watches}/${watch.slug}?movement=Suisse`"
                     preserve-scroll
-                    :aria-current="movement === 'Suisse' ? 'true' : undefined"
+                    :aria-current="movement === 'Suisse' ? 'page' : undefined"
                     :class="[
-                        'vvs-choice-card group relative min-w-0 overflow-hidden rounded-2xl border p-5 focus-visible:ring-2 focus-visible:ring-amber-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none',
+                        'flex min-h-11 flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-center text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4bf99] sm:flex-none',
                         movement === 'Suisse'
-                            ? 'vvs-choice-card--featured border-amber-300/70 shadow-[0_0_35px_rgba(251,191,36,0.08)]'
-                            : '',
+                            ? 'bg-[#d4bf99] text-[#191714]'
+                            : 'text-zinc-300 hover:bg-white/5 hover:text-white',
                     ]"
                 >
-                    <div class="flex min-w-0 items-start justify-between gap-4">
-                        <div class="min-w-0">
-                            <p
-                                class="text-[9px] font-black tracking-[0.22em] text-zinc-400 uppercase"
-                            >
-                                {{ translations.product.version }}
-                            </p>
-
-                            <p class="mt-2 text-lg font-black">
-                                {{ translations.movements.suisse }}
-                            </p>
-                        </div>
-
-                        <div
-                            aria-hidden="true"
-                            :class="[
-                                'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[10px] font-black transition',
-                                movement === 'Suisse'
-                                    ? 'border-amber-300 bg-amber-300 text-black'
-                                    : 'border-white/15 text-transparent',
-                            ]"
-                        >
-                            ✓
-                        </div>
-                    </div>
-
-                    <div class="mt-7">
-                        <p
-                            v-if="watch.swiss_promo_price"
-                            class="text-xs text-zinc-400 line-through"
-                        >
-                            {{ formatPrice(watch.swiss_price) }}
-                        </p>
-
-                        <p class="vvs-price mt-1 whitespace-nowrap text-3xl font-black">
-                            {{
-                                formatPrice(
-                                    watch.swiss_promo_price ??
-                                        watch.swiss_price,
-                                )
-                            }}
-                        </p>
-                    </div>
-
-                    <p
-                        class="mt-4 text-[10px] tracking-[0.15em] text-zinc-400 uppercase"
-                    >
-                        {{ translations.product.select }}
-                    </p>
+                    {{ translations.movements.suisse }}
                 </Link>
-            </div>
+            </nav>
         </div>
 
         <div

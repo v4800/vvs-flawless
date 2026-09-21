@@ -1,5 +1,6 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
+import { MapPin } from '@lucide/vue';
 import { computed } from 'vue';
 
 const page = usePage();
@@ -74,7 +75,7 @@ const zoneCopy = computed(() => {
                     </p>
 
                     <h2
-                        class="vvs-display-title mt-5 max-w-3xl text-5xl sm:text-6xl"
+                        class="vvs-display-title mt-5 max-w-3xl text-[clamp(2.4rem,9vw,3.75rem)]"
                     >
                         {{ translations.pickup.title_before }}
                         <span class="vvs-gradient-text">
@@ -82,92 +83,72 @@ const zoneCopy = computed(() => {
                         </span>
                     </h2>
 
-                    <p class="mt-7 max-w-2xl text-base leading-7 text-zinc-400">
+                    <p class="mt-7 max-w-2xl text-base leading-7 text-zinc-300">
                         {{ translations.pickup.description_1 }}
                     </p>
 
-                    <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-500">
+                    <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-400">
                         {{ translations.pickup.description_2 }}
                     </p>
 
                     <div class="mt-8">
                         <p
-                            class="mb-3 text-[9px] font-black tracking-[0.25em] text-zinc-600 uppercase"
+                            class="mb-3 text-[10px] font-bold tracking-[0.18em] text-zinc-300 uppercase"
                         >
                             {{ zoneCopy.title }}
                         </p>
 
-                        <div class="grid gap-3 sm:grid-cols-3">
+                        <div class="pickup-coverage-grid relative grid gap-3 rounded-2xl border border-white/10 p-3 sm:grid-cols-3">
                             <div
-                                class="rounded-2xl border border-white/10 bg-black/40 p-4"
+                                class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="flex h-5 w-8 overflow-hidden rounded-[3px] border border-white/10"
-                                    >
-                                        <span class="flex-1 bg-black"></span>
-                                        <span
-                                            class="flex-1 bg-yellow-400"
-                                        ></span>
-                                        <span class="flex-1 bg-red-600"></span>
-                                    </div>
+                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                                     <span
-                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >BE</span
                                     >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.be }}
                                 </p>
-                                <p class="mt-1 text-xs text-zinc-600">
+                                <p class="mt-1 text-xs text-zinc-400">
                                     {{ zoneCopy.beDetail }}
                                 </p>
                             </div>
 
                             <div
-                                class="rounded-2xl border border-white/10 bg-black/40 p-4"
+                                class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="flex h-5 w-8 overflow-hidden rounded-[3px] border border-white/10"
-                                    >
-                                        <span class="flex-1 bg-blue-700"></span>
-                                        <span class="flex-1 bg-white"></span>
-                                        <span class="flex-1 bg-red-600"></span>
-                                    </div>
+                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                                     <span
-                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >FR</span
                                     >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.fr }}
                                 </p>
-                                <p class="mt-1 text-xs text-zinc-600">
+                                <p class="mt-1 text-xs text-zinc-400">
                                     {{ zoneCopy.frDetail }}
                                 </p>
                             </div>
 
                             <div
-                                class="rounded-2xl border border-white/10 bg-black/40 p-4"
+                                class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <div
-                                        class="flex h-5 w-8 flex-col overflow-hidden rounded-[3px] border border-white/10"
-                                    >
-                                        <span class="flex-1 bg-red-600"></span>
-                                        <span class="flex-1 bg-white"></span>
-                                        <span class="flex-1 bg-blue-700"></span>
-                                    </div>
+                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                                     <span
-                                        class="text-[9px] font-black tracking-[0.18em] text-zinc-600"
+                                        class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >NL</span
                                     >
                                 </div>
                                 <p class="mt-3 text-sm font-bold text-white">
                                     {{ zoneCopy.nl }}
                                 </p>
-                                <p class="mt-1 text-xs text-zinc-600">
+                                <p class="mt-1 text-xs text-zinc-400">
                                     {{ zoneCopy.nlDetail }}
                                 </p>
                             </div>
@@ -188,7 +169,7 @@ const zoneCopy = computed(() => {
                             <p class="font-bold">
                                 {{ translations.pickup.step_1_title }}
                             </p>
-                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                            <p class="mt-1 text-sm leading-6 text-zinc-300">
                                 {{ translations.pickup.step_1_text }}
                             </p>
                         </div>
@@ -206,7 +187,7 @@ const zoneCopy = computed(() => {
                             <p class="font-bold">
                                 {{ translations.pickup.step_2_title }}
                             </p>
-                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                            <p class="mt-1 text-sm leading-6 text-zinc-300">
                                 {{ translations.pickup.step_2_text }}
                             </p>
                         </div>
@@ -224,7 +205,7 @@ const zoneCopy = computed(() => {
                             <p class="font-bold">
                                 {{ translations.pickup.step_3_title }}
                             </p>
-                            <p class="mt-1 text-sm leading-6 text-zinc-500">
+                            <p class="mt-1 text-sm leading-6 text-zinc-300">
                                 {{ translations.pickup.step_3_text }}
                             </p>
                         </div>
@@ -233,7 +214,7 @@ const zoneCopy = computed(() => {
                     <div
                         class="flex items-center justify-between rounded-xl border border-white/10 px-5 py-4"
                     >
-                        <span class="text-sm text-zinc-500">
+                        <span class="text-sm text-zinc-300">
                             {{ translations.pickup.delay_label }}
                         </span>
                         <span class="text-sm font-bold text-zinc-200">

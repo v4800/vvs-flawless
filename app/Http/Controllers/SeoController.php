@@ -10,6 +10,7 @@ class SeoController extends Controller
     public function sitemap(): Response
     {
         $watches = Watch::query()
+            ->whereNotIn('slug', WatchController::HIDDEN_PUBLIC_SLUGS)
             ->select([
                 'id',
                 'slug',

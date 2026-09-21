@@ -172,7 +172,8 @@ class WatchImageCatalogTest extends TestCase
             'availability' => 'Sur commande',
             'image' => '/images/watches/classique-bleu-roi.webp',
         ]);
-        $watch->id = 45;
+        // The blue gallery is explicitly assigned to watch 61 in the catalog.
+        $watch->id = 61;
         $watch->save();
 
         foreach ([

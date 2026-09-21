@@ -1,6 +1,6 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const props = defineProps({
     quantity: {
@@ -10,7 +10,7 @@ const props = defineProps({
 
     availability: {
         type: String,
-        default: '',
+        default: "",
     },
 });
 
@@ -22,7 +22,7 @@ const stock = computed(() => {
     if (
         props.quantity === null ||
         props.quantity === undefined ||
-        props.quantity === ''
+        props.quantity === ""
     ) {
         return null;
     }
@@ -34,19 +34,19 @@ const availabilityLabel = computed(() => props.availability.trim());
 
 const normalizedAvailability = computed(() =>
     availabilityLabel.value
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase(),
 );
 
 const isMadeToOrder = computed(() =>
-    ['sur commande', 'sur reservation', 'precommande'].some((label) =>
+    ["sur commande", "sur reservation", "precommande"].some((label) =>
         normalizedAvailability.value.includes(label),
     ),
 );
 
 const isUnavailable = computed(() =>
-    ['indisponible', 'rupture', 'epuise'].some((label) =>
+    ["indisponible", "rupture", "epuise"].some((label) =>
         normalizedAvailability.value.includes(label),
     ),
 );
@@ -56,26 +56,26 @@ const badge = computed(() => {
         if (isMadeToOrder.value) {
             return {
                 label: translations.value.stock.made_to_order,
-                icon: '○',
-                classes: 'border-white/15 bg-black/85 text-zinc-400',
-                iconClasses: 'text-zinc-500',
+                icon: "○",
+                classes: "border-white/15 bg-black/85 text-zinc-400",
+                iconClasses: "text-zinc-500",
             };
         }
 
         if (isUnavailable.value) {
             return {
                 label: translations.value.stock.unavailable,
-                icon: '○',
-                classes: 'border-white/15 bg-black/85 text-zinc-400',
-                iconClasses: 'text-zinc-500',
+                icon: "○",
+                classes: "border-white/15 bg-black/85 text-zinc-400",
+                iconClasses: "text-zinc-500",
             };
         }
 
         return {
             label: translations.value.stock.available,
-            icon: '●',
-            classes: 'border-amber-300/30 bg-black/85 text-amber-200',
-            iconClasses: 'text-amber-300',
+            icon: "●",
+            classes: "border-amber-300/30 bg-black/85 text-amber-200",
+            iconClasses: "text-amber-300",
         };
     }
 
@@ -84,37 +84,37 @@ const badge = computed(() => {
             label: isMadeToOrder.value
                 ? translations.value.stock.made_to_order
                 : translations.value.stock.unavailable,
-            icon: '○',
-            classes: 'border-white/15 bg-black/85 text-zinc-400',
-            iconClasses: 'text-zinc-500',
+            icon: "○",
+            classes: "border-white/15 bg-black/85 text-zinc-400",
+            iconClasses: "text-zinc-500",
         };
     }
 
     if (stock.value === 1) {
         return {
             label: translations.value.stock.last_piece,
-            icon: '●',
+            icon: "●",
             classes:
-                'border-red-500/50 bg-red-950/80 text-red-300 shadow-[0_0_22px_rgba(239,68,68,0.18)]',
-            iconClasses: 'animate-pulse text-red-400',
+                "border-red-500/50 bg-red-950/80 text-red-300 shadow-[0_0_22px_rgba(239,68,68,0.18)]",
+            iconClasses: "text-red-400",
         };
     }
 
     if (stock.value === 2) {
         return {
             label: translations.value.stock.two_left,
-            icon: '●',
+            icon: "●",
             classes:
-                'border-orange-400/50 bg-orange-950/70 text-orange-200 shadow-[0_0_22px_rgba(251,146,60,0.14)]',
-            iconClasses: 'text-orange-400',
+                "border-orange-400/50 bg-orange-950/70 text-orange-200 shadow-[0_0_22px_rgba(251,146,60,0.14)]",
+            iconClasses: "text-orange-400",
         };
     }
 
     return {
         label: translations.value.stock.available,
-        icon: '●',
-        classes: 'border-amber-300/30 bg-black/85 text-amber-200',
-        iconClasses: 'text-amber-300',
+        icon: "●",
+        classes: "border-amber-300/30 bg-black/85 text-amber-200",
+        iconClasses: "text-amber-300",
     };
 });
 </script>

@@ -1,6 +1,12 @@
 <?php
 
 return [
+    908 => [
+        'name' => 'Silver octagonal · Gold Arabic numerals — Limited edition',
+        'short_description' => 'Silver-tone finish, pavé dial and gold Arabic numerals.',
+        'description' => 'Limited edition with a silver-tone finish, pavé dial and gold Arabic numerals, set with VVS moissanite. This version is offered with a Swiss movement.',
+    ],
+
     'presented' => [
         'name' => 'Square · White dial, black leather strap',
         'short_description' => 'Square stone-set case, Roman numerals and black leather strap.',
@@ -16,6 +22,11 @@ return [
         ],
     ],
     'catalog' => [
+        'silver-roman-pave' => [
+            'name' => '41 mm · Silver, pavé dial, Roman numerals',
+            'short_description' => 'Silver-tone finish, pavé dial, Roman numerals and VVS stone setting.',
+            'description' => 'A 41 mm silver-tone watch fully set with VVS moissanite, featuring a pavé dial, Roman numerals, a stone-set bezel and a stone-set bracelet.',
+        ],
         'twotone-round' => [
             'name' => '41 mm · Two-tone, champagne dial',
             'short_description' => 'Two-tone finish, champagne dial and integrated bracelet.',
@@ -55,6 +66,31 @@ return [
             'name' => '36 mm · Square women’s watch, white dial',
             'short_description' => 'Square case, white dial and pavé bracelet.',
             'description' => 'A 36 mm square women’s model with a white Roman-numeral dial, pavé bracelet and D-colour VVS moissanite.',
+        ],
+        'square-roman' => [
+            'name' => '41 mm · Two-tone square, Roman numerals',
+            'short_description' => 'Two-tone square case and Roman numerals.',
+            'description' => '41 mm watch with a two-tone square case, Roman-numeral dial and colour D VVS moissanite setting.',
+        ],
+        'black-stainless' => [
+            'name' => '41 mm · Black square, white dial',
+            'short_description' => 'Black square case and white dial.',
+            'description' => '41 mm watch with a black square case, white dial and colour D VVS moissanite setting.',
+        ],
+        'red-roman' => [
+            'name' => '41 mm · Silver-tone, white dial',
+            'short_description' => 'Silver-tone finish and white dial.',
+            'description' => '41 mm watch with a silver-tone finish, white dial and colour D VVS moissanite setting.',
+        ],
+        'jubilee' => [
+            'name' => '41 mm · Classic, Roman numerals',
+            'short_description' => 'Classic styling and Roman numerals.',
+            'description' => '41 mm watch with classic styling, Roman-numeral dial and colour D VVS moissanite setting.',
+        ],
+        'cadran-bleu-roi' => [
+            'name' => '41 mm · Royal-blue dial, silver-tone bracelet',
+            'short_description' => 'Royal-blue dial and silver-tone bracelet.',
+            'description' => '41 mm watch with a royal-blue dial, silver-tone bracelet and colour D VVS moissanite setting.',
         ],
     ],
     42 => [

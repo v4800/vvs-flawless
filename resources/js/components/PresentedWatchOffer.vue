@@ -17,7 +17,7 @@ const htmlLang = computed(() => page.props.locale.replace('_', '-'));
         <p class="text-xs font-bold tracking-[0.3em] text-amber-300">
             VVS FLAWLESS
         </p>
-        <h1 class="vvs-display-title mt-6 text-4xl sm:text-5xl">
+        <h1 class="vvs-watch-title mt-6 text-4xl sm:text-5xl">
             {{ watch.name }}
         </h1>
         <p class="mt-6 leading-7 text-zinc-300">
@@ -26,7 +26,7 @@ const htmlLang = computed(() => page.props.locale.replace('_', '-'));
         <p class="mt-8 text-xs tracking-widest text-zinc-400 uppercase">
             {{ watch.presented_copy.price_label }}
         </p>
-        <p class="mt-2 text-5xl font-bold text-amber-200">
+        <p class="vvs-price mt-2 inline-block max-w-full text-[clamp(2.25rem,9vw,3rem)] font-bold">
             {{ Number(watch.price).toFixed(0) }} €
         </p>
         <dl class="mt-8 space-y-4 border-t border-white/10 pt-6 text-sm">
@@ -52,7 +52,7 @@ const htmlLang = computed(() => page.props.locale.replace('_', '-'));
         </p>
         <a
             href="#reservation"
-            class="mt-8 block rounded-xl bg-amber-300 px-5 py-4 text-center font-bold text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
+            class="vvs-button-primary mt-8 block rounded-xl px-5 py-4 text-center font-bold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
         >
             {{ translations.product.reserve_watch }}
         </a>

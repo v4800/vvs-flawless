@@ -18,6 +18,13 @@ use Inertia\Response;
 
 class WatchController extends Controller
 {
+    /** @var list<string> */
+    public const HIDDEN_PUBLIC_SLUGS = [
+        '41-mm-carree-noire-cadran-blanc',
+        '41-mm-argentee-cadran-blanc',
+        '41-mm-classique-chiffres-romains',
+    ];
+
     public function __construct(
         private readonly WatchCatalog $catalog,
         private readonly WatchSeo $seo,
@@ -40,6 +47,7 @@ class WatchController extends Controller
         ]);
 
         $inventory = Watch::query()
+            ->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS)
             ->select(['id', 'name', 'slug', 'image'])
             ->orderBy('name')
             ->get()
@@ -49,7 +57,7 @@ class WatchController extends Controller
                 )
             );
 
-        $query = Watch::query();
+        $query = Watch::query()->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS);
 
         $search = trim((string) ($filters['q'] ?? ''));
 
@@ -234,6 +242,8 @@ class WatchController extends Controller
         Request $request,
         Watch $watch
     ): Response {
+        abort_if(in_array($watch->slug, self::HIDDEN_PUBLIC_SLUGS, true), 404);
+
         $this->marketingAttribution->capture($request);
 
         $watch = $this->catalog->localizedWatch($watch);
@@ -244,10 +254,12 @@ class WatchController extends Controller
         }
 
         $selectedMovement = $request->query('movement') === 'Suisse'
+            && ((float) ($watch->swiss_promo_price ?? $watch->swiss_price ?? 0)) > 0
             ? 'Suisse'
             : 'Japonais';
 
         $relatedWatches = Watch::query()
+            ->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS)
             ->where('id', '!=', $watch->id)
             ->select([
                 'id',
@@ -255,6 +267,8 @@ class WatchController extends Controller
                 'slug',
                 'image',
                 'stock_quantity',
+                'price',
+                'promo_price',
                 'japanese_price',
                 'japanese_promo_price',
                 'swiss_price',

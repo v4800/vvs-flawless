@@ -27,7 +27,7 @@ class FeaturedCatalogWatchesSeeder extends Seeder
         $models = [
             2 => [
                 'name' => '41 mm · Bicolore, cadran champagne',
-                'japanese_price' => 650,
+                'japanese_price' => 850,
                 'swiss_price' => 1000,
                 'description' => 'Une montre 41 mm à finition bicolore, cadran champagne et bracelet intégré, sertie de moissanite VVS couleur D.',
             ],

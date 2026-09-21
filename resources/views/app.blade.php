@@ -270,6 +270,90 @@
     </head>
 
     <body class="font-sans antialiased">
+        {{-- VVS LUCKY FALCON LOADER --}}
+        <div
+            id="vvs-route-loader"
+            class="vvs-route-loader is-active"
+            aria-hidden="true"
+        >
+            <div class="vvs-lucky-loader">
+                <span
+                    class="vvs-lucky-loader__ring vvs-lucky-loader__ring--outer"
+                ></span>
+
+                <span
+                    class="vvs-lucky-loader__ring vvs-lucky-loader__ring--inner"
+                ></span>
+
+                <span class="vvs-lucky-loader__core"></span>
+            </div>
+        </div>
+
+        <script
+            @if ($cspNonce)
+                nonce="{{ $cspNonce }}"
+            @endif
+        >
+            (() => {
+                const loader =
+                    document.getElementById('vvs-route-loader');
+
+                if (!loader) {
+                    return;
+                }
+
+                let timer = null;
+
+                const showLoader = () => {
+                    if (timer) {
+                        window.clearTimeout(timer);
+                    }
+
+                    loader.classList.add('is-active');
+                };
+
+                const hideLoader = () => {
+                    if (timer) {
+                        window.clearTimeout(timer);
+                    }
+
+                    timer = window.setTimeout(() => {
+                        loader.classList.remove('is-active');
+                    }, 90);
+                };
+
+                document.addEventListener(
+                    'inertia:start',
+                    showLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:finish',
+                    hideLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:invalid',
+                    hideLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:exception',
+                    hideLoader,
+                );
+
+                window.addEventListener(
+                    'load',
+                    hideLoader,
+                    { once: true },
+                );
+
+                window.addEventListener(
+                    'pageshow',
+                    hideLoader,
+                );
+            })();
+        </script>
         <x-inertia::app />
     </body>
 </html>

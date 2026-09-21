@@ -498,7 +498,6 @@ final class WatchSeo
             'logo' => url('/images/vvs-flawless-profile.webp'),
             'description' => trans('seo_intents.collection_seo.description'),
             'sameAs' => [
-                'https://www.instagram.com/vvsflawless43/',
                 'https://www.tiktok.com/@vvsflawless43',
             ],
             'knowsAbout' => [

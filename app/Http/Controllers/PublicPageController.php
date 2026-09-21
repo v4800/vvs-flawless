@@ -38,7 +38,6 @@ class PublicPageController extends Controller
                 'Diamond and moissanite comparison',
             ],
             'sameAs' => [
-                'https://www.instagram.com/vvsflawless43/',
                 'https://www.tiktok.com/@vvsflawless43',
             ],
         ];

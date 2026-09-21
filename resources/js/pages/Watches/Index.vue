@@ -1,10 +1,8 @@
 <script setup>
 import CustomerConfidence from '@/components/CustomerConfidence.vue';
-import { Head, usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, onMounted } from 'vue';
-import { animate, createTimeline, stagger } from 'animejs';
+import { Head, Link, usePage } from '@inertiajs/vue3';
+import { computed, ref } from 'vue';
 
-import VvsNavigation from '@/components/VvsNavigation.vue';
 import OrderSteps from '@/components/OrderSteps.vue';
 import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
@@ -54,6 +52,7 @@ const props = defineProps({
 const page = usePage();
 const translations = page.props.translations;
 const landingCopy = page.props.landingCopy;
+const catalogVisualLoading = ref(false);
 
 const noResultsCopy = computed(() => {
     return (
@@ -61,22 +60,27 @@ const noResultsCopy = computed(() => {
             fr_BE: {
                 title: 'Aucune montre ne correspond à votre recherche',
                 text: 'Essayez un autre nom, une autre référence ou effacez la recherche.',
+                reset: 'Voir toute la collection',
             },
             nl_BE: {
                 title: 'Geen horloge komt overeen met je zoekopdracht',
                 text: 'Probeer een andere naam of referentie, of wis de zoekopdracht.',
+                reset: 'Bekijk de hele collectie',
             },
             en_BE: {
                 title: 'No watch matches your search',
                 text: 'Try another name or reference, or clear the search.',
+                reset: 'View the full collection',
             },
             de_BE: {
                 title: 'Keine Uhr entspricht deiner Suche',
                 text: 'Versuche einen anderen Namen oder eine andere Referenz oder lösche die Suche.',
+                reset: 'Alle Uhren ansehen',
             },
         }[page.props.locale] ?? {
             title: 'No watch matches your search',
             text: 'Try another name or reference, or clear the search.',
+            reset: 'View the full collection',
         }
     );
 });
@@ -151,98 +155,6 @@ const scrollToCollection = () => {
     });
 };
 
-let revealObserver = null;
-
-onMounted(() => {
-    const prefersReducedMotion = window.matchMedia(
-        '(prefers-reduced-motion: reduce)',
-    ).matches;
-
-    if (prefersReducedMotion) {
-        document
-            .querySelectorAll('.hero-animate, .hero-watch, .reveal-on-scroll')
-            .forEach((element) => {
-                element.style.opacity = '1';
-                element.style.transform = 'none';
-            });
-
-        return;
-    }
-
-    const heroTimeline = createTimeline({
-        defaults: {
-            ease: 'outExpo',
-        },
-    });
-
-    heroTimeline
-        .add('.site-header', {
-            opacity: [0, 1],
-            y: [-18, 0],
-            duration: 700,
-        })
-        .add(
-            '.hero-animate',
-            {
-                opacity: [0, 1],
-                y: [34, 0],
-                duration: 900,
-                delay: stagger(90),
-            },
-            '-=420',
-        )
-        .add(
-            '.hero-watch',
-            {
-                opacity: [0, 1],
-                x: [85, 0],
-                scale: [0.9, 1],
-                duration: 1450,
-            },
-            '-=900',
-        );
-
-    const revealElements = document.querySelectorAll('.reveal-on-scroll');
-
-    revealElements.forEach((element) => {
-        element.style.opacity = '0';
-    });
-
-    revealObserver = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                if (!entry.isIntersecting) {
-                    return;
-                }
-
-                const element = entry.target;
-                const isCard = element.classList.contains('watch-card');
-
-                animate(element, {
-                    opacity: [0, 1],
-                    y: [isCard ? 42 : 30, 0],
-                    scale: [isCard ? 0.96 : 0.985, 1],
-                    duration: isCard ? 850 : 950,
-                    ease: 'outExpo',
-                });
-
-                revealObserver?.unobserve(element);
-            });
-        },
-        {
-            threshold: 0.12,
-            rootMargin: '0px 0px -40px 0px',
-        },
-    );
-
-    revealElements.forEach((element) => {
-        revealObserver.observe(element);
-    });
-});
-
-onBeforeUnmount(() => {
-    revealObserver?.disconnect();
-});
 </script>
 
 <template>
@@ -256,20 +168,18 @@ onBeforeUnmount(() => {
             {{ translations.accessibility.skip_content }}
         </a>
 
-        <CollectionSiteHeader :seo="seo" />
+        <CollectionSiteHeader hide-center-brand :seo="seo" />
 
         <main id="main-content" tabindex="-1">
-            <div class="collection-toolbar-shell pt-6 pb-8 sm:pt-7 sm:pb-10">
-                <CollectionFilters :filters="props.filters" :options="props.filterOptions" />
-            </div>
-
-            <VvsNavigation
-                current="collection"
-                :show-back="false"
-                class="hidden md:block md:!sticky md:!top-24 md:!mt-4 md:!mb-10"
-            />
-
             <CollectionHero @scroll-to-collection="scrollToCollection" />
+
+            <div class="collection-toolbar-shell pt-6 pb-8 sm:pt-7 sm:pb-10">
+                <CollectionFilters
+                    :filters="props.filters"
+                    :options="props.filterOptions"
+                    @visual-loading="catalogVisualLoading = $event"
+                />
+            </div>
 
             <section
                 id="collection"
@@ -316,7 +226,8 @@ onBeforeUnmount(() => {
 
                     <div
                         v-if="showSourcedModels || props.watches.length"
-                        class="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+                        :aria-busy="catalogVisualLoading"
+                        class="grid gap-6 transition-opacity duration-200 sm:grid-cols-2 xl:grid-cols-3 motion-reduce:transition-none"
                     >
                         <SourcedWatches
                             v-if="showSourcedModels"
@@ -341,6 +252,9 @@ onBeforeUnmount(() => {
                         <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
                             {{ noResultsCopy.text }}
                         </p>
+                        <Link :href="page.props.localizedRoutes.watches" class="vvs-button-secondary mt-6 inline-flex min-h-11 items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                            {{ noResultsCopy.reset }}
+                        </Link>
                     </div>
 
                     <CollectionPagination :pagination="props.pagination" />
@@ -355,10 +269,11 @@ onBeforeUnmount(() => {
             />
 
             <AboutSection />
+            <CustomerConfidence />
             <PickupSection />
             <FaqSection />
             <ContactSection />
-            <CustomerConfidence />
+
         </main>
 
         <CollectionFooter />

@@ -1,5 +1,6 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
+import { Gem, Settings2, MapPin, Clock3 } from '@lucide/vue';
 
 const emit = defineEmits(['scroll-to-collection']);
 
@@ -16,11 +17,10 @@ const translations = page.props.translations;
                 class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
             >
                 <div
-                    class="flex h-20 w-28 overflow-hidden rounded-lg border border-white/10 shadow-[0_0_30px_rgba(251,191,36,0.15)]"
+                    aria-hidden="true"
+                    class="flex h-20 w-28 items-center justify-center rounded-xl border border-amber-200/20 bg-[radial-gradient(circle_at_50%_40%,rgba(242,213,138,0.12),transparent_72%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                 >
-                    <span class="flex-1 bg-black"></span>
-                    <span class="flex-1 bg-yellow-400"></span>
-                    <span class="flex-1 bg-red-600"></span>
+                    <span class="font-serif text-4xl tracking-[-0.12em] text-amber-100">VVS</span>
                 </div>
 
                 <div>
@@ -53,7 +53,7 @@ const translations = page.props.translations;
             class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
         >
             <div class="border-b border-white/10 p-7 sm:border-r lg:border-b-0">
-                <div class="text-2xl text-amber-300">◇</div>
+                <Gem :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.quality_title }}
                 </h3>
@@ -62,7 +62,7 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="border-b border-white/10 p-7 lg:border-r lg:border-b-0">
-                <div class="text-2xl text-amber-300">⚙</div>
+                <Settings2 :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.movements_title }}
                 </h3>
@@ -71,7 +71,7 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="border-b border-white/10 p-7 sm:border-r sm:border-b-0">
-                <div class="text-2xl text-amber-300">↗</div>
+                <MapPin :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.delivery_title }}
                 </h3>
@@ -80,7 +80,7 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="p-7">
-                <div class="text-2xl text-amber-300">◷</div>
+                <Clock3 :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.delay_title }}
                 </h3>

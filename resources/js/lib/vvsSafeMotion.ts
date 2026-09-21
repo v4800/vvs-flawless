@@ -30,6 +30,12 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     let revealObserver: IntersectionObserver | null = null;
     let mutationObserver: MutationObserver | null = null;
 
+    const isInInitialViewport = (element: HTMLElement) => {
+        const bounds = element.getBoundingClientRect();
+
+        return bounds.top < window.innerHeight && bounds.bottom > 0;
+    };
+
     const prepareEditorialImage = (image: HTMLImageElement) => {
         const wrapper = image.parentElement;
 
@@ -106,7 +112,11 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
         element.dataset.vvsRevealReady = 'true';
         element.classList.add('vvs-reveal-ready');
 
-        if (reducedMotionQuery.matches || !revealObserver) {
+        if (
+            reducedMotionQuery.matches ||
+            !revealObserver ||
+            isInInitialViewport(element)
+        ) {
             element.classList.add('vvs-in-view');
             return;
         }
@@ -121,7 +131,11 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
 
         element.classList.add('vvs-title-accent');
 
-        if (reducedMotionQuery.matches || !revealObserver) {
+        if (
+            reducedMotionQuery.matches ||
+            !revealObserver ||
+            isInInitialViewport(element)
+        ) {
             element.classList.add('vvs-in-view');
             return;
         }

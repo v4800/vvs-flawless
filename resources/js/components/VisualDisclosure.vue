@@ -62,7 +62,7 @@ const shouldShow = computed(
                         {{ translations.text }}
                     </p>
 
-                    <p class="mt-2 max-w-5xl text-xs leading-6 text-zinc-500">
+                    <p class="mt-2 max-w-5xl text-xs leading-6 text-zinc-400">
                         {{ translations.note }}
                     </p>
                 </div>

@@ -1,6 +1,12 @@
 <?php
 
 return [
+    908 => [
+        'name' => 'Octogonale argentée · Chiffres arabes dorés — Édition limitée',
+        'short_description' => 'Finition argentée, cadran pavé et chiffres arabes dorés.',
+        'description' => 'Édition limitée à finition argentée, cadran pavé et chiffres arabes dorés, sertie de moissanite VVS. Cette version est proposée avec mouvement suisse.',
+    ],
+
     'presented' => [
         'name' => 'Carrée · Cadran blanc, bracelet cuir noir',
         'short_description' => 'Boîtier carré serti, chiffres romains et bracelet cuir noir.',
@@ -16,6 +22,11 @@ return [
         ],
     ],
     'catalog' => [
+        'silver-roman-pave' => [
+            'name' => '41 mm · Argentée, cadran pavé, chiffres romains',
+            'short_description' => 'Finition argentée, cadran pavé, chiffres romains et sertissage VVS.',
+            'description' => 'Montre 41 mm argentée entièrement sertie de moissanite VVS, avec cadran pavé, chiffres romains, lunette sertie et bracelet serti.',
+        ],
         'twotone-round' => [
             'name' => '41 mm · Bicolore, cadran champagne',
             'short_description' => 'Finition bicolore, cadran champagne et bracelet intégré.',
@@ -55,6 +66,31 @@ return [
             'name' => '36 mm · Femme carrée, cadran blanc',
             'short_description' => 'Boîtier carré, cadran blanc et bracelet pavé.',
             'description' => 'Modèle femme 36 mm à boîtier carré, cadran blanc à chiffres romains, bracelet pavé et sertissage en moissanite VVS couleur D.',
+        ],
+        'square-roman' => [
+            'name' => '41 mm · Carrée bicolore, chiffres romains',
+            'short_description' => 'Boîtier carré bicolore et chiffres romains.',
+            'description' => 'Montre 41 mm à boîtier carré bicolore, cadran à chiffres romains et sertissage en moissanite VVS couleur D.',
+        ],
+        'black-stainless' => [
+            'name' => '41 mm · Carrée noire, cadran blanc',
+            'short_description' => 'Boîtier carré noir et cadran blanc.',
+            'description' => 'Montre 41 mm à boîtier carré noir, cadran blanc et sertissage en moissanite VVS couleur D.',
+        ],
+        'red-roman' => [
+            'name' => '41 mm · Argentée, cadran blanc',
+            'short_description' => 'Finition argentée et cadran blanc.',
+            'description' => 'Montre 41 mm à finition argentée, cadran blanc et sertissage en moissanite VVS couleur D.',
+        ],
+        'jubilee' => [
+            'name' => '41 mm · Classique, chiffres romains',
+            'short_description' => 'Style classique et chiffres romains.',
+            'description' => 'Montre 41 mm au style classique, cadran à chiffres romains et sertissage en moissanite VVS couleur D.',
+        ],
+        'cadran-bleu-roi' => [
+            'name' => '41 mm · Cadran bleu roi, bracelet argenté',
+            'short_description' => 'Cadran bleu roi et bracelet argenté.',
+            'description' => 'Montre 41 mm avec cadran bleu roi, bracelet argenté et sertissage en moissanite VVS couleur D.',
         ],
     ],
     42 => [

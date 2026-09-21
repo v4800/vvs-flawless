@@ -340,6 +340,7 @@ class ReservationController extends Controller
 
                     'watch' => [
                         'id' => $watch->id,
+                        'slug' => $watch->slug,
                         'name' => $watchName,
                         'image' => $watch->image,
                         'presented_copy' => $localizedWatch->getAttribute(

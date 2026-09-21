@@ -1,6 +1,12 @@
 <?php
 
 return [
+    908 => [
+        'name' => 'Silberfarben achteckig · Goldene arabische Ziffern — Limitierte Edition',
+        'short_description' => 'Silberfarbene Ausführung, Pavé-Zifferblatt und goldene arabische Ziffern.',
+        'description' => 'Limitierte Edition mit silberfarbener Ausführung, Pavé-Zifferblatt und goldenen arabischen Ziffern, besetzt mit VVS-Moissanit. Diese Version wird mit Schweizer Uhrwerk angeboten.',
+    ],
+
     'presented' => [
         'name' => 'Quadratisch · Weißes Zifferblatt, schwarzes Lederband',
         'short_description' => 'Quadratisches besetztes Gehäuse, römische Ziffern und schwarzes Lederband.',
@@ -16,6 +22,11 @@ return [
         ],
     ],
     'catalog' => [
+        'silver-roman-pave' => [
+            'name' => '41 mm · Silberfarben, Pavé-Zifferblatt, römische Ziffern',
+            'short_description' => 'Silberfarbene Ausführung, Pavé-Zifferblatt, römische Ziffern und VVS-Besatz.',
+            'description' => 'Silberfarbene 41-mm-Uhr, vollständig mit VVS-Moissanit besetzt, mit Pavé-Zifferblatt, römischen Ziffern, besetzter Lünette und besetztem Armband.',
+        ],
         'twotone-round' => [
             'name' => '41 mm · Bicolor, Champagner-Zifferblatt',
             'short_description' => 'Bicolor-Ausführung, Champagner-Zifferblatt und integriertes Armband.',
@@ -55,6 +66,31 @@ return [
             'name' => '36 mm · Eckige Damenuhr, weißes Zifferblatt',
             'short_description' => 'Eckiges Gehäuse, weißes Zifferblatt und Pavé-Armband.',
             'description' => 'Eckiges 36-mm-Damenmodell mit weißem Zifferblatt und römischen Ziffern, Pavé-Armband und VVS-Moissanit in Farbe D.',
+        ],
+        'square-roman' => [
+            'name' => '41 mm · Bicolor eckig, römische Ziffern',
+            'short_description' => 'Bicolores eckiges Gehäuse und römische Ziffern.',
+            'description' => '41-mm-Uhr mit bicolorem eckigem Gehäuse, Zifferblatt mit römischen Ziffern und VVS-Moissanit in Farbe D.',
+        ],
+        'black-stainless' => [
+            'name' => '41 mm · Schwarz eckig, weißes Zifferblatt',
+            'short_description' => 'Schwarzes eckiges Gehäuse und weißes Zifferblatt.',
+            'description' => '41-mm-Uhr mit schwarzem eckigem Gehäuse, weißem Zifferblatt und VVS-Moissanit in Farbe D.',
+        ],
+        'red-roman' => [
+            'name' => '41 mm · Silberfarben, weißes Zifferblatt',
+            'short_description' => 'Silberfarbene Ausführung und weißes Zifferblatt.',
+            'description' => '41-mm-Uhr mit silberfarbener Ausführung, weißem Zifferblatt und VVS-Moissanit in Farbe D.',
+        ],
+        'jubilee' => [
+            'name' => '41 mm · Klassisch, römische Ziffern',
+            'short_description' => 'Klassischer Stil und römische Ziffern.',
+            'description' => '41-mm-Uhr im klassischen Stil mit römischen Ziffern und VVS-Moissanit in Farbe D.',
+        ],
+        'cadran-bleu-roi' => [
+            'name' => '41 mm · Königsblaues Zifferblatt, silberfarbenes Armband',
+            'short_description' => 'Königsblaues Zifferblatt und silberfarbenes Armband.',
+            'description' => '41-mm-Uhr mit königsblauem Zifferblatt, silberfarbenem Armband und VVS-Moissanit in Farbe D.',
         ],
     ],
     42 => [

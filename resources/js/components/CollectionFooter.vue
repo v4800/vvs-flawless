@@ -1,6 +1,6 @@
 <script setup>
-import { Link, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
+import { Link, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 
 const page = usePage();
 const translations = page.props.translations;
@@ -37,7 +37,7 @@ const guideLinks = computed(() => {
             >
                 <Link
                     :href="localizedRoutes.about"
-                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    class="inline-flex min-h-11 items-center px-1 text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
                 >
                     {{ translations.navigation.about }}
                 </Link>
@@ -46,24 +46,25 @@ const guideLinks = computed(() => {
                     v-for="guide in guideLinks"
                     :key="guide.href"
                     :href="guide.href"
-                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    class="inline-flex min-h-11 items-center px-1 text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
                 >
                     {{ guide.title }}
                 </Link>
 
                 <Link
                     :href="localizedRoutes.privacy"
-                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    class="inline-flex min-h-11 items-center px-1 text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
                 >
                     {{ translations.footer.privacy }}
                 </Link>
                 <Link
                     :href="localizedRoutes.reservationTerms"
-                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                    class="inline-flex min-h-11 items-center px-1 text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
                 >
                     {{ translations.footer.terms }}
                 </Link>
             </nav>
+            <!-- VVS SOCIAL YOUTUBE 20260921 -->
 
             <p class="text-xs text-zinc-500">
                 {{ translations.footer.copyright }}

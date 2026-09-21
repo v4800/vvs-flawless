@@ -24,7 +24,8 @@ const startingPrice = (watch) => {
         .filter((price) => Number.isFinite(price) && price > 0);
 
     if (prices.length === 0) {
-        return null;
+        const singlePrice = Number(watch.promo_price ?? watch.price);
+        return Number.isFinite(singlePrice) && singlePrice > 0 ? singlePrice : null;
     }
 
     return Math.min(...prices);
@@ -92,7 +93,7 @@ const formatPrice = (price) => {
                         </p>
 
                         <h3
-                            class="vvs-display-title mt-3 mb-5 min-h-[48px] text-2xl leading-6"
+                            class="vvs-watch-title mt-3 mb-5 min-h-[48px] text-2xl leading-6"
                         >
                             {{ watch.name }}
                         </h3>

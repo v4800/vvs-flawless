@@ -1,7 +1,9 @@
 <script setup>
 import ReservationTrust from '@/components/ReservationTrust.vue';
+import { usePage } from '@inertiajs/vue3';
+import { computed, onBeforeUnmount, ref, watch } from 'vue';
 
-defineProps({
+const props = defineProps({
     watch: {
         type: Object,
         required: true,
@@ -33,8 +35,34 @@ defineProps({
 });
 
 const emit = defineEmits(['submit']);
+const page = usePage();
+const showProgress = ref(false);
+let progressTimer;
 
-const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
+watch(() => props.form.processing, (processing) => {
+    window.clearTimeout(progressTimer);
+    if (processing) {
+        progressTimer = window.setTimeout(() => { showProgress.value = true; }, 180);
+    } else {
+        showProgress.value = false;
+    }
+});
+
+onBeforeUnmount(() => { window.clearTimeout(progressTimer); });
+const requestCopy = computed(() => ({
+    fr_BE: { error: 'Vérifiez les champs signalés, puis réessayez.' },
+    nl_BE: { error: 'Controleer de gemarkeerde velden en probeer het opnieuw.' },
+    en_BE: { error: 'Check the highlighted fields and try again.' },
+    de_BE: { error: 'Prüfen Sie die markierten Felder und versuchen Sie es erneut.' },
+}[page.props.locale] ?? { error: 'Check the highlighted fields and try again.' }));
+
+const formatPrice = (price) => {
+    const numericPrice = Number(price);
+
+    return Number.isFinite(numericPrice) && numericPrice > 0
+        ? `${numericPrice.toFixed(0)} €`
+        : '—';
+};
 </script>
 
 <template>
@@ -67,19 +95,19 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     class="vvs-luxury-card mt-7 overflow-hidden rounded-2xl border"
                 >
                     <div class="grid grid-cols-[105px_1fr]">
-                        <div class="bg-zinc-400">
+                        <div class="bg-[#12110f]">
                             <img
                                 :src="activeImage"
                                 :alt="watch.name"
                                 loading="lazy"
                                 decoding="async"
-                                class="h-full w-full object-cover"
+                                class="h-full w-full object-contain p-1"
                             />
                         </div>
 
                         <div class="p-4">
                             <p
-                                class="vvs-display-title line-clamp-2 text-xl leading-5"
+                                class="vvs-watch-title line-clamp-2 text-xl leading-6"
                             >
                                 {{ watch.name }}
                             </p>
@@ -465,13 +493,17 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                     </div>
 
                     <div class="md:col-span-2 xl:col-span-4">
+                        <p v-if="form.hasErrors" role="alert" class="mb-4 rounded-xl border border-red-300/20 bg-red-400/5 px-4 py-3 text-sm leading-6 text-red-200">
+                            {{ requestCopy.error }}
+                        </p>
                         <button
                             type="submit"
-                            :disabled="form.processing"
+                            :disabled="form.processing || selectedPrice <= 0"
                             :aria-busy="form.processing"
                             class="vvs-button-primary group flex w-full items-center justify-between rounded-xl px-6 py-5 text-sm font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                         >
-                            <span>
+                            <span class="flex items-center gap-3">
+                                <span v-if="showProgress" class="vvs-loading-indicator vvs-loading-indicator--dark" aria-hidden="true"></span>
                                 {{
                                     form.processing
                                         ? translations.product.sending
@@ -486,6 +518,10 @@ const formatPrice = (price) => `${Number(price).toFixed(0)} €`;
                                 →
                             </span>
                         </button>
+
+                        <p v-if="form.processing" role="status" class="sr-only">
+                            {{ translations.product.sending }}
+                        </p>
 
                         <p
                             class="mt-4 text-center text-[11px] leading-5 text-zinc-400"

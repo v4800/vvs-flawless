@@ -37,7 +37,8 @@ class CustomerReservationMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'mail.reservations.customer'
+            view: 'mail.reservations.customer-html',
+            text: 'mail.reservations.customer-text'
         );
     }
 

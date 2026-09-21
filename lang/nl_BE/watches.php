@@ -1,6 +1,12 @@
 <?php
 
 return [
+    908 => [
+        'name' => 'Zilverkleurig achthoekig · Gouden Arabische cijfers — Limited edition',
+        'short_description' => 'Zilverkleurige afwerking, pavéwijzerplaat en gouden Arabische cijfers.',
+        'description' => 'Limited edition met zilverkleurige afwerking, pavéwijzerplaat en gouden Arabische cijfers, bezet met VVS-moissaniet. Deze uitvoering wordt aangeboden met een Zwitsers uurwerk.',
+    ],
+
     'presented' => [
         'name' => 'Vierkant · Witte wijzerplaat, zwarte leren band',
         'short_description' => 'Vierkante bezette kast, Romeinse cijfers en zwarte leren band.',
@@ -16,6 +22,11 @@ return [
         ],
     ],
     'catalog' => [
+        'silver-roman-pave' => [
+            'name' => '41 mm · Zilverkleurig, pavé-wijzerplaat, Romeinse cijfers',
+            'short_description' => 'Zilverkleurige afwerking, pavé-wijzerplaat, Romeinse cijfers en VVS-bezetting.',
+            'description' => 'Zilverkleurig horloge van 41 mm, volledig bezet met VVS-moissaniet, met pavé-wijzerplaat, Romeinse cijfers, bezette lunette en bezette armband.',
+        ],
         'twotone-round' => [
             'name' => '41 mm · Tweekleurig, champagne wijzerplaat',
             'short_description' => 'Tweekleurige afwerking, champagne wijzerplaat en geïntegreerde band.',
@@ -55,6 +66,31 @@ return [
             'name' => '36 mm · Vierkant damesmodel, witte wijzerplaat',
             'short_description' => 'Vierkante kast, witte wijzerplaat en pavéband.',
             'description' => 'Vierkant damesmodel van 36 mm met witte wijzerplaat en Romeinse cijfers, pavéband en VVS-moissaniet in kleur D.',
+        ],
+        'square-roman' => [
+            'name' => '41 mm · Tweekleurig vierkant, Romeinse cijfers',
+            'short_description' => 'Tweekleurige vierkante kast en Romeinse cijfers.',
+            'description' => '41 mm horloge met tweekleurige vierkante kast, wijzerplaat met Romeinse cijfers en VVS-moissaniet in kleur D.',
+        ],
+        'black-stainless' => [
+            'name' => '41 mm · Zwart vierkant, witte wijzerplaat',
+            'short_description' => 'Zwarte vierkante kast en witte wijzerplaat.',
+            'description' => '41 mm horloge met zwarte vierkante kast, witte wijzerplaat en VVS-moissaniet in kleur D.',
+        ],
+        'red-roman' => [
+            'name' => '41 mm · Zilverkleurig, witte wijzerplaat',
+            'short_description' => 'Zilverkleurige afwerking en witte wijzerplaat.',
+            'description' => '41 mm horloge met zilverkleurige afwerking, witte wijzerplaat en VVS-moissaniet in kleur D.',
+        ],
+        'jubilee' => [
+            'name' => '41 mm · Klassiek, Romeinse cijfers',
+            'short_description' => 'Klassieke stijl en Romeinse cijfers.',
+            'description' => '41 mm horloge in klassieke stijl, met Romeinse cijfers en VVS-moissaniet in kleur D.',
+        ],
+        'cadran-bleu-roi' => [
+            'name' => '41 mm · Koningsblauwe wijzerplaat, zilverkleurige band',
+            'short_description' => 'Koningsblauwe wijzerplaat en zilverkleurige band.',
+            'description' => '41 mm horloge met koningsblauwe wijzerplaat, zilverkleurige band en VVS-moissaniet in kleur D.',
         ],
     ],
     42 => [

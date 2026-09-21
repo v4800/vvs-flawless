@@ -6,52 +6,56 @@ const emit = defineEmits(['scroll-to-collection']);
 const page = usePage();
 const translations = page.props.translations;
 const hero = page.props.landingCopy.hero;
-
 </script>
 
 <template>
     <section
-        class="relative isolate overflow-hidden border-b border-white/10 bg-[#060606]"
+        class="vvs-brand-hero vvs-brand-hero--intro relative isolate overflow-hidden border-b border-white/10 bg-[#050505]"
     >
-
         <div
-            class="mx-auto grid max-w-[1500px] items-center gap-10 px-6 py-10 sm:gap-12 sm:py-12 lg:min-h-[650px] lg:grid-cols-[0.92fr_1.08fr] lg:px-10 lg:py-20"
+            class="relative mx-auto flex min-h-[610px] max-w-[1500px] items-center justify-center px-5 py-20 text-center sm:min-h-[680px] sm:px-8 sm:py-24 lg:min-h-[720px] lg:px-10"
         >
-            <div class="relative z-10">
+            <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(190,158,95,0.12),transparent_42%)]"
+            ></div>
+
+            <div class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center">
                 <p
-                    class="hero-animate text-xs font-bold tracking-[0.24em] text-amber-300 uppercase"
+                    class="vvs-eyebrow max-w-full text-[10px] tracking-[0.16em] sm:tracking-[0.28em]"
                 >
                     {{ hero.badge_stone }} · {{ hero.badge_style }} ·
                     {{ hero.badge_culture }}
                 </p>
 
-                <div
-                    class="hero-animate mt-7 w-full min-w-0 max-w-[560px]"
+                <h1
+                    class="vvs-brand-wordmark mt-8 w-full max-w-full"
+                    aria-label="VVS FLAWLESS"
                 >
-                    <div
-                        class="aspect-[2.2/1] w-full overflow-hidden"
-                    >
-                        <img
-                            src="/images/branding/vvs-flawless-logo.svg"
-                            alt="VVS FLAWLESS — Depuis 2026"
-                            width="1280"
-                            height="1024"
-                            decoding="async"
-                            class="block h-full w-full object-cover object-center"
-                        />
-                    </div>
-                </div>
+                    <span class="vvs-brand-wordmark__vvs">VVS</span>
+                    <span class="vvs-brand-wordmark__flawless">
+                        FLAWLESS
+                    </span>
+                </h1>
 
                 <p
-                    class="hero-animate vvs-body-copy mt-6 max-w-xl text-base text-zinc-400 sm:text-lg"
+                    class="vvs-display-title mt-9 max-w-4xl text-[clamp(2rem,6vw,4.5rem)] leading-[1.02] text-[#f5f0e7]"
+                >
+                    {{ translations.hero.tagline }}
+                </p>
+
+                <p
+                    class="vvs-body-copy mx-auto mt-6 max-w-2xl text-sm text-zinc-400 sm:text-base lg:text-lg"
                 >
                     {{ translations.hero.description }}
                 </p>
 
-                <div class="hero-animate mt-9 flex min-w-0 max-w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+                <div
+                    class="mt-9 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
+                >
                     <button
                         type="button"
-                        class="vvs-button-primary rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
+                        class="vvs-button-primary min-h-12 rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
                         @click="emit('scroll-to-collection')"
                     >
                         {{ translations.concept.cta }}
@@ -59,50 +63,10 @@ const hero = page.props.landingCopy.hero;
 
                     <a
                         href="#concept"
-                        class="max-w-full break-words rounded text-sm font-semibold text-zinc-400 underline decoration-white/20 underline-offset-4 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-300"
+                        class="vvs-button-secondary inline-flex min-h-12 items-center justify-center rounded-xl px-7 py-4 text-sm font-semibold"
                     >
                         {{ translations.hero.concept }}
                     </a>
-                </div>
-            </div>
-
-            <div
-                class="relative mt-2 flex min-h-0 items-center justify-center sm:mt-4 lg:mt-0 lg:min-h-[600px]"
-            >
-                <div
-                    class="hero-watch relative z-10 w-full max-w-[760px] overflow-hidden rounded-[24px] border border-white/10 bg-black shadow-[0_30px_80px_rgba(0,0,0,0.55)]"
-                >
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img
-                            src="/images/vvs-watch-hero.webp"
-                            :alt="hero.image_alt"
-                            width="1536"
-                            height="1024"
-                            fetchpriority="high"
-                            decoding="async"
-                            class="block h-full w-full object-cover object-center"
-                        />
-
-                        <div
-                            class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent"
-                        ></div>
-
-                        <div
-                            class="absolute right-0 bottom-0 left-0 p-5 sm:p-7"
-                        >
-                            <p
-                                class="text-[9px] font-black tracking-[0.24em] text-amber-300 uppercase"
-                            >
-                                {{ hero.signature_material }}
-                            </p>
-
-                            <p
-                                class="vvs-display-title mt-2 text-3xl leading-none text-white sm:text-4xl"
-                            >
-                                {{ hero.signature_title }}
-                            </p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
