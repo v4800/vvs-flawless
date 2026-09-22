@@ -20,7 +20,11 @@ class ReservationRecapMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'VVS FLAWLESS — Récapitulatif '.$this->reservation->reservation_number
+            subject: (string) trans(
+                'site.mail.subject',
+                ['number' => $this->reservation->reservation_number],
+                $this->reservation->locale ?: config('app.locale')
+            )
         );
     }
 
