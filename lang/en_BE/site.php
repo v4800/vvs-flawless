@@ -170,7 +170,7 @@ return [
         'piece_amount' => 'Watch amount',
         'sending' => 'Sending…',
         'submit' => 'Send my reservation',
-        'reservation_note' => 'Submitting the form does not trigger a payment. You confirm the order later directly with VVS FLAWLESS.',
+        'reservation_note' => 'Submitting the form does not trigger a payment. Once the details have been reviewed and confirmed with VVS FLAWLESS, a fixed €100 deposit is requested before preparation begins.',
         'footer_material' => 'VVS moissanite • Colour D',
     ],
 
@@ -333,7 +333,7 @@ return [
             ['question' => 'Are your watches set with diamonds?', 'answer' => 'No. The models shown on the website are set with VVS moissanite. It offers the bright look many people seek in a diamond or iced-out watch, but it is not diamond.'],
             ['question' => 'Can moissanite trigger a diamond tester?', 'answer' => 'Moissanite can test positive on some basic thermal diamond testers. A tester designed to distinguish diamond from moissanite can identify them separately.'],
             ['question' => 'What is the difference between Japanese and Swiss movements?', 'answer' => 'The Japanese version is the more accessible configuration. The Swiss version is the premium option when offered for that model. Both prices are displayed before reservation.'],
-            ['question' => 'How does a reservation work?', 'answer' => 'Choose the watch and movement and submit the form. You pay nothing on the website. We then contact you directly to confirm all details before preparation starts.'],
+            ['question' => 'How does a reservation work?', 'answer' => 'Choose the watch and movement and submit the form. You pay nothing on the website. We contact you to confirm the details; once confirmed, a fixed €100 deposit is requested before preparation begins.'],
             ['question' => 'When will my watch be available?', 'answer' => 'Allow around 5 to 6 working days. This remains an estimate until we have checked the order with you.'],
             ['question' => 'How do I receive my watch?', 'answer' => 'You can choose personal handover or delivery. Exact terms and any costs are confirmed before the order is finalised.'],
             ['question' => 'How does personal handover work?', 'answer' => 'After confirmation, we agree on a place and time that works for both sides.'],
