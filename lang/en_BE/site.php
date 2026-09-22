@@ -215,7 +215,7 @@ return [
                 ['title' => '2. Confirmation', 'paragraphs' => ['After receiving the request, VVS FLAWLESS contacts the customer to confirm the model, chosen movement, price and reservation terms.']],
                 ['title' => '3. Availability', 'paragraphs' => ['The availability period generally shown is 5 to 6 working days. This remains an estimate until the reservation has been confirmed.']],
                 ['title' => '4. Price', 'paragraphs' => ['The price for the selected model and movement is shown on the product page and repeated during reservation.']],
-                ['title' => '5. Payment', 'paragraphs' => ['No payment is processed directly on the website. Payment terms are confirmed with the customer before handover or delivery.', 'Payment may be made in cash or by an electronic payment method agreed during confirmation, subject to applicable rules.']],
+                ['title' => '5. Payment', 'paragraphs' => ['No payment is processed directly on the website. Once the details are confirmed, a fixed €100 deposit is requested before preparation of the watch begins.', 'The remaining balance is arranged directly with the customer once the watch is ready, according to the agreed reception method and applicable rules.']],
                 ['title' => '6. Personal handover or delivery', 'paragraphs' => ['The customer chooses personal handover or delivery when submitting the request. Exact terms are agreed before the order is finalised.']],
                 ['title' => '7. Information provided', 'paragraphs' => ['The customer agrees to provide accurate information so VVS FLAWLESS can make contact and process the request.']],
             ],
