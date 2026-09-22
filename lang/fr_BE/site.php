@@ -129,7 +129,7 @@ return [
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
         'about_title' => 'À propos de VVS FLAWLESS — Belgique & Europe',
-        'about_description' => 'Découvrez VVS FLAWLESS, un projet belge consacré aux montres iced-out serties de moissanite VVS et disponibles sur réservation.',
+        'about_description' => 'Découvrez VVS FLAWLESS, un projet indépendant belge consacré aux montres iced-out serties de moissanite VVS, avec demandes possibles depuis la Belgique, la France, l’Allemagne et les Pays-Bas.',
     ],
 
     'movements' => [
