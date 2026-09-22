@@ -128,7 +128,7 @@ return [
         'product_description_suffix' => 'Montre sertie de moissanite VVS, avec mouvement japonais ou suisse, disponible sur réservation avec remise en main propre ou livraison.',
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
-        'about_title' => 'À propos de VVS FLAWLESS — Belgique & Europe',
+        'about_title' => 'À propos de VVS FLAWLESS',
         'about_description' => 'Découvrez VVS FLAWLESS, un projet indépendant belge consacré aux montres iced-out serties de moissanite VVS, avec demandes possibles depuis la Belgique, la France, l’Allemagne et les Pays-Bas.',
     ],
 
