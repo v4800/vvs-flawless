@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    lang="{{ data_get($page, 'props.seo.language') ?: str_replace('_', '-', app()->getLocale()) }}"
     @class(['dark' => ($appearance ?? 'system') == 'dark'])
 >
     <head>
@@ -38,7 +38,16 @@
                 ? $seo['locale']
                 : app()->getLocale();
 
-            $openGraphLocale = str_replace('-', '_', $seoLocale);
+            $seoLanguage = is_string($seo['language'] ?? null)
+                ? $seo['language']
+                : null;
+
+            $openGraphLocaleSource = is_string($seoLanguage)
+                && preg_match('/^[a-z]{2}-[A-Z]{2}$/', $seoLanguage) === 1
+                    ? $seoLanguage
+                    : $seoLocale;
+
+            $openGraphLocale = str_replace('-', '_', $openGraphLocaleSource);
 
             $seoImage = is_string($seo['image'] ?? null)
                 ? $seo['image']

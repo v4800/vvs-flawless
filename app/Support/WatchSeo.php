@@ -64,6 +64,7 @@ final class WatchSeo
             'robots' => $hasFilters ? 'noindex,follow' : 'index,follow',
             'alternates' => $alternates,
             'locale' => app()->getLocale(),
+            'language' => $this->languageTag(),
             'image' => url('/images/vvs-flawless-profile.webp'),
             'imageAlt' => trans('seo_intents.collection_seo.image_alt'),
             'type' => 'website',
@@ -152,6 +153,7 @@ final class WatchSeo
             'canonical' => $watchUrl,
             'alternates' => $this->watchAlternates($watch),
             'locale' => app()->getLocale(),
+            'language' => $this->languageTag(),
             'image' => $structuredImages[0],
             'imageAlt' => $watch->name.' — VVS FLAWLESS',
             'type' => 'product',
@@ -448,10 +450,10 @@ final class WatchSeo
     private function collectionAlternates(): array
     {
         return [
-            ['hreflang' => 'fr-BE', 'href' => route('watches.index')],
-            ['hreflang' => 'nl-BE', 'href' => route('nl.watches.index')],
-            ['hreflang' => 'en-BE', 'href' => route('en.watches.index')],
-            ['hreflang' => 'de-BE', 'href' => route('de.watches.index')],
+            ['hreflang' => 'fr', 'href' => route('watches.index')],
+            ['hreflang' => 'nl', 'href' => route('nl.watches.index')],
+            ['hreflang' => 'en', 'href' => route('en.watches.index')],
+            ['hreflang' => 'de', 'href' => route('de.watches.index')],
             ['hreflang' => 'x-default', 'href' => route('watches.index')],
         ];
     }
@@ -463,19 +465,19 @@ final class WatchSeo
     {
         return [
             [
-                'hreflang' => 'fr-BE',
+                'hreflang' => 'fr',
                 'href' => route('watches.show', $watch),
             ],
             [
-                'hreflang' => 'nl-BE',
+                'hreflang' => 'nl',
                 'href' => route('nl.watches.show', $watch),
             ],
             [
-                'hreflang' => 'en-BE',
+                'hreflang' => 'en',
                 'href' => route('en.watches.show', $watch),
             ],
             [
-                'hreflang' => 'de-BE',
+                'hreflang' => 'de',
                 'href' => route('de.watches.show', $watch),
             ],
             [
@@ -512,20 +514,16 @@ final class WatchSeo
                     'name' => 'Belgium',
                 ],
                 [
-                    '@type' => 'AdministrativeArea',
-                    'name' => 'Wallonia',
-                    'containedInPlace' => [
-                        '@type' => 'Country',
-                        'name' => 'Belgium',
-                    ],
+                    '@type' => 'Country',
+                    'name' => 'France',
                 ],
                 [
-                    '@type' => 'AdministrativeArea',
-                    'name' => 'Flanders',
-                    'containedInPlace' => [
-                        '@type' => 'Country',
-                        'name' => 'Belgium',
-                    ],
+                    '@type' => 'Country',
+                    'name' => 'Germany',
+                ],
+                [
+                    '@type' => 'Country',
+                    'name' => 'Netherlands',
                 ],
             ],
         ];
@@ -533,6 +531,11 @@ final class WatchSeo
 
     private function languageTag(): string
     {
-        return str_replace('_', '-', app()->getLocale());
+        return match (app()->getLocale()) {
+            'nl_BE' => 'nl',
+            'en_BE' => 'en',
+            'de_BE' => 'de',
+            default => 'fr',
+        };
     }
 }

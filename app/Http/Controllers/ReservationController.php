@@ -6,6 +6,7 @@ use App\Mail\CustomerReservationMail;
 use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\ReservationPayment;
 use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -133,6 +134,8 @@ class ReservationController extends Controller
 
             'price' => $price,
 
+            'deposit_amount' => ReservationPayment::depositAmount($price),
+
             'customer_name' => $validated['customer_name'],
 
             'email' => $validated['email'],
@@ -142,6 +145,8 @@ class ReservationController extends Controller
             'city' => $validated['city'] ?? null,
 
             'delivery_method' => $validated['delivery_method'],
+
+            'locale' => app()->getLocale(),
 
             'status' => 'Nouvelle demande',
 
@@ -318,6 +323,16 @@ class ReservationController extends Controller
 
                         'price' => (float) $reservation
                             ->price,
+
+                        'deposit_amount' => ReservationPayment::depositAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount
+                        ),
+
+                        'balance_amount' => ReservationPayment::balanceAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount
+                        ),
 
                         'delivery_method' => $reservation
                             ->delivery_method,

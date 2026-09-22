@@ -1,4 +1,5 @@
 <script setup>
+import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineProps({
@@ -12,6 +13,8 @@ const emit = defineEmits(['compose-email']);
 
 const copiedPhone = ref(false);
 const copiedReference = ref(false);
+const sendingRecap = ref(false);
+const recapStatus = ref('');
 
 const phoneHref = (phone) => {
     const value = String(phone ?? '')
@@ -19,6 +22,29 @@ const phoneHref = (phone) => {
         .replace(/[^\d+]/g, '');
 
     return value ? 'tel:' + value : '#';
+};
+
+const sendRecap = (reservation) => {
+    sendingRecap.value = true;
+    recapStatus.value = '';
+
+    router.post(
+        '/admin/reservations/' + reservation.id + '/recap/email',
+        {},
+        {
+            preserveScroll: true,
+            onSuccess: () => {
+                recapStatus.value = 'Récapitulatif PDF envoyé';
+            },
+            onError: (errors) => {
+                recapStatus.value =
+                    errors.email_message || 'Échec de l’envoi du PDF';
+            },
+            onFinish: () => {
+                sendingRecap.value = false;
+            },
+        },
+    );
 };
 
 const copyValue = async (value, state) => {
@@ -55,6 +81,29 @@ const copyValue = async (value, state) => {
         >
             Envoyer un email
         </button>
+
+        <a
+            :href="'/admin/reservations/' + reservation.id + '/recap'"
+            class="rounded-lg bg-white/5 px-3 py-2 text-xs font-bold hover:bg-white/10"
+        >
+            Télécharger le récapitulatif PDF
+        </a>
+
+        <button
+            type="button"
+            class="rounded-lg bg-amber-300 px-3 py-2 text-xs font-black text-black hover:bg-amber-200 disabled:cursor-wait disabled:opacity-60"
+            :disabled="sendingRecap"
+            @click="sendRecap(reservation)"
+        >
+            {{ sendingRecap ? 'Envoi…' : 'Envoyer le récapitulatif PDF' }}
+        </button>
+
+        <span
+            v-if="recapStatus"
+            class="text-xs font-bold text-emerald-300"
+        >
+            {{ recapStatus }}
+        </span>
 
         <button
             type="button"

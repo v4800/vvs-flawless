@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\AdminReservationContactMail;
+use App\Mail\ReservationRecapMail;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Watch;
@@ -64,7 +65,7 @@ class AdminReservationsDashboardTest extends TestCase
                     ->where('stats.new', 1)
                     ->where('stats.deposit_paid', 1)
                     ->where('stats.completed', 1)
-                    ->where('stats.confirmed_revenue', 1050)
+                    ->where('stats.confirmed_revenue', 900)
                     ->has('recentReservations', 3)
             );
     }
@@ -171,7 +172,7 @@ class AdminReservationsDashboardTest extends TestCase
             );
     }
 
-    public function test_price_is_split_into_expected_25_and_75_percent_amounts(): void
+    public function test_price_uses_fixed_100_euro_deposit_and_remaining_balance(): void
     {
         $reservation = $this->reservation($this->watch(), [
             'price' => 1000,
@@ -184,12 +185,33 @@ class AdminReservationsDashboardTest extends TestCase
             ]))
             ->assertInertia(
                 fn (Assert $page) => $page
-                    ->where('reservations.data.0.deposit_amount', 250)
-                    ->where('reservations.data.0.balance_amount', 750)
+                    ->where('reservations.data.0.deposit_amount', 100)
+                    ->where('reservations.data.0.balance_amount', 900)
                     ->where(
                         'reservations.data.0.confirmed_paid_amount',
                         0
                     )
+            );
+    }
+
+    public function test_dashboard_preserves_a_historical_deposit_snapshot(): void
+    {
+        $reservation = $this->reservation($this->watch(), [
+            'price' => 1000,
+            'deposit_amount' => 250,
+            'reservation_number' => 'VVS-LEGACY-DEPOSIT',
+            'deposit_paid_at' => now(),
+        ]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.reservations.index', [
+                'q' => $reservation->reservation_number,
+            ]))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where('reservations.data.0.deposit_amount', 250)
+                    ->where('reservations.data.0.balance_amount', 750)
+                    ->where('reservations.data.0.confirmed_paid_amount', 250)
             );
     }
 
@@ -318,6 +340,67 @@ class AdminReservationsDashboardTest extends TestCase
                 ->hasTo('contact-client@example.com')
                 && $mail->subjectLine === 'Votre réservation VVS-EMAIL-TEST'
                 && $mail->messageBody === 'Votre montre est prête.'
+        );
+    }
+
+    public function test_admin_can_download_and_email_reservation_recap_pdf(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'recap-client@example.com',
+            'reservation_number' => 'VVS-RECAP-TEST',
+            'price' => 950,
+        ]);
+
+        $response = $this->actingAs($this->admin())
+            ->get(route('admin.reservations.recap', $reservation));
+
+        $response
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/pdf')
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+
+        $this->assertStringStartsWith('%PDF-1.4', $response->getContent());
+        $this->assertStringContainsString(
+            '0.82 0.68 0.43 rg',
+            $response->getContent()
+        );
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.recap.email', $reservation))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            ReservationRecapMail::class,
+            fn (ReservationRecapMail $mail): bool => $mail
+                ->hasTo('recap-client@example.com')
+                && count($mail->attachments()) === 1
+        );
+    }
+
+    public function test_recap_email_uses_the_reservation_locale(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'english-client@example.com',
+            'reservation_number' => 'VVS-EN-RECAP',
+            'locale' => 'en_BE',
+        ]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.recap.email', $reservation))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            ReservationRecapMail::class,
+            fn (ReservationRecapMail $mail): bool =>
+                $mail->hasTo('english-client@example.com')
+                && $mail->envelope()->subject
+                    === 'Your VVS FLAWLESS reservation summary — VVS-EN-RECAP'
         );
     }
 
