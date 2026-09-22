@@ -254,6 +254,8 @@ return [
         'watch' => 'Horloge',
         'movement' => 'Uurwerk',
         'reserved_price' => 'Gereserveerde prijs',
+        'deposit' => 'Vaste aanbetaling',
+        'balance' => 'Resterend saldo',
         'name' => 'Naam',
         'email' => 'E-mail',
         'phone' => 'Telefoon',
