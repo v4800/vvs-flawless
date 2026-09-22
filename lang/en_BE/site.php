@@ -261,8 +261,8 @@ return [
     ],
 
     'concept' => [
-        'eyebrow' => 'VVS FLAWLESS Belgium',
-        'title' => 'Bustdown culture arrives in Belgium',
+        'eyebrow' => 'VVS FLAWLESS · Belgian project',
+        'title' => 'VVS & iced-out watches from Belgium',
         'description' => 'A selection of iced-out watches set with VVS moissanite and offered with Japanese or Swiss movements.',
         'cta' => 'View the collection',
     ],
@@ -279,7 +279,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'Bustdown culture arrives in Belgium',
+        'tagline' => 'VVS FLAWLESS · Independent Belgian project',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Privacy',
         'terms' => 'Reservation terms',
@@ -290,8 +290,8 @@ return [
         'eyebrow' => 'About',
         'title_before' => 'A new',
         'title_highlight' => 'culture',
-        'title_after' => 'in Belgium.',
-        'paragraph_1' => 'VVS FLAWLESS is a Belgian project focused on iced-out watches set with moissanite.',
+        'title_after' => 'from Belgium.',
+        'paragraph_1' => 'VVS FLAWLESS is an independent Belgian project focused on iced-out watches set with moissanite, with requests available from Belgium, France, Germany and the Netherlands subject to confirmation.',
         'paragraph_2' => 'You choose your model and movement on the website. We then review the order directly with you and arrange reception.',
         'paragraph_3_before' => 'The models offered are set with',
         'paragraph_3_strong' => 'VVS moissanite, colour D',
