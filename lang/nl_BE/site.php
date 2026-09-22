@@ -268,6 +268,7 @@ return [
         'next' => 'We nemen contact op om de details te controleren. Na bevestiging wordt een vaste aanbetaling van 100 € gevraagd voordat de voorbereiding start.',
         'legal_note' => 'Dit bericht bevestigt jouw reservatieaanvraag. De bestelling wordt definitief na bevestiging met VVS FLAWLESS.',
         'thanks' => 'Bedankt,',
+        'document_note' => 'Dit document is een reservatieoverzicht en geen fiscale factuur.',
     ],
 
     'language' => [
