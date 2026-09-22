@@ -31,11 +31,12 @@ class AdminOverviewController extends Controller
         ));
 
         $confirmedRevenue = (clone $baseQuery)
-            ->get(['price', 'deposit_paid_at', 'balance_paid_at'])
+            ->get(['price', 'deposit_amount', 'deposit_paid_at', 'balance_paid_at'])
             ->sum(fn (Reservation $reservation): float => ReservationPayment::confirmedPaidAmount(
                 $reservation->price,
                 $reservation->deposit_paid_at !== null,
-                $reservation->balance_paid_at !== null
+                $reservation->balance_paid_at !== null,
+                $reservation->deposit_amount
             ));
 
         $recentReservations = (clone $baseQuery)
