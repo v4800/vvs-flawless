@@ -248,7 +248,7 @@ return [
         'status' => 'Status',
         'your_message' => 'Your message',
         'button' => 'View my summary',
-        'next' => 'We will contact you to check the details and finalise the order with you.',
+        'next' => 'We will contact you to review the details. Once confirmed, a fixed €100 deposit is requested before preparation begins.',
         'legal_note' => 'This message confirms your reservation request. The order becomes final after confirmation with VVS FLAWLESS.',
         'thanks' => 'Thank you,',
     ],
@@ -364,7 +364,7 @@ return [
         'reserve' => 'Reserve',
         'reserve_text' => 'Send your request through the form.',
         'confirm' => 'Confirmation',
-        'confirm_text' => 'We review the model, price, timing and order details with you directly before preparation starts.',
+        'confirm_text' => 'We review the model, price, timing and order details with you directly. Once confirmed, a fixed €100 deposit starts preparation.',
         'receive' => 'Reception',
         'receive_text' => 'Once the watch is ready and confirmed with you, we arrange handover or delivery.',
         'delay_label' => 'Estimated availability',
@@ -385,7 +385,7 @@ return [
 
     'reservation_trust' => [
         'title' => 'You pay nothing when submitting the form',
-        'description' => 'The request only allows us to review the watch, movement, price and terms with you before a final order.',
+        'description' => 'The request lets us review the watch, movement, price and terms with you. After written confirmation, a fixed €100 deposit is requested before preparation.',
         'sent' => 'Request sent',
         'confirmed' => 'Contact and confirmation',
         'organized' => 'Reception arranged',
