@@ -23,7 +23,7 @@ class ReservationRecapMail extends Mailable
             subject: (string) trans(
                 'site.mail.subject',
                 ['number' => $this->reservation->reservation_number],
-                $this->reservation->locale ?: config('app.locale')
+                (string) ($this->reservation->locale ?: config('app.locale'))
             )
         );
     }
