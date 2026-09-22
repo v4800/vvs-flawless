@@ -6,18 +6,20 @@
 <x-mail::message>
 # VVS FLAWLESS
 
-Bonjour {{ $reservation->customer_name }},
+{{ trans('site.mail.hello', ['name' => $reservation->customer_name]) }}
 
-Vous trouverez en pièce jointe le **récapitulatif de votre réservation {{ $reservation->reservation_number }}**.
+{{ trans('site.mail.summary') }} **{{ $reservation->reservation_number }}**
 
-**Prix total :** {{ number_format($price, 2, ',', ' ') }} €  
-**Acompte fixe :** {{ number_format($deposit, 2, ',', ' ') }} €  
-**Solde restant :** {{ number_format($balance, 2, ',', ' ') }} €
+**{{ trans('site.mail.reserved_price') }} :** {{ number_format($price, 2, ',', ' ') }} €  
+**{{ trans('site.mail.deposit') }} :** {{ number_format($deposit, 2, ',', ' ') }} €  
+**{{ trans('site.mail.balance') }} :** {{ number_format($balance, 2, ',', ' ') }} €
 
-Aucun paiement n’est effectué automatiquement sur le site. La préparation débute après validation des détails et confirmation de l’acompte.
+{{ trans('site.mail.next') }}
 
-Lorsque la montre est prête, nous vous transmettons les éléments convenus et organisons le règlement du solde ainsi que la remise ou la livraison.
+{{ trans('site.mail.legal_note') }}
 
-Merci,<br>
+{{ trans('site.mail.document_note') }}
+
+{{ trans('site.mail.thanks') }}<br>
 **VVS FLAWLESS**
 </x-mail::message>
