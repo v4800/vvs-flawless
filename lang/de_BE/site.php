@@ -230,6 +230,8 @@ return array_replace_recursive($base, [
         'watch' => 'Uhr',
         'movement' => 'Werk',
         'reserved_price' => 'Reservierter Preis',
+        'deposit' => 'Feste Anzahlung',
+        'balance' => 'Restbetrag',
         'name' => 'Name',
         'email' => 'E-Mail',
         'phone' => 'Telefon',
