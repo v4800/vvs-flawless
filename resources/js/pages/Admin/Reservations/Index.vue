@@ -268,7 +268,7 @@ const paginationLabel = (label) =>
 
     <AdminLayout
         title="Réservations"
-        subtitle="Acompte de 25 %, préparation, vidéo, rendez-vous puis solde pendant la remise en main propre."
+        subtitle="Acompte fixe de 100 €, préparation, vidéo, puis règlement du solde selon les modalités convenues avec le client."
     >
         <section class="flex justify-end">
             <p class="text-sm text-zinc-400">
@@ -637,7 +637,7 @@ const paginationLabel = (label) =>
                                         }}</strong>
                                     </p>
                                     <p>
-                                        Acompte 25 % :
+                                        Acompte fixe :
                                         <strong>{{
                                             formatMoney(
                                                 reservation.deposit_amount,
@@ -645,7 +645,7 @@ const paginationLabel = (label) =>
                                         }}</strong>
                                     </p>
                                     <p>
-                                        Solde 75 % :
+                                        Solde restant :
                                         <strong>{{
                                             formatMoney(
                                                 reservation.balance_amount,
@@ -682,7 +682,7 @@ const paginationLabel = (label) =>
                             </label>
 
                             <label class="text-xs text-zinc-400">
-                                Solde reçu pendant la remise
+                                Solde reçu
                                 <div class="mt-2 flex gap-2">
                                     <input
                                         v-model="
