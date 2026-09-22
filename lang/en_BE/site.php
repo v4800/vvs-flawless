@@ -115,7 +115,7 @@ return [
         'product_category' => 'Iced-out watch set with moissanite',
         'offer_name' => ':movement movement',
         'about_title' => 'About VVS FLAWLESS — Belgium & Europe',
-        'about_description' => 'Discover VVS FLAWLESS, a Belgian project focused on iced-out watches set with VVS moissanite and available by reservation.',
+        'about_description' => 'Discover VVS FLAWLESS, an independent Belgian project focused on iced-out watches set with VVS moissanite, with requests available from Belgium, France, Germany and the Netherlands.',
     ],
 
     'movements' => [
