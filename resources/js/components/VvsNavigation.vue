@@ -50,28 +50,28 @@ const languages = [
         flag: '🇫🇷',
         label: 'Français',
         locale: 'fr_BE',
-        hreflang: 'fr-BE',
+        hreflang: 'fr',
     },
     {
         code: 'NL',
         flag: '🇳🇱',
         label: 'Nederlands',
         locale: 'nl_BE',
-        hreflang: 'nl-BE',
+        hreflang: 'nl',
     },
     {
         code: 'EN',
         flag: '🇬🇧',
         label: 'English',
         locale: 'en_BE',
-        hreflang: 'en-BE',
+        hreflang: 'en',
     },
     {
         code: 'DE',
         flag: '🇩🇪',
         label: 'Deutsch',
         locale: 'de_BE',
-        hreflang: 'de-BE',
+        hreflang: 'de',
     },
 ];
 
