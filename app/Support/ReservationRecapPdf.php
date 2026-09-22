@@ -8,7 +8,7 @@ final class ReservationRecapPdf
 {
     public function filename(Reservation $reservation): string
     {
-        return 'VVS-FLAWLESS-'.$reservation->reservation_number.'-recapitulatif.pdf';
+        return $reservation->reservation_number.'-reservation-summary.pdf';
     }
 
     public function make(Reservation $reservation): string
@@ -33,16 +33,25 @@ final class ReservationRecapPdf
                 ?: $reservation->watch?->name
                 ?: 'VVS FLAWLESS'
             );
+            $localizedWatch = null;
 
             if ($reservation->watch !== null) {
-                $watchName = (string) app(WatchCatalog::class)
-                    ->localizedWatch($reservation->watch)
-                    ->name;
+                $localizedWatch = app(WatchCatalog::class)
+                    ->localizedWatch($reservation->watch);
+                $watchName = (string) $localizedWatch->name;
             }
 
             $movement = match ($reservation->movement) {
                 'Suisse' => (string) trans('site.movements.suisse'),
                 'Japonais' => (string) trans('site.movements.japonais'),
+                'Modele presente' => is_array(
+                    $localizedWatch?->getAttribute('presented_copy')
+                )
+                    ? (string) (
+                        $localizedWatch->getAttribute('presented_copy')['model_label']
+                        ?? $reservation->movement
+                    )
+                    : $reservation->movement,
                 default => $reservation->movement,
             };
 
@@ -53,7 +62,7 @@ final class ReservationRecapPdf
             $lines = [
                 [(string) trans('site.confirmation.title'), 16, true],
                 [(string) trans('site.mail.number').' : '.$reservation->reservation_number, 10, false],
-                ['Date : '.($reservation->created_at?->timezone('Europe/Brussels')->format('d/m/Y H:i') ?? '—'), 10, false],
+                [(string) trans('site.mail.date').' : '.($reservation->created_at?->timezone('Europe/Brussels')->format('d/m/Y H:i') ?? '—'), 10, false],
                 ['', 10, false],
                 [(string) trans('site.confirmation.customer_information'), 11, true],
                 [(string) trans('site.mail.name').' : '.$reservation->customer_name, 10, false],
