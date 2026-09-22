@@ -14,6 +14,9 @@
         ? trans('site.product.delivery')
         : trans('site.product.handover');
 
+    $deposit = \App\Support\ReservationPayment::depositAmount($reservation->price) ?? 0;
+    $balance = \App\Support\ReservationPayment::balanceAmount($reservation->price) ?? 0;
+
     $depositAmount = \App\Support\ReservationPayment::depositAmount(
         $reservation->price
     ) ?? 0;
