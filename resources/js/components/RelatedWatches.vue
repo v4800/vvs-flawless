@@ -2,6 +2,8 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+import WatchCardVisual from '@/components/WatchCardVisual.vue';
+
 defineProps({
     watches: {
         type: Array,
@@ -22,7 +24,8 @@ const startingPrice = (watch) => {
         .filter((price) => Number.isFinite(price) && price > 0);
 
     if (prices.length === 0) {
-        return null;
+        const singlePrice = Number(watch.promo_price ?? watch.price);
+        return Number.isFinite(singlePrice) && singlePrice > 0 ? singlePrice : null;
     }
 
     return Math.min(...prices);
@@ -40,17 +43,13 @@ const formatPrice = (price) => {
     >
         <div class="mx-auto max-w-[1400px]">
             <div class="mb-10 text-center">
-                <p
-                    class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
-                >
+                <p class="vvs-eyebrow">
                     {{ translations.related.eyebrow }}
                 </p>
 
-                <h2
-                    class="mt-4 text-3xl font-black tracking-[-0.035em] uppercase sm:text-4xl"
-                >
+                <h2 class="vvs-display-title mt-4 text-4xl sm:text-5xl">
                     {{ translations.related.title_before }}
-                    <span class="text-amber-300">
+                    <span class="vvs-gradient-text">
                         {{ translations.related.title_highlight }}
                     </span>
                 </h2>
@@ -66,28 +65,27 @@ const formatPrice = (price) => {
                 <Link
                     v-for="watch in watches"
                     :key="watch.id"
-                    :href="`${localizedRoutes.watches}/${watch.id}`"
-                    class="group overflow-hidden rounded-2xl border border-white/10 bg-zinc-950 transition duration-300 hover:-translate-y-1 hover:border-amber-300/35"
+                    :href="`${localizedRoutes.watches}/${watch.slug}`"
+                    class="vvs-luxury-card vvs-luxury-card--interactive group flex flex-col self-stretch overflow-hidden rounded-2xl border"
                 >
-                    <div class="h-[280px] overflow-hidden bg-zinc-400">
-                        <img
-                            v-if="watch.image"
-                            :src="watch.image"
+                    <div
+                        class="relative shrink-0 overflow-hidden bg-[#070707]"
+                    >
+                        <WatchCardVisual
+                            v-if="watch.card_image || watch.image"
+                            :src="watch.card_image ?? watch.image"
                             :alt="watch.name"
-                            loading="lazy"
-                            decoding="async"
-                            class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
                         />
 
                         <div
                             v-else
-                            class="flex h-full items-center justify-center text-sm text-zinc-700"
+                            class="flex aspect-[3/4] w-full items-center justify-center text-sm text-zinc-700"
                         >
                             {{ translations.related.image_soon }}
                         </div>
                     </div>
 
-                    <div class="p-5">
+                    <div class="flex flex-1 flex-col p-5">
                         <p
                             class="text-[9px] font-black tracking-[0.2em] text-amber-300 uppercase"
                         >
@@ -95,13 +93,13 @@ const formatPrice = (price) => {
                         </p>
 
                         <h3
-                            class="mt-3 min-h-[48px] text-base leading-6 font-black uppercase"
+                            class="vvs-watch-title mt-3 mb-5 min-h-[48px] text-2xl leading-6"
                         >
                             {{ watch.name }}
                         </h3>
 
                         <div
-                            class="mt-5 flex items-end justify-between gap-4 border-t border-white/10 pt-4"
+                            class="mt-auto flex items-end justify-between gap-4 border-t border-white/10 pt-4"
                         >
                             <div>
                                 <p
@@ -112,7 +110,7 @@ const formatPrice = (price) => {
 
                                 <p
                                     v-if="startingPrice(watch)"
-                                    class="mt-1 text-xl font-black text-amber-200"
+                                    class="vvs-price mt-1 text-xl font-black"
                                 >
                                     {{ formatPrice(startingPrice(watch)) }}
                                 </p>
@@ -131,7 +129,7 @@ const formatPrice = (price) => {
             <div class="mt-8 text-center">
                 <Link
                     :href="`${localizedRoutes.watches}#collection`"
-                    class="inline-flex rounded-xl border border-white/15 px-6 py-3.5 text-xs font-black tracking-[0.1em] uppercase transition hover:border-amber-300/40 hover:text-amber-300"
+                    class="vvs-button-secondary inline-flex rounded-xl px-6 py-3.5 text-xs font-bold tracking-[0.1em] uppercase"
                 >
                     {{ translations.related.all }}
                 </Link>

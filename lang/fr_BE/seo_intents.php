@@ -1,0 +1,247 @@
+<?php
+
+return [
+    'collection_seo' => [
+        'title' => 'Montres moissanite VVS & iced-out | VVS FLAWLESS',
+        'description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS couleur D, proposées depuis la Belgique pour la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
+        'product_suffix' => 'Montre sertie de moissanite VVS couleur D, pensée pour un rendu iced-out très lumineux. Prix affiché sur la fiche, réservation en ligne puis remise en main propre ou livraison selon confirmation.',
+        'image_alt' => 'Montres iced-out VVS FLAWLESS serties de moissanite VVS couleur D',
+    ],
+
+    'product_bridge' => [
+        'text' => 'Vous aimez le rendu d’une montre diamant ou iced-out ? Ce modèle est serti de moissanite VVS couleur D. Dans un pavage dense, son rendu peut être très proche visuellement du diamant, avec un feu encore plus intense ; le GIA indique que la moissanite présente davantage de feu que le diamant.',
+        'cta' => 'Comparer diamant et moissanite',
+    ],
+
+    'hub' => [
+        'eyebrow' => 'Guides d’achat',
+        'title' => 'Bien choisir une montre VVS ou iced-out',
+        'description' => 'Diamant, moissanite, VVS, montre sertie, homme ou femme : ces guides expliquent simplement les différences de pierre, de rendu et de style, ainsi que la façon de réserver une montre VVS FLAWLESS.',
+        'cards' => [
+            [
+                'route' => 'diamondGuide',
+                'title' => 'Diamant ou moissanite ?',
+                'text' => 'Comparez l’éclat, le feu, la dureté, l’identification et le budget des deux pierres.',
+                'cta' => 'Comparer les pierres',
+            ],
+            [
+                'route' => 'vvsGuide',
+                'title' => 'Que signifie VVS ?',
+                'text' => 'Comprenez VVS1, VVS2 et la différence entre un grade de diamant et l’usage commercial du terme pour la moissanite.',
+                'cta' => 'Comprendre VVS',
+            ],
+            [
+                'route' => 'menWomenGuide',
+                'title' => 'Homme, femme ou unisexe',
+                'text' => 'Choisissez une montre sertie selon ses proportions, son cadran, son bracelet et la présence recherchée au poignet.',
+                'cta' => 'Choisir son style',
+            ],
+            [
+                'route' => 'belgiumGuide',
+                'title' => 'Réserver en Belgique',
+                'text' => 'Prix, délai, réservation, remise en main propre et livraison : tout le fonctionnement VVS FLAWLESS au même endroit.',
+                'cta' => 'Voir le guide Belgique',
+            ],
+            [
+                'route' => 'franceGuide',
+                'title' => 'Commander depuis la France',
+                'text' => 'Découvrez comment envoyer une demande depuis la France et comment les modalités de réception sont confirmées.',
+                'cta' => 'Voir le guide France',
+            ],
+        ],
+    ],
+
+    'vvs_watch' => [
+        'seo_title' => 'Montre VVS : diamant, moissanite et iced-out | VVS FLAWLESS',
+        'seo_description' => 'Que signifie VVS sur une montre ? Comprendre diamant VVS, moissanite VVS, couleur D et rendu iced-out avant de choisir une montre sertie.',
+        'eyebrow' => 'Guide VVS',
+        'title' => 'Montre VVS : que signifie vraiment VVS ?',
+        'intro' => 'Sur une montre sertie, le mot VVS peut parler d’un grade de pureté du diamant ou être utilisé commercialement pour décrire une moissanite très propre visuellement. La pierre indiquée sur la fiche reste donc l’information la plus importante.',
+        'answer' => 'Pour le diamant, VVS1 et VVS2 font partie de l’échelle de pureté du GIA. Pour la moissanite, VVS est une indication commerciale de pureté visuelle et non un grade GIA. VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec le matériau indiqué clairement sur chaque fiche.',
+        'sections' => [
+            [
+                'title' => 'VVS sur un diamant',
+                'paragraphs' => [
+                    'VVS signifie « Very, Very Slightly Included ». Sur l’échelle du GIA, les grades VVS1 et VVS2 correspondent à des inclusions difficiles à voir sous grossissement 10× pour un professionnel qualifié.',
+                    'Une montre diamant VVS désigne donc normalement une montre réellement sertie de diamants dont la pureté est annoncée dans cette gamme.',
+                ],
+            ],
+            [
+                'title' => 'VVS sur une moissanite',
+                'paragraphs' => [
+                    'Le GIA n’applique pas son échelle VVS1/VVS2 à la moissanite. Dans le commerce, VVS sert plutôt à décrire une pierre très propre à l’œil, avec peu d’inclusions visibles.',
+                    'Chez VVS FLAWLESS, la formulation utilisée est « moissanite VVS » afin que la pierre, sa qualité visuelle et la couleur D soient immédiatement compréhensibles.',
+                ],
+            ],
+            [
+                'title' => 'Pourquoi la moissanite fonctionne bien sur une montre iced-out',
+                'paragraphs' => [
+                    'La moissanite est très brillante et produit davantage de dispersion colorée. Le GIA indique qu’elle présente plus de deux fois le feu du diamant et légèrement plus de brillance.',
+                    'Sur un cadran, une lunette ou un bracelet fortement serti, cela donne un rendu très lumineux et de nombreux éclats colorés. C’est ce qui en fait une alternative visuelle populaire pour les montres iced-out.',
+                ],
+            ],
+            [
+                'title' => 'VVS homme ou femme : regardez surtout le format',
+                'paragraphs' => [
+                    'Une montre VVS peut être portée par un homme, une femme ou dans un style totalement unisexe. Le diamètre du boîtier, la largeur du bracelet, la forme et le cadran sont plus utiles qu’une étiquette stricte.',
+                    'Si une dimension ou un détail n’est pas indiqué, demandez-le avant de réserver afin de choisir la pièce la plus adaptée à votre poignet.',
+                ],
+            ],
+        ],
+        'faq_title' => 'Questions fréquentes sur les montres VVS',
+        'faq' => [
+            ['question' => 'Une montre VVS est-elle forcément en diamant ?', 'answer' => 'Non. Pour le diamant, VVS est un grade de pureté. Pour la moissanite, le terme est utilisé commercialement pour décrire sa propreté visuelle. Vérifiez toujours la pierre indiquée sur la fiche.'],
+            ['question' => 'Quelle pierre utilise VVS FLAWLESS ?', 'answer' => 'Les modèles présentés sur le site utilisent de la moissanite VVS, généralement annoncée en couleur D.'],
+            ['question' => 'La moissanite brille-t-elle autant que le diamant ?', 'answer' => 'Les deux pierres sont très brillantes. Le GIA indique que la moissanite présente légèrement plus de brillance et plus de deux fois le feu du diamant, ce qui produit davantage d’éclats colorés.'],
+            ['question' => 'Une montre VVS convient-elle aux hommes et aux femmes ?', 'answer' => 'Oui. Le meilleur choix dépend surtout des proportions de la montre, du cadran, du bracelet et du rendu souhaité.'],
+        ],
+        'sources_title' => 'Sources techniques',
+        'sources' => [
+            ['label' => 'GIA — 4Cs Clarity', 'url' => 'https://www.gia.edu/gia-about/4cs-clarity'],
+            ['label' => 'GIA — An Introduction to Imitation Diamonds & Other Gems', 'url' => 'https://www.gia.edu/gem-imitation'],
+            ['label' => 'GIA 4Cs — Diamond Alternatives: Moissanite', 'url' => 'https://4cs.gia.edu/en-us/blog/diamond-alternatives-engagement-rings/'],
+        ],
+        'cta_title' => 'Découvrir les montres VVS FLAWLESS',
+        'cta_text' => 'Parcourez les modèles iced-out en moissanite VVS couleur D et consultez leur prix de départ avant de réserver.',
+        'cta_label' => 'Voir la collection',
+    ],
+
+    'men_women' => [
+        'seo_title' => 'Montre diamant ou moissanite homme et femme | VVS FLAWLESS',
+        'seo_description' => 'Montre diamant homme ou femme, montre moissanite VVS, iced-out ou sertie : choisissez selon le format, le cadran et le rendu au poignet.',
+        'eyebrow' => 'Guide style',
+        'title' => 'Montre iced-out homme ou femme : comment choisir ?',
+        'intro' => 'Que vous regardiez une montre diamant homme, une montre diamant femme ou une montre moissanite VVS, le bon choix dépend surtout du format et du style qui auront le meilleur rendu à votre poignet.',
+        'answer' => 'Les modèles VVS FLAWLESS sont sertis de moissanite VVS couleur D. Pour choisir entre un style homme, femme ou unisexe, regardez surtout le boîtier, la largeur du bracelet, le cadran, la finition et la densité du sertissage.',
+        'sections' => [
+            [
+                'title' => 'Pour un rendu plus fin',
+                'paragraphs' => [
+                    'Une montre sertie destinée à un poignet plus fin peut rester très lumineuse sans être massive. Un boîtier contenu, un bracelet plus étroit ou un cadran clair donnent souvent une présence plus légère.',
+                    'Une montre moissanite VVS conserve un effet iced-out marqué même sur un format plus discret grâce à la forte dispersion lumineuse de la pierre.',
+                ],
+            ],
+            [
+                'title' => 'Pour une présence plus forte',
+                'paragraphs' => [
+                    'Un boîtier plus large, une lunette imposante et un bracelet épais créent un rendu plus visible. C’est la silhouette typique d’une montre iced-out pensée pour avoir une forte présence au poignet.',
+                    'La moissanite VVS permet d’obtenir beaucoup de lumière sur ces grandes surfaces serties tout en gardant un budget généralement plus accessible que le diamant.',
+                ],
+            ],
+            [
+                'title' => 'Le style unisexe fonctionne très bien',
+                'paragraphs' => [
+                    'De nombreux modèles peuvent être portés de façon unisexe. Une carrure sportive, un cadran coloré ou un bracelet intégré ne sont pas réservés à un genre précis.',
+                    'Comparez surtout les proportions et demandez les dimensions si elles ne figurent pas encore sur la fiche.',
+                ],
+            ],
+            [
+                'title' => 'Diamant ou moissanite : choisissez selon votre priorité',
+                'paragraphs' => [
+                    'Si votre priorité est la nature et la valeur propre du diamant, choisissez un modèle réellement serti de diamants. Si votre priorité est le rendu iced-out, la brillance et les éclats colorés, la moissanite est une alternative visuelle très forte.',
+                    'Sur VVS FLAWLESS, chaque modèle précise qu’il est serti de moissanite VVS afin que vous puissiez comparer le style et le prix sans ambiguïté.',
+                ],
+            ],
+        ],
+        'faq_title' => 'Questions fréquentes homme et femme',
+        'faq' => [
+            ['question' => 'Une montre moissanite VVS peut-elle avoir un rendu proche d’une montre diamant ?', 'answer' => 'Oui, surtout sur un pavage iced-out dense. La moissanite possède toutefois davantage de feu, donc plus d’éclats arc-en-ciel, ce qui peut la distinguer du diamant.'],
+            ['question' => 'Quel modèle choisir pour un petit poignet ?', 'answer' => 'Privilégiez d’abord les dimensions du boîtier et du bracelet. Si elles ne sont pas indiquées, demandez-les avant de réserver.'],
+            ['question' => 'Faut-il absolument choisir une montre homme ou femme ?', 'answer' => 'Non. Beaucoup de modèles sont naturellement unisexes ; les proportions et votre style personnel sont de meilleurs critères.'],
+        ],
+        'cta_title' => 'Comparer les modèles disponibles',
+        'cta_text' => 'Parcourez la collection, comparez cadrans, bracelets et prix de départ, puis ouvrez la fiche du modèle qui vous correspond.',
+        'cta_label' => 'Voir les montres',
+    ],
+
+    'belgium' => [
+        'seo_title' => 'Montre moissanite VVS & iced-out en Belgique | VVS FLAWLESS',
+        'seo_description' => 'Réservez une montre moissanite VVS couleur D avec prix affiché et remise en main propre sur rendez-vous partout en Belgique.',
+        'eyebrow' => 'VVS FLAWLESS Belgique',
+        'title' => 'Réserver une montre VVS en Belgique',
+        'intro' => 'VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec un style allant de la montre sertie classique aux modèles iced-out plus imposants. Les prix de départ sont visibles dans la collection avant toute demande.',
+        'answer' => 'Vous choisissez votre montre sur le site puis envoyez une demande sans paiement immédiat. VVS FLAWLESS confirme directement avec vous le modèle, le prix, le délai, le mode de réception et les éventuels frais avant toute préparation de la montre. La remise en main propre peut être organisée sur rendez-vous en Belgique selon la zone confirmée.',
+        'sections' => [
+            [
+                'title' => 'Moissanite VVS couleur D',
+                'paragraphs' => [
+                    'Les montres de la collection sont serties de moissanite VVS couleur D. Cette pierre peut donner un rendu visuel très proche du diamant sur un pavage dense, tout en produisant davantage de feu et d’éclats colorés.',
+                    'Le matériau est indiqué clairement sur les fiches afin que vous sachiez exactement quelle pierre est utilisée avant de réserver.',
+                ],
+            ],
+            [
+                'title' => 'Prix et réservation',
+                'paragraphs' => [
+                    'La collection affiche un prix de départ pour chaque modèle. Le formulaire de réservation n’entraîne aucun paiement : il sert à enregistrer votre intérêt et vos coordonnées.',
+                    'La demande envoyée sur le site ne déclenche aucun paiement. Les détails définitifs sont confirmés directement avec vous avant que la préparation de la montre ne commence.',
+                ],
+            ],
+            [
+                'title' => 'Délai et réception',
+                'paragraphs' => [
+                    'Le délai habituellement annoncé est de 5 à 6 jours ouvrables après confirmation, sous réserve de la disponibilité du modèle et de la préparation.',
+                    'La remise en main propre est proposée sur rendez-vous en Belgique selon la zone confirmée. Le lieu, l’heure et les éventuels frais sont précisés directement avant la préparation de la montre.',
+                ],
+            ],
+            [
+                'title' => 'Homme, femme ou style unisexe',
+                'paragraphs' => [
+                    'La collection comprend des silhouettes plus fines, plus sportives ou plus imposantes. Une montre peut donc convenir à un homme, une femme ou être portée dans un style totalement unisexe selon ses proportions.',
+                    'Les fiches permettent de comparer les modèles sans dupliquer artificiellement chaque montre par genre.',
+                ],
+            ],
+        ],
+        'faq_title' => 'Questions sur VVS FLAWLESS',
+        'faq' => [
+            ['question' => 'Que vend VVS FLAWLESS ?', 'answer' => 'VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec différents styles iced-out et sertis.'],
+            ['question' => 'Faut-il payer pour envoyer une réservation ?', 'answer' => 'Non. L’envoi du formulaire ne déclenche aucun paiement. Les détails de la commande sont confirmés ensuite directement avec vous.'],
+            ['question' => 'Où peut se faire la remise en main propre ?', 'answer' => 'Elle peut être organisée sur rendez-vous en Belgique selon la zone confirmée. Le lieu, l’heure et les éventuels frais sont précisés directement avec vous.'],
+            ['question' => 'Quel est le délai ?', 'answer' => 'Le délai indicatif habituel est de 5 à 6 jours ouvrables après confirmation, mais il est vérifié pour chaque commande.'],
+        ],
+        'cta_title' => 'Voir les montres disponibles',
+        'cta_text' => 'Consultez la collection, les prix de départ et les modèles en moissanite VVS, puis envoyez une demande depuis la montre qui vous intéresse.',
+        'cta_label' => 'Voir la collection',
+    ],
+    'france' => [
+        'seo_title' => 'Montres moissanite VVS & iced-out en France | VVS FLAWLESS',
+        'seo_description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS, avec prix affichés et réservation depuis la France selon confirmation des modalités.',
+        'eyebrow' => 'VVS FLAWLESS France',
+        'title' => 'Montres moissanite VVS disponibles pour la France',
+        'intro' => 'VVS FLAWLESS est un projet indépendant basé en Belgique. La collection est également proposée aux clients en France, avec prix visibles et modalités de réception confirmées directement selon la zone.',
+        'answer' => 'Choisissez votre modèle et envoyez une demande depuis sa fiche. Aucun paiement n’est effectué sur le site. Le modèle, le prix, le délai et le mode de réception sont confirmés directement avec vous avant toute préparation.',
+        'sections' => [
+            [
+                'title' => 'Moissanite VVS, pas diamant',
+                'paragraphs' => [
+                    'Les modèles présentés sont sertis de moissanite VVS couleur D lorsque cela est indiqué sur la fiche. VVS FLAWLESS distingue clairement moissanite et diamant afin d’éviter toute ambiguïté.',
+                    'Pour comparer les deux pierres, le guide diamant ou moissanite détaille leur rendu et leurs différences.',
+                ],
+            ],
+            [
+                'title' => 'Prix et demande depuis la France',
+                'paragraphs' => [
+                    'Les prix disponibles sont affichés sur les fiches produits. Le formulaire sert à transmettre votre intérêt et vos coordonnées sans paiement en ligne.',
+                    'Avant toute préparation, les détails de la commande sont confirmés directement avec vous.',
+                ],
+            ],
+            [
+                'title' => 'Réception selon la zone',
+                'paragraphs' => [
+                    'La livraison ou une remise en main propre peut être envisagée selon la zone et doit toujours être confirmée directement avant la préparation.',
+                    'Les éventuels frais et le délai réel sont précisés au cas par cas.',
+                ],
+            ],
+        ],
+        'faq_title' => 'Questions pour la France',
+        'faq' => [
+            ['question' => 'Puis-je réserver depuis la France ?', 'answer' => 'Oui. Vous pouvez envoyer une demande depuis la fiche du modèle ; les modalités sont ensuite confirmées directement selon votre zone.'],
+            ['question' => 'Dois-je payer sur le site ?', 'answer' => 'Non. Le formulaire ne réalise aucun paiement en ligne.'],
+            ['question' => 'Les montres sont-elles en diamant ?', 'answer' => 'Les modèles concernés sont annoncés comme sertis de moissanite VVS. La matière est précisée clairement sur chaque fiche.'],
+            ['question' => 'Comment connaître le délai et les frais ?', 'answer' => 'Ils sont confirmés directement en fonction du modèle choisi et de votre mode de réception.'],
+        ],
+        'cta_title' => 'Voir la collection',
+        'cta_text' => 'Comparez les modèles, leurs prix et leurs configurations, puis envoyez une demande depuis la fiche qui vous intéresse.',
+        'cta_label' => 'Voir les montres',
+    ],
+
+];

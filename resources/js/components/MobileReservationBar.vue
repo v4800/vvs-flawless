@@ -23,7 +23,11 @@ const localizedMovement = computed(() =>
 );
 
 const formatPrice = (price) => {
-    return `${Number(price).toFixed(0)} €`;
+    const numericPrice = Number(price);
+
+    return Number.isFinite(numericPrice) && numericPrice > 0
+        ? `${numericPrice.toFixed(0)} €`
+        : '—';
 };
 </script>
 
@@ -34,7 +38,7 @@ const formatPrice = (price) => {
         <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
             <div class="min-w-0">
                 <p
-                    class="truncate text-[9px] font-black tracking-[0.16em] text-zinc-600 uppercase"
+                    class="truncate text-[9px] font-black tracking-[0.16em] text-zinc-400 uppercase"
                 >
                     {{
                         translations.mobile_reservation.movement.replace(
@@ -44,18 +48,18 @@ const formatPrice = (price) => {
                     }}
                 </p>
 
-                <p class="mt-1 text-xl font-black text-amber-200">
+                <p class="vvs-price mt-1 inline-block text-xl font-black">
                     {{ formatPrice(price) }}
                 </p>
             </div>
 
             <a
                 href="#reservation"
-                class="flex shrink-0 items-center gap-3 rounded-xl bg-amber-300 px-5 py-3.5 text-xs font-black tracking-[0.08em] text-black uppercase transition active:scale-[0.98]"
+                class="vvs-button-primary flex shrink-0 items-center gap-3 rounded-xl px-5 py-3.5 text-xs font-black tracking-[0.08em] uppercase focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none active:scale-[0.98]"
             >
                 {{ translations.mobile_reservation.cta }}
 
-                <span>↓</span>
+                <span aria-hidden="true">↓</span>
             </a>
         </div>
     </div>

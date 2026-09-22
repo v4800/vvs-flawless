@@ -21,8 +21,12 @@ class ConfirmationSecurityTest extends TestCase
 
     private function createReservation(): string
     {
-        $watchId = DB::table('watches')->insertGetId([
+        $watchId = 42;
+
+        DB::table('watches')->insert([
+            'id' => $watchId,
             'name' => 'Montre Confirmation Test',
+            'slug' => 'montre-confirmation-test',
             'price' => 1500.00,
             'promo_price' => 950.00,
             'description' => 'Test confirmation',
@@ -99,6 +103,13 @@ class ConfirmationSecurityTest extends TestCase
             $this->get($signedUrl);
 
         $response->assertOk();
+
+        $response->assertInertia(
+            fn (Assert $page) => $page
+                ->component('Reservations/Confirmation')
+                ->where('watch.slug', 'montre-confirmation-test')
+                ->etc()
+        );
 
         $cacheControl =
     $response->headers->get(

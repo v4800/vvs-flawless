@@ -4,6 +4,7 @@ import { computed } from 'vue';
 import AboutSection from '@/components/AboutSection.vue';
 import ContactSection from '@/components/ContactSection.vue';
 import PickupSection from '@/components/PickupSection.vue';
+import SeoContentHub from '@/components/SeoContentHub.vue';
 import VvsNavigation from '@/components/VvsNavigation.vue';
 
 defineProps({
@@ -15,23 +16,22 @@ defineProps({
 
 const page = usePage();
 const translations = computed(() => page.props.translations);
+const guideLinks = computed(() => page.props.guideLinks);
 const localizedRoutes = computed(() => page.props.localizedRoutes);
 </script>
 
 <template>
     <Head :title="seo.title" />
 
-    <div class="min-h-screen bg-black text-white">
+    <div class="vvs-storefront min-h-screen text-white">
         <VvsNavigation :back-label="translations.vvs_navigation.collection" />
 
         <main id="main-content">
             <header class="mx-auto max-w-4xl px-6 pt-12 text-center sm:pt-20">
-                <p
-                    class="text-[10px] font-black tracking-[0.35em] text-amber-300 uppercase"
+                <p class="vvs-eyebrow">VVS FLAWLESS</p>
+                <h1
+                    class="vvs-gradient-text vvs-display-title mt-5 text-5xl sm:text-7xl"
                 >
-                    VVS FLAWLESS
-                </p>
-                <h1 class="mt-5 text-4xl font-black uppercase sm:text-6xl">
                     {{ translations.navigation.about }}
                 </h1>
                 <p
@@ -42,17 +42,44 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
             </header>
 
             <AboutSection />
+            <SeoContentHub />
             <PickupSection />
             <ContactSection :collection-href="localizedRoutes.watches" />
         </main>
 
-        <footer class="border-t border-white/10 px-6 py-9 text-center">
-            <Link
-                :href="localizedRoutes.watches"
-                class="text-xs font-black tracking-[0.12em] text-amber-300 uppercase"
+        <footer class="border-t border-white/10 px-6 py-9">
+            <nav
+                class="mx-auto flex max-w-4xl flex-wrap items-center justify-center gap-x-5 gap-y-3 text-center"
+                :aria-label="translations.navigation.main_label"
             >
-                {{ translations.footer.collection }}
-            </Link>
+                <Link
+                    :href="localizedRoutes.watches"
+                    class="text-xs font-black tracking-[0.12em] text-amber-300 uppercase"
+                >
+                    {{ translations.footer.collection }}
+                </Link>
+
+                <Link
+                    :href="localizedRoutes.diamondGuide"
+                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                >
+                    {{ guideLinks.eyebrow }}
+                </Link>
+
+                <Link
+                    :href="localizedRoutes.privacy"
+                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                >
+                    {{ translations.footer.privacy }}
+                </Link>
+
+                <Link
+                    :href="localizedRoutes.reservationTerms"
+                    class="text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase transition hover:text-amber-300"
+                >
+                    {{ translations.footer.terms }}
+                </Link>
+            </nav>
         </footer>
     </div>
 </template>

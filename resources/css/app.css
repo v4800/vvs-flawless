@@ -1,6 +1,6 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@import 'tw-animate-css';
+@import "tw-animate-css";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -10,8 +10,9 @@
 @theme inline {
     --font-sans:
         Instrument Sans, ui-sans-serif, system-ui, sans-serif,
-        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-        'Noto Color Emoji';
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -83,13 +84,20 @@
     body,
     html {
         --font-sans:
-            'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
-            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
-            'Noto Color Emoji';
+            "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
+            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+            "Noto Color Emoji";
     }
 }
 
 :root {
+    --vvs-gold-deep: #9a6414;
+    --vvs-gold: #d9a62e;
+    --vvs-champagne: #f2d58a;
+    --vvs-ivory: #fff8df;
+    --vvs-surface: rgb(9 9 11 / 0.78);
+    --vvs-line: rgb(255 255 255 / 0.095);
+    --vvs-line-gold: rgb(242 213 138 / 0.24);
     --background: hsl(0 0% 100%);
     --foreground: hsl(0 0% 3.9%);
     --card: hsl(0 0% 100%);
@@ -166,36 +174,565 @@
     * {
         @apply border-border outline-ring/50;
     }
+    html,
+    body,
+    #app {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: clip;
+        overscroll-behavior-x: none;
+    }
+
     body {
         @apply bg-background text-foreground;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+@layer components {
+    /* Shared storefront backdrop: solid dark surfaces with restrained,
+       static light accents. No marble texture or decorative image asset. */
+    .vvs-storefront {
+        background-color: #070707;
+        background-image:
+            radial-gradient(
+                circle at 12% 8%,
+                rgb(217 166 46 / 0.055),
+                transparent 26rem
+            ),
+            radial-gradient(
+                circle at 88% 18%,
+                rgb(255 255 255 / 0.035),
+                transparent 30rem
+            ),
+            radial-gradient(
+                circle at 50% 62%,
+                rgb(113 113 122 / 0.04),
+                transparent 34rem
+            ),
+            linear-gradient(180deg, #090909 0%, #050505 48%, #080808 100%);
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+    }
+
+    .vvs-display-title {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-variation-settings: normal;
+        letter-spacing: -0.025em;
+        line-height: 0.98;
+        text-wrap: balance;
+    }
+
+    .vvs-watch-title {
+        font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.08;
+        text-wrap: balance;
+    }
+
+    .vvs-brand-hero {
+        background:
+            radial-gradient(
+                circle at 86% 28%,
+                rgb(242 213 138 / 0.075),
+                transparent 30rem
+            ),
+            radial-gradient(
+                circle at 16% 60%,
+                rgb(255 255 255 / 0.045),
+                transparent 24rem
+            ),
+            #080808;
+    }
+
+    .vvs-brand-wordmark {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: fit-content;
+        line-height: 0.8;
+    }
+
+    .vvs-brand-wordmark__vvs {
+        display: block;
+        font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        font-size: clamp(6rem, 25vw, 11rem);
+        font-weight: 800;
+        letter-spacing: -0.105em;
+        padding-right: 0.12em;
+        background: linear-gradient(
+            168deg,
+            #fff 8%,
+            #e4e4e7 37%,
+            #8b8b92 71%,
+            #fff8df 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .vvs-brand-wordmark__flawless {
+        display: block;
+        max-width: 100%;
+        margin-top: 0.16em;
+        font-family: var(--font-display);
+        font-size: clamp(2.35rem, 10vw, 5.65rem);
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 1;
+        background: linear-gradient(
+            105deg,
+            #fff8df,
+            #f2d58a 46%,
+            #fff 76%,
+            #b89957
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .vvs-body-copy {
+        line-height: 1.75;
+        text-wrap: pretty;
+    }
+
+    .vvs-eyebrow {
+        color: var(--vvs-champagne);
+        font-size: 0.625rem;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        line-height: 1.4;
+        text-transform: uppercase;
+    }
+
+    .vvs-premium-panel {
+        border-color: var(--vvs-line);
+        background:
+            radial-gradient(
+                circle at 15% 0%,
+                rgb(255 248 223 / 0.05),
+                transparent 13rem
+            ),
+            linear-gradient(145deg, rgb(255 255 255 / 0.035), transparent 48%),
+            var(--vvs-surface);
+        box-shadow:
+            0 28px 80px rgb(0 0 0 / 0.3),
+            inset 0 1px 0 rgb(255 255 255 / 0.055);
+    }
+
+    .vvs-luxury-card {
+        border-color: var(--vvs-line);
+        background:
+            radial-gradient(
+                circle at 15% -10%,
+                rgb(242 213 138 / 0.075),
+                transparent 12rem
+            ),
+            linear-gradient(145deg, rgb(255 255 255 / 0.04), transparent 48%),
+            rgb(7 7 8 / 0.9);
+        box-shadow:
+            0 28px 80px rgb(0 0 0 / 0.32),
+            inset 0 1px 0 rgb(255 255 255 / 0.055),
+            inset 0 0 0 1px rgb(255 255 255 / 0.012);
+    }
+
+    .vvs-luxury-card--interactive {
+        transition:
+            transform 450ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 450ms ease,
+            box-shadow 450ms ease;
+    }
+
+    .vvs-choice-card {
+        border-color: var(--vvs-line);
+        background:
+            linear-gradient(135deg, rgb(255 255 255 / 0.035), transparent 58%),
+            rgb(3 3 4 / 0.72);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.035);
+        transition:
+            border-color 260ms ease,
+            background-color 260ms ease,
+            transform 260ms ease;
+    }
+
+    .vvs-choice-card--featured {
+        border-color: var(--vvs-line-gold);
+        background:
+            radial-gradient(
+                circle at 100% 0%,
+                rgb(242 213 138 / 0.1),
+                transparent 10rem
+            ),
+            linear-gradient(135deg, rgb(217 166 46 / 0.055), transparent 62%),
+            rgb(5 5 5 / 0.82);
+    }
+
+    .vvs-form :where(input:not([type="checkbox"]), select, textarea) {
+        border-color: rgb(255 255 255 / 0.105);
+        background:
+            linear-gradient(135deg, rgb(255 255 255 / 0.025), transparent 62%),
+            rgb(0 0 0 / 0.72);
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.025),
+            0 10px 28px rgb(0 0 0 / 0.12);
+        transition:
+            border-color 220ms ease,
+            box-shadow 220ms ease,
+            background-color 220ms ease;
+    }
+
+    .vvs-form :where(input:not([type="checkbox"]), select, textarea):focus {
+        border-color: rgb(242 213 138 / 0.58);
+        box-shadow:
+            0 0 0 3px rgb(217 166 46 / 0.08),
+            inset 0 1px 0 rgb(255 255 255 / 0.045);
+    }
+
+    .vvs-form :where(input, textarea)::placeholder {
+        color: rgb(113 113 122 / 0.78);
+    }
+
+    .vvs-button-primary,
+    .vvs-button-secondary {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        transition:
+            transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 260ms ease,
+            color 260ms ease,
+            box-shadow 260ms ease;
+    }
+
+    .vvs-button-primary {
+        border: 1px solid rgb(255 248 223 / 0.48);
+        background: linear-gradient(
+            115deg,
+            var(--vvs-gold-deep),
+            var(--vvs-gold) 32%,
+            var(--vvs-champagne) 66%,
+            #c88d1d
+        );
+        color: #080808;
+        box-shadow:
+            0 14px 32px rgb(180 115 16 / 0.18),
+            inset 0 1px 0 rgb(255 255 255 / 0.38);
+    }
+
+    .vvs-button-primary::after {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(
+            110deg,
+            transparent 22%,
+            rgb(255 255 255 / 0.44) 46%,
+            transparent 70%
+        );
+        content: "";
+        opacity: 0;
+        transform: translateX(-85%);
+        transition:
+            transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 220ms ease;
+    }
+
+    .vvs-button-secondary {
+        border: 1px solid rgb(242 213 138 / 0.25);
+        background:
+            linear-gradient(135deg, rgb(242 213 138 / 0.055), transparent 65%),
+            rgb(5 5 5 / 0.72);
+        color: var(--vvs-ivory);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+    }
+
+    .vvs-price {
+        color: var(--vvs-champagne);
+        background-image: linear-gradient(
+            105deg,
+            var(--vvs-gold) 5%,
+            var(--vvs-ivory) 48%,
+            var(--vvs-champagne) 78%,
+            #b77918 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .vvs-hairline {
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgb(242 213 138 / 0.52),
+            transparent
+        );
+    }
+
+    .vvs-nav-link {
+        position: relative;
+        color: rgb(212 212 216 / 0.88);
+        transition: color 220ms ease;
+    }
+
+    .vvs-nav-link::after {
+        position: absolute;
+        right: 0;
+        bottom: -0.55rem;
+        left: 0;
+        height: 1px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--vvs-champagne),
+            transparent
+        );
+        content: "";
+        opacity: 0;
+        transform: scaleX(0.35);
+        transition:
+            opacity 220ms ease,
+            transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+        .vvs-luxury-card--interactive:hover {
+            border-color: rgb(242 213 138 / 0.34);
+            box-shadow:
+                0 34px 90px rgb(0 0 0 / 0.42),
+                0 0 42px rgb(217 166 46 / 0.07),
+                inset 0 1px 0 rgb(255 255 255 / 0.075);
+            transform: translateY(-0.35rem);
+        }
+
+        .vvs-choice-card:hover {
+            border-color: rgb(242 213 138 / 0.32);
+            transform: translateY(-0.18rem);
+        }
+
+        .vvs-button-primary:hover,
+        .vvs-button-secondary:hover {
+            border-color: rgb(255 248 223 / 0.62);
+            box-shadow:
+                0 18px 38px rgb(180 115 16 / 0.2),
+                inset 0 1px 0 rgb(255 255 255 / 0.12);
+            transform: translateY(-0.15rem);
+        }
+
+        .vvs-button-primary:hover::after {
+            opacity: 1;
+            transform: translateX(85%);
+        }
+
+        .vvs-nav-link:hover {
+            color: var(--vvs-ivory);
+        }
+
+        .vvs-nav-link:hover::after {
+            opacity: 1;
+            transform: scaleX(1);
+        }
+    }
+
+    .guide-hero::before {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: linear-gradient(
+            105deg,
+            rgb(255 255 255 / 0.02),
+            transparent 46%
+        );
+        content: "";
+        pointer-events: none;
+    }
+
+    .guide-orbit {
+        position: absolute;
+        top: -9rem;
+        right: -8rem;
+        width: 31rem;
+        aspect-ratio: 1;
+        border: 1px solid rgb(253 230 138 / 0.09);
+        border-radius: 9999px;
+        box-shadow:
+            0 0 0 4rem rgb(253 230 138 / 0.018),
+            0 0 0 9rem rgb(253 230 138 / 0.012);
+        pointer-events: none;
+    }
+
+    .guide-lead {
+        border-color: rgb(253 230 138 / 0.18);
+        background:
+            linear-gradient(115deg, rgb(253 230 138 / 0.07), transparent 60%),
+            rgb(9 9 11 / 0.78);
+        box-shadow:
+            0 28px 80px rgb(0 0 0 / 0.28),
+            inset 3px 0 0 rgb(252 211 77 / 0.72);
+    }
+
+    .guide-table {
+        background: rgb(9 9 11 / 0.72);
+        box-shadow:
+            0 28px 90px rgb(0 0 0 / 0.28),
+            inset 0 1px 0 rgb(255 255 255 / 0.035);
+    }
+
+    .guide-table thead {
+        background: linear-gradient(
+            90deg,
+            rgb(24 24 27 / 0.92),
+            rgb(9 9 11 / 0.96)
+        );
+    }
+
+    .guide-table tbody tr {
+        transition: background-color 180ms ease;
+    }
+
+    .guide-table tbody tr:hover {
+        background-color: rgb(253 230 138 / 0.025);
+    }
+
+    .guide-comparison-card {
+        background:
+            linear-gradient(145deg, rgb(255 255 255 / 0.035), transparent 52%),
+            rgb(9 9 11 / 0.78);
+        box-shadow:
+            0 20px 55px rgb(0 0 0 / 0.22),
+            inset 0 1px 0 rgb(255 255 255 / 0.025);
+    }
+
+    .guide-info-card,
+    .guide-choice-card {
+        background:
+            linear-gradient(145deg, rgb(255 255 255 / 0.035), transparent 52%),
+            rgb(9 9 11 / 0.72);
+        box-shadow:
+            0 24px 70px rgb(0 0 0 / 0.2),
+            inset 0 1px 0 rgb(255 255 255 / 0.025);
+    }
+
+    .guide-report {
+        background:
+            radial-gradient(
+                circle at 20% 28%,
+                rgb(252 211 77 / 0.11),
+                transparent 21rem
+            ),
+            linear-gradient(135deg, #15130d, #090909 48%, #050505);
+        box-shadow:
+            0 45px 110px rgb(0 0 0 / 0.42),
+            inset 0 1px 0 rgb(254 240 138 / 0.08);
+    }
+
+    .guide-report::before {
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgb(253 230 138 / 0.025) 1px, transparent 1px),
+            linear-gradient(
+                90deg,
+                rgb(253 230 138 / 0.025) 1px,
+                transparent 1px
+            );
+        background-size: 34px 34px;
+        mask-image: linear-gradient(to right, black, transparent 72%);
+        content: "";
+        pointer-events: none;
+    }
+
+    .guide-report-mark {
+        background:
+            radial-gradient(circle, rgb(253 230 138 / 0.07), transparent 58%),
+            rgb(0 0 0 / 0.18);
+        box-shadow: inset 0 0 50px rgb(0 0 0 / 0.2);
+    }
+
+    .guide-report-grid {
+        gap: 1px;
+        background-color: rgb(255 255 255 / 0.08);
+    }
+
+    .guide-report-field {
+        background: rgb(3 3 3 / 0.62);
+    }
+
+    .guide-choice-card--gold {
+        background:
+            radial-gradient(
+                circle at 100% 0%,
+                rgb(252 211 77 / 0.11),
+                transparent 14rem
+            ),
+            linear-gradient(145deg, rgb(253 230 138 / 0.04), transparent 55%),
+            rgb(9 9 11 / 0.8);
+    }
+
+    .guide-cta {
+        background:
+            radial-gradient(
+                circle at 50% 0%,
+                rgb(252 211 77 / 0.13),
+                transparent 18rem
+            ),
+            linear-gradient(145deg, rgb(255 255 255 / 0.035), transparent 60%),
+            rgb(9 9 11 / 0.78);
+        box-shadow:
+            0 35px 100px rgb(0 0 0 / 0.32),
+            inset 0 1px 0 rgb(254 240 138 / 0.05);
     }
 }
 @keyframes vvs-gradient-text {
-    0% {
-        background-position: 0% 50%;
+    0%,
+    12% {
+        background-position: 100% 50%;
     }
 
+    88%,
     100% {
-        background-position: 100% 50%;
+        background-position: 0% 50%;
     }
 }
 
 .vvs-gradient-text {
-    color: transparent;
+    color: var(--vvs-champagne);
     background-image: linear-gradient(
-        90deg,
-        #f59e0b,
-        #fde68a,
-        #ffffff,
-        #fcd34d,
-        #d97706,
-        #fde68a,
-        #f59e0b
+        108deg,
+        #9a6414 0%,
+        #d7a329 18%,
+        #f2d58a 36%,
+        #fff8df 47%,
+        #ffffff 50%,
+        #f3dc9c 57%,
+        #d19a27 76%,
+        #9a6414 100%
     );
-    background-size: 300% 300%;
+    background-size: 235% 100%;
     background-clip: text;
     -webkit-background-clip: text;
-    animation: vvs-gradient-text 6s linear infinite;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 18px rgb(217 166 46 / 0.08));
+}
+
+.vvs-gradient-text--hero {
+    background-image: linear-gradient(
+        112deg,
+        #ffffff 0%,
+        #d4d4d8 22%,
+        #fff8df 42%,
+        #ffffff 50%,
+        #f2d58a 62%,
+        #a1a1aa 82%,
+        #ffffff 100%
+    );
+    background-size: 250% 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -203,4 +740,2506 @@
         animation: none;
         background-position: 50% 50%;
     }
+
+    .vvs-luxury-card--interactive,
+    .vvs-button-primary,
+    .vvs-button-secondary,
+    .vvs-button-primary::after,
+    .vvs-choice-card {
+        transition-duration: 0.01ms;
+    }
+
+    .vvs-nav-link,
+    .vvs-nav-link::after {
+        transition-duration: 0.01ms;
+    }
 }
+
+/* The watch visual component controls image fit so entire watches stay visible. */
+.watch-card {
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.06),
+        0 18px 48px rgb(0 0 0 / 0.24);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .watch-card:hover {
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.08),
+            0 22px 52px rgb(0 0 0 / 0.34);
+    }
+}
+@layer utilities {
+    .vvs-gold-text {
+        color: #f2d58a;
+        background-image: linear-gradient(
+            110deg,
+            #b9782a 0%,
+            #f4d58a 48%,
+            #e0a23a 82%,
+            #e8987a 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+/* VVS SAFE MOTION PACK - CSS ONLY */
+
+.site-header {
+    isolation: isolate;
+}
+
+.site-header::after {
+    content: "";
+    position: absolute;
+    right: 12%;
+    bottom: -1px;
+    left: 12%;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.1) 24%,
+        rgb(255 248 223 / 0.34) 50%,
+        rgb(242 213 138 / 0.1) 76%,
+        transparent
+    );
+    opacity: 0.72;
+}
+
+.watch-card {
+    isolation: isolate;
+    transition:
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 320ms ease,
+        box-shadow 420ms ease;
+}
+
+.watch-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 50% -14%,
+            rgb(255 248 223 / 0.13),
+            transparent 36%
+        ),
+        linear-gradient(
+            115deg,
+            transparent 34%,
+            rgb(242 213 138 / 0.035) 50%,
+            transparent 66%
+        );
+    opacity: 0;
+    transition: opacity 380ms ease;
+}
+
+.guide-comparison-card,
+.guide-info-card,
+.guide-choice-card,
+.guide-report {
+    transition:
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 320ms ease,
+        box-shadow 420ms ease;
+}
+
+.guide-report-mark {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.guide-report-mark::after {
+    content: "";
+    position: absolute;
+    top: -35%;
+    bottom: -35%;
+    left: -22%;
+    width: 15%;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 248 223 / 0.08),
+        rgb(255 255 255 / 0.28),
+        rgb(242 213 138 / 0.08),
+        transparent
+    );
+    filter: blur(2px);
+    opacity: 0;
+    transform: translateX(-220%) skewX(-18deg);
+}
+
+.vvs-button-primary > [aria-hidden="true"],
+.vvs-button-secondary > [aria-hidden="true"] {
+    display: inline-block;
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .watch-card:hover {
+        border-color: rgb(242 213 138 / 0.26);
+        box-shadow:
+            0 30px 70px rgb(0 0 0 / 0.34),
+            0 0 38px rgb(217 166 46 / 0.045),
+            inset 0 1px 0 rgb(255 255 255 / 0.04);
+        transform: translateY(-4px);
+    }
+
+    .watch-card:hover::after {
+        opacity: 1;
+    }
+
+    .guide-comparison-card:hover,
+    .guide-info-card:hover,
+    .guide-choice-card:hover {
+        border-color: rgb(242 213 138 / 0.2);
+        box-shadow:
+            0 28px 72px rgb(0 0 0 / 0.3),
+            0 0 34px rgb(217 166 46 / 0.035),
+            inset 0 1px 0 rgb(255 255 255 / 0.035);
+        transform: translateY(-3px);
+    }
+
+    .guide-report:hover {
+        box-shadow:
+            0 50px 120px rgb(0 0 0 / 0.46),
+            0 0 42px rgb(217 166 46 / 0.045),
+            inset 0 1px 0 rgb(254 240 138 / 0.08);
+        transform: translateY(-2px);
+    }
+
+    .guide-report-mark:hover::after {
+        opacity: 1;
+        transform: translateX(850%) skewX(-18deg);
+        transition:
+            transform 900ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease;
+    }
+
+    .vvs-button-primary:hover > [aria-hidden="true"],
+    .vvs-button-secondary:hover > [aria-hidden="true"] {
+        transform: translateX(3px);
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .watch-card,
+    .guide-comparison-card,
+    .guide-info-card,
+    .guide-choice-card,
+    .guide-report {
+        transform: none;
+    }
+
+    .watch-card::after,
+    .guide-report-mark::after {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .watch-card,
+    .watch-card::after,
+    .guide-comparison-card,
+    .guide-info-card,
+    .guide-choice-card,
+    .guide-report,
+    .guide-report-mark::after,
+    .vvs-button-primary > [aria-hidden="true"],
+    .vvs-button-secondary > [aria-hidden="true"] {
+        animation: none !important;
+        transition-duration: 0.01ms !important;
+        transform: none !important;
+    }
+
+    .watch-card::after,
+    .guide-report-mark::after {
+        display: none !important;
+    }
+}
+/* VVS SAFE MOTION 2 - CSS AND NATIVE JS
+   Safe layer only: transform, opacity, gradients and native IntersectionObserver.
+   No layout sizes, breakpoints, grid rules or responsive page structure are changed.
+*/
+
+/* Scroll reveal: only active when JS marks the document as motion-ready. */
+html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+    transition:
+        opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+}
+
+html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+}
+
+/* Editorial images: one slow champagne reflection, not a permanent flashy loop. */
+.vvs-editorial-shimmer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.vvs-editorial-shimmer::after {
+    content: "";
+    position: absolute;
+    z-index: 25;
+    top: -30%;
+    bottom: -30%;
+    left: -24%;
+    width: 14%;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(255 248 223 / 0.06),
+        rgb(255 255 255 / 0.26),
+        rgb(217 166 46 / 0.1),
+        transparent
+    );
+    filter: blur(2px);
+    opacity: 0;
+    transform: translateX(-220%) skewX(-18deg);
+}
+
+/* Diamond vs moissanite: subtle spectral light reserved to the right side. */
+.vvs-spectrum-visual {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.vvs-spectrum-visual::before {
+    content: "";
+    position: absolute;
+    z-index: 24;
+    top: 8%;
+    right: -8%;
+    bottom: 8%;
+    width: 58%;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            ellipse at 48% 52%,
+            rgb(255 255 255 / 0.11) 0%,
+            transparent 29%
+        ),
+        conic-gradient(
+            from 190deg at 48% 52%,
+            transparent 0deg,
+            rgb(255 82 82 / 0.07) 22deg,
+            rgb(255 210 92 / 0.08) 40deg,
+            rgb(91 255 184 / 0.07) 60deg,
+            rgb(100 202 255 / 0.09) 82deg,
+            rgb(174 126 255 / 0.08) 104deg,
+            transparent 132deg
+        );
+    mix-blend-mode: screen;
+    opacity: 0.46;
+    transform: scale(0.985);
+    transform-origin: 50% 50%;
+    animation: vvs-spectrum-breathe-safe 5.4s ease-in-out infinite;
+}
+
+@keyframes vvs-spectrum-breathe-safe {
+    0%,
+    100% {
+        opacity: 0.34;
+        transform: scale(0.985) translate3d(-2px, 1px, 0);
+    }
+
+    50% {
+        opacity: 0.54;
+        transform: scale(1.01) translate3d(2px, -1px, 0);
+    }
+}
+
+/* Pointer light: desktop only. Uses CSS variables written by native JS. */
+@media (hover: hover) and (pointer: fine) {
+    .watch-card {
+        --vvs-pointer-x: 50%;
+        --vvs-pointer-y: 24%;
+    }
+
+    .watch-card::after {
+        background:
+            radial-gradient(
+                circle at var(--vvs-pointer-x) var(--vvs-pointer-y),
+                rgb(255 248 223 / 0.16),
+                rgb(217 166 46 / 0.055) 18%,
+                transparent 42%
+            ),
+            linear-gradient(
+                115deg,
+                transparent 34%,
+                rgb(242 213 138 / 0.03) 50%,
+                transparent 66%
+            );
+    }
+
+    .vvs-editorial-shimmer:hover::after {
+        opacity: 1;
+        transform: translateX(900%) skewX(-18deg);
+        transition:
+            transform 1050ms cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 180ms ease;
+    }
+}
+
+/* Secondary button gets the same restrained light language as the primary CTA. */
+.vvs-button-secondary::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        110deg,
+        transparent 25%,
+        rgb(255 248 223 / 0.18) 48%,
+        transparent 72%
+    );
+    content: "";
+    opacity: 0;
+    transform: translateX(-90%);
+    transition:
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-button-secondary:hover::after {
+        opacity: 1;
+        transform: translateX(90%);
+    }
+}
+
+/* Touch devices: no pointer tracking or moving shimmer. */
+@media (hover: none), (pointer: coarse) {
+    .vvs-editorial-shimmer::after {
+        display: none;
+    }
+
+    .vvs-spectrum-visual::before {
+        animation: none;
+        opacity: 0.32;
+        transform: none;
+    }
+}
+
+/* Accessibility: all decorative motion becomes static. */
+@media (prefers-reduced-motion: reduce) {
+    .vvs-reveal-ready,
+    .vvs-reveal-ready.vvs-in-view {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+    }
+
+    .vvs-editorial-shimmer::after {
+        display: none !important;
+    }
+
+    .vvs-spectrum-visual::before {
+        animation: none !important;
+        opacity: 0.28 !important;
+        transform: none !important;
+    }
+
+    .vvs-button-secondary::after {
+        display: none !important;
+    }
+}
+/* VVS SAFE MOTION 3 - CSS ONLY EXTENSIONS
+   Adds premium micro-interactions without changing responsive layout.
+*/
+
+/* Skeleton shimmer, only applied when JS marks an element as loading. */
+@keyframes vvs-skeleton-shimmer-safe {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+.vvs-skeleton-safe {
+    background: linear-gradient(
+        100deg,
+        rgb(255 255 255 / 0.035) 20%,
+        rgb(255 255 255 / 0.085) 38%,
+        rgb(255 255 255 / 0.035) 56%
+    );
+    background-size: 220% 100%;
+    animation: vvs-skeleton-shimmer-safe 1.8s linear infinite;
+}
+
+/* Headings: subtle underline light, no layout change. */
+.vvs-title-accent {
+    position: relative;
+}
+
+.vvs-title-accent::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -0.55rem;
+    width: min(7rem, 42%);
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.46),
+        transparent
+    );
+    opacity: 0.72;
+    transform: translateX(-50%) scaleX(0.72);
+    transform-origin: center;
+    transition:
+        opacity 420ms ease,
+        transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.vvs-title-accent.vvs-in-view::after {
+    opacity: 1;
+    transform: translateX(-50%) scaleX(1);
+}
+
+/* Filter controls: a restrained active/focus glow without touching spacing. */
+.vvs-filter-active {
+    border-color: rgb(242 213 138 / 0.38) !important;
+    box-shadow:
+        0 0 0 1px rgb(242 213 138 / 0.08),
+        0 10px 28px rgb(0 0 0 / 0.18),
+        0 0 24px rgb(217 166 46 / 0.05);
+}
+
+/* Quiet coverage grid with readable text and no hover-dependent information. */
+.pickup-coverage-grid {
+    background-color: #10100f;
+    background-image:
+        radial-gradient(
+            circle at 50% 0%,
+            rgb(242 213 138 / 0.085),
+            transparent 70%
+        ),
+        linear-gradient(rgb(255 255 255 / 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 0.015) 1px, transparent 1px);
+    background-size:
+        auto,
+        32px 32px,
+        32px 32px;
+}
+
+/* A small progress cue, mounted only while a request is actually pending. */
+.vvs-loading-indicator {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    flex: none;
+    border: 2px solid rgb(242 213 138 / 0.28);
+    border-top-color: #f2d58a;
+    border-radius: 50%;
+    animation: vvs-loading-turn 850ms linear infinite;
+}
+
+.vvs-loading-indicator--dark {
+    border-color: rgb(0 0 0 / 0.22);
+    border-top-color: #141210;
+}
+
+/* Progress follows the real Inertia request; it never reserves page height. */
+.vvs-request-progress {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    overflow: hidden;
+    background: rgb(242 213 138 / 0.12);
+    pointer-events: none;
+}
+
+.vvs-request-progress::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 35%;
+    background: linear-gradient(90deg, transparent, #f2d58a, transparent);
+    animation: vvs-progress-pass 1.35s ease-in-out infinite;
+}
+
+@keyframes vvs-progress-pass {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(295%);
+    }
+}
+
+@keyframes vvs-loading-turn {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-loading-indicator {
+        animation: none;
+    }
+    .vvs-request-progress::after {
+        animation: none;
+        width: 100%;
+    }
+}
+
+/* Product gallery: tiny depth response on desktop, never changes dimensions. */
+#product-gallery-panel {
+    isolation: isolate;
+}
+
+#product-gallery-panel::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 25;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(
+        180deg,
+        rgb(255 255 255 / 0.025),
+        transparent 22%,
+        transparent 76%,
+        rgb(0 0 0 / 0.1)
+    );
+    opacity: 0.85;
+}
+
+/* Reservation confirmation check: one restrained entrance pulse. */
+@keyframes vvs-confirm-safe {
+    0% {
+        opacity: 0;
+        transform: scale(0.92);
+        box-shadow: 0 0 0 rgb(217 166 46 / 0);
+    }
+
+    55% {
+        opacity: 1;
+        transform: scale(1.025);
+        box-shadow: 0 0 34px rgb(217 166 46 / 0.12);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 0 rgb(217 166 46 / 0);
+    }
+}
+
+.vvs-confirm-icon-safe {
+    animation: vvs-confirm-safe 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Desktop-only micro zoom for editorial/product images, max 1.015. */
+@media (hover: hover) and (pointer: fine) {
+    .vvs-soft-zoom img {
+        transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .vvs-soft-zoom:hover img {
+        transform: scale(1.015);
+    }
+
+    #product-gallery-panel:hover > img {
+        transform: scale(1.008);
+    }
+}
+
+/* Touch devices: keep all extra Motion 3 effects static. */
+@media (hover: none), (pointer: coarse) {
+    .vvs-soft-zoom img,
+    #product-gallery-panel > img {
+        transform: none !important;
+    }
+}
+
+/* Reduced motion: all Motion 3 decorative movement becomes static. */
+@media (prefers-reduced-motion: reduce) {
+    .vvs-skeleton-safe {
+        animation: none !important;
+        background: rgb(255 255 255 / 0.05) !important;
+    }
+
+    .vvs-title-accent::after {
+        transition: none !important;
+        transform: translateX(-50%) scaleX(1) !important;
+    }
+
+    .vvs-confirm-icon-safe {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .vvs-soft-zoom img,
+    #product-gallery-panel > img {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* VVS PREMIUM UI PACK 20260920 V2
+   Editorial luxury layer inspired by the four references previously selected.
+   Performance rules: CSS only, no WebGL, no canvas, no video, no permanent loop.
+*/
+
+.vvs-hero-premium {
+    background:
+        radial-gradient(
+            circle at 15% 16%,
+            rgb(242 213 138 / 0.07),
+            transparent 23rem
+        ),
+        radial-gradient(
+            circle at 84% 42%,
+            rgb(255 255 255 / 0.032),
+            transparent 30rem
+        ),
+        linear-gradient(145deg, #050505 0%, #080704 46%, #030303 100%);
+}
+
+.vvs-hero-premium::before {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(rgb(255 255 255 / 0.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(255 255 255 / 0.016) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(112deg, rgb(0 0 0 / 0.72), transparent 66%);
+    content: "";
+}
+
+.vvs-brand-stage {
+    position: relative;
+    isolation: isolate;
+    border-radius: 1.35rem;
+    padding: 0.45rem;
+    background: linear-gradient(
+        135deg,
+        rgb(255 255 255 / 0.052),
+        rgb(242 213 138 / 0.018) 44%,
+        rgb(255 255 255 / 0.016)
+    );
+    box-shadow:
+        0 22px 64px rgb(0 0 0 / 0.26),
+        inset 0 1px 0 rgb(255 255 255 / 0.05);
+}
+
+.vvs-brand-stage::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border: 1px solid rgb(242 213 138 / 0.12);
+    border-radius: inherit;
+    content: "";
+    pointer-events: none;
+}
+
+.vvs-brand-signature {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    align-items: baseline;
+    gap: 0.18em;
+    margin-top: 1.05rem;
+    font-size: clamp(1.7rem, 5vw, 3.35rem);
+    font-weight: 950;
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    white-space: nowrap;
+}
+
+.vvs-brand-signature__vvs {
+    color: #fff;
+}
+
+.vvs-brand-signature__flawless {
+    color: #f2d58a;
+    background-image: linear-gradient(
+        105deg,
+        #b7791f 0%,
+        #f2d58a 34%,
+        #fff8df 50%,
+        #d9a62e 74%,
+        #a56515 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.vvs-hero-proof {
+    display: flex;
+    width: fit-content;
+    max-width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem 0.72rem;
+    margin-top: 0.85rem;
+    padding-block: 0.62rem;
+    border-block: 1px solid rgb(255 255 255 / 0.072);
+    color: rgb(212 212 216 / 0.76);
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.vvs-hero-proof > [aria-hidden="true"] {
+    color: rgb(242 213 138 / 0.54);
+}
+
+.vvs-hero-card-premium {
+    isolation: isolate;
+    border-color: rgb(255 255 255 / 0.13) !important;
+    box-shadow:
+        0 32px 88px rgb(0 0 0 / 0.45),
+        0 0 0 1px rgb(242 213 138 / 0.026),
+        inset 0 1px 0 rgb(255 255 255 / 0.05) !important;
+}
+
+.vvs-hero-card-premium::before {
+    position: absolute;
+    top: 0;
+    right: 13%;
+    left: 13%;
+    z-index: 30;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.18),
+        rgb(255 248 223 / 0.58),
+        rgb(242 213 138 / 0.18),
+        transparent
+    );
+    content: "";
+}
+
+.vvs-send-button {
+    position: relative;
+    isolation: isolate;
+    min-height: 3.25rem;
+    padding-right: 3.2rem !important;
+    overflow: hidden;
+    border: 1px solid rgb(255 248 223 / 0.17);
+    box-shadow:
+        0 14px 34px rgb(0 0 0 / 0.25),
+        inset 0 1px 0 rgb(255 255 255 / 0.17);
+}
+
+.vvs-send-button::before {
+    position: absolute;
+    top: 50%;
+    right: 1.12rem;
+    color: currentColor;
+    content: "â†—";
+    font-size: 0.92rem;
+    line-height: 1;
+    opacity: 0.82;
+    transform: translate3d(0, -50%, 0);
+    transition:
+        transform 170ms ease,
+        opacity 170ms ease;
+}
+
+#reservation-confirmation {
+    display: inline-grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
+    appearance: none;
+    place-items: center;
+    border: 1px solid rgb(242 213 138 / 0.34);
+    border-radius: 0.38rem;
+    background:
+        linear-gradient(
+            145deg,
+            rgb(255 255 255 / 0.045),
+            rgb(255 255 255 / 0.012)
+        ),
+        #080808;
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.05),
+        0 8px 20px rgb(0 0 0 / 0.18);
+    cursor: pointer;
+    transition:
+        border-color 150ms ease,
+        background-color 150ms ease,
+        box-shadow 150ms ease;
+}
+
+#reservation-confirmation::after {
+    width: 0.34rem;
+    height: 0.62rem;
+    border-right: 2px solid #090909;
+    border-bottom: 2px solid #090909;
+    content: "";
+    transform: rotate(45deg) scale(0);
+    transform-origin: 55% 55%;
+    transition: transform 130ms ease;
+}
+
+#reservation-confirmation:checked {
+    border-color: #f2d58a;
+    background: #f2d58a;
+    box-shadow:
+        0 0 0 3px rgb(242 213 138 / 0.08),
+        0 10px 24px rgb(0 0 0 / 0.2);
+}
+
+#reservation-confirmation:checked::after {
+    transform: rotate(45deg) scale(1);
+}
+
+#reservation-confirmation:focus-visible {
+    outline: 2px solid #fde68a;
+    outline-offset: 3px;
+}
+
+#collection > .mx-auto > header {
+    position: relative;
+}
+
+#collection > .mx-auto > header::after {
+    display: block;
+    width: min(13rem, 52vw);
+    height: 1px;
+    margin: 1.65rem auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.45),
+        transparent
+    );
+    content: "";
+}
+
+#collection .vvs-display-title {
+    text-wrap: balance;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-hero-card-premium {
+        transition:
+            transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 200ms ease,
+            box-shadow 220ms ease;
+    }
+
+    .vvs-hero-card-premium:hover {
+        border-color: rgb(242 213 138 / 0.23) !important;
+        transform: translate3d(0, -3px, 0);
+        box-shadow:
+            0 38px 98px rgb(0 0 0 / 0.49),
+            0 0 0 1px rgb(242 213 138 / 0.05),
+            inset 0 1px 0 rgb(255 255 255 / 0.065) !important;
+    }
+
+    .vvs-send-button:hover::before {
+        opacity: 1;
+        transform: translate3d(3px, -53%, 0);
+    }
+}
+
+@media (max-width: 639px) {
+    .vvs-brand-signature {
+        font-size: clamp(1.55rem, 9.5vw, 2.4rem);
+    }
+
+    .vvs-hero-proof {
+        gap: 0.34rem 0.52rem;
+        font-size: 0.56rem;
+        letter-spacing: 0.13em;
+    }
+
+    .vvs-brand-stage {
+        padding: 0.32rem;
+        border-radius: 1.05rem;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .vvs-hero-card-premium {
+        transform: none !important;
+    }
+
+    .vvs-send-button::before {
+        transition: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-hero-card-premium,
+    .vvs-send-button,
+    .vvs-send-button::before,
+    #reservation-confirmation,
+    #reservation-confirmation::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* VVS PREMIUM DETAILS PACK 20260921
+   CSS-only: no WebGL, canvas, video, particles, permanent motion or dependency.
+*/
+
+/* 1. Cards */
+.watch-card {
+    border-color: rgb(255 255 255/0.105);
+    background:
+        linear-gradient(150deg, rgb(255 255 255/0.025), transparent 46%),
+        #080808;
+    box-shadow:
+        0 22px 54px rgb(0 0 0/0.22),
+        inset 0 1px 0 rgb(255 255 255/0.03);
+}
+.watch-card > a:first-of-type {
+    isolation: isolate;
+}
+.watch-card > a:first-of-type::after {
+    position: absolute;
+    inset: 0;
+    z-index: 18;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(
+        180deg,
+        rgb(255 248 223/0.025),
+        transparent 24%,
+        transparent 74%,
+        rgb(0 0 0/0.08)
+    );
+}
+.watch-card > a:first-of-type img {
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 2. Product gallery */
+#product-gallery-panel {
+    border-color: rgb(242 213 138/0.14);
+    box-shadow:
+        0 30px 75px rgb(0 0 0/0.3),
+        inset 0 1px 0 rgb(255 255 255/0.04);
+}
+[role="tablist"] > button[role="tab"] {
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+}
+[role="tablist"] > button[role="tab"][aria-selected="true"] {
+    border-color: rgb(242 213 138/0.72) !important;
+    box-shadow:
+        0 0 0 1px rgb(242 213 138/0.15),
+        0 10px 24px rgb(0 0 0/0.18);
+}
+
+/* 3. Prices */
+.vvs-price,
+.watch-card p.text-2xl.font-black.text-amber-200 {
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    text-shadow: 0 0 24px rgb(217 166 46/0.06);
+}
+
+/* 4. Reservation form */
+.vvs-form label,
+.vvs-form legend {
+    transition: color 160ms ease;
+}
+.vvs-form :where(input:not([type="checkbox"]), select, textarea):focus {
+    border-color: rgb(242 213 138/0.62);
+    box-shadow:
+        0 0 0 3px rgb(217 166 46/0.075),
+        inset 0 1px 0 rgb(255 255 255/0.04);
+}
+.vvs-form :where(input, select, textarea)[aria-invalid="true"] {
+    border-color: rgb(248 113 113/0.48) !important;
+    box-shadow: 0 0 0 3px rgb(248 113 113/0.055);
+}
+#reservation-confirmation {
+    display: inline-grid;
+    width: 1.35rem;
+    height: 1.35rem;
+    flex: 0 0 auto;
+    appearance: none;
+    place-items: center;
+    border: 1px solid rgb(242 213 138/0.36);
+    border-radius: 0.38rem;
+    background: #080808;
+    cursor: pointer;
+    transition:
+        border-color 140ms ease,
+        background-color 140ms ease,
+        box-shadow 140ms ease;
+}
+#reservation-confirmation::after {
+    width: 0.34rem;
+    height: 0.62rem;
+    border-right: 2px solid #090909;
+    border-bottom: 2px solid #090909;
+    content: "";
+    transform: rotate(45deg) scale(0);
+    transform-origin: 55% 55%;
+    transition: transform 120ms ease;
+}
+#reservation-confirmation:checked {
+    border-color: #f2d58a;
+    background: #f2d58a;
+    box-shadow: 0 0 0 3px rgb(242 213 138/0.08);
+}
+#reservation-confirmation:checked::after {
+    transform: rotate(45deg) scale(1);
+}
+
+/* 5. Buttons */
+.vvs-button-primary,
+.vvs-button-secondary {
+    transition:
+        transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+}
+.vvs-button-primary:active,
+.vvs-button-secondary:active {
+    transform: translateY(1px) scale(0.992);
+}
+.vvs-button-primary > [aria-hidden="true"],
+.vvs-button-secondary > [aria-hidden="true"] {
+    transition: transform 160ms ease;
+}
+
+/* 6. Section titles */
+#collection > .mx-auto > header {
+    position: relative;
+}
+#collection > .mx-auto > header::after {
+    display: block;
+    width: min(11rem, 46vw);
+    height: 1px;
+    margin: 1.45rem auto 0;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138/0.46),
+        transparent
+    );
+}
+.vvs-eyebrow {
+    text-shadow: 0 0 18px rgb(217 166 46/0.07);
+}
+
+/* 7. Filters */
+.collection-toolbar-shell {
+    position: relative;
+    isolation: isolate;
+}
+.collection-toolbar-shell::after {
+    position: absolute;
+    right: 5%;
+    bottom: 0;
+    left: 5%;
+    height: 1px;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138/0.14),
+        transparent
+    );
+}
+#collection-search,
+#collection-sort {
+    transition:
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background-color 160ms ease;
+}
+
+/* 8. Availability: static, no pulse */
+.watch-card .animate-pulse,
+#product-gallery-panel .animate-pulse {
+    animation: none !important;
+}
+
+/* 9. Header */
+.site-header {
+    isolation: isolate;
+}
+.site-header::after {
+    position: absolute;
+    right: 10%;
+    bottom: -1px;
+    left: 10%;
+    height: 1px;
+    pointer-events: none;
+    content: "";
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138/0.12) 25%,
+        rgb(255 248 223/0.32) 50%,
+        rgb(242 213 138/0.12) 75%,
+        transparent
+    );
+}
+
+/* 10. Below-the-fold rendering */
+#concept,
+#services {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+}
+
+/* Disable continuous decorative loops from older packs */
+.vvs-spectrum-visual::before,
+.vvs-skeleton-safe {
+    animation: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .watch-card:hover {
+        border-color: rgb(242 213 138/0.25);
+        box-shadow:
+            0 30px 70px rgb(0 0 0/0.32),
+            0 0 30px rgb(217 166 46/0.035),
+            inset 0 1px 0 rgb(255 255 255/0.04);
+        transform: translate3d(0, -3px, 0);
+    }
+    .watch-card:hover > a:first-of-type img {
+        transform: scale(1.012);
+    }
+    [role="tablist"] > button[role="tab"]:hover {
+        border-color: rgb(242 213 138/0.34);
+        transform: translate3d(0, -1px, 0);
+    }
+    .vvs-button-primary:hover > [aria-hidden="true"],
+    .vvs-button-secondary:hover > [aria-hidden="true"] {
+        transform: translate3d(2px, 0, 0);
+    }
+}
+@media (hover: none), (pointer: coarse) {
+    .watch-card,
+    .watch-card img,
+    [role="tablist"] > button[role="tab"] {
+        transform: none !important;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .watch-card,
+    .watch-card img,
+    [role="tablist"] > button[role="tab"],
+    .vvs-button-primary,
+    .vvs-button-secondary,
+    .vvs-button-primary > [aria-hidden="true"],
+    .vvs-button-secondary > [aria-hidden="true"],
+    #reservation-confirmation,
+    #reservation-confirmation::after {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+    #reservation-confirmation:checked::after {
+        transform: rotate(45deg) scale(1) !important;
+    }
+}
+
+/* VVS CLEANUP UI 20260921 */
+
+/* HERO — un seul branding, grand et net */
+.vvs-entry-wordmark {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 100%;
+    line-height: 0.78;
+    user-select: none;
+}
+
+.vvs-entry-wordmark__vvs {
+    font-family: var(--font-sans);
+    font-size: clamp(6.5rem, 14vw, 13rem);
+    font-weight: 950;
+    letter-spacing: -0.09em;
+    color: #f5f5f4;
+    background: linear-gradient(
+        180deg,
+        #ffffff 3%,
+        #f4f4f5 40%,
+        #a1a1aa 72%,
+        #ead49a 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.vvs-entry-wordmark__flawless {
+    margin-top: 0.16em;
+    font-family: var(--font-display);
+    font-size: clamp(3.9rem, 9.2vw, 8.2rem);
+    font-weight: 600;
+    letter-spacing: 0.075em;
+    color: #fff8df;
+    background: linear-gradient(
+        100deg,
+        #d3aa52,
+        #fff8df 31%,
+        #ffffff 50%,
+        #d7bd82 76%,
+        #f3e1b4
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* aucun symbole ajouté au bouton Voir la collection */
+.vvs-hero-cta-clean::before {
+    display: none !important;
+    content: none !important;
+}
+
+.vvs-hero-cta-clean {
+    padding-right: 1.75rem !important;
+}
+
+/* le bloc confiance reste, le doublon Avis clients a été retiré */
+#confiance-et-avis {
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+}
+
+#confiance-et-avis > div > article {
+    width: 100%;
+}
+
+/* CONFIRMATION — plus d'air entre navigation et ✓ */
+.vvs-confirmation-page {
+    padding-top: clamp(5.5rem, 7vw, 7.5rem) !important;
+    padding-bottom: clamp(5rem, 7vw, 7rem) !important;
+}
+
+.vvs-confirmation-intro {
+    position: relative;
+}
+
+.vvs-confirmation-check {
+    position: relative;
+    box-shadow:
+        0 0 0 7px rgb(242 213 138 / 0.025),
+        0 14px 40px rgb(0 0 0 / 0.35),
+        inset 0 1px 0 rgb(255 255 255 / 0.1);
+}
+
+.vvs-confirmation-check::after {
+    position: absolute;
+    inset: -0.55rem;
+    border: 1px solid rgb(242 213 138 / 0.08);
+    border-radius: 9999px;
+    content: "";
+    pointer-events: none;
+}
+
+.vvs-confirmation-receipt {
+    position: relative;
+    border-color: rgb(242 213 138 / 0.22);
+    background:
+        radial-gradient(
+            circle at 75% 0%,
+            rgb(242 213 138 / 0.045),
+            transparent 24rem
+        ),
+        linear-gradient(145deg, rgb(255 255 255 / 0.025), transparent 40%),
+        #070708;
+    box-shadow:
+        0 35px 100px rgb(0 0 0 / 0.48),
+        inset 0 1px 0 rgb(255 255 255 / 0.045);
+}
+
+.vvs-confirmation-receipt::before {
+    position: absolute;
+    top: 0;
+    right: 12%;
+    left: 12%;
+    z-index: 5;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgb(242 213 138 / 0.18),
+        rgb(255 248 223 / 0.52),
+        rgb(242 213 138 / 0.18),
+        transparent
+    );
+    content: "";
+    pointer-events: none;
+}
+
+.vvs-confirmation-page h1 {
+    text-wrap: balance;
+}
+
+.vvs-confirmation-page a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 639px) {
+    .vvs-entry-wordmark__vvs {
+        font-size: clamp(5.2rem, 27vw, 8rem);
+    }
+
+    .vvs-entry-wordmark__flawless {
+        font-size: clamp(3rem, 15vw, 4.8rem);
+        letter-spacing: 0.035em;
+    }
+
+    .vvs-confirmation-page {
+        padding-top: 4.75rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-entry-wordmark,
+    .vvs-entry-wordmark__vvs,
+    .vvs-entry-wordmark__flawless,
+    .vvs-confirmation-check,
+    .vvs-confirmation-receipt {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* VVS UI4VERSE BUTTON + SEARCH 20260921
+   Inspirations:
+   - silent-mole-79: button
+   - curvy-earwig-22: search input
+   Adapted to VVS FLAWLESS.
+   CSS only. No permanent animation.
+*/
+
+/* =========================================================
+   BUTTONS — silent-mole style adapté VVS
+   ========================================================= */
+
+.vvs-button-primary,
+.vvs-button-secondary {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    transition:
+        transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+}
+
+/* liseré intérieur premium */
+.vvs-button-primary {
+    box-shadow:
+        -2px 2px 0 rgb(217 166 46 / 0.18),
+        2px -2px 0 rgb(255 248 223 / 0.1),
+        0 14px 32px rgb(0 0 0 / 0.24),
+        inset 0 1px 0 rgb(255 255 255 / 0.26);
+}
+
+.vvs-button-secondary {
+    box-shadow:
+        -2px 2px 0 rgb(217 166 46 / 0.12),
+        2px -2px 0 rgb(255 255 255 / 0.045),
+        0 12px 28px rgb(0 0 0 / 0.2),
+        inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+/* reflet interne court — aucun loop */
+.vvs-button-primary::before,
+.vvs-button-secondary::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgb(255 255 255 / 0) 34%,
+        rgb(255 248 223 / 0.18) 49%,
+        rgb(255 255 255 / 0.04) 57%,
+        transparent 74%
+    );
+
+    content: "";
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate3d(-28%, 0, 0);
+
+    transition:
+        opacity 160ms ease,
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* icône déjà existante seulement — aucune nouvelle flèche */
+.vvs-button-primary > [aria-hidden="true"],
+.vvs-button-secondary > [aria-hidden="true"] {
+    display: inline-block;
+
+    transition:
+        transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 180ms ease;
+}
+
+/* =========================================================
+   SEARCH — curvy-earwig adapté VVS
+   ========================================================= */
+
+/* wrapper actuel autour de #collection-search */
+form[role="search"] .relative:has(#collection-search) {
+    position: relative;
+
+    padding: 1px;
+
+    border-radius: 1rem;
+
+    background: linear-gradient(
+        120deg,
+        rgb(255 255 255 / 0.11),
+        rgb(242 213 138 / 0.2) 42%,
+        rgb(255 255 255 / 0.1) 72%
+    );
+
+    box-shadow:
+        0 16px 35px rgb(0 0 0 / 0.2),
+        inset 0 1px 0 rgb(255 255 255 / 0.035);
+
+    transition:
+        background 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+}
+
+/* input */
+#collection-search {
+    height: 3.25rem !important;
+
+    border: 0 !important;
+    border-radius: calc(1rem - 1px) !important;
+
+    background:
+        linear-gradient(135deg, rgb(255 255 255 / 0.025), transparent 55%),
+        #121212 !important;
+
+    padding-left: 1.15rem !important;
+    padding-right: 4rem !important;
+
+    color: #fafafa !important;
+
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.03),
+        inset 0 -1px 0 rgb(0 0 0 / 0.35);
+
+    outline: none !important;
+
+    transition:
+        background-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+#collection-search::placeholder {
+    color: rgb(113 113 122 / 0.9) !important;
+    opacity: 1;
+}
+
+/* bouton loupe déjà existant */
+form[role="search"] .relative:has(#collection-search) > button[type="submit"] {
+    right: 0.42rem !important;
+
+    width: 2.55rem !important;
+    height: 2.55rem !important;
+    min-width: 2.55rem !important;
+    min-height: 2.55rem !important;
+
+    border: 1px solid rgb(242 213 138 / 0.12);
+    border-radius: 0.75rem;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgb(242 213 138 / 0.055),
+            rgb(255 255 255 / 0.015)
+        ),
+        #161616;
+
+    color: rgb(212 212 216 / 0.85);
+
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+
+    transition:
+        color 160ms ease,
+        border-color 160ms ease,
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+/* focus de toute la barre */
+form[role="search"] .relative:has(#collection-search:focus) {
+    background: linear-gradient(
+        110deg,
+        rgb(242 213 138 / 0.28),
+        rgb(255 248 223 / 0.48) 48%,
+        rgb(217 166 46 / 0.25)
+    );
+
+    box-shadow:
+        0 0 0 3px rgb(217 166 46 / 0.055),
+        0 16px 38px rgb(0 0 0 / 0.24);
+}
+
+form[role="search"]
+    .relative:has(#collection-search:focus)
+    > button[type="submit"] {
+    color: #f2d58a;
+    border-color: rgb(242 213 138 / 0.25);
+}
+
+/* =========================================================
+   DESKTOP HOVER UNIQUEMENT
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-button-primary:hover,
+    .vvs-button-secondary:hover {
+        transform: translate3d(0, -2px, 0);
+    }
+
+    .vvs-button-primary:hover {
+        box-shadow:
+            -3px 3px 0 rgb(217 166 46 / 0.25),
+            3px -3px 0 rgb(255 248 223 / 0.13),
+            0 18px 38px rgb(0 0 0 / 0.27),
+            inset 0 1px 0 rgb(255 255 255 / 0.28);
+    }
+
+    .vvs-button-secondary:hover {
+        box-shadow:
+            -3px 3px 0 rgb(217 166 46 / 0.17),
+            3px -3px 0 rgb(255 255 255 / 0.065),
+            0 16px 34px rgb(0 0 0 / 0.24),
+            inset 0 1px 0 rgb(255 255 255 / 0.055);
+    }
+
+    .vvs-button-primary:hover::before,
+    .vvs-button-secondary:hover::before {
+        opacity: 1;
+        transform: translate3d(24%, 0, 0);
+    }
+
+    .vvs-button-primary:hover > [aria-hidden="true"],
+    .vvs-button-secondary:hover > [aria-hidden="true"] {
+        transform: translate3d(2px, 0, 0);
+    }
+
+    form[role="search"] .relative:has(#collection-search):hover {
+        background: linear-gradient(
+            120deg,
+            rgb(255 255 255 / 0.13),
+            rgb(242 213 138 / 0.27) 45%,
+            rgb(255 255 255 / 0.065)
+        );
+    }
+
+    form[role="search"]
+        .relative:has(#collection-search)
+        > button[type="submit"]:hover {
+        color: #f2d58a;
+        border-color: rgb(242 213 138 / 0.28);
+        transform: scale(1.035);
+    }
+}
+
+/* =========================================================
+   ACTIVE
+   ========================================================= */
+
+.vvs-button-primary:active,
+.vvs-button-secondary:active {
+    transform: translate3d(0, 0, 0) scale(0.992);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (hover: none), (pointer: coarse) {
+    .vvs-button-primary,
+    .vvs-button-secondary,
+    form[role="search"] .relative:has(#collection-search),
+    form[role="search"]
+        .relative:has(#collection-search)
+        > button[type="submit"] {
+        transform: none !important;
+    }
+
+    .vvs-button-primary::before,
+    .vvs-button-secondary::before {
+        display: none;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-button-primary,
+    .vvs-button-secondary,
+    .vvs-button-primary::before,
+    .vvs-button-secondary::before,
+    .vvs-button-primary > [aria-hidden="true"],
+    .vvs-button-secondary > [aria-hidden="true"],
+    form[role="search"] .relative:has(#collection-search),
+    #collection-search,
+    form[role="search"]
+        .relative:has(#collection-search)
+        > button[type="submit"] {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* VVS SEARCH BRIGHT + SOCIAL 20260921 */
+
+/* =========================================================
+   SEARCH — Curvy Earwig x VVS FLAWLESS
+   Plus lumineuse que l'ancienne version
+   ========================================================= */
+
+.vvs-search-shell {
+    position: relative;
+    padding: 1px;
+    border-radius: 1rem;
+
+    background: linear-gradient(
+        110deg,
+        rgb(242 213 138 / 0.62),
+        rgb(255 248 223 / 0.2) 28%,
+        rgb(255 255 255 / 0.1) 50%,
+        rgb(217 166 46 / 0.38) 78%,
+        rgb(242 213 138 / 0.62)
+    );
+
+    box-shadow:
+        0 0 0 1px rgb(242 213 138 / 0.08),
+        0 12px 30px rgb(0 0 0 / 0.2);
+}
+
+#collection-search.vvs-search-input {
+    border: 1px solid rgb(255 255 255 / 0.07) !important;
+
+    background:
+        radial-gradient(
+            circle at 8% 0%,
+            rgb(242 213 138 / 0.09),
+            transparent 40%
+        ),
+        linear-gradient(120deg, #1c1b18, #171717 48%, #121212) !important;
+
+    color: #fafafa !important;
+
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.075),
+        inset 0 -1px 0 rgb(0 0 0 / 0.4) !important;
+
+    transition:
+        border-color 170ms ease,
+        background 170ms ease,
+        box-shadow 170ms ease;
+}
+
+#collection-search.vvs-search-input::placeholder {
+    color: #a1a1aa !important;
+    opacity: 1 !important;
+}
+
+#collection-search.vvs-search-input:focus {
+    border-color: rgb(242 213 138 / 0.62) !important;
+
+    background:
+        radial-gradient(
+            circle at 8% 0%,
+            rgb(242 213 138 / 0.14),
+            transparent 44%
+        ),
+        linear-gradient(120deg, #211f1a, #191919 48%, #141414) !important;
+
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.09),
+        0 0 0 3px rgb(242 213 138 / 0.08) !important;
+}
+
+.vvs-search-submit {
+    border: 1px solid rgb(255 248 223 / 0.32) !important;
+
+    background: linear-gradient(
+        145deg,
+        #f8e7b2,
+        #e5c46f 52%,
+        #c99a36
+    ) !important;
+
+    color: #111111 !important;
+
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.52),
+        0 5px 16px rgb(0 0 0 / 0.24);
+
+    transition:
+        transform 160ms ease,
+        box-shadow 160ms ease,
+        filter 160ms ease;
+}
+
+/* =========================================================
+   SOCIAL — Silent Mole inspiration x VVS
+   ========================================================= */
+
+.vvs-social-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+
+    padding: 0.55rem 0.85rem 0.55rem 0.6rem;
+
+    border: 1px solid rgb(242 213 138 / 0.3);
+    border-radius: 0.8rem;
+
+    background:
+        linear-gradient(135deg, rgb(255 255 255 / 0.045), transparent 52%),
+        #0d0d0d;
+
+    color: #f4f4f5;
+
+    box-shadow:
+        -2px 2px 0 rgb(217 166 46 / 0.16),
+        2px -2px 0 rgb(255 248 223 / 0.055),
+        0 10px 24px rgb(0 0 0 / 0.23),
+        inset 0 1px 0 rgb(255 255 255 / 0.05);
+
+    text-decoration: none;
+
+    transition:
+        transform 170ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color 170ms ease,
+        box-shadow 170ms ease;
+}
+
+.vvs-social-button__icon {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgb(242 213 138 / 0.25);
+    border-radius: 0.6rem;
+
+    background: rgb(242 213 138 / 0.08);
+    color: #f2d58a;
+
+    transition:
+        transform 170ms cubic-bezier(0.22, 1, 0.36, 1),
+        background-color 170ms ease,
+        color 170ms ease;
+}
+
+.vvs-social-button__label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   HOVER DESKTOP
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-search-submit:hover {
+        filter: brightness(1.08);
+
+        transform: translateY(-50%) scale(1.04);
+
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.6),
+            0 7px 20px rgb(0 0 0 / 0.3);
+    }
+
+    .vvs-social-button:hover {
+        border-color: rgb(242 213 138 / 0.55);
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            -3px 3px 0 rgb(217 166 46 / 0.21),
+            3px -3px 0 rgb(255 248 223 / 0.08),
+            0 14px 30px rgb(0 0 0 / 0.28),
+            inset 0 1px 0 rgb(255 255 255 / 0.065);
+    }
+
+    .vvs-social-button:hover .vvs-social-button__icon {
+        background: #f2d58a;
+        color: #111111;
+        transform: translateX(2px) scale(1.04);
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+.vvs-social-button:focus-visible,
+.vvs-search-submit:focus-visible {
+    outline: 2px solid #f2d58a;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #collection-search.vvs-search-input,
+    .vvs-search-submit,
+    .vvs-social-button,
+    .vvs-social-button__icon {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* VVS LUCKY FALCON LOADER 20260921
+   Inspiration:
+   Uiverse / xXJollyHAKERXx / lucky-falcon-75
+*/
+
+/*
+ * IMPORTANT :
+ * aucun voile noir sur la page.
+ * La luminosité du site reste totalement inchangée.
+ */
+.vvs-route-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+
+    display: grid;
+    place-items: center;
+
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 120ms ease,
+        visibility 120ms ease;
+}
+
+.vvs-route-loader.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* conteneur du loader */
+.vvs-lucky-loader {
+    position: relative;
+
+    width: 86px;
+    height: 86px;
+
+    border-radius: 9999px;
+
+    transform: translateZ(0);
+}
+
+/* les deux anneaux */
+.vvs-lucky-loader__ring {
+    position: absolute;
+
+    border-radius: 9999px;
+
+    will-change: transform;
+}
+
+/* anneau principal */
+.vvs-lucky-loader__ring--outer {
+    inset: 0;
+
+    background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 48deg,
+        #8f5e13 78deg,
+        #d9a62e 124deg,
+        #f2d58a 165deg,
+        #fff8df 194deg,
+        #ffffff 211deg,
+        #f2d58a 227deg,
+        #c78a1c 260deg,
+        transparent 307deg,
+        transparent 360deg
+    );
+
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 8px),
+        #000 calc(100% - 7px)
+    );
+
+    mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 8px),
+        #000 calc(100% - 7px)
+    );
+
+    filter: drop-shadow(0 0 6px rgb(242 213 138 / 0.55))
+        drop-shadow(0 0 15px rgb(217 166 46 / 0.22));
+
+    animation: vvs-lucky-spin 1.05s linear infinite;
+}
+
+/* deuxième anneau */
+.vvs-lucky-loader__ring--inner {
+    inset: 15px;
+
+    background: conic-gradient(
+        from 180deg,
+        transparent 0deg,
+        transparent 76deg,
+        rgb(255 255 255 / 0.3) 112deg,
+        #fff8df 154deg,
+        #d9a62e 202deg,
+        transparent 258deg,
+        transparent 360deg
+    );
+
+    -webkit-mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 4px),
+        #000 calc(100% - 3px)
+    );
+
+    mask: radial-gradient(
+        farthest-side,
+        transparent calc(100% - 4px),
+        #000 calc(100% - 3px)
+    );
+
+    filter: drop-shadow(0 0 7px rgb(255 248 223 / 0.28));
+
+    animation: vvs-lucky-spin-reverse 1.55s linear infinite;
+}
+
+/* diamant lumineux au centre */
+.vvs-lucky-loader__core {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 13px;
+    height: 13px;
+
+    border: 1px solid rgb(255 248 223 / 0.85);
+
+    border-radius: 4px;
+
+    background: radial-gradient(
+        circle at 32% 24%,
+        #ffffff 0%,
+        #fff8df 24%,
+        #f2d58a 48%,
+        #d9a62e 71%,
+        #8f5e13 100%
+    );
+
+    box-shadow:
+        0 0 7px rgb(255 255 255 / 0.52),
+        0 0 16px rgb(242 213 138 / 0.45),
+        0 0 28px rgb(217 166 46 / 0.2);
+
+    transform: translate(-50%, -50%) rotate(45deg);
+
+    animation: vvs-lucky-core 1.25s ease-in-out infinite;
+}
+
+/* aucune animation CPU quand le loader est caché */
+.vvs-route-loader:not(.is-active) .vvs-lucky-loader__ring,
+.vvs-route-loader:not(.is-active) .vvs-lucky-loader__core {
+    animation-play-state: paused;
+}
+
+@keyframes vvs-lucky-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes vvs-lucky-spin-reverse {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes vvs-lucky-core {
+    0%,
+    100% {
+        opacity: 0.75;
+
+        transform: translate(-50%, -50%) rotate(45deg) scale(0.88);
+    }
+
+    50% {
+        opacity: 1;
+
+        transform: translate(-50%, -50%) rotate(45deg) scale(1.08);
+    }
+}
+
+/* mobile légèrement plus petit */
+@media (max-width: 640px) {
+    .vvs-lucky-loader {
+        width: 72px;
+        height: 72px;
+    }
+
+    .vvs-lucky-loader__ring--inner {
+        inset: 13px;
+    }
+}
+
+/* accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .vvs-route-loader {
+        transition: none;
+    }
+
+    .vvs-lucky-loader__ring,
+    .vvs-lucky-loader__core {
+        animation: none !important;
+    }
+
+    .vvs-lucky-loader__ring--outer {
+        transform: rotate(35deg);
+    }
+
+    .vvs-lucky-loader__ring--inner {
+        transform: rotate(-28deg);
+    }
+}
+
+/* VVS DESIGN FINITIONS 2026-09-21 */
+.vvs-storefront .vvs-button-primary,
+.vvs-storefront .vvs-button-secondary {
+    border-radius: 0.75rem;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 5px 14px rgb(0 0 0 / 0.14);
+    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+.vvs-storefront .vvs-button-primary::after,
+.vvs-storefront .vvs-button-secondary::after { display: none; }
+.vvs-storefront .vvs-button-primary > [aria-hidden='true'],
+.vvs-storefront .vvs-button-secondary > [aria-hidden='true'] { transition: transform 180ms ease; }
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-storefront .vvs-button-primary:hover,
+    .vvs-storefront .vvs-button-secondary:hover {
+        transform: translateY(-1px);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.26), 0 8px 17px rgb(0 0 0 / 0.2);
+    }
+    .vvs-storefront .vvs-button-primary:hover > [aria-hidden='true'],
+    .vvs-storefront .vvs-button-secondary:hover > [aria-hidden='true'] {
+        transform: translateX(2px);
+    }
+}
+
+.vvs-search-shell { isolation: isolate; }
+.vvs-storefront .vvs-search-field {
+    min-height: 3.25rem;
+    border: 1px solid rgb(218 184 111 / 0.66);
+    background: linear-gradient(170deg, #22211e, #161615 68%, #1b1a18);
+    color: #f8f7f3;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.085), 0 3px 12px rgb(0 0 0 / 0.17);
+}
+.vvs-storefront .vvs-search-field::placeholder {
+    color: #bdb9b0;
+    opacity: 1;
+}
+.vvs-storefront .vvs-search-field:focus-visible {
+    border-color: #f2d58a;
+    box-shadow: 0 0 0 3px rgb(242 213 138 / 0.17), inset 0 1px 0 rgb(255 255 255 / 0.1);
+}
+.vvs-storefront .vvs-search-submit {
+    border: 1px solid rgb(255 248 223 / 0.52);
+    background: linear-gradient(145deg, #e7c674, #b98a32);
+    color: #14110a;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35);
+}
+.vvs-storefront .vvs-search-submit:hover {
+    background: #f2d58a;
+    color: #14110a;
+}
+.vvs-storefront .vvs-filter-control {
+    border-color: rgb(218 184 111 / 0.42);
+    background: linear-gradient(160deg, #211f1c, #151514);
+    color: #f6f1e8;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.065);
+}
+.vvs-storefront .vvs-filter-control:focus-within,
+.vvs-storefront .vvs-filter-control:focus-visible {
+    border-color: #e7c674;
+    outline: 2px solid rgb(242 213 138 / 0.24);
+    outline-offset: 2px;
+}
+
+.vvs-loading-indicator {
+    border-color: rgb(242 213 138 / 0.3);
+    border-top-color: #f2d58a;
+    border-right-color: #fff8df;
+    box-shadow: 0 0 8px rgb(242 213 138 / 0.16);
+}
+.vvs-loading-indicator::after {
+    content: '';
+    display: block;
+    width: 3px;
+    height: 3px;
+    margin: 5px auto;
+    background: #fff8df;
+    transform: rotate(45deg);
+}
+.vvs-button-primary .vvs-loading-indicator--dark {
+    border-color: rgb(24 20 12 / 0.22);
+    border-top-color: #141210;
+    border-right-color: #493812;
+    box-shadow: none;
+}
+.vvs-button-primary .vvs-loading-indicator--dark::after {
+    background: #141210;
+}
+
+.vvs-footer-youtube {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.45rem 0.8rem;
+    border: 1px solid rgb(242 213 138 / 0.38);
+    border-radius: 0.75rem;
+    background: linear-gradient(160deg, #211f1c, #0c0c0b);
+    color: #f2d58a;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
+    transition: border-color 180ms ease, transform 180ms ease;
+}
+.vvs-footer-youtube:hover,
+.vvs-footer-youtube:focus-visible {
+    border-color: #f2d58a;
+    color: #fff8df;
+}
+@media (hover: hover) and (pointer: fine) {
+    .vvs-footer-youtube:hover { transform: translateY(-1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .vvs-storefront .vvs-button-primary,
+    .vvs-storefront .vvs-button-secondary,
+    .vvs-footer-youtube { transition: none; transform: none; }
+    .vvs-loading-indicator { animation: none; }
+}
+
+/* VVS INTERACTIONS BIJOUTERIE 2026-09-21 */
+
+/* Reflet bref, déclenché uniquement au survol. */
+.vvs-storefront .vvs-button-primary::after,
+.vvs-storefront .vvs-button-secondary::after {
+    display: block;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+        105deg,
+        transparent 36%,
+        rgb(255 248 223 / 0.38) 50%,
+        transparent 64%
+    );
+    opacity: 0;
+    transform: translateX(-110%);
+    transition: transform 460ms ease, opacity 150ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .vvs-storefront .vvs-button-primary:hover,
+    .vvs-storefront .vvs-button-secondary:hover {
+        transform: translateY(-2px);
+        border-color: #f2d58a;
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.35),
+            0 9px 22px rgb(166 117 38 / 0.20);
+    }
+
+    .vvs-storefront .vvs-button-primary:hover::after,
+    .vvs-storefront .vvs-button-secondary:hover::after {
+        opacity: 0.7;
+        transform: translateX(110%);
+    }
+
+    .vvs-footer-youtube:hover svg {
+        transform: translateX(3px);
+    }
+}
+
+.vvs-storefront .vvs-button-primary:active,
+.vvs-storefront .vvs-button-secondary:active,
+.vvs-footer-youtube:active {
+    transform: translateY(1px);
+}
+
+.vvs-footer-youtube svg {
+    transition: transform 180ms ease;
+}
+
+/* La recherche se distingue davantage du fond noir. */
+.vvs-storefront .vvs-search-field {
+    border-color: rgb(231 198 116 / 0.82);
+    background: linear-gradient(165deg, #292721, #1b1a18);
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.12),
+        0 4px 14px rgb(0 0 0 / 0.20);
+}
+
+.vvs-storefront .vvs-search-field::placeholder {
+    color: #d4d0c7;
+}
+
+.vvs-storefront .vvs-search-shell:focus-within .vvs-search-field {
+    border-color: #fff0bc;
+    box-shadow:
+        0 0 0 3px rgb(242 213 138 / 0.17),
+        inset 0 1px 0 rgb(255 255 255 / 0.12);
+}
+
+/* Anneau et éclat visibles uniquement pendant le chargement réel. */
+.vvs-loading-indicator {
+    width: 21px;
+    height: 21px;
+    border-width: 2px;
+    border-color: rgb(242 213 138 / 0.38);
+    border-top-color: #fff8df;
+    border-right-color: #d8a13b;
+    box-shadow:
+        0 0 0 2px rgb(242 213 138 / 0.10),
+        0 0 9px rgb(242 213 138 / 0.15);
+    animation: vvs-jewel-turn 850ms linear infinite;
+}
+
+.vvs-loading-indicator::after {
+    width: 4px;
+    height: 4px;
+    margin: 6px auto;
+    background: #fff8df;
+}
+
+.vvs-search-submit .vvs-loading-indicator,
+.vvs-button-primary .vvs-loading-indicator--dark {
+    border-color: rgb(26 21 11 / 0.28);
+    border-top-color: #17130b;
+    border-right-color: #5b4318;
+    box-shadow: none;
+}
+
+.vvs-search-submit .vvs-loading-indicator::after,
+.vvs-button-primary .vvs-loading-indicator--dark::after {
+    background: #17130b;
+}
+
+@keyframes vvs-jewel-turn {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-loading-indicator { animation: none; }
+
+    .vvs-storefront .vvs-button-primary::after,
+    .vvs-storefront .vvs-button-secondary::after {
+        display: none;
+    }
+
+    .vvs-footer-youtube svg { transition: none; }
+}
+/* VVS CONFIRMATION REFINEMENT 2026-09-21 */
+.vvs-confirmation {
+    padding-top: clamp(7.5rem, 11vw, 9.5rem);
+    padding-bottom: clamp(3rem, 8vw, 5rem);
+    background:
+        radial-gradient(ellipse at 50% 5%, rgb(205 170 98 / 0.075), transparent 37rem),
+        #090909;
+}
+.vvs-confirmation-mark {
+    width: 4.25rem;
+    height: 4.25rem;
+    border: 1px solid rgb(242 213 138 / 0.58);
+    color: #fff8df;
+    background: radial-gradient(
+        circle at 30% 25%,
+        rgb(242 213 138 / 0.23),
+        rgb(242 213 138 / 0.055) 70%
+    );
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.13),
+        0 0 0 6px rgb(242 213 138 / 0.035);
+}
+.vvs-confirmation-title {
+    margin-top: 1.6rem;
+    font-size: clamp(2.4rem, 6vw, 4.5rem);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+    color: #fff8df;
+    background: linear-gradient(105deg, #fff 10%, #fff8df 48%, #d5af69 91%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.vvs-confirmation-card {
+    border-color: rgb(242 213 138 / 0.32);
+    background: #111110;
+    box-shadow:
+        0 18px 60px rgb(0 0 0 / 0.28),
+        inset 0 1px 0 rgb(255 255 255 / 0.045);
+}
+.vvs-confirmation-card > div:first-child {
+    background: linear-gradient(105deg, #191815, #0d0d0c 75%);
+}
+.vvs-confirmation-card .text-zinc-600 { color: #a1a1aa; }
+.vvs-confirmation-card .text-zinc-500 { color: #b4b4bc; }
+.vvs-confirmation-card h2,
+.vvs-confirmation-card p,
+.vvs-confirmation-card span {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.vvs-confirmation-media {
+    padding: 0.75rem;
+    background: radial-gradient(circle at 50% 42%, #2b2822, #151514 72%);
+}
+.vvs-confirmation-media img {
+    max-height: 19rem;
+    width: 100%;
+    object-fit: contain;
+}
+.vvs-confirmation-next {
+    border-color: rgb(242 213 138 / 0.36);
+    background: linear-gradient(
+        110deg,
+        rgb(242 213 138 / 0.09),
+        rgb(242 213 138 / 0.025)
+    );
+}
+.vvs-confirmation-card a.vvs-button-primary,
+.vvs-confirmation-card a.vvs-button-secondary {
+    min-height: 3rem;
+    text-align: center;
+    line-height: 1.45;
+}
+.vvs-confirmation-card a:focus-visible {
+    outline: 2px solid #f2d58a;
+    outline-offset: 3px;
+}
+@media (max-width: 639px) {
+    .vvs-confirmation { padding-top: 7.75rem; }
+    .vvs-confirmation-card > div { min-width: 0; }
+}
+
+/* VVS MUTED CHAMPAGNE BUTTONS 2026-09-21 */
+.vvs-storefront .vvs-button-primary,
+main.vvs-storefront a.bg-amber-300.px-5.py-4 {
+    border: 1px solid #d4bf99;
+    background: linear-gradient(115deg, #ae9169 0%, #d4bf99 48%, #e8dcc4 68%, #b69b73 100%);
+    color: #191714;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 5px 16px rgb(0 0 0 / 0.18);
+}
+.vvs-storefront .vvs-button-secondary {
+    border-color: rgb(212 191 153 / 0.48);
+    background: linear-gradient(145deg, #25231f, #131312);
+    color: #f1eadc;
+}
+@media (hover: hover) and (pointer: fine) {
+    .vvs-storefront .vvs-button-primary:hover,
+    main.vvs-storefront a.bg-amber-300.px-5.py-4:hover {
+        border-color: #eee2cb;
+        background: linear-gradient(115deg, #b99e78, #e4d3b4 55%, #c3aa83);
+    }
+}
+
+/* VVS SIMPLE INTRO START */
+.vvs-brand-hero--intro .vvs-brand-wordmark {
+    align-items: center;
+    width: 100%;
+    line-height: 0.76;
+}
+
+.vvs-brand-hero--intro .vvs-brand-wordmark__vvs {
+    font-size: clamp(7.25rem, 25vw, 15rem);
+    padding-right: 0.09em;
+}
+
+.vvs-brand-hero--intro .vvs-brand-wordmark__flawless {
+    margin-top: 0.2em;
+    font-size: clamp(3rem, 12vw, 7.25rem);
+    letter-spacing: 0.025em;
+}
+
+@media (max-width: 390px) {
+    .vvs-brand-hero--intro .vvs-brand-wordmark__vvs {
+        font-size: clamp(6.5rem, 34vw, 8rem);
+    }
+
+    .vvs-brand-hero--intro .vvs-brand-wordmark__flawless {
+        font-size: clamp(2.65rem, 14vw, 3.5rem);
+        letter-spacing: 0;
+    }
+}
+/* VVS SIMPLE INTRO END */

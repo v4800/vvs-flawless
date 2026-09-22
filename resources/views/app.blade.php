@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    lang="{{ data_get($page, 'props.seo.language') ?: str_replace('_', '-', app()->getLocale()) }}"
     @class(['dark' => ($appearance ?? 'system') == 'dark'])
 >
     <head>
@@ -13,9 +13,18 @@
                 ? $seo['title']
                 : config('app.name', 'VVS FLAWLESS');
 
+            $localizedSeoFallback = \Illuminate\Support\Facades\Lang::get(
+                'site.seo.collection_description',
+                [],
+                app()->getLocale(),
+                false
+            );
+
             $seoDescription = is_string($seo['description'] ?? null)
                 ? $seo['description']
-                : 'VVS FLAWLESS — Montres iced-out en moissanite VVS couleur D en Belgique.';
+                : (is_string($localizedSeoFallback)
+                    ? $localizedSeoFallback
+                    : 'VVS FLAWLESS');
 
             $seoCanonical = is_string($seo['canonical'] ?? null)
                 ? $seo['canonical']
@@ -29,15 +38,32 @@
                 ? $seo['locale']
                 : app()->getLocale();
 
-            $openGraphLocale = str_replace('-', '_', $seoLocale);
+            $seoLanguage = is_string($seo['language'] ?? null)
+                ? $seo['language']
+                : null;
+
+            $openGraphLocaleSource = is_string($seoLanguage)
+                && preg_match('/^[a-z]{2}-[A-Z]{2}$/', $seoLanguage) === 1
+                    ? $seoLanguage
+                    : $seoLocale;
+
+            $openGraphLocale = str_replace('-', '_', $openGraphLocaleSource);
 
             $seoImage = is_string($seo['image'] ?? null)
                 ? $seo['image']
                 : url('/images/vvs-flawless-profile.webp');
 
+            $seoImageAlt = is_string($seo['imageAlt'] ?? null)
+                ? $seo['imageAlt']
+                : 'VVS FLAWLESS';
+
             $seoType = is_string($seo['type'] ?? null)
                 ? $seo['type']
                 : 'website';
+
+            $seoRobots = is_string($seo['robots'] ?? null)
+                ? $seo['robots']
+                : 'index,follow';
 
             $structuredData = is_array($seo['structuredData'] ?? null)
                 ? $seo['structuredData']
@@ -58,6 +84,11 @@
         <meta
             name="description"
             content="{{ $seoDescription }}"
+        >
+
+        <meta
+            name="robots"
+            content="{{ $seoRobots }}"
         >
 
         <meta
@@ -134,6 +165,11 @@
             content="{{ $seoImage }}"
         >
 
+        <meta
+            property="og:image:alt"
+            content="{{ $seoImageAlt }}"
+        >
+
         {{-- Partage social --}}
 
         <meta
@@ -154,6 +190,11 @@
         <meta
             name="twitter:image"
             content="{{ $seoImage }}"
+        >
+
+        <meta
+            name="twitter:image:alt"
+            content="{{ $seoImageAlt }}"
         >
 
         {{-- Données structurées SEO --}}
@@ -238,6 +279,90 @@
     </head>
 
     <body class="font-sans antialiased">
+        {{-- VVS LUCKY FALCON LOADER --}}
+        <div
+            id="vvs-route-loader"
+            class="vvs-route-loader is-active"
+            aria-hidden="true"
+        >
+            <div class="vvs-lucky-loader">
+                <span
+                    class="vvs-lucky-loader__ring vvs-lucky-loader__ring--outer"
+                ></span>
+
+                <span
+                    class="vvs-lucky-loader__ring vvs-lucky-loader__ring--inner"
+                ></span>
+
+                <span class="vvs-lucky-loader__core"></span>
+            </div>
+        </div>
+
+        <script
+            @if ($cspNonce)
+                nonce="{{ $cspNonce }}"
+            @endif
+        >
+            (() => {
+                const loader =
+                    document.getElementById('vvs-route-loader');
+
+                if (!loader) {
+                    return;
+                }
+
+                let timer = null;
+
+                const showLoader = () => {
+                    if (timer) {
+                        window.clearTimeout(timer);
+                    }
+
+                    loader.classList.add('is-active');
+                };
+
+                const hideLoader = () => {
+                    if (timer) {
+                        window.clearTimeout(timer);
+                    }
+
+                    timer = window.setTimeout(() => {
+                        loader.classList.remove('is-active');
+                    }, 90);
+                };
+
+                document.addEventListener(
+                    'inertia:start',
+                    showLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:finish',
+                    hideLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:invalid',
+                    hideLoader,
+                );
+
+                document.addEventListener(
+                    'inertia:exception',
+                    hideLoader,
+                );
+
+                window.addEventListener(
+                    'load',
+                    hideLoader,
+                    { once: true },
+                );
+
+                window.addEventListener(
+                    'pageshow',
+                    hideLoader,
+                );
+            })();
+        </script>
         <x-inertia::app />
     </body>
 </html>

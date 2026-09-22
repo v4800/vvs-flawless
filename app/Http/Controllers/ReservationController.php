@@ -6,6 +6,8 @@ use App\Mail\CustomerReservationMail;
 use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\ReservationPayment;
+use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -28,7 +30,7 @@ class ReservationController extends Controller
             'movement' => [
                 'required',
                 'string',
-                'in:Japonais,Suisse',
+                'in:Japonais,Suisse,Modele presente',
             ],
 
             'customer_name' => [
@@ -77,7 +79,16 @@ class ReservationController extends Controller
             (int) $validated['watch_id']
         );
 
-        if ($validated['movement'] === 'Suisse') {
+        $singleOffer = \App\Support\PresentedWatch::matches($watch);
+        abort_if(
+            $singleOffer !== ($validated['movement'] === 'Modele presente'),
+            422,
+            'Version indisponible pour ce modele.'
+        );
+
+        if ($singleOffer) {
+            $price = $watch->price;
+        } elseif ($validated['movement'] === 'Suisse') {
             $price =
                 $watch->swiss_promo_price
                 ?? $watch->swiss_price;
@@ -123,6 +134,8 @@ class ReservationController extends Controller
 
             'price' => $price,
 
+            'deposit_amount' => ReservationPayment::depositAmount($price),
+
             'customer_name' => $validated['customer_name'],
 
             'email' => $validated['email'],
@@ -132,6 +145,8 @@ class ReservationController extends Controller
             'city' => $validated['city'] ?? null,
 
             'delivery_method' => $validated['delivery_method'],
+
+            'locale' => app()->getLocale(),
 
             'status' => 'Nouvelle demande',
 
@@ -177,9 +192,12 @@ class ReservationController extends Controller
 
         $reservation->load('watch');
 
-        $confirmationRoute = app()->getLocale() === 'nl_BE'
-            ? 'nl.reservations.confirmation'
-            : 'reservations.confirmation';
+        $confirmationRoute = match (app()->getLocale()) {
+            'nl_BE' => 'nl.reservations.confirmation',
+            'en_BE' => 'en.reservations.confirmation',
+            'de_BE' => 'de.reservations.confirmation',
+            default => 'reservations.confirmation',
+        };
 
         $confirmationUrl =
             URL::temporarySignedRoute(
@@ -245,7 +263,8 @@ class ReservationController extends Controller
     }
 
     public function confirmation(
-        string $reservationNumber
+        string $reservationNumber,
+        WatchCatalog $catalog
     ): SymfonyResponse {
         $reservation =
             Reservation::query()
@@ -263,20 +282,21 @@ class ReservationController extends Controller
             404
         );
 
-        $watchName = $watch->name;
+        $localizedWatch = $catalog->localizedWatch($watch);
+        $watchName = $localizedWatch->name;
 
-        if (app()->getLocale() === 'nl_BE') {
-            $translatedWatch = trans('watches.'.$watch->id);
+        $dateFormat = match (app()->getLocale()) {
+            'nl_BE' => 'd/m/Y \\o\\m H:i',
+            'en_BE' => 'd/m/Y \\a\\t H:i',
+            'de_BE' => 'd.m.Y \\u\\m H:i',
+            default => 'd/m/Y à H:i',
+        };
 
-            if (is_array($translatedWatch)
-                && is_string($translatedWatch['name'] ?? null)) {
-                $watchName = $translatedWatch['name'];
-            }
+        $createdAt = $reservation->created_at;
+
+        if ($createdAt === null) {
+            abort(500, 'Reservation creation date missing.');
         }
-
-        $dateFormat = app()->getLocale() === 'nl_BE'
-            ? 'd/m/Y \\o\\m H:i'
-            : 'd/m/Y à H:i';
 
         $response =
             Inertia::render(
@@ -304,6 +324,16 @@ class ReservationController extends Controller
                         'price' => (float) $reservation
                             ->price,
 
+                        'deposit_amount' => ReservationPayment::depositAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount
+                        ),
+
+                        'balance_amount' => ReservationPayment::balanceAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount
+                        ),
+
                         'delivery_method' => $reservation
                             ->delivery_method,
 
@@ -313,8 +343,7 @@ class ReservationController extends Controller
                         'message' => $reservation
                             ->message,
 
-                        'date' => $reservation
-                            ->created_at
+                        'date' => $createdAt
                             ->copy()
                             ->timezone(
                                 'Europe/Brussels'
@@ -326,8 +355,12 @@ class ReservationController extends Controller
 
                     'watch' => [
                         'id' => $watch->id,
+                        'slug' => $watch->slug,
                         'name' => $watchName,
                         'image' => $watch->image,
+                        'presented_copy' => $localizedWatch->getAttribute(
+                            'presented_copy'
+                        ),
                     ],
                 ]
             )->toResponse(
@@ -347,6 +380,11 @@ class ReservationController extends Controller
         $response->headers->set(
             'Expires',
             '0'
+        );
+
+        $response->headers->set(
+            'X-Robots-Tag',
+            'noindex, nofollow, noarchive'
         );
 
         return $response;

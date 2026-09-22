@@ -1,17 +1,13 @@
 @php
-    $watchName = $reservation->watch->name;
+    $localizedWatch = app(\App\Support\WatchCatalog::class)
+        ->localizedWatch($reservation->watch);
+    $watchName = $localizedWatch->name;
 
-    if (app()->getLocale() === 'nl_BE') {
-        $translatedWatch = trans('watches.'.$reservation->watch->id);
-
-        if (is_array($translatedWatch) && is_string($translatedWatch['name'] ?? null)) {
-            $watchName = $translatedWatch['name'];
-        }
-    }
-
-    $movement = $reservation->movement === 'Suisse'
-        ? trans('site.movements.suisse')
-        : trans('site.movements.japonais');
+    $movement = match ($reservation->movement) {
+        'Modele presente' => $localizedWatch->getAttribute('presented_copy')['model_label'],
+        'Suisse' => trans('site.movements.suisse'),
+        default => trans('site.movements.japonais'),
+    };
 
     $deliveryMethod = $reservation->delivery_method === 'Livraison'
         ? trans('site.product.delivery')

@@ -6,33 +6,33 @@ Une nouvelle réservation vient d'être enregistrée.
 
 ## Commande
 
-**Numéro :**  
+**Numéro :**
 {{ $reservation->reservation_number }}
 
-**Montre :**  
+**Montre :**
 {{ $reservation->watch->name }}
 
-**Mouvement :**  
+**Mouvement :**
 {{ $reservation->movement }}
 
-**Prix :**  
+**Prix :**
 {{ number_format($reservation->price, 0, ',', ' ') }} €
 
-**Statut :**  
+**Statut :**
 {{ $reservation->status }}
 
 ## Client
 
-**Nom :**  
+**Nom :**
 {{ $reservation->customer_name }}
 
-**E-mail :**  
+**E-mail :**
 {{ $reservation->email }}
 
-**Téléphone :**  
+**Téléphone :**
 {{ $reservation->phone }}
 
-**Ville :**  
+**Ville :**
 {{ $reservation->city ?: 'Non renseignée' }}
 
 **Mode de réception :**

@@ -3,118 +3,272 @@
 namespace App\Http\Controllers;
 
 use App\Models\Watch;
+use App\Support\LocalizedRoute;
+use App\Support\MarketingAttribution;
+use App\Support\WatchCatalog;
+use App\Support\WatchSeo;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Inertia\Response;
 
 class WatchController extends Controller
 {
+    /** @var list<string> */
+    public const HIDDEN_PUBLIC_SLUGS = [
+        '41-mm-carree-noire-cadran-blanc',
+        '41-mm-argentee-cadran-blanc',
+        '41-mm-classique-chiffres-romains',
+    ];
+
+    public function __construct(
+        private readonly WatchCatalog $catalog,
+        private readonly WatchSeo $seo,
+        private readonly MarketingAttribution $marketingAttribution,
+        private readonly LocalizedRoute $localizedRoute
+    ) {}
+
     public function index(Request $request): Response
     {
-        $this->captureMarketingAttribution($request);
+        $this->marketingAttribution->capture($request);
 
-        $watches = Watch::latest()
+        $filters = $request->validate([
+            'q' => ['nullable', 'string', 'max:100'],
+            'model' => ['nullable', 'integer', 'min:1'],
+            'price_min' => ['nullable', 'numeric', 'min:0', 'max:999999'],
+            'price_max' => ['nullable', 'numeric', 'min:0', 'max:999999'],
+            'movement' => ['nullable', Rule::in(['japanese', 'swiss'])],
+            'availability' => ['nullable', 'string', 'max:100'],
+            'sort' => ['nullable', Rule::in(['newest', 'price_asc', 'price_desc', 'name'])],
+        ]);
+
+        $inventory = Watch::query()
+            ->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS)
+            ->select(['id', 'name', 'slug', 'image'])
+            ->orderBy('name')
             ->get()
             ->map(
-                fn (Watch $watch) => $this->localizedWatch(
-                    $watch
+                fn (Watch $watch) => $this->catalog->localizedWatch(
+                    $this->catalog->applyCover($watch)
                 )
             );
 
-        $collectionUrl = route(
-            $this->localizedRouteName('watches.index')
+        $query = Watch::query()->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS);
+
+        $search = trim((string) ($filters['q'] ?? ''));
+
+        if ($search !== '') {
+            $matchingLocalizedIds = $this->matchingLocalizedIds(
+                $inventory,
+                $search
+            );
+
+            if ($matchingLocalizedIds === []) {
+                $query->whereRaw('1 = 0');
+            } else {
+                $query->whereIn('id', $matchingLocalizedIds);
+            }
+        }
+
+        if (isset($filters['model'])) {
+            $query->whereKey((int) $filters['model']);
+        }
+
+
+        if (isset($filters['movement'])) {
+            $movement = $filters['movement'];
+
+            $query->where(function (Builder $builder) use ($movement): void {
+                if ($movement === 'swiss') {
+                    $builder
+                        ->whereNotNull('swiss_price')
+                        ->orWhereNotNull('swiss_promo_price');
+
+                    return;
+                }
+
+                $builder
+                    ->whereNotNull('japanese_price')
+                    ->orWhereNotNull('japanese_promo_price');
+            });
+        }
+
+        if (isset($filters['availability'])) {
+            $query->where('availability', $filters['availability']);
+        }
+
+        $startingPrice = $this->priceExpressionForMovement(
+            $filters['movement'] ?? null
         );
+
+        $numericStartingPrice = 'CAST(('
+            .$startingPrice
+            .') AS DECIMAL(10, 2))';
+
+        if (isset($filters['price_min'])) {
+            $query->whereRaw(
+                $numericStartingPrice.' >= ?',
+                [(float) $filters['price_min']]
+            );
+        }
+
+        if (isset($filters['price_max'])) {
+            $query->whereRaw(
+                $numericStartingPrice.' <= ?',
+                [(float) $filters['price_max']]
+            );
+        }
+
+        match ($filters['sort'] ?? 'newest') {
+            'price_asc' => $query->orderByRaw($numericStartingPrice.' asc')->orderBy('id'),
+            'price_desc' => $query->orderByRaw($numericStartingPrice.' desc')->orderByDesc('id'),
+            'name' => $query->orderBy('name')->orderBy('id'),
+            default => $query->latest(),
+        };
+
+        $paginator = $query
+            ->paginate(12)
+            ->withQueryString();
+
+        $watches = $paginator
+            ->getCollection()
+            ->map(
+                fn (Watch $watch) => $this->catalog->localizedWatch(
+                    $this->catalog->applyCover($watch)
+                )
+            );
+
+        $paginator->setCollection($watches);
+
+        $seoQuery = $request->query();
+        unset($seoQuery['page']);
+
+        $seoHasFilters = collect($seoQuery)
+            ->contains(function ($value): bool {
+                if (is_array($value)) {
+                    return $value !== [];
+                }
+
+                return trim((string) $value) !== '';
+            });
 
         return inertia('Watches/Index', [
             'watches' => $watches,
-
-            'seo' => [
-                'title' => trans('site.seo.collection_title'),
-
-                'description' => trans(
-                    'site.seo.collection_description'
-                ),
-
-                'canonical' => $collectionUrl,
-
-                'alternates' => $this->collectionAlternates(),
-
-                'locale' => app()->getLocale(),
-
-                'image' => url(
-                    '/images/vvs-flawless-profile.webp'
-                ),
-
-                'type' => 'website',
-
-                'structuredData' => [
-                    '@context' => 'https://schema.org',
-
-                    '@type' => 'WebSite',
-
-                    'name' => 'VVS FLAWLESS',
-
-                    'url' => $collectionUrl,
-
-                    'inLanguage' => str_replace(
-                        '_',
-                        '-',
-                        app()->getLocale()
-                    ),
-
-                    'publisher' => [
-                        '@type' => 'Organization',
-
-                        'name' => 'VVS FLAWLESS',
-
-                        'url' => url('/'),
-
-                        'logo' => url(
-                            '/images/vvs-flawless-profile.webp'
-                        ),
-
-                        'sameAs' => [
-                            'https://www.instagram.com/vvsflawless43/',
-                            'https://www.tiktok.com/@vvsflawless43',
-                        ],
-                    ],
-                ],
+            'catalogModels' => $this->catalog->featuredModels($inventory),
+            'filters' => [
+                'q' => $search,
+                'model' => isset($filters['model'])
+                    ? (string) $filters['model']
+                    : '',
+                'price_min' => isset($filters['price_min'])
+                    ? (string) $filters['price_min']
+                    : '',
+                'price_max' => isset($filters['price_max'])
+                    ? (string) $filters['price_max']
+                    : '',
+                'movement' => $filters['movement'] ?? '',
+                'availability' => $filters['availability'] ?? '',
+                'sort' => $filters['sort'] ?? 'newest',
             ],
+            'filterOptions' => [
+                'models' => $inventory
+                    ->map(fn (Watch $watch) => [
+                        'value' => (string) $watch->id,
+                        'label' => $watch->name,
+                        'reference' => 'VVS-'.$watch->id,
+                    ])
+                    ->sortBy('label', SORT_NATURAL | SORT_FLAG_CASE)
+                    ->values(),
+                'availability' => Watch::query()
+                    ->whereNotNull('availability')
+                    ->where('availability', '!=', '')
+                    ->distinct()
+                    ->orderBy('availability')
+                    ->pluck('availability')
+                    ->values(),
+                'movements' => array_values(array_filter([
+                    $this->movementExists('japanese')
+                        ? [
+                            'value' => 'japanese',
+                            'label' => trans('site.collection.japanese'),
+                        ]
+                        : null,
+                    $this->movementExists('swiss')
+                        ? [
+                            'value' => 'swiss',
+                            'label' => trans('site.collection.swiss'),
+                        ]
+                        : null,
+                ])),
+            ],
+            'pagination' => [
+                'currentPage' => $paginator->currentPage(),
+                'lastPage' => $paginator->lastPage(),
+                'perPage' => $paginator->perPage(),
+                'total' => $paginator->total(),
+                'from' => $paginator->firstItem(),
+                'to' => $paginator->lastItem(),
+                'previousUrl' => $paginator->previousPageUrl(),
+                'nextUrl' => $paginator->nextPageUrl(),
+            ],
+            'seo' => $this->seo->collection(
+                $watches,
+                $paginator->currentPage(),
+                $paginator->perPage(),
+                $seoHasFilters
+            ),
         ]);
+    }
+
+    public function redirectLegacy(
+        Request $request,
+        int $watchId
+    ): RedirectResponse {
+        $watch = Watch::query()->findOrFail($watchId);
+
+        $url = route(
+            $this->localizedRoute->name('watches.show'),
+            ['watch' => $watch] + $request->query()
+        );
+
+        return redirect()->to($url, 301);
     }
 
     public function show(
         Request $request,
         Watch $watch
     ): Response {
-        $this->captureMarketingAttribution($request);
+        abort_if(in_array($watch->slug, self::HIDDEN_PUBLIC_SLUGS, true), 404);
 
-        $watch = $this->localizedWatch($watch);
+        $this->marketingAttribution->capture($request);
 
-        $selectedMovement =
-            $request->query('movement') === 'Suisse'
-                ? 'Suisse'
-                : 'Japonais';
+        $watch = $this->catalog->localizedWatch($watch);
+        $gallery = $this->catalog->galleryForWatch($watch);
 
-        $description = Str::limit(
-            trim(
-                $watch->name
-                .'. '
-                .$watch->description
-                .' '
-                .trans('site.seo.product_description_suffix')
-            ),
-            160,
-            '…'
-        );
+        if ($gallery !== []) {
+            $watch->image = $gallery[0];
+        }
+
+        $selectedMovement = $request->query('movement') === 'Suisse'
+            && ((float) ($watch->swiss_promo_price ?? $watch->swiss_price ?? 0)) > 0
+            ? 'Suisse'
+            : 'Japonais';
 
         $relatedWatches = Watch::query()
+            ->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS)
             ->where('id', '!=', $watch->id)
             ->select([
                 'id',
                 'name',
+                'slug',
                 'image',
                 'stock_quantity',
+                'price',
+                'promo_price',
                 'japanese_price',
                 'japanese_promo_price',
                 'swiss_price',
@@ -124,374 +278,157 @@ class WatchController extends Controller
             ->limit(3)
             ->get()
             ->map(
-                fn (Watch $relatedWatch) => $this->localizedWatch(
-                    $relatedWatch
+                fn (Watch $relatedWatch) => $this->catalog->localizedWatch(
+                    $this->catalog->applyCover($relatedWatch)
                 )
             );
 
-        $watchUrl = route(
-            $this->localizedRouteName('watches.show'),
-            $watch
-        );
+        $productReviews = DB::table('vvs_customer_reviews')
+            ->where('status', 'published')
+            ->where('watch_id', $watch->id)
+            ->select([
+                'id',
+                'display_name',
+                'rating',
+                'body',
+                'created_at',
+            ])
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->limit(6)
+            ->get();
 
-        $structuredData = [
-            '@context' => 'https://schema.org',
-
-            '@graph' => [
-                [
-                    '@type' => 'Product',
-
-                    'name' => $watch->name,
-
-                    'description' => $description,
-
-                    'url' => $watchUrl,
-
-                    'sku' => 'VVS-'.$watch->id,
-
-                    'category' => trans('site.seo.product_category'),
-
-                    'image' => [
-                        $watch->image
-                            ? url($watch->image)
-                            : url(
-                                '/images/vvs-flawless-profile.webp'
-                            ),
-                    ],
-
-                    'offers' => $this->offersForWatch(
-                        $watch
-                    ),
-                ],
-                [
-                    '@type' => 'BreadcrumbList',
-
-                    'itemListElement' => [
-                        [
-                            '@type' => 'ListItem',
-                            'position' => 1,
-                            'name' => trans('site.navigation.watches'),
-                            'item' => route(
-                                $this->localizedRouteName(
-                                    'watches.index'
-                                )
-                            ),
-                        ],
-                        [
-                            '@type' => 'ListItem',
-                            'position' => 2,
-                            'name' => $watch->name,
-                            'item' => $watchUrl,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        return inertia('Watches/Show', [
+        $props = [
             'watch' => $watch,
-
+            'gallery' => $gallery,
             'selectedMovement' => $selectedMovement,
-
             'relatedWatches' => $relatedWatches,
-
-            'seo' => [
-                'title' => $watch->name
-                    .' — VVS FLAWLESS',
-
-                'description' => $description,
-
-                'canonical' => $watchUrl,
-
-                'alternates' => $this->watchAlternates($watch),
-
-                'locale' => app()->getLocale(),
-
-                'image' => $watch->image
-                    ? url($watch->image)
-                    : url(
-                        '/images/vvs-flawless-profile.webp'
-                    ),
-
-                'type' => 'product',
-
-                'structuredData' => $structuredData,
+            'reviews' => $productReviews,
+            'reviewRoutes' => [
+                'index' => route('vvs.reviews.index'),
+                'store' => route('vvs.reviews.store'),
             ],
-        ]);
+            'seo' => $this->seo->product($watch, $gallery),
+        ];
+
+        return inertia(
+            'Watches/Show',
+            $this->catalog->localizeNestedWatches($props)
+        );
     }
 
     /**
-     * @return list<array{
-     *     '@type': string,
-     *     name: string,
-     *     url: string,
-     *     price: float,
-     *     priceCurrency: string,
-     *     itemCondition: string,
-     *     availability: string,
-     *     seller: array{
-     *         '@type': string,
-     *         name: string,
-     *         url: string
-     *     }
-     * }>
+     * @param  Collection<int, Watch>  $inventory
+     * @return list<int>
      */
-    private function offersForWatch(
-        Watch $watch
+    private function matchingLocalizedIds(
+        Collection $inventory,
+        string $search
     ): array {
-        $offers = [];
+        $needle = $this->normalizeSearchText($search);
+        $tokens = array_values(array_filter(explode(' ', $needle)));
 
-        $availability = $this->structuredDataAvailability(
-            $watch
-        );
-
-        $movements = [
-            'Japonais' => $watch->japanese_promo_price
-                ?? $watch->japanese_price,
-
-            'Suisse' => $watch->swiss_promo_price
-                ?? $watch->swiss_price,
-        ];
-
-        foreach ($movements as $movement => $price) {
-            if (! is_numeric($price)) {
-                continue;
-            }
-
-            $offers[] = [
-                '@type' => 'Offer',
-
-                'name' => trans(
-                    'site.seo.offer_name',
-                    [
-                        'movement' => trans(
-                            'site.movements.'.strtolower($movement)
-                        ),
-                    ]
-                ),
-
-                'url' => route(
-                    $this->localizedRouteName('watches.show'),
-                    [
-                        'watch' => $watch,
-                        'movement' => $movement,
-                    ]
-                ),
-
-                'price' => (float) $price,
-
-                'priceCurrency' => 'EUR',
-
-                'itemCondition' => 'https://schema.org/NewCondition',
-
-                'availability' => $availability,
-
-                'seller' => [
-                    '@type' => 'Organization',
-
-                    'name' => 'VVS FLAWLESS',
-
-                    'url' => url('/'),
-                ],
-            ];
+        if ($tokens === []) {
+            return [];
         }
 
-        return $offers;
+        return $inventory
+            ->filter(function (Watch $watch) use ($tokens): bool {
+                $metadata = $this->catalog->searchMetadataForWatch($watch);
+                $familyLabels = collect($metadata['families'])
+                    ->pluck('label')
+                    ->implode(' ');
+
+                $haystack = $this->normalizeSearchText(
+                    (string) $watch->name
+                    .' '
+                    .(string) $watch->slug
+                    .' '
+                    .(string) $watch->description
+                    .' '
+                    .(string) $watch->getAttribute('short_description')
+                    .' VVS-'
+                    .$watch->id
+                    .' '
+                    .$familyLabels
+                    .' '
+                    .implode(' ', $metadata['aliases'])
+                    .' '
+                    .implode(' ', $metadata['keywords'])
+                );
+
+                foreach ($tokens as $token) {
+                    if (! $this->searchTokenMatches($haystack, $token)) {
+                        return false;
+                    }
+                }
+
+                return true;
+            })
+            ->pluck('id')
+            ->map(fn ($id) => (int) $id)
+            ->values()
+            ->all();
     }
 
-    private function structuredDataAvailability(
-        Watch $watch
-    ): string {
-        $availability = Str::lower(
-            Str::ascii($watch->availability)
-        );
 
-        if (
-            Str::contains(
-                $availability,
-                [
-                    'sur commande',
-                    'sur reservation',
-                    'precommande',
-                ]
-            )
-        ) {
-            return 'https://schema.org/PreOrder';
-        }
-
-        if (
-            ($watch->stock_quantity !== null
-                && (int) $watch->stock_quantity <= 0)
-            || Str::contains(
-                $availability,
-                [
-                    'indisponible',
-                    'rupture',
-                    'epuise',
-                ]
-            )
-        ) {
-            return 'https://schema.org/OutOfStock';
-        }
-
-        return 'https://schema.org/InStock';
-    }
-
-    private function localizedRouteName(string $name): string
+    private function normalizeSearchText(string $value): string
     {
-        return app()->getLocale() === 'nl_BE'
-            ? 'nl.'.$name
-            : $name;
+        $value = Str::lower(Str::ascii($value));
+        $value = preg_replace('/[^a-z0-9]+/', ' ', $value) ?? '';
+        $value = preg_replace('/\s+/', ' ', $value) ?? '';
+
+        return trim($value);
     }
 
-    private function localizedWatch(Watch $watch): Watch
+    private function searchTokenMatches(string $haystack, string $token): bool
     {
-        if (app()->getLocale() !== 'nl_BE') {
-            return $watch;
+        if (strlen($token) <= 2) {
+            return preg_match(
+                '/(?:^| )'.preg_quote($token, '/').'(?: |$)/',
+                $haystack
+            ) === 1;
         }
 
-        $translation = trans('watches.'.$watch->id);
-
-        if (! is_array($translation)) {
-            return $watch;
-        }
-
-        $localizedWatch = clone $watch;
-
-        if (is_string($translation['name'] ?? null)) {
-            $localizedWatch->name = $translation['name'];
-        }
-
-        if (is_string($translation['description'] ?? null)) {
-            $localizedWatch->description = $translation['description'];
-        }
-
-        return $localizedWatch;
+        return Str::contains($haystack, $token);
     }
 
-    /**
-     * @return list<array{hreflang: string, href: string}>
-     */
-    private function collectionAlternates(): array
+    private function movementExists(string $movement): bool
     {
-        return [
-            [
-                'hreflang' => 'fr-BE',
-                'href' => route('watches.index'),
-            ],
-            [
-                'hreflang' => 'nl-BE',
-                'href' => route('nl.watches.index'),
-            ],
-            [
-                'hreflang' => 'x-default',
-                'href' => route('watches.index'),
-            ],
-        ];
+        $columns = $movement === 'swiss'
+            ? ['swiss_price', 'swiss_promo_price']
+            : ['japanese_price', 'japanese_promo_price'];
+
+        return Watch::query()
+            ->where(function (Builder $query) use ($columns): void {
+                $query
+                    ->whereNotNull($columns[0])
+                    ->orWhereNotNull($columns[1]);
+            })
+            ->exists();
     }
 
-    /**
-     * @return list<array{hreflang: string, href: string}>
-     */
-    private function watchAlternates(Watch $watch): array
+    private function priceExpressionForMovement(?string $movement): string
     {
-        return [
-            [
-                'hreflang' => 'fr-BE',
-                'href' => route('watches.show', $watch),
-            ],
-            [
-                'hreflang' => 'nl-BE',
-                'href' => route('nl.watches.show', $watch),
-            ],
-            [
-                'hreflang' => 'x-default',
-                'href' => route('watches.show', $watch),
-            ],
-        ];
-    }
-
-    private function captureMarketingAttribution(
-        Request $request
-    ): void {
-        $keys = [
-            'utm_source',
-            'utm_medium',
-            'utm_campaign',
-            'utm_term',
-            'utm_content',
-        ];
-
-        $attribution = [];
-
-        foreach ($keys as $key) {
-            $value = $request->query($key);
-
-            if (! is_string($value)) {
-                continue;
-            }
-
-            $value = trim($value);
-
-            if ($value === '') {
-                continue;
-            }
-
-            $attribution[$key] = Str::limit(
-                $value,
-                100,
-                ''
-            );
+        if ($movement === 'swiss') {
+            return 'COALESCE(swiss_promo_price, swiss_price, price)';
         }
 
-        if ($attribution === []) {
-            return;
+        if ($movement === 'japanese') {
+            return 'COALESCE(japanese_promo_price, japanese_price, price)';
         }
 
-        $referrer = $request->headers->get('referer');
-
-        if (is_string($referrer) && trim($referrer) !== '') {
-            $safeReferrer = $this->trackingUrl($referrer);
-
-            if ($safeReferrer !== null) {
-                $attribution['referrer'] = $safeReferrer;
-            }
-        }
-
-        $attribution['landing_page'] = Str::limit(
-            $request->url(),
-            2048,
-            ''
-        );
-
-        $request
-            ->session()
-            ->put(
-                'marketing_attribution',
-                $attribution
-            );
-    }
-
-    private function trackingUrl(string $value): ?string
-    {
-        $parts = parse_url(trim($value));
-
-        if (! is_array($parts)
-            || ! in_array($parts['scheme'] ?? null, ['http', 'https'], true)
-            || ! is_string($parts['host'] ?? null)) {
-            return null;
-        }
-
-        $url = $parts['scheme'].'://'.$parts['host'];
-
-        if (is_int($parts['port'] ?? null)) {
-            $url .= ':'.$parts['port'];
-        }
-
-        if (is_string($parts['path'] ?? null)) {
-            $url .= $parts['path'];
-        }
-
-        return Str::limit($url, 2048, '');
+        return <<<'SQL'
+CASE
+    WHEN COALESCE(japanese_promo_price, japanese_price) IS NULL
+        THEN COALESCE(swiss_promo_price, swiss_price, price)
+    WHEN COALESCE(swiss_promo_price, swiss_price) IS NULL
+        THEN COALESCE(japanese_promo_price, japanese_price, price)
+    WHEN COALESCE(japanese_promo_price, japanese_price)
+        <= COALESCE(swiss_promo_price, swiss_price)
+        THEN COALESCE(japanese_promo_price, japanese_price)
+    ELSE COALESCE(swiss_promo_price, swiss_price)
+END
+SQL;
     }
 }

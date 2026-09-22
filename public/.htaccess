@@ -5,6 +5,19 @@
 
     RewriteEngine On
 
+    # Reject HTTP methods that are not used by the application and can expose
+    # unnecessary server behaviour.
+    RewriteCond %{REQUEST_METHOD} ^(TRACE|TRACK)$ [NC]
+    RewriteRule .* - [F,L]
+
+    # Never expose version-control metadata if it is copied below public/ by
+    # mistake during a deployment.
+    RewriteRule (^|/)\.(git|svn|hg)(/|$) - [F,L,NC]
+
+    # Static media folders must never execute PHP-like payloads. This is a
+    # defense-in-depth rule in case an upload feature is introduced later.
+    RewriteRule ^(?:images|models)/.*\.(?:php[0-9]*|phtml|phar|phps)$ - [F,L,NC]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
@@ -22,4 +35,45 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+</IfModule>
+
+<IfModule mod_authz_core.c>
+    # Protect common secrets, backups, logs and project manifests if they are
+    # ever copied into the web root accidentally.
+    <FilesMatch "(?i)^(?:\.env(?:\..*)?|composer\.(?:json|lock)|package(?:-lock)?\.json|phpunit\.xml(?:\.dist)?|.*\.(?:log|sql|sqlite|bak|backup|old|orig|swp))$">
+        Require all denied
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # Product imagery uses stable descriptive filenames. A month keeps repeat
+    # visits fast while still allowing planned catalogue refreshes.
+    ExpiresByType image/avif "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/gif "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+
+    # Vite assets and bundled fonts are content-hashed at build time.
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(?:css|js|woff2?)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    <FilesMatch "\.(?:avif|webp|png|jpe?g|gif|svg)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json application/xml image/svg+xml
 </IfModule>

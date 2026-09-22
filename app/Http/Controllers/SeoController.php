@@ -10,8 +10,10 @@ class SeoController extends Controller
     public function sitemap(): Response
     {
         $watches = Watch::query()
+            ->whereNotIn('slug', WatchController::HIDDEN_PUBLIC_SLUGS)
             ->select([
                 'id',
+                'slug',
                 'updated_at',
             ])
             ->orderBy('id')
@@ -34,6 +36,7 @@ class SeoController extends Controller
         $content = implode(PHP_EOL, [
             'User-agent: *',
             'Allow: /',
+            'Disallow: /admin',
             'Disallow: /dashboard',
             'Disallow: /settings',
             'Disallow: /login',
@@ -42,6 +45,8 @@ class SeoController extends Controller
             'Disallow: /reset-password',
             'Disallow: /reservation-confirmed/',
             'Disallow: /nl/reservation-confirmed/',
+            'Disallow: /en/reservation-confirmed/',
+            'Disallow: /de/reservierung-bestaetigt/',
             '',
             'Sitemap: '.route('sitemap'),
             '',
