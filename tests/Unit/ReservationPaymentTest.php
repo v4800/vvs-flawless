@@ -17,6 +17,27 @@ class ReservationPaymentTest extends TestCase
         );
     }
 
+    public function test_it_preserves_a_stored_historical_deposit(): void
+    {
+        $this->assertSame(
+            250.0,
+            ReservationPayment::depositAmount(1000, 250)
+        );
+        $this->assertSame(
+            750.0,
+            ReservationPayment::balanceAmount(1000, 250)
+        );
+        $this->assertSame(
+            250.0,
+            ReservationPayment::confirmedPaidAmount(
+                1000,
+                true,
+                false,
+                250
+            )
+        );
+    }
+
     public function test_deposit_never_exceeds_total_price(): void
     {
         $this->assertSame(80.0, ReservationPayment::depositAmount(80));
