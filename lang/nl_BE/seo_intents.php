@@ -42,6 +42,12 @@ return [
                 'text' => 'Prijs, termijn, reservatie, persoonlijke overhandiging en levering: zo werkt VVS FLAWLESS.',
                 'cta' => 'Bekijk de België-gids',
             ],
+            [
+                'route' => 'netherlandsGuide',
+                'title' => 'Reserveren vanuit Nederland',
+                'text' => 'Lees hoe je vanuit Nederland een aanvraag verstuurt en hoe de ontvangstvoorwaarden worden bevestigd.',
+                'cta' => 'Bekijk de Nederland-gids',
+            ],
         ],
     ],
 
