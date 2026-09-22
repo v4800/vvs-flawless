@@ -64,7 +64,7 @@ class AdminReservationsDashboardTest extends TestCase
                     ->where('stats.new', 1)
                     ->where('stats.deposit_paid', 1)
                     ->where('stats.completed', 1)
-                    ->where('stats.confirmed_revenue', 1050)
+                    ->where('stats.confirmed_revenue', 900)
                     ->has('recentReservations', 3)
             );
     }
@@ -171,7 +171,7 @@ class AdminReservationsDashboardTest extends TestCase
             );
     }
 
-    public function test_price_is_split_into_expected_25_and_75_percent_amounts(): void
+    public function test_price_uses_fixed_100_euro_deposit_and_remaining_balance(): void
     {
         $reservation = $this->reservation($this->watch(), [
             'price' => 1000,
@@ -184,8 +184,8 @@ class AdminReservationsDashboardTest extends TestCase
             ]))
             ->assertInertia(
                 fn (Assert $page) => $page
-                    ->where('reservations.data.0.deposit_amount', 250)
-                    ->where('reservations.data.0.balance_amount', 750)
+                    ->where('reservations.data.0.deposit_amount', 100)
+                    ->where('reservations.data.0.balance_amount', 900)
                     ->where(
                         'reservations.data.0.confirmed_paid_amount',
                         0
