@@ -274,8 +274,8 @@ return [
     ],
 
     'concept' => [
-        'eyebrow' => 'VVS FLAWLESS Belgique',
-        'title' => 'La culture bustdown arrive en Belgique',
+        'eyebrow' => 'VVS FLAWLESS · Projet belge',
+        'title' => 'Montres VVS & iced-out depuis la Belgique',
         'description' => 'Une sélection de montres iced-out serties de moissanite VVS, proposées avec mouvement japonais ou suisse.',
         'cta' => 'Voir la collection',
     ],
@@ -292,7 +292,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'La culture bustdown arrive en Belgique',
+        'tagline' => 'VVS FLAWLESS · Projet indépendant belge',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Confidentialité',
         'terms' => 'Conditions de réservation',
@@ -303,8 +303,8 @@ return [
         'eyebrow' => 'À propos',
         'title_before' => 'Une nouvelle',
         'title_highlight' => 'culture',
-        'title_after' => 'en Belgique.',
-        'paragraph_1' => 'VVS FLAWLESS est un projet belge consacré aux montres iced-out serties de moissanite.',
+        'title_after' => 'depuis la Belgique.',
+        'paragraph_1' => 'VVS FLAWLESS est un projet indépendant belge consacré aux montres iced-out serties de moissanite, avec demandes possibles depuis la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
         'paragraph_2' => 'Vous choisissez votre modèle et son mouvement sur le site. Nous échangeons ensuite directement avec vous pour confirmer la commande et organiser sa réception.',
         'paragraph_3_before' => 'Les modèles proposés sont sertis de',
         'paragraph_3_strong' => 'moissanite VVS, couleur D',
