@@ -174,6 +174,8 @@ return array_replace_recursive($base, [
         'summary' => 'Übersicht',
         'your_watch' => 'Deine Uhr',
         'reserved_price' => 'Reservierter Preis',
+        'deposit' => 'Feste Anzahlung',
+        'balance' => 'Restbetrag',
         'customer_information' => 'Kundendaten',
         'not_provided' => 'Nicht angegeben',
         'status' => 'Status',
