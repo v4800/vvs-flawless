@@ -273,8 +273,8 @@ return [
     ],
 
     'concept' => [
-        'eyebrow' => 'VVS FLAWLESS België',
-        'title' => 'De bustdown-cultuur komt naar België',
+        'eyebrow' => 'VVS FLAWLESS · Belgisch project',
+        'title' => 'VVS- & iced-out horloges vanuit België',
         'description' => 'Een selectie iced-out horloges bezet met VVS-moissanite, met Japans of Zwitsers uurwerk.',
         'cta' => 'Bekijk de collectie',
     ],
@@ -291,7 +291,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'De bustdown-cultuur komt naar België',
+        'tagline' => 'VVS FLAWLESS · Onafhankelijk Belgisch project',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Privacy',
         'terms' => 'Reservatievoorwaarden',
@@ -302,8 +302,8 @@ return [
         'eyebrow' => 'Over ons',
         'title_before' => 'Een nieuwe',
         'title_highlight' => 'cultuur',
-        'title_after' => 'in België.',
-        'paragraph_1' => 'VVS FLAWLESS is een Belgisch project rond iced-out horloges bezet met moissanite.',
+        'title_after' => 'vanuit België.',
+        'paragraph_1' => 'VVS FLAWLESS is een onafhankelijk Belgisch project rond iced-out horloges met moissanite, met aanvragen vanuit België, Frankrijk, Duitsland en Nederland na bevestiging.',
         'paragraph_2' => 'Je kiest het model en uurwerk op de website. Daarna overlopen we de bestelling rechtstreeks met jou en spreken we de ontvangst af.',
         'paragraph_3_before' => 'De aangeboden modellen zijn bezet met',
         'paragraph_3_strong' => 'VVS-moissanite, kleur D',
