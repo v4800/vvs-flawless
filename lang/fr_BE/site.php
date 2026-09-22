@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'La culture bustdown arrive en Belgique',
-        'description' => 'Vous recherchez l’éclat d’une montre diamant ? Découvrez nos modèles iced-out sertis de moissanite VVS, disponibles sur réservation en Belgique.',
+        'tagline' => 'Montres VVS & iced-out depuis la Belgique',
+        'description' => 'Découvrez nos montres iced-out serties de moissanite VVS, proposées depuis la Belgique avec réservation possible en Belgique, France, Allemagne et Pays-Bas selon confirmation.',
         'concept' => 'Découvrir VVS FLAWLESS',
 
         'view_3d' => 'Voir la montre en 3D',
@@ -99,7 +99,7 @@ return [
         'step_3_text' => 'Laissez vos coordonnées. Aucun paiement n’est demandé sur le site.',
 
         'step_4_title' => 'Nous vous recontactons',
-        'step_4_text' => 'Nous confirmons avec vous le modèle, le prix, le délai et les conditions de l’acompte.',
+        'step_4_text' => 'Nous confirmons directement avec vous le modèle, le prix, le délai et les modalités de la commande.',
 
         'step_5_title' => 'Recevez votre montre',
         'step_5_text' => 'Une fois la montre prête et validée, nous organisons la remise en main propre ou la livraison.',
@@ -124,11 +124,11 @@ return [
 
     'seo' => [
         'collection_title' => 'Montres VVS en moissanite iced-out | VVS FLAWLESS',
-        'collection_description' => 'Découvrez nos montres VVS serties de moissanite et nos modèles iced-out disponibles sur réservation en Belgique, avec mouvement japonais ou suisse.',
+        'collection_description' => 'Découvrez nos montres VVS serties de moissanite et nos modèles iced-out, proposés depuis la Belgique pour la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
         'product_description_suffix' => 'Montre sertie de moissanite VVS, avec mouvement japonais ou suisse, disponible sur réservation avec remise en main propre ou livraison.',
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
-        'about_title' => 'À propos de VVS FLAWLESS — Belgique',
+        'about_title' => 'À propos de VVS FLAWLESS — Belgique & Europe',
         'about_description' => 'Découvrez VVS FLAWLESS, un projet belge consacré aux montres iced-out serties de moissanite VVS et disponibles sur réservation.',
     ],
 
@@ -337,7 +337,7 @@ return [
             ['question' => 'Vos montres sont-elles serties de diamants ?', 'answer' => 'Non. Les modèles présentés sur le site sont sertis de moissanite VVS. Cette pierre offre l’éclat recherché sur une montre diamant ou iced-out, mais elle reste différente du diamant.'],
             ['question' => 'La moissanite passe-t-elle au testeur diamant ?', 'answer' => 'La moissanite peut réagir positivement sur certains testeurs thermiques utilisés pour le diamant. Un testeur capable de différencier diamant et moissanite pourra cependant identifier les deux pierres séparément.'],
             ['question' => 'Quelle différence entre mouvement japonais et suisse ?', 'answer' => 'Le mouvement japonais est la configuration la plus accessible. La version suisse est l’option premium lorsqu’elle est proposée sur le modèle. Les deux prix sont affichés avant la réservation.'],
-            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons pour confirmer les détails et, si vous validez la commande, l’acompte de 25 %.'],
+            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons ensuite pour confirmer directement les détails avant toute préparation de la montre.'],
             ['question' => 'Quand ma montre sera-t-elle disponible ?', 'answer' => 'Comptez généralement 5 à 6 jours ouvrables. Ce délai reste indicatif jusqu’à ce que nous ayons vérifié votre commande avec vous.'],
             ['question' => 'Comment recevoir ma montre ?', 'answer' => 'Vous pouvez choisir une remise en main propre ou une livraison. Les modalités précises et les éventuels frais sont confirmés avant la finalisation de la commande.'],
             ['question' => 'Comment se passe la remise en main propre ?', 'answer' => 'Après confirmation, nous choisissons ensemble un lieu et un moment qui conviennent aux deux parties.'],
@@ -377,9 +377,9 @@ return [
         'reserve' => 'Réservez',
         'reserve_text' => 'Envoyez votre demande directement depuis le formulaire.',
         'confirm' => 'Confirmation',
-        'confirm_text' => 'Nous vérifions les détails avec vous et expliquons l’acompte de 25 %.',
+        'confirm_text' => 'Nous vérifions directement avec vous le modèle, le prix, le délai et les modalités avant toute préparation.',
         'receive' => 'Réception',
-        'receive_text' => 'Après la vidéo de confirmation, nous organisons le solde de 75 % et la réception.',
+        'receive_text' => 'Une fois la montre prête et validée avec vous, nous organisons sa remise ou sa livraison.',
         'delay_label' => 'Disponibilité estimée',
         'delay' => '5–6 jours ouvrables',
         'delivery_label' => 'Mode de réception',
