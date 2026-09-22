@@ -196,6 +196,8 @@ return [
         'summary' => 'Récapitulatif',
         'your_watch' => 'Votre montre',
         'reserved_price' => 'Prix réservé',
+        'deposit' => 'Acompte fixe',
+        'balance' => 'Solde restant',
         'customer_information' => 'Informations client',
         'not_provided' => 'Non renseignée',
         'status' => 'Statut',
