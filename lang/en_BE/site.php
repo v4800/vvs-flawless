@@ -114,7 +114,7 @@ return [
         'product_description_suffix' => 'Watch set with VVS moissanite, available with a Japanese or Swiss movement and by reservation with personal handover or delivery.',
         'product_category' => 'Iced-out watch set with moissanite',
         'offer_name' => ':movement movement',
-        'about_title' => 'About VVS FLAWLESS — Belgium & Europe',
+        'about_title' => 'About VVS FLAWLESS',
         'about_description' => 'Discover VVS FLAWLESS, an independent Belgian project focused on iced-out watches set with VVS moissanite, with requests available from Belgium, France, Germany and the Netherlands.',
     ],
 
