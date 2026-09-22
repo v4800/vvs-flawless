@@ -59,10 +59,14 @@ final class ReservationRecapPdf
                 ? (string) trans('site.product.delivery')
                 : (string) trans('site.product.handover');
 
+            $dateFormat = $locale === 'de_BE'
+                ? 'd.m.Y H:i'
+                : 'd/m/Y H:i';
+
             $lines = [
                 [(string) trans('site.confirmation.title'), 16, true],
                 [(string) trans('site.mail.number').' : '.$reservation->reservation_number, 10, false],
-                [(string) trans('site.mail.date').' : '.($reservation->created_at?->timezone('Europe/Brussels')->format('d/m/Y H:i') ?? '—'), 10, false],
+                [(string) trans('site.mail.date').' : '.($reservation->created_at?->timezone('Europe/Brussels')->format($dateFormat) ?? '—'), 10, false],
                 ['', 10, false],
                 [(string) trans('site.confirmation.customer_information'), 11, true],
                 [(string) trans('site.mail.name').' : '.$reservation->customer_name, 10, false],
@@ -79,9 +83,9 @@ final class ReservationRecapPdf
                 [(string) trans('site.mail.movement').' : '.$movement, 10, false],
                 [(string) trans('site.mail.reception_method').' : '.$delivery, 10, false],
                 ['', 10, false],
-                [(string) trans('site.mail.reserved_price').' : '.$this->money($price), 10, false],
-                [(string) trans('site.mail.deposit').' : '.$this->money($deposit), 10, true],
-                [(string) trans('site.mail.balance').' : '.$this->money($balance), 10, false],
+                [(string) trans('site.mail.reserved_price').' : '.$this->money($price, $locale), 10, false],
+                [(string) trans('site.mail.deposit').' : '.$this->money($deposit, $locale), 10, true],
+                [(string) trans('site.mail.balance').' : '.$this->money($balance, $locale), 10, false],
                 ['', 10, false],
                 [(string) trans('site.mail.next'), 9, false],
                 [(string) trans('site.mail.legal_note'), 8, false],
@@ -94,8 +98,16 @@ final class ReservationRecapPdf
         }
     }
 
-    private function money(float $amount): string
+    private function money(float $amount, string $locale): string
     {
+        if ($locale === 'en_BE') {
+            return '€'.number_format($amount, 2, '.', ',');
+        }
+
+        if (in_array($locale, ['nl_BE', 'de_BE'], true)) {
+            return number_format($amount, 2, ',', '.').' €';
+        }
+
         return number_format($amount, 2, ',', ' ').' €';
     }
 
