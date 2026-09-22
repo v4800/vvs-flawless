@@ -178,9 +178,9 @@ class ReservationDashboardController extends Controller
         abort_unless((bool) $request->user()?->is_admin, 403);
 
         try {
-            Mail::to($reservation->email)->send(
-                new ReservationRecapMail($reservation)
-            );
+            Mail::to($reservation->email)
+                ->locale($reservation->locale ?: config('app.locale'))
+                ->send(new ReservationRecapMail($reservation));
         } catch (Throwable) {
             return back()->withErrors([
                 'email_message' => 'Le récapitulatif n’a pas pu être envoyé. Vérifie la configuration mail du site.',
@@ -321,6 +321,7 @@ class ReservationDashboardController extends Controller
             'phone' => $reservation->phone,
             'city' => $reservation->city,
             'delivery_method' => $reservation->delivery_method,
+            'locale' => $reservation->locale,
             'message' => $reservation->message,
             'movement' => $reservation->movement,
             'price' => $price,
