@@ -163,7 +163,7 @@ return array_replace_recursive($base, [
         'piece_amount' => 'Preis der Uhr',
         'sending' => 'Wird gesendet…',
         'submit' => 'Reservierung senden',
-        'reservation_note' => 'Das Absenden des Formulars löst keine Zahlung aus. Die Bestellung bestätigst du später direkt mit VVS FLAWLESS.',
+        'reservation_note' => 'Das Absenden des Formulars löst keine Zahlung aus. Nachdem die Details mit VVS FLAWLESS geprüft und bestätigt wurden, wird eine feste Anzahlung von 100 € verlangt, bevor die Vorbereitung beginnt.',
         'footer_material' => 'VVS-Moissanit • Farbe D',
     ],
     'confirmation' => [
@@ -316,7 +316,7 @@ return array_replace_recursive($base, [
             ['question' => 'Sind eure Uhren mit Diamanten besetzt?', 'answer' => 'Nein. Die auf der Website gezeigten Modelle sind mit VVS-Moissanit besetzt. Der Stein bietet den hellen Look, den viele bei einer Diamant- oder Iced-Out-Uhr suchen, ist aber kein Diamant.'],
             ['question' => 'Kann Moissanit auf einem Diamanttester reagieren?', 'answer' => 'Moissanit kann bei manchen einfachen thermischen Diamanttestern positiv reagieren. Ein Gerät, das zwischen Diamant und Moissanit unterscheidet, kann beide getrennt erkennen.'],
             ['question' => 'Was ist der Unterschied zwischen japanischem und Schweizer Werk?', 'answer' => 'Die japanische Version ist die zugänglichere Konfiguration. Die Schweizer Version ist die Premium-Option, wenn sie für das Modell angeboten wird. Beide Preise werden vor der Reservierung angezeigt.'],
-            ['question' => 'Wie funktioniert die Reservierung?', 'answer' => 'Wähle Uhr und Werk und sende das Formular. Auf der Website zahlst du nichts. Danach bestätigen wir alle Details direkt mit dir, bevor die Vorbereitung beginnt.'],
+            ['question' => 'Wie funktioniert die Reservierung?', 'answer' => 'Wähle Uhr und Werk und sende das Formular. Auf der Website zahlst du nichts. Wir bestätigen die Details direkt mit dir; danach wird eine feste Anzahlung von 100 € verlangt, bevor die Vorbereitung beginnt.'],
             ['question' => 'Wann ist meine Uhr verfügbar?', 'answer' => 'Rechne mit ungefähr 5 bis 6 Werktagen. Dies bleibt eine Schätzung, bis wir die Bestellung mit dir geprüft haben.'],
             ['question' => 'Wie erhalte ich meine Uhr?', 'answer' => 'Du kannst persönliche Übergabe oder Lieferung wählen. Die genauen Bedingungen und mögliche Kosten werden vor der endgültigen Bestellung bestätigt.'],
             ['question' => 'Wie funktioniert die persönliche Übergabe?', 'answer' => 'Nach der Bestätigung vereinbaren wir einen Ort und Zeitpunkt, der für beide Seiten passt.'],
