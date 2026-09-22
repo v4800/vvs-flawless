@@ -251,6 +251,7 @@ return [
         'recorded' => 'Jouw reservatieaanvraag is goed geregistreerd.',
         'summary' => 'Overzicht',
         'number' => 'Nummer',
+        'date' => 'Datum',
         'watch' => 'Horloge',
         'movement' => 'Uurwerk',
         'reserved_price' => 'Gereserveerde prijs',
