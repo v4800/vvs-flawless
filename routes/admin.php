@@ -38,6 +38,18 @@ Route::middleware([
                 ->middleware('throttle:10,1')
                 ->name('reservations.email');
 
+            Route::get(
+                '/reservations/{reservation}/recap',
+                [ReservationDashboardController::class, 'downloadRecap']
+            )->name('reservations.recap');
+
+            Route::post(
+                '/reservations/{reservation}/recap/email',
+                [ReservationDashboardController::class, 'sendRecap']
+            )
+                ->middleware('throttle:10,1')
+                ->name('reservations.recap.email');
+
             Route::patch(
                 '/reservations/{reservation}/archive',
                 [ReservationDashboardController::class, 'archive']
