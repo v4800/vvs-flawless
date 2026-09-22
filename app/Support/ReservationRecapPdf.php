@@ -15,7 +15,7 @@ final class ReservationRecapPdf
     {
         $reservation->loadMissing('watch');
 
-        $locale = $reservation->locale ?: 'fr_BE';
+        $locale = (string) ($reservation->locale ?: 'fr_BE');
         $previousLocale = app()->getLocale();
 
         app()->setLocale($locale);
@@ -28,12 +28,14 @@ final class ReservationRecapPdf
             $deposit = ReservationPayment::depositAmount($price) ?? 0.0;
             $balance = ReservationPayment::balanceAmount($price) ?? 0.0;
 
-            $watchName = $reservation->watch_name_snapshot
+            $watchName = (string) (
+                $reservation->watch_name_snapshot
                 ?: $reservation->watch?->name
-                ?: 'VVS FLAWLESS';
+                ?: 'VVS FLAWLESS'
+            );
 
             if ($reservation->watch !== null) {
-                $watchName = app(WatchCatalog::class)
+                $watchName = (string) app(WatchCatalog::class)
                     ->localizedWatch($reservation->watch)
                     ->name;
             }
@@ -57,7 +59,11 @@ final class ReservationRecapPdf
                 [(string) trans('site.mail.name').' : '.$reservation->customer_name, 10, false],
                 [(string) trans('site.mail.email').' : '.$reservation->email, 10, false],
                 [(string) trans('site.mail.phone').' : '.$reservation->phone, 10, false],
-                [(string) trans('site.mail.city').' : '.($reservation->city ?: trans('site.mail.not_provided')), 10, false],
+                [(string) trans('site.mail.city').' : '.(
+                    $reservation->city
+                        ? (string) $reservation->city
+                        : (string) trans('site.mail.not_provided')
+                ), 10, false],
                 ['', 10, false],
                 [(string) trans('site.mail.summary'), 11, true],
                 [(string) trans('site.mail.watch').' : '.$watchName, 10, false],
