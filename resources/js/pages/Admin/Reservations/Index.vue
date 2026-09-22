@@ -830,6 +830,13 @@ const paginationLabel = (label) =>
                                             {{ reservation.delivery_method }}
                                         </dd>
                                     </div>
+
+                                    <div>
+                                        <dt class="text-xs text-zinc-600">
+                                            Langue
+                                        </dt>
+                                        <dd>{{ reservation.locale || 'fr_BE' }}</dd>
+                                    </div>
                                     <div v-if="reservation.message">
                                         <dt class="text-xs text-zinc-600">
                                             Message
