@@ -244,6 +244,7 @@ return array_replace_recursive($base, [
         'next' => 'Wir kontaktieren dich, um die Details zu prüfen. Nach Bestätigung wird eine feste Anzahlung von 100 € verlangt, bevor die Vorbereitung beginnt.',
         'legal_note' => 'Diese Nachricht bestätigt deine Reservierungsanfrage. Die Bestellung wird erst nach Bestätigung mit VVS FLAWLESS endgültig.',
         'thanks' => 'Vielen Dank,',
+        'document_note' => 'Dieses Dokument ist eine Reservierungsübersicht und keine Steuerrechnung.',
     ],
     'language' => [
         'label' => 'Sprache wählen',
