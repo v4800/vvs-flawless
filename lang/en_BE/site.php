@@ -255,6 +255,7 @@ return [
         'next' => 'We will contact you to review the details. Once confirmed, a fixed €100 deposit is requested before preparation begins.',
         'legal_note' => 'This message confirms your reservation request. The order becomes final after confirmation with VVS FLAWLESS.',
         'thanks' => 'Thank you,',
+        'document_note' => 'This document is a reservation summary and not a tax invoice.',
     ],
 
     'language' => [
