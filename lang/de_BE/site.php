@@ -227,6 +227,7 @@ return array_replace_recursive($base, [
         'recorded' => 'Deine Reservierungsanfrage wurde erfasst.',
         'summary' => 'Übersicht',
         'number' => 'Nummer',
+        'date' => 'Datum',
         'watch' => 'Uhr',
         'movement' => 'Werk',
         'reserved_price' => 'Reservierter Preis',
