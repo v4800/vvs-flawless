@@ -19,6 +19,7 @@ class Reservation extends Model
         'phone',
         'city',
         'delivery_method',
+        'locale',
         'status',
         'reservation_number',
         'message',
