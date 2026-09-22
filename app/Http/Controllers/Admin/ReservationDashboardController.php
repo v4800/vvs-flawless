@@ -304,13 +304,20 @@ class ReservationDashboardController extends Controller
             ? (float) $reservation->price
             : null;
 
-        $depositAmount = ReservationPayment::depositAmount($price);
-        $balanceAmount = ReservationPayment::balanceAmount($price);
+        $depositAmount = ReservationPayment::depositAmount(
+            $price,
+            $reservation->deposit_amount
+        );
+        $balanceAmount = ReservationPayment::balanceAmount(
+            $price,
+            $reservation->deposit_amount
+        );
 
         $confirmedPaidAmount = ReservationPayment::confirmedPaidAmount(
             $price,
             $reservation->deposit_paid_at !== null,
-            $reservation->balance_paid_at !== null
+            $reservation->balance_paid_at !== null,
+            $reservation->deposit_amount
         );
 
         return [
