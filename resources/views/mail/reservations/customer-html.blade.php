@@ -143,7 +143,7 @@
                                                         {{ strtoupper(trans('site.mail.reserved_price')) }}
                                                     </div>
                                                     <div style="margin-top:7px;font-size:25px;font-weight:800;color:#d8c49e;">
-                                                        {{ number_format($reservation->price, 0, ',', ' ') }} €
+                                                        {{ $formatMoney((float) $reservation->price) }}
                                                     </div>
                                                 </td>
                                             </tr>
@@ -158,7 +158,7 @@
                                                         {{ strtoupper(trans('site.mail.deposit')) }}
                                                     </div>
                                                     <div style="margin-top:7px;font-size:14px;font-weight:700;color:#d8c49e;">
-                                                        {{ number_format($deposit, 2, ',', ' ') }} €
+                                                        {{ $formatMoney((float) $deposit) }}
                                                     </div>
                                                 </td>
 
@@ -167,7 +167,7 @@
                                                         {{ strtoupper(trans('site.mail.balance')) }}
                                                     </div>
                                                     <div style="margin-top:7px;font-size:14px;font-weight:700;color:#eee9df;">
-                                                        {{ number_format($balance, 2, ',', ' ') }} €
+                                                        {{ $formatMoney((float) $balance) }}
                                                     </div>
                                                 </td>
                                             </tr>
