@@ -42,6 +42,12 @@ return array_replace_recursive($base, [
                 'text' => 'Preise, Lieferzeit, Reservierung, persönliche Übergabe und Versand: So funktioniert VVS FLAWLESS.',
                 'cta' => 'Belgien-Ratgeber ansehen',
             ],
+            [
+                'route' => 'germanyGuide',
+                'title' => 'Aus Deutschland anfragen',
+                'text' => 'Erfahre, wie du aus Deutschland eine Anfrage sendest und wie die Empfangsbedingungen bestätigt werden.',
+                'cta' => 'Deutschland-Ratgeber ansehen',
+            ],
         ],
     ],
     'vvs_watch' => [
