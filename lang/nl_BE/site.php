@@ -183,7 +183,7 @@ return [
         'piece_amount' => 'Bedrag van het horloge',
         'sending' => 'Wordt verzonden…',
         'submit' => 'Mijn reservatie versturen',
-        'reservation_note' => 'Het formulier voert geen betaling uit. Je bevestigt de bestelling later rechtstreeks met VVS FLAWLESS.',
+        'reservation_note' => 'Het formulier voert geen betaling uit. Nadat de details met VVS FLAWLESS zijn gecontroleerd en bevestigd, wordt een vaste aanbetaling van 100 € gevraagd voordat de voorbereiding start.',
         'footer_material' => 'VVS-moissanite • Kleur D',
     ],
 
@@ -345,7 +345,7 @@ return [
             ['question' => 'Zijn jullie horloges met diamant bezet?', 'answer' => 'Nee. De modellen op de website zijn bezet met VVS-moissanite. Die steen biedt de uitstraling die veel mensen zoeken in een diamanten of iced-out horloge, maar is geen diamant.'],
             ['question' => 'Reageert moissanite op een diamanttester?', 'answer' => 'Moissanite kan positief reageren op bepaalde thermische diamanttesters. Een tester die diamant en moissanite van elkaar onderscheidt, kan beide stenen afzonderlijk herkennen.'],
             ['question' => 'Wat is het verschil tussen een Japans en Zwitsers uurwerk?', 'answer' => 'De Japanse uitvoering is de meest toegankelijke versie. De Zwitserse uitvoering is de premiumoptie wanneer die voor het model beschikbaar is. Beide prijzen staan vóór de reservatie op de pagina.'],
-            ['question' => 'Hoe werkt een reservatie?', 'answer' => 'Kies het horloge en uurwerk en verstuur het formulier. Je betaalt niets via de website. We nemen daarna rechtstreeks contact op om alle details te bevestigen voordat de voorbereiding start.'],
+            ['question' => 'Hoe werkt een reservatie?', 'answer' => 'Kies het horloge en uurwerk en verstuur het formulier. Je betaalt niets via de website. We nemen contact op om de details te bevestigen; daarna wordt een vaste aanbetaling van 100 € gevraagd voordat de voorbereiding start.'],
             ['question' => 'Wanneer is mijn horloge beschikbaar?', 'answer' => 'Reken meestal op 5 tot 6 werkdagen. Die termijn blijft een schatting totdat we jouw bestelling samen hebben gecontroleerd.'],
             ['question' => 'Hoe ontvang ik mijn horloge?', 'answer' => 'Je kunt kiezen tussen persoonlijke overhandiging en levering. De precieze voorwaarden en eventuele kosten worden vóór de definitieve bestelling bevestigd.'],
             ['question' => 'Hoe verloopt een persoonlijke overhandiging?', 'answer' => 'Na de bevestiging kiezen we samen een plaats en tijdstip die voor beide partijen passen.'],
