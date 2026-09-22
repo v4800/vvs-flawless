@@ -184,7 +184,7 @@ return [
         'piece_amount' => 'Montant de la pièce',
         'sending' => 'Envoi en cours…',
         'submit' => 'Envoyer ma réservation',
-        'reservation_note' => 'L’envoi du formulaire ne déclenche aucun paiement. La commande est confirmée ensuite avec VVS FLAWLESS.',
+        'reservation_note' => 'L’envoi du formulaire ne déclenche aucun paiement. Après vérification et validation des détails avec VVS FLAWLESS, un acompte fixe de 100 € est demandé avant le lancement de la préparation.',
         'footer_material' => 'Moissanite VVS • Couleur D',
     ],
 
@@ -346,7 +346,7 @@ return [
             ['question' => 'Vos montres sont-elles serties de diamants ?', 'answer' => 'Non. Les modèles présentés sur le site sont sertis de moissanite VVS. Cette pierre offre l’éclat recherché sur une montre diamant ou iced-out, mais elle reste différente du diamant.'],
             ['question' => 'La moissanite passe-t-elle au testeur diamant ?', 'answer' => 'La moissanite peut réagir positivement sur certains testeurs thermiques utilisés pour le diamant. Un testeur capable de différencier diamant et moissanite pourra cependant identifier les deux pierres séparément.'],
             ['question' => 'Quelle différence entre mouvement japonais et suisse ?', 'answer' => 'Le mouvement japonais est la configuration la plus accessible. La version suisse est l’option premium lorsqu’elle est proposée sur le modèle. Les deux prix sont affichés avant la réservation.'],
-            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons ensuite pour confirmer directement les détails avant toute préparation de la montre.'],
+            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons pour confirmer les détails ; après validation, un acompte fixe de 100 € est demandé avant le lancement de la préparation.'],
             ['question' => 'Quand ma montre sera-t-elle disponible ?', 'answer' => 'Comptez généralement 5 à 6 jours ouvrables. Ce délai reste indicatif jusqu’à ce que nous ayons vérifié votre commande avec vous.'],
             ['question' => 'Comment recevoir ma montre ?', 'answer' => 'Vous pouvez choisir une remise en main propre ou une livraison. Les modalités précises et les éventuels frais sont confirmés avant la finalisation de la commande.'],
             ['question' => 'Comment se passe la remise en main propre ?', 'answer' => 'Après confirmation, nous choisissons ensemble un lieu et un moment qui conviennent aux deux parties.'],
