@@ -25,8 +25,14 @@ final class ReservationRecapPdf
                 ? (float) $reservation->price
                 : 0.0;
 
-            $deposit = ReservationPayment::depositAmount($price) ?? 0.0;
-            $balance = ReservationPayment::balanceAmount($price) ?? 0.0;
+            $deposit = ReservationPayment::depositAmount(
+                $price,
+                $reservation->deposit_amount
+            ) ?? 0.0;
+            $balance = ReservationPayment::balanceAmount(
+                $price,
+                $reservation->deposit_amount
+            ) ?? 0.0;
 
             $watchName = (string) (
                 $reservation->watch_name_snapshot
