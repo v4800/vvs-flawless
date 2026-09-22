@@ -194,6 +194,27 @@ class AdminReservationsDashboardTest extends TestCase
             );
     }
 
+    public function test_dashboard_preserves_a_historical_deposit_snapshot(): void
+    {
+        $reservation = $this->reservation($this->watch(), [
+            'price' => 1000,
+            'deposit_amount' => 250,
+            'reservation_number' => 'VVS-LEGACY-DEPOSIT',
+            'deposit_paid_at' => now(),
+        ]);
+
+        $this->actingAs($this->admin())
+            ->get(route('admin.reservations.index', [
+                'q' => $reservation->reservation_number,
+            ]))
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where('reservations.data.0.deposit_amount', 250)
+                    ->where('reservations.data.0.balance_amount', 750)
+                    ->where('reservations.data.0.confirmed_paid_amount', 250)
+            );
+    }
+
     public function test_admin_can_update_workflow_and_history_is_recorded(): void
     {
         $admin = $this->admin();
