@@ -3,9 +3,12 @@
         ->localizedWatch($reservation->watch);
 
     $watchName = $localizedWatch->name;
+    $presentedCopy = $localizedWatch->getAttribute('presented_copy');
 
     $movement = match ($reservation->movement) {
-        'Modele presente' => $localizedWatch->getAttribute('presented_copy')['model_label'],
+        'Modele presente' => is_array($presentedCopy)
+            ? ($presentedCopy['model_label'] ?? $reservation->movement)
+            : $reservation->movement,
         'Suisse' => trans('site.movements.suisse'),
         default => trans('site.movements.japonais'),
     };
@@ -14,16 +17,28 @@
         ? trans('site.product.delivery')
         : trans('site.product.handover');
 
-    $deposit = \App\Support\ReservationPayment::depositAmount($reservation->price) ?? 0;
-    $balance = \App\Support\ReservationPayment::balanceAmount($reservation->price) ?? 0;
-
-    $depositAmount = \App\Support\ReservationPayment::depositAmount(
+    $deposit = \App\Support\ReservationPayment::depositAmount(
         $reservation->price
     ) ?? 0;
 
-    $balanceAmount = \App\Support\ReservationPayment::balanceAmount(
+    $balance = \App\Support\ReservationPayment::balanceAmount(
         $reservation->price
     ) ?? 0;
+
+    $locale = app()->getLocale();
+
+    $formatMoney = static function (float $amount) use ($locale): string {
+        if ($locale === 'en_BE') {
+            return '€'.number_format($amount, 2, '.', ',');
+        }
+
+        if (in_array($locale, ['nl_BE', 'de_BE'], true)) {
+            return number_format($amount, 2, ',', '.').' €';
+        }
+
+        return number_format($amount, 2, ',', ' ').' €';
+    };
+
     $watchImageUrl = url(
         app(\App\Support\WatchCatalog::class)
             ->applyCover($reservation->watch)
@@ -67,7 +82,7 @@
                                             VVS FLAWLESS
                                         </div>
                                         <div style="margin-top:5px;font-size:11px;letter-spacing:1.4px;color:#ad9a78;">
-                                            MOISSANITE VVS · BELGIQUE
+                                            {{ trans('site.mail.brand_line') }}
                                         </div>
                                     </td>
                                     <td align="right" style="font-size:11px;color:#8e8980;">
@@ -81,7 +96,7 @@
                     <tr>
                         <td class="vvs-padding" style="padding:42px 34px 28px;">
                             <div style="display:inline-block;padding:7px 12px;border:1px solid #8f7b59;border-radius:999px;background:#1b1915;font-size:10px;font-weight:700;letter-spacing:1.7px;color:#d7c29d;">
-                                DEMANDE ENREGISTRÉE
+                                {{ trans('site.mail.recorded_badge') }}
                             </div>
 
                             <h1 class="vvs-title" style="margin:20px 0 12px;font-family:Georgia,'Times New Roman',serif;font-size:38px;line-height:44px;font-weight:500;color:#f7f3ea;">
@@ -179,30 +194,6 @@
                                             <tr>
                                                 <td class="vvs-detail" width="50%" valign="top" style="padding-right:12px;">
                                                     <div style="font-size:10px;letter-spacing:1.2px;color:#77736c;">
-                                                        {{ strtoupper(trans('site.mail.deposit')) }}
-                                                    </div>
-                                                    <div style="margin-top:7px;font-size:18px;font-weight:800;color:#d8c49e;">
-                                                        {{ number_format($depositAmount, 0, ',', ' ') }} €
-                                                    </div>
-                                                </td>
-
-                                                <td class="vvs-detail" width="50%" valign="top">
-                                                    <div style="font-size:10px;letter-spacing:1.2px;color:#77736c;">
-                                                        {{ strtoupper(trans('site.mail.balance')) }}
-                                                    </div>
-                                                    <div style="margin-top:7px;font-size:18px;font-weight:800;color:#eee9df;">
-                                                        {{ number_format($balanceAmount, 0, ',', ' ') }} €
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td colspan="2" style="height:22px;"></td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="vvs-detail" width="50%" valign="top" style="padding-right:12px;">
-                                                    <div style="font-size:10px;letter-spacing:1.2px;color:#77736c;">
                                                         {{ strtoupper(trans('site.mail.reception_method')) }}
                                                     </div>
                                                     <div style="margin-top:7px;font-size:14px;color:#eee9df;">
@@ -270,7 +261,7 @@
                 </table>
 
                 <div style="padding:18px;font-size:10px;line-height:17px;color:#5e5a54;">
-                    Message automatique lié à la demande {{ $reservation->reservation_number }}.
+                    {{ trans('site.mail.automated_message', ['number' => $reservation->reservation_number]) }}
                 </div>
             </td>
         </tr>
