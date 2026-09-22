@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'De bustdown-cultuur komt naar België',
-        'description' => 'Op zoek naar de uitstraling van een diamanten horloge? Ontdek onze iced-out modellen bezet met VVS-moissanite, op reservatie verkrijgbaar in België.',
+        'tagline' => 'VVS- & iced-out horloges vanuit België',
+        'description' => 'Ontdek onze iced-out horloges met VVS-moissanite, aangeboden vanuit België voor België, Frankrijk, Duitsland en Nederland na bevestiging.',
         'concept' => 'Ontdek VVS FLAWLESS',
 
         'view_3d' => 'Bekijk het horloge in 3D',
@@ -98,7 +98,7 @@ return [
         'step_3_text' => 'Laat je gegevens achter. Je betaalt niets via de website.',
 
         'step_4_title' => 'We nemen contact op',
-        'step_4_text' => 'We bevestigen samen het model, de prijs, de termijn en de voorwaarden van het voorschot.',
+        'step_4_text' => 'We bevestigen rechtstreeks het model, de prijs, de termijn en de bestelvoorwaarden voordat de voorbereiding start.',
 
         'step_5_title' => 'Ontvang je horloge',
         'step_5_text' => 'Zodra het horloge klaar en goedgekeurd is, spreken we de afhaling of levering af.',
@@ -123,11 +123,11 @@ return [
 
     'seo' => [
         'collection_title' => 'VVS-moissanite & iced-out horloges | VVS FLAWLESS',
-        'collection_description' => 'Ontdek VVS-moissanite en iced-out horloges op reservatie in België, met keuze uit een Japans of Zwitsers uurwerk.',
+        'collection_description' => 'Ontdek VVS-moissanite en iced-out horloges vanuit België, beschikbaar voor België, Frankrijk, Duitsland en Nederland na bevestiging.',
         'product_description_suffix' => 'Horloge bezet met VVS-moissanite, met Japans of Zwitsers uurwerk, op reservatie verkrijgbaar met persoonlijke overhandiging of levering.',
         'product_category' => 'Iced-out horloge bezet met moissanite',
         'offer_name' => ':movement uurwerk',
-        'about_title' => 'Over VVS FLAWLESS — België',
+        'about_title' => 'Over VVS FLAWLESS — België & Europa',
         'about_description' => 'Ontdek VVS FLAWLESS, een Belgisch project rond iced-out horloges bezet met VVS-moissanite en verkrijgbaar op reservatie.',
     ],
 
@@ -336,7 +336,7 @@ return [
             ['question' => 'Zijn jullie horloges met diamant bezet?', 'answer' => 'Nee. De modellen op de website zijn bezet met VVS-moissanite. Die steen biedt de uitstraling die veel mensen zoeken in een diamanten of iced-out horloge, maar is geen diamant.'],
             ['question' => 'Reageert moissanite op een diamanttester?', 'answer' => 'Moissanite kan positief reageren op bepaalde thermische diamanttesters. Een tester die diamant en moissanite van elkaar onderscheidt, kan beide stenen afzonderlijk herkennen.'],
             ['question' => 'Wat is het verschil tussen een Japans en Zwitsers uurwerk?', 'answer' => 'De Japanse uitvoering is de meest toegankelijke versie. De Zwitserse uitvoering is de premiumoptie wanneer die voor het model beschikbaar is. Beide prijzen staan vóór de reservatie op de pagina.'],
-            ['question' => 'Hoe werkt een reservatie?', 'answer' => 'Kies het horloge en uurwerk en verstuur het formulier. Je betaalt niets via de website. We nemen contact op om de details en, als je bestelt, het voorschot van 25% te bevestigen.'],
+            ['question' => 'Hoe werkt een reservatie?', 'answer' => 'Kies het horloge en uurwerk en verstuur het formulier. Je betaalt niets via de website. We nemen daarna rechtstreeks contact op om alle details te bevestigen voordat de voorbereiding start.'],
             ['question' => 'Wanneer is mijn horloge beschikbaar?', 'answer' => 'Reken meestal op 5 tot 6 werkdagen. Die termijn blijft een schatting totdat we jouw bestelling samen hebben gecontroleerd.'],
             ['question' => 'Hoe ontvang ik mijn horloge?', 'answer' => 'Je kunt kiezen tussen persoonlijke overhandiging en levering. De precieze voorwaarden en eventuele kosten worden vóór de definitieve bestelling bevestigd.'],
             ['question' => 'Hoe verloopt een persoonlijke overhandiging?', 'answer' => 'Na de bevestiging kiezen we samen een plaats en tijdstip die voor beide partijen passen.'],
@@ -376,9 +376,9 @@ return [
         'reserve' => 'Reserveer',
         'reserve_text' => 'Verstuur je aanvraag via het formulier.',
         'confirm' => 'Bevestiging',
-        'confirm_text' => 'We overlopen de details en leggen het voorschot van 25% uit.',
+        'confirm_text' => 'We overlopen rechtstreeks het model, de prijs, de termijn en de voorwaarden voordat de voorbereiding start.',
         'receive' => 'Ontvangst',
-        'receive_text' => 'Na de bevestigingsvideo spreken we het saldo van 75% en de ontvangst af.',
+        'receive_text' => 'Wanneer het horloge klaar en bevestigd is, spreken we de overhandiging of levering af.',
         'delay_label' => 'Geschatte beschikbaarheid',
         'delay' => '5–6 werkdagen',
         'delivery_label' => 'Ontvangstwijze',
