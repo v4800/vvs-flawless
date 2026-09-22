@@ -6,6 +6,7 @@ use App\Mail\CustomerReservationMail;
 use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\ReservationPayment;
 use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -318,6 +319,14 @@ class ReservationController extends Controller
 
                         'price' => (float) $reservation
                             ->price,
+
+                        'deposit_amount' => ReservationPayment::depositAmount(
+                            $reservation->price
+                        ),
+
+                        'balance_amount' => ReservationPayment::balanceAmount(
+                            $reservation->price
+                        ),
 
                         'delivery_method' => $reservation
                             ->delivery_method,
