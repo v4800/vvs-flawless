@@ -245,6 +245,15 @@ class PublicPageController extends Controller
             $graph[] = $faqSchema;
         }
 
+        $graph[] = [
+            '@type' => 'Organization',
+            '@id' => url('/').'#organization',
+            'name' => 'VVS FLAWLESS',
+            'url' => url('/'),
+            'logo' => url('/images/vvs-flawless-profile.webp'),
+            'areaServed' => $this->serviceAreas(),
+        ];
+
         $seo['type'] = 'article';
         $seo['structuredData'] = [
             '@context' => 'https://schema.org',
