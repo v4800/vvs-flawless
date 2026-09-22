@@ -13,6 +13,14 @@
     $deliveryMethod = $reservation->delivery_method === 'Livraison'
         ? trans('site.product.delivery')
         : trans('site.product.handover');
+
+    $depositAmount = \App\Support\ReservationPayment::depositAmount(
+        $reservation->price
+    ) ?? 0;
+
+    $balanceAmount = \App\Support\ReservationPayment::balanceAmount(
+        $reservation->price
+    ) ?? 0;
 @endphp
 VVS FLAWLESS
 
@@ -25,6 +33,8 @@ VVS FLAWLESS
 {{ trans('site.mail.watch') }} : {{ $watchName }}
 {{ trans('site.mail.movement') }} : {{ $movement }}
 {{ trans('site.mail.reserved_price') }} : {{ number_format($reservation->price, 0, ',', ' ') }} €
+{{ trans('site.mail.deposit') }} : {{ number_format($depositAmount, 0, ',', ' ') }} €
+{{ trans('site.mail.balance') }} : {{ number_format($balanceAmount, 0, ',', ' ') }} €
 {{ trans('site.mail.reception_method') }} : {{ $deliveryMethod }}
 
 @if ($reservation->message)
