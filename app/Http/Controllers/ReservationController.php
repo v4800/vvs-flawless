@@ -134,6 +134,8 @@ class ReservationController extends Controller
 
             'price' => $price,
 
+            'deposit_amount' => ReservationPayment::depositAmount($price),
+
             'customer_name' => $validated['customer_name'],
 
             'email' => $validated['email'],
@@ -323,11 +325,13 @@ class ReservationController extends Controller
                             ->price,
 
                         'deposit_amount' => ReservationPayment::depositAmount(
-                            $reservation->price
+                            $reservation->price,
+                            $reservation->deposit_amount
                         ),
 
                         'balance_amount' => ReservationPayment::balanceAmount(
-                            $reservation->price
+                            $reservation->price,
+                            $reservation->deposit_amount
                         ),
 
                         'delivery_method' => $reservation
