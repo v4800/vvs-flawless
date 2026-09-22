@@ -262,7 +262,7 @@ return [
         'status' => 'Statut',
         'your_message' => 'Votre message',
         'button' => 'Voir mon récapitulatif',
-        'next' => 'Nous vous recontactons pour vérifier les détails et finaliser la commande avec vous.',
+        'next' => 'Nous vous recontactons pour vérifier les détails. Après validation, un acompte fixe de 100 € est demandé avant le lancement de la préparation.',
         'legal_note' => 'Ce message confirme votre demande de réservation. La commande devient définitive après confirmation avec VVS FLAWLESS.',
         'thanks' => 'Merci,',
     ],
@@ -377,7 +377,7 @@ return [
         'reserve' => 'Réservez',
         'reserve_text' => 'Envoyez votre demande directement depuis le formulaire.',
         'confirm' => 'Confirmation',
-        'confirm_text' => 'Nous vérifions directement avec vous le modèle, le prix, le délai et les modalités avant toute préparation.',
+        'confirm_text' => 'Nous vérifions directement avec vous le modèle, le prix, le délai et les modalités. Après validation, un acompte fixe de 100 € lance la préparation.',
         'receive' => 'Réception',
         'receive_text' => 'Une fois la montre prête et validée avec vous, nous organisons sa remise ou sa livraison.',
         'delay_label' => 'Disponibilité estimée',
@@ -398,7 +398,7 @@ return [
 
     'reservation_trust' => [
         'title' => 'Vous ne payez rien en envoyant le formulaire',
-        'description' => 'Votre demande nous permet simplement de vérifier avec vous la montre, le mouvement, le prix et les conditions avant toute commande définitive.',
+        'description' => 'Votre demande nous permet de vérifier avec vous la montre, le mouvement, le prix et les conditions. Après validation écrite, un acompte fixe de 100 € est demandé avant la préparation.',
         'sent' => 'Demande envoyée',
         'confirmed' => 'Contact et confirmation',
         'organized' => 'Réception organisée',
