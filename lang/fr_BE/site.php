@@ -269,6 +269,7 @@ return [
         'next' => 'Nous vous recontactons pour vérifier les détails. Après validation, un acompte fixe de 100 € est demandé avant le lancement de la préparation.',
         'legal_note' => 'Ce message confirme votre demande de réservation. La commande devient définitive après confirmation avec VVS FLAWLESS.',
         'thanks' => 'Merci,',
+        'document_note' => 'Ce document est un récapitulatif de réservation et non une facture fiscale.',
     ],
 
     'language' => [
