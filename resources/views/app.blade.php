@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-    lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    lang="{{ data_get($page, 'props.seo.language') ?: str_replace('_', '-', app()->getLocale()) }}"
     @class(['dark' => ($appearance ?? 'system') == 'dark'])
 >
     <head>
