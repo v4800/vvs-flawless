@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SendReservationEmailRequest;
 use App\Http\Requests\Admin\UpdateReservationRequest;
 use App\Mail\AdminReservationContactMail;
+use App\Mail\ReservationRecapMail;
 use App\Models\Reservation;
 use App\Models\Watch;
+use App\Support\ReservationPayment;
+use App\Support\ReservationRecapPdf;
 use App\Support\ReservationWorkflow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
@@ -148,6 +152,44 @@ class ReservationDashboardController extends Controller
         return back()->with('success', 'Email envoyé au client.');
     }
 
+    public function downloadRecap(
+        Request $request,
+        Reservation $reservation,
+        ReservationRecapPdf $pdf
+    ): HttpResponse {
+        abort_unless((bool) $request->user()?->is_admin, 403);
+
+        return response(
+            $pdf->make($reservation),
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment; filename="'.$pdf->filename($reservation).'"',
+                'Cache-Control' => 'no-store, private, max-age=0, must-revalidate',
+                'X-Robots-Tag' => 'noindex, nofollow, noarchive',
+            ]
+        );
+    }
+
+    public function sendRecap(
+        Request $request,
+        Reservation $reservation
+    ): RedirectResponse {
+        abort_unless((bool) $request->user()?->is_admin, 403);
+
+        try {
+            Mail::to($reservation->email)->send(
+                new ReservationRecapMail($reservation)
+            );
+        } catch (Throwable) {
+            return back()->withErrors([
+                'email_message' => 'Le récapitulatif n’a pas pu être envoyé. Vérifie la configuration mail du site.',
+            ]);
+        }
+
+        return back()->with('success', 'Récapitulatif PDF envoyé au client.');
+    }
+
     public function archive(
         Request $request,
         Reservation $reservation
@@ -262,23 +304,14 @@ class ReservationDashboardController extends Controller
             ? (float) $reservation->price
             : null;
 
-        $depositAmount = $price !== null
-            ? round($price * 0.25, 2)
-            : null;
+        $depositAmount = ReservationPayment::depositAmount($price);
+        $balanceAmount = ReservationPayment::balanceAmount($price);
 
-        $balanceAmount = $price !== null
-            ? round($price * 0.75, 2)
-            : null;
-
-        $confirmedPaidAmount = 0.0;
-
-        if ($reservation->deposit_paid_at !== null) {
-            $confirmedPaidAmount += $depositAmount ?? 0;
-        }
-
-        if ($reservation->balance_paid_at !== null) {
-            $confirmedPaidAmount += $balanceAmount ?? 0;
-        }
+        $confirmedPaidAmount = ReservationPayment::confirmedPaidAmount(
+            $price,
+            $reservation->deposit_paid_at !== null,
+            $reservation->balance_paid_at !== null
+        );
 
         return [
             'id' => $reservation->id,
@@ -293,7 +326,7 @@ class ReservationDashboardController extends Controller
             'price' => $price,
             'deposit_amount' => $depositAmount,
             'balance_amount' => $balanceAmount,
-            'confirmed_paid_amount' => round($confirmedPaidAmount, 2),
+            'confirmed_paid_amount' => $confirmedPaidAmount,
             'status' => $reservation->status,
             'watch_id' => $reservation->watch_id,
             'watch_name_snapshot' => $reservation->watch_name_snapshot,
