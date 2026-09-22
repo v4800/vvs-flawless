@@ -255,6 +255,8 @@ return [
         'watch' => 'Montre',
         'movement' => 'Mouvement',
         'reserved_price' => 'Prix réservé',
+        'deposit' => 'Acompte fixe',
+        'balance' => 'Solde restant',
         'name' => 'Nom',
         'email' => 'E-mail',
         'phone' => 'Téléphone',
