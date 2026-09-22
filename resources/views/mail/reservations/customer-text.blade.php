@@ -35,7 +35,7 @@ VVS FLAWLESS
 {{ trans('site.mail.number') }} : {{ $reservation->reservation_number }}
 {{ trans('site.mail.watch') }} : {{ $watchName }}
 {{ trans('site.mail.movement') }} : {{ $movement }}
-{{ trans('site.mail.reserved_price') }} : {{ number_format($reservation->price, 0, ',', ' ') }} €
+{{ trans('site.mail.reserved_price') }} : {{ $formatMoney((float) $reservation->price) }}
 {{ trans('site.mail.deposit') }} : {{ number_format($depositAmount, 0, ',', ' ') }} €
 {{ trans('site.mail.balance') }} : {{ number_format($balanceAmount, 0, ',', ' ') }} €
 {{ trans('site.mail.reception_method') }} : {{ $deliveryMethod }}
