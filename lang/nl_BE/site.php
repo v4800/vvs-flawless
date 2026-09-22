@@ -195,6 +195,8 @@ return [
         'summary' => 'Overzicht',
         'your_watch' => 'Jouw horloge',
         'reserved_price' => 'Gereserveerde prijs',
+        'deposit' => 'Vaste aanbetaling',
+        'balance' => 'Resterend saldo',
         'customer_information' => 'Klantgegevens',
         'not_provided' => 'Niet ingevuld',
         'status' => 'Status',
