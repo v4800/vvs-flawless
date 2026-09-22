@@ -42,6 +42,12 @@ return [
                 'text' => 'Prix, délai, réservation, remise en main propre et livraison : tout le fonctionnement VVS FLAWLESS au même endroit.',
                 'cta' => 'Voir le guide Belgique',
             ],
+            [
+                'route' => 'franceGuide',
+                'title' => 'Commander depuis la France',
+                'text' => 'Découvrez comment envoyer une demande depuis la France et comment les modalités de réception sont confirmées.',
+                'cta' => 'Voir le guide France',
+            ],
         ],
     ],
 
