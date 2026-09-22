@@ -341,6 +341,10 @@ class AdminReservationsDashboardTest extends TestCase
             ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
 
         $this->assertStringStartsWith('%PDF-1.4', $response->getContent());
+        $this->assertStringContainsString(
+            '0.82 0.68 0.43 rg',
+            $response->getContent()
+        );
 
         $this->actingAs($this->admin())
             ->post(route('admin.reservations.recap.email', $reservation))
@@ -352,6 +356,30 @@ class AdminReservationsDashboardTest extends TestCase
             fn (ReservationRecapMail $mail): bool => $mail
                 ->hasTo('recap-client@example.com')
                 && count($mail->attachments()) === 1
+        );
+    }
+
+    public function test_recap_email_uses_the_reservation_locale(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'english-client@example.com',
+            'reservation_number' => 'VVS-EN-RECAP',
+            'locale' => 'en_BE',
+        ]);
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.recap.email', $reservation))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            ReservationRecapMail::class,
+            fn (ReservationRecapMail $mail): bool =>
+                $mail->hasTo('english-client@example.com')
+                && $mail->envelope()->subject
+                    === 'Your VVS FLAWLESS reservation summary — VVS-EN-RECAP'
         );
     }
 
