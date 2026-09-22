@@ -18,11 +18,13 @@
         : trans('site.product.handover');
 
     $deposit = \App\Support\ReservationPayment::depositAmount(
-        $reservation->price
+        $reservation->price,
+        $reservation->deposit_amount
     ) ?? 0;
 
     $balance = \App\Support\ReservationPayment::balanceAmount(
-        $reservation->price
+        $reservation->price,
+        $reservation->deposit_amount
     ) ?? 0;
 
     $locale = app()->getLocale();
