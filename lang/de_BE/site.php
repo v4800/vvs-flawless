@@ -110,7 +110,7 @@ return array_replace_recursive($base, [
         'product_category' => 'Iced-Out-Uhr mit Moissanit',
         'offer_name' => ':movement Werk',
         'about_title' => 'Über VVS FLAWLESS — Belgien & Europa',
-        'about_description' => 'VVS FLAWLESS ist ein belgisches Projekt rund um Iced-Out-Uhren mit VVS-Moissanit, erhältlich auf Reservierung.',
+        'about_description' => 'VVS FLAWLESS ist ein unabhängiges belgisches Projekt rund um Iced-Out-Uhren mit VVS-Moissanit, mit Anfragen aus Belgien, Frankreich, Deutschland und den Niederlanden.',
     ],
     'movements' => [
         'japonais' => 'Japanisches Automatikwerk',
