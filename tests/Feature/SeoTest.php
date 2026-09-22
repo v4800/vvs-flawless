@@ -315,6 +315,38 @@ class SeoTest extends TestCase
         $this->assertArrayHasKey('france', $frenchIntents);
     }
 
+    public function test_public_copy_does_not_publish_deposit_or_split_payment_terms(): void
+    {
+        foreach (['fr_BE', 'nl_BE', 'en_BE', 'de_BE'] as $locale) {
+            $publicCopy = json_encode(
+                [
+                    trans('site', [], $locale),
+                    trans('seo_intents', [], $locale),
+                ],
+                JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR
+            );
+
+            $normalized = mb_strtolower($publicCopy);
+
+            foreach ([
+                'acompte',
+                'voorschot',
+                'deposit',
+                'anzahlung',
+                '25 %',
+                '25%',
+                '75 %',
+                '75%',
+            ] as $forbidden) {
+                $this->assertStringNotContainsString(
+                    $forbidden,
+                    $normalized,
+                    $locale.' public copy exposes '.$forbidden
+                );
+            }
+        }
+    }
+
     public function test_about_schema_describes_brand_and_service_area(): void
     {
         $this->get(route('about'))
