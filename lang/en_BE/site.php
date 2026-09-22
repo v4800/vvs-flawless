@@ -241,6 +241,8 @@ return [
         'watch' => 'Watch',
         'movement' => 'Movement',
         'reserved_price' => 'Reserved price',
+        'deposit' => 'Fixed deposit',
+        'balance' => 'Remaining balance',
         'name' => 'Name',
         'email' => 'Email',
         'phone' => 'Phone',
