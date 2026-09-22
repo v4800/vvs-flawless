@@ -104,7 +104,7 @@ class PublicPageController extends Controller
     {
         return $this->intentGuide(
             'germany',
-            'de.guides.germany',
+            'guides.germany',
             [],
             'de-DE'
         );
@@ -114,7 +114,7 @@ class PublicPageController extends Controller
     {
         return $this->intentGuide(
             'netherlands',
-            'nl.guides.netherlands',
+            'guides.netherlands',
             [],
             'nl-NL'
         );
