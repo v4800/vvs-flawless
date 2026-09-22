@@ -252,6 +252,7 @@ return [
         'recorded' => 'Votre demande de réservation a bien été enregistrée.',
         'summary' => 'Récapitulatif',
         'number' => 'Numéro',
+        'date' => 'Date',
         'watch' => 'Montre',
         'movement' => 'Mouvement',
         'reserved_price' => 'Prix réservé',
