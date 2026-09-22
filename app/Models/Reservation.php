@@ -14,6 +14,7 @@ class Reservation extends Model
         'watch_image_snapshot',
         'movement',
         'price',
+        'deposit_amount',
         'customer_name',
         'email',
         'phone',
@@ -42,6 +43,7 @@ class Reservation extends Model
 
     protected $casts = [
         'price' => 'decimal:2',
+        'deposit_amount' => 'decimal:2',
         'travel_fee' => 'decimal:2',
         'deposit_paid_at' => 'datetime',
         'balance_paid_at' => 'datetime',
