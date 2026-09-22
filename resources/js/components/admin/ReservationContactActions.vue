@@ -14,6 +14,7 @@ const emit = defineEmits(['compose-email']);
 const copiedPhone = ref(false);
 const copiedReference = ref(false);
 const sendingRecap = ref(false);
+const recapStatus = ref('');
 
 const phoneHref = (phone) => {
     const value = String(phone ?? '')
@@ -25,12 +26,20 @@ const phoneHref = (phone) => {
 
 const sendRecap = (reservation) => {
     sendingRecap.value = true;
+    recapStatus.value = '';
 
     router.post(
         '/admin/reservations/' + reservation.id + '/recap/email',
         {},
         {
             preserveScroll: true,
+            onSuccess: () => {
+                recapStatus.value = 'Récapitulatif PDF envoyé';
+            },
+            onError: (errors) => {
+                recapStatus.value =
+                    errors.email_message || 'Échec de l’envoi du PDF';
+            },
             onFinish: () => {
                 sendingRecap.value = false;
             },
@@ -88,6 +97,13 @@ const copyValue = async (value, state) => {
         >
             {{ sendingRecap ? 'Envoi…' : 'Envoyer le récapitulatif PDF' }}
         </button>
+
+        <span
+            v-if="recapStatus"
+            class="text-xs font-bold text-emerald-300"
+        >
+            {{ recapStatus }}
+        </span>
 
         <button
             type="button"
