@@ -1,7 +1,13 @@
 @php
     $price = $reservation->price !== null ? (float) $reservation->price : 0;
-    $deposit = \App\Support\ReservationPayment::depositAmount($price) ?? 0;
-    $balance = \App\Support\ReservationPayment::balanceAmount($price) ?? 0;
+    $deposit = \App\Support\ReservationPayment::depositAmount(
+        $price,
+        $reservation->deposit_amount
+    ) ?? 0;
+    $balance = \App\Support\ReservationPayment::balanceAmount(
+        $price,
+        $reservation->deposit_amount
+    ) ?? 0;
     $locale = app()->getLocale();
     $formatMoney = static function (float $amount) use ($locale): string {
         if ($locale === 'en_BE') {
