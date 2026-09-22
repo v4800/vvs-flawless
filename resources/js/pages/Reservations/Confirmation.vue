@@ -173,6 +173,26 @@ const formatPrice = (price) => {
                                     {{ formatPrice(reservation.price) }}
                                 </p>
                             </div>
+
+                            <div>
+                                <p class="text-xs text-zinc-600">
+                                    {{ translations.confirmation.deposit }}
+                                </p>
+
+                                <p class="mt-1 font-semibold text-amber-200">
+                                    {{ formatPrice(reservation.deposit_amount) }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-zinc-600">
+                                    {{ translations.confirmation.balance }}
+                                </p>
+
+                                <p class="mt-1 font-semibold">
+                                    {{ formatPrice(reservation.balance_amount) }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
