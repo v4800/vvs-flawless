@@ -179,7 +179,7 @@ class ReservationDashboardController extends Controller
 
         try {
             Mail::to($reservation->email)
-                ->locale($reservation->locale ?: config('app.locale'))
+                ->locale((string) ($reservation->locale ?: config('app.locale')))
                 ->send(new ReservationRecapMail($reservation));
         } catch (Throwable) {
             return back()->withErrors([
