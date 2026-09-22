@@ -15,45 +15,68 @@ final class ReservationRecapPdf
     {
         $reservation->loadMissing('watch');
 
-        $price = $reservation->price !== null ? (float) $reservation->price : 0.0;
-        $deposit = ReservationPayment::depositAmount($price) ?? 0.0;
-        $balance = ReservationPayment::balanceAmount($price) ?? 0.0;
-        $watchName = $reservation->watch_name_snapshot
-            ?: $reservation->watch?->name
-            ?: 'Montre VVS FLAWLESS';
+        $locale = $reservation->locale ?: 'fr_BE';
+        $previousLocale = app()->getLocale();
 
-        $lines = [
-            ['VVS FLAWLESS', 22, true],
-            ['MOISSANITE VVS · BELGIQUE', 9, false],
-            ['', 10, false],
-            ['RÉCAPITULATIF DE RÉSERVATION', 16, true],
-            ['Référence : '.$reservation->reservation_number, 10, false],
-            ['Date : '.($reservation->created_at?->timezone('Europe/Brussels')->format('d/m/Y H:i') ?? '—'), 10, false],
-            ['', 10, false],
-            ['CLIENT', 11, true],
-            ['Nom : '.$reservation->customer_name, 10, false],
-            ['E-mail : '.$reservation->email, 10, false],
-            ['Téléphone : '.$reservation->phone, 10, false],
-            ['Ville : '.($reservation->city ?: '—'), 10, false],
-            ['', 10, false],
-            ['RÉSERVATION', 11, true],
-            ['Montre : '.$watchName, 10, false],
-            ['Mouvement : '.$reservation->movement, 10, false],
-            ['Réception : '.$reservation->delivery_method, 10, false],
-            ['', 10, false],
-            ['MONTANTS', 11, true],
-            ['Prix total : '.$this->money($price), 10, false],
-            ['Acompte fixe : '.$this->money($deposit), 10, true],
-            ['Solde restant : '.$this->money($balance), 10, false],
-            ['', 10, false],
-            ['Aucun paiement n’est effectué automatiquement sur le site.', 9, false],
-            ['La préparation débute après validation des détails et confirmation de l’acompte.', 9, false],
-            ['Le solde est organisé avec le client lorsque la montre est prête.', 9, false],
-            ['', 10, false],
-            ['Ce document est un récapitulatif de réservation et non une facture fiscale.', 8, false],
-        ];
+        app()->setLocale($locale);
 
-        return $this->buildPdf($lines);
+        try {
+            $price = $reservation->price !== null
+                ? (float) $reservation->price
+                : 0.0;
+
+            $deposit = ReservationPayment::depositAmount($price) ?? 0.0;
+            $balance = ReservationPayment::balanceAmount($price) ?? 0.0;
+
+            $watchName = $reservation->watch_name_snapshot
+                ?: $reservation->watch?->name
+                ?: 'VVS FLAWLESS';
+
+            if ($reservation->watch !== null) {
+                $watchName = app(WatchCatalog::class)
+                    ->localizedWatch($reservation->watch)
+                    ->name;
+            }
+
+            $movement = match ($reservation->movement) {
+                'Suisse' => (string) trans('site.movements.suisse'),
+                'Japonais' => (string) trans('site.movements.japonais'),
+                default => $reservation->movement,
+            };
+
+            $delivery = $reservation->delivery_method === 'Livraison'
+                ? (string) trans('site.product.delivery')
+                : (string) trans('site.product.handover');
+
+            $lines = [
+                [(string) trans('site.confirmation.title'), 16, true],
+                [(string) trans('site.mail.number').' : '.$reservation->reservation_number, 10, false],
+                ['Date : '.($reservation->created_at?->timezone('Europe/Brussels')->format('d/m/Y H:i') ?? '—'), 10, false],
+                ['', 10, false],
+                [(string) trans('site.confirmation.customer_information'), 11, true],
+                [(string) trans('site.mail.name').' : '.$reservation->customer_name, 10, false],
+                [(string) trans('site.mail.email').' : '.$reservation->email, 10, false],
+                [(string) trans('site.mail.phone').' : '.$reservation->phone, 10, false],
+                [(string) trans('site.mail.city').' : '.($reservation->city ?: trans('site.mail.not_provided')), 10, false],
+                ['', 10, false],
+                [(string) trans('site.mail.summary'), 11, true],
+                [(string) trans('site.mail.watch').' : '.$watchName, 10, false],
+                [(string) trans('site.mail.movement').' : '.$movement, 10, false],
+                [(string) trans('site.mail.reception_method').' : '.$delivery, 10, false],
+                ['', 10, false],
+                [(string) trans('site.mail.reserved_price').' : '.$this->money($price), 10, false],
+                [(string) trans('site.mail.deposit').' : '.$this->money($deposit), 10, true],
+                [(string) trans('site.mail.balance').' : '.$this->money($balance), 10, false],
+                ['', 10, false],
+                [(string) trans('site.mail.next'), 9, false],
+                [(string) trans('site.mail.legal_note'), 8, false],
+                [(string) trans('site.mail.document_note'), 8, false],
+            ];
+
+            return $this->buildPdf($lines);
+        } finally {
+            app()->setLocale($previousLocale);
+        }
     }
 
     private function money(float $amount): string
@@ -66,8 +89,15 @@ final class ReservationRecapPdf
      */
     private function buildPdf(array $lines): string
     {
-        $content = "BT\n";
-        $y = 790;
+        $logo = $this->logoCommands();
+        $content = $logo;
+
+        if ($logo === '') {
+            $content .= "BT\n/F2 20 Tf 1 0 0 1 56 790 Tm (VVS FLAWLESS) Tj\nET\n";
+        }
+
+        $content .= "BT\n";
+        $y = 620;
 
         foreach ($lines as [$text, $size, $bold]) {
             if ($text === '') {
@@ -75,18 +105,20 @@ final class ReservationRecapPdf
                 continue;
             }
 
-            $font = $bold ? '/F2' : '/F1';
-            $encoded = $this->pdfText($text);
+            foreach ($this->wrap($text, $size) as $line) {
+                $font = $bold ? '/F2' : '/F1';
+                $encoded = $this->pdfText($line);
 
-            $content .= sprintf(
-                "%s %d Tf 1 0 0 1 56 %d Tm (%s) Tj\n",
-                $font,
-                $size,
-                $y,
-                $encoded
-            );
+                $content .= sprintf(
+                    "%s %d Tf 1 0 0 1 56 %d Tm (%s) Tj\n",
+                    $font,
+                    $size,
+                    $y,
+                    $encoded
+                );
 
-            $y -= $size >= 16 ? 28 : 18;
+                $y -= $size >= 16 ? 27 : 17;
+            }
         }
 
         $content .= "ET\n";
@@ -120,6 +152,186 @@ final class ReservationRecapPdf
         $pdf .= "startxref\n".$xref."\n%%EOF";
 
         return $pdf;
+    }
+
+    private function logoCommands(): string
+    {
+        $path = public_path('images/branding/vvs-flawless-logo.svg');
+
+        if (! is_file($path)) {
+            return '';
+        }
+
+        $svg = file_get_contents($path);
+
+        if (! is_string($svg) || $svg === '') {
+            return '';
+        }
+
+        preg_match_all(
+            '/<path[^>]*transform="\\s*translate\\(([-\\d.]+),\\s*([-\\d.]+)\\)"[^>]*d="([^"]+)"/s',
+            $svg,
+            $matches,
+            PREG_SET_ORDER
+        );
+
+        if (count($matches) < 3) {
+            return '';
+        }
+
+        $groups = [
+            [1.9211538461538462, 642.9677429726271, 609.1560298830245],
+            [1.9211538461538462, 645.492266369371, 679.9382617534412],
+            [1.9211538461538462, 637.609311053438, 423.43876587676357],
+        ];
+
+        $commands = "q\n0.82 0.68 0.43 rg\n";
+
+        foreach (array_slice($matches, 0, 3) as $index => $match) {
+            [$scale, $offsetX, $offsetY] = $groups[$index];
+
+            $commands .= $this->svgPathToPdf(
+                $match[3],
+                (float) $match[1],
+                (float) $match[2],
+                $scale,
+                $offsetX,
+                $offsetY
+            );
+            $commands .= "f*\n";
+        }
+
+        return $commands."Q\n";
+    }
+
+    private function svgPathToPdf(
+        string $path,
+        float $translateX,
+        float $translateY,
+        float $groupScale,
+        float $groupX,
+        float $groupY
+    ): string {
+        preg_match_all(
+            '/[MLCZ]|-?(?:\\d+\\.\\d+|\\d+|\\.\\d+)(?:[eE][+-]?\\d+)?/',
+            $path,
+            $matches
+        );
+
+        $tokens = $matches[0] ?? [];
+        $index = 0;
+        $command = null;
+        $pdf = '';
+
+        while ($index < count($tokens)) {
+            if (in_array($tokens[$index], ['M', 'L', 'C', 'Z'], true)) {
+                $command = $tokens[$index];
+                $index++;
+
+                if ($command === 'Z') {
+                    $pdf .= "h\n";
+                    $command = null;
+                    continue;
+                }
+            }
+
+            if ($command === 'M' || $command === 'L') {
+                if (! isset($tokens[$index + 1])) {
+                    break;
+                }
+
+                [$x, $y] = $this->logoPoint(
+                    (float) $tokens[$index],
+                    (float) $tokens[$index + 1],
+                    $translateX,
+                    $translateY,
+                    $groupScale,
+                    $groupX,
+                    $groupY
+                );
+
+                $pdf .= sprintf(
+                    "%.3F %.3F %s\n",
+                    $x,
+                    $y,
+                    $command === 'M' ? 'm' : 'l'
+                );
+                $index += 2;
+                continue;
+            }
+
+            if ($command === 'C') {
+                if (! isset($tokens[$index + 5])) {
+                    break;
+                }
+
+                $points = [];
+
+                for ($i = 0; $i < 6; $i += 2) {
+                    $points[] = $this->logoPoint(
+                        (float) $tokens[$index + $i],
+                        (float) $tokens[$index + $i + 1],
+                        $translateX,
+                        $translateY,
+                        $groupScale,
+                        $groupX,
+                        $groupY
+                    );
+                }
+
+                $pdf .= sprintf(
+                    "%.3F %.3F %.3F %.3F %.3F %.3F c\n",
+                    $points[0][0],
+                    $points[0][1],
+                    $points[1][0],
+                    $points[1][1],
+                    $points[2][0],
+                    $points[2][1]
+                );
+                $index += 6;
+                continue;
+            }
+
+            $index++;
+        }
+
+        return $pdf;
+    }
+
+    /**
+     * @return array{0:float,1:float}
+     */
+    private function logoPoint(
+        float $x,
+        float $y,
+        float $translateX,
+        float $translateY,
+        float $groupScale,
+        float $groupX,
+        float $groupY
+    ): array {
+        $svgX = $groupScale * ($x + $translateX) + $groupX;
+        $svgY = $groupScale * ($y + $translateY) + $groupY;
+
+        $scale = 220 / 1280;
+        $boxX = (595 - 220) / 2;
+        $boxTop = 825;
+
+        return [
+            $boxX + ($svgX * $scale),
+            $boxTop - ($svgY * $scale),
+        ];
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function wrap(string $text, int $size): array
+    {
+        $limit = $size >= 16 ? 48 : ($size >= 11 ? 72 : 86);
+        $wrapped = wordwrap($text, $limit, "\n", true);
+
+        return explode("\n", $wrapped);
     }
 
     private function pdfText(string $value): string
