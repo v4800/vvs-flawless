@@ -55,6 +55,7 @@ class ReservationMailFlowTest extends TestCase
         $this->assertDatabaseHas('reservations', [
             'email' => 'english-locale@example.com',
             'locale' => 'en_BE',
+            'deposit_amount' => 100,
         ]);
     }
 
