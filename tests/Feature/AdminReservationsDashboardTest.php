@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\AdminReservationContactMail;
+use App\Mail\ReservationRecapMail;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Watch;
@@ -318,6 +319,39 @@ class AdminReservationsDashboardTest extends TestCase
                 ->hasTo('contact-client@example.com')
                 && $mail->subjectLine === 'Votre réservation VVS-EMAIL-TEST'
                 && $mail->messageBody === 'Votre montre est prête.'
+        );
+    }
+
+    public function test_admin_can_download_and_email_reservation_recap_pdf(): void
+    {
+        Mail::fake();
+
+        $reservation = $this->reservation($this->watch(), [
+            'email' => 'recap-client@example.com',
+            'reservation_number' => 'VVS-RECAP-TEST',
+            'price' => 950,
+        ]);
+
+        $response = $this->actingAs($this->admin())
+            ->get(route('admin.reservations.recap', $reservation));
+
+        $response
+            ->assertOk()
+            ->assertHeader('Content-Type', 'application/pdf')
+            ->assertHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+
+        $this->assertStringStartsWith('%PDF-1.4', $response->getContent());
+
+        $this->actingAs($this->admin())
+            ->post(route('admin.reservations.recap.email', $reservation))
+            ->assertRedirect()
+            ->assertSessionHas('success');
+
+        Mail::assertSent(
+            ReservationRecapMail::class,
+            fn (ReservationRecapMail $mail): bool => $mail
+                ->hasTo('recap-client@example.com')
+                && count($mail->attachments()) === 1
         );
     }
 
