@@ -18,7 +18,7 @@ return [
         'color_note' => 'Éclat net',
         'lead_time_title' => '5–6 jours',
         'lead_time_note' => 'Sur réservation',
-        'markets_title' => 'BE • FR • NL',
+        'markets_title' => 'BE • FR • DE • NL',
         'signature_material' => 'Moissanite VVS • Couleur D',
         'signature_title' => 'Pièce signature',
         'image_alt' => 'Montre iced-out VVS FLAWLESS',
