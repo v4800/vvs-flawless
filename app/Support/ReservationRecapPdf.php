@@ -329,7 +329,7 @@ final class ReservationRecapPdf
     private function wrap(string $text, int $size): array
     {
         $limit = $size >= 16 ? 48 : ($size >= 11 ? 72 : 86);
-        $wrapped = wordwrap($text, $limit, "\n", true);
+        $wrapped = wordwrap($text, $limit, "\n", false);
 
         return explode("\n", $wrapped);
     }
