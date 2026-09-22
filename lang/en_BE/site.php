@@ -182,6 +182,8 @@ return [
         'summary' => 'Summary',
         'your_watch' => 'Your watch',
         'reserved_price' => 'Reserved price',
+        'deposit' => 'Fixed deposit',
+        'balance' => 'Remaining balance',
         'customer_information' => 'Customer details',
         'not_provided' => 'Not provided',
         'status' => 'Status',
