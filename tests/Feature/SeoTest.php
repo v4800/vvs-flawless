@@ -58,11 +58,14 @@ class SeoTest extends TestCase
             route('nl.guides.belgium'),
             route('en.guides.belgium'),
             route('de.guides.belgium'),
+            route('guides.france'),
+            route('de.guides.germany'),
+            route('nl.guides.netherlands'),
         ] as $url) {
             $response->assertSee($url, false);
         }
 
-        foreach (['fr-BE', 'nl-BE', 'en-BE', 'de-BE', 'x-default'] as $hreflang) {
+        foreach (['fr', 'nl', 'en', 'de', 'fr-BE', 'nl-BE', 'en-BE', 'de-BE', 'x-default'] as $hreflang) {
             $response->assertSee(
                 'hreflang="'.$hreflang.'"',
                 false
@@ -182,10 +185,10 @@ class SeoTest extends TestCase
                         ->where('locale', $expected['locale'])
                         ->where('seo.locale', $expected['locale'])
                         ->where('seo.canonical', $expected['canonical'])
-                        ->where('seo.alternates.0.hreflang', 'fr-BE')
-                        ->where('seo.alternates.1.hreflang', 'nl-BE')
-                        ->where('seo.alternates.2.hreflang', 'en-BE')
-                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.0.hreflang', 'fr')
+                        ->where('seo.alternates.1.hreflang', 'nl')
+                        ->where('seo.alternates.2.hreflang', 'en')
+                        ->where('seo.alternates.3.hreflang', 'de')
                         ->where('seo.alternates.4.hreflang', 'x-default')
                         ->where(
                             'seo.structuredData.@graph.0.@type',
@@ -215,10 +218,10 @@ class SeoTest extends TestCase
                         ->component('Guides/DiamondVsMoissanite')
                         ->where('locale', $locale)
                         ->where('seo.type', 'article')
-                        ->where('seo.alternates.0.hreflang', 'fr-BE')
-                        ->where('seo.alternates.1.hreflang', 'nl-BE')
-                        ->where('seo.alternates.2.hreflang', 'en-BE')
-                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.0.hreflang', 'fr')
+                        ->where('seo.alternates.1.hreflang', 'nl')
+                        ->where('seo.alternates.2.hreflang', 'en')
+                        ->where('seo.alternates.3.hreflang', 'de')
                         ->where('seo.alternates.4.hreflang', 'x-default')
                         ->where(
                             'seo.structuredData.@graph.0.@type',
@@ -306,15 +309,10 @@ class SeoTest extends TestCase
         $belgiumAnswer = $frenchIntents['belgium']['answer'];
 
         $this->assertStringContainsString('Belgique', $belgiumAnswer);
-        $this->assertStringContainsString('Liège', $belgiumAnswer);
-        $this->assertStringContainsString('Verviers', $belgiumAnswer);
-        $this->assertStringContainsString('Bruxelles', $belgiumAnswer);
-        $this->assertStringContainsString('Anvers', $belgiumAnswer);
-
-        $pricingSection = $frenchIntents['belgium']['sections'][1]['paragraphs'][1];
-        $this->assertStringContainsString('25 %', $pricingSection);
-        $this->assertStringContainsString('75 %', $pricingSection);
-        $this->assertStringContainsString('pendant le rendez-vous', $pricingSection);
+        $this->assertStringNotContainsString('25 %', $serialized);
+        $this->assertStringNotContainsString('75 %', $serialized);
+        $this->assertStringNotContainsString('acompte', mb_strtolower($serialized));
+        $this->assertArrayHasKey('france', $frenchIntents);
     }
 
     public function test_about_schema_describes_brand_and_service_area(): void
@@ -326,8 +324,50 @@ class SeoTest extends TestCase
                     ->where('seo.structuredData.@type', 'Organization')
                     ->where('seo.structuredData.name', 'VVS FLAWLESS')
                     ->where('seo.structuredData.areaServed.0.name', 'Belgium')
-                    ->where('seo.structuredData.areaServed.1.name', 'Wallonia')
-                    ->where('seo.structuredData.areaServed.2.name', 'Flanders')
+                    ->where('seo.structuredData.areaServed.1.name', 'France')
+                    ->where('seo.structuredData.areaServed.2.name', 'Germany')
+                    ->where('seo.structuredData.areaServed.3.name', 'Netherlands')
+                    ->etc()
+            );
+    }
+
+    public function test_market_guides_are_public_self_canonical_and_region_specific(): void
+    {
+        foreach ([
+            'guides.france' => ['locale' => 'fr_BE', 'language' => 'fr-FR'],
+            'de.guides.germany' => ['locale' => 'de_BE', 'language' => 'de-DE'],
+            'nl.guides.netherlands' => ['locale' => 'nl_BE', 'language' => 'nl-NL'],
+        ] as $routeName => $expected) {
+            $response = $this->get(route($routeName));
+
+            $response
+                ->assertOk()
+                ->assertInertia(
+                    fn (Assert $page) => $page
+                        ->component('Guides/SeoIntent')
+                        ->where('locale', $expected['locale'])
+                        ->where('seo.canonical', route($routeName))
+                        ->where('seo.alternates', [])
+                        ->where(
+                            'seo.structuredData.@graph.0.inLanguage',
+                            $expected['language']
+                        )
+                        ->etc()
+                );
+        }
+    }
+
+    public function test_belgium_guide_keeps_regional_hreflang(): void
+    {
+        $this->get(route('guides.belgium'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where('seo.alternates.0.hreflang', 'fr-BE')
+                    ->where('seo.alternates.1.hreflang', 'nl-BE')
+                    ->where('seo.alternates.2.hreflang', 'en-BE')
+                    ->where('seo.alternates.3.hreflang', 'de-BE')
+                    ->where('seo.alternates.4.hreflang', 'x-default')
                     ->etc()
             );
     }
@@ -366,8 +406,8 @@ class SeoTest extends TestCase
                                 $locale
                             )
                         )
-                        ->where('seo.alternates.2.hreflang', 'en-BE')
-                        ->where('seo.alternates.3.hreflang', 'de-BE')
+                        ->where('seo.alternates.2.hreflang', 'en')
+                        ->where('seo.alternates.3.hreflang', 'de')
                         ->where('seo.alternates.4.hreflang', 'x-default')
                         ->etc()
                 );
