@@ -184,6 +184,15 @@ class SeoTest extends TestCase
                     fn (Assert $page) => $page
                         ->where('locale', $expected['locale'])
                         ->where('seo.locale', $expected['locale'])
+                        ->where(
+                            'seo.language',
+                            match ($expected['locale']) {
+                                'nl_BE' => 'nl',
+                                'en_BE' => 'en',
+                                'de_BE' => 'de',
+                                default => 'fr',
+                            }
+                        )
                         ->where('seo.canonical', $expected['canonical'])
                         ->where('seo.alternates.0.hreflang', 'fr')
                         ->where('seo.alternates.1.hreflang', 'nl')
@@ -374,6 +383,10 @@ class SeoTest extends TestCase
 
             $response
                 ->assertOk()
+                ->assertSee(
+                    'lang="'.$expected['language'].'"',
+                    false
+                )
                 ->assertInertia(
                     fn (Assert $page) => $page
                         ->component('Guides/SeoIntent')
@@ -393,6 +406,7 @@ class SeoTest extends TestCase
     {
         $this->get(route('guides.belgium'))
             ->assertOk()
+            ->assertSee('lang="fr-BE"', false)
             ->assertInertia(
                 fn (Assert $page) => $page
                     ->where('seo.alternates.0.hreflang', 'fr-BE')
