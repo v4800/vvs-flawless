@@ -238,6 +238,7 @@ return [
         'recorded' => 'Your reservation request has been recorded.',
         'summary' => 'Summary',
         'number' => 'Number',
+        'date' => 'Date',
         'watch' => 'Watch',
         'movement' => 'Movement',
         'reserved_price' => 'Reserved price',
