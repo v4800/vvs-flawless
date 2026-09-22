@@ -187,7 +187,8 @@ class PublicPageController extends Controller
             (string) ($guide['seo_description'] ?? ''),
             $canonical,
             $page,
-            $alternates
+            $alternates,
+            $languageTag
         );
 
         $graph = [
@@ -261,7 +262,8 @@ class PublicPageController extends Controller
         string $description,
         string $canonical,
         string $page,
-        ?array $alternates = null
+        ?array $alternates = null,
+        ?string $languageTag = null
     ): array {
         return [
             'title' => $title,
@@ -269,6 +271,7 @@ class PublicPageController extends Controller
             'canonical' => $canonical,
             'alternates' => $alternates ?? $this->alternates($page),
             'locale' => app()->getLocale(),
+            'language' => $languageTag ?? $this->languageTag(),
             'image' => url('/images/vvs-flawless-profile.webp'),
             'imageAlt' => 'VVS FLAWLESS',
             'type' => 'website',
