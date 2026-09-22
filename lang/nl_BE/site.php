@@ -128,7 +128,7 @@ return [
         'product_category' => 'Iced-out horloge bezet met moissanite',
         'offer_name' => ':movement uurwerk',
         'about_title' => 'Over VVS FLAWLESS — België & Europa',
-        'about_description' => 'Ontdek VVS FLAWLESS, een Belgisch project rond iced-out horloges bezet met VVS-moissanite en verkrijgbaar op reservatie.',
+        'about_description' => 'Ontdek VVS FLAWLESS, een onafhankelijk Belgisch project rond iced-out horloges met VVS-moissanite, met aanvragen vanuit België, Frankrijk, Duitsland en Nederland.',
     ],
 
     'movements' => [
