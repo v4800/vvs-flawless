@@ -41,18 +41,18 @@ final class ReservationRecapPdf
                 $watchName = (string) $localizedWatch->name;
             }
 
+            $presentedCopy = $localizedWatch?->getAttribute('presented_copy');
+
             $movement = match ($reservation->movement) {
                 'Suisse' => (string) trans('site.movements.suisse'),
                 'Japonais' => (string) trans('site.movements.japonais'),
-                'Modele presente' => is_array(
-                    $localizedWatch?->getAttribute('presented_copy')
-                )
+                'Modele presente' => is_array($presentedCopy)
                     ? (string) (
-                        $localizedWatch->getAttribute('presented_copy')['model_label']
+                        $presentedCopy['model_label']
                         ?? $reservation->movement
                     )
-                    : $reservation->movement,
-                default => $reservation->movement,
+                    : (string) $reservation->movement,
+                default => (string) $reservation->movement,
             };
 
             $delivery = $reservation->delivery_method === 'Livraison'
@@ -328,8 +328,8 @@ final class ReservationRecapPdf
         $svgX = $groupScale * ($x + $translateX) + $groupX;
         $svgY = $groupScale * ($y + $translateY) + $groupY;
 
-        $scale = 220 / 1280;
-        $boxX = (595 - 220) / 2;
+        $scale = 300 / 1280;
+        $boxX = (595 - 300) / 2;
         $boxTop = 825;
 
         return [
