@@ -14,12 +14,12 @@ use App\Support\ReservationRecapPdf;
 use App\Support\ReservationWorkflow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
-use Throwable;
 use Inertia\Response;
+use Throwable;
 
 class ReservationDashboardController extends Controller
 {
