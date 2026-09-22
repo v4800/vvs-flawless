@@ -144,6 +144,8 @@ class ReservationController extends Controller
 
             'delivery_method' => $validated['delivery_method'],
 
+            'locale' => app()->getLocale(),
+
             'status' => 'Nouvelle demande',
 
             'reservation_number' => $reservationNumber,
