@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class CustomerReviewController extends Controller
 {
-    public function index()
+    public function index(): Response
     {
         return response()->view('vvs-reviews.index', [
             'reviews' => DB::table('vvs_customer_reviews')->where('status', 'published')
@@ -17,7 +19,7 @@ class CustomerReviewController extends Controller
         ])->header('Cache-Control', 'private, no-store');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'watch_id' => ['nullable', 'integer', 'exists:watches,id'],
@@ -45,24 +47,31 @@ class CustomerReviewController extends Controller
         return redirect('/avis-clients')->with('review_status', $message);
     }
 
-    public function moderate()
+    public function moderate(): Response
     {
         return response()->view('vvs-reviews.moderate', [
             'reviews' => DB::table('vvs_customer_reviews')->orderByDesc('id')->paginate(25),
         ])->header('Cache-Control', 'private, no-store')->header('X-Robots-Tag', 'noindex, nofollow');
     }
 
-    public function update(Request $request, int $review)
+    public function update(Request $request, int $review): RedirectResponse
     {
         $data = $request->validate([
             'status' => ['required', Rule::in(['published', 'rejected', 'pending'])],
             'reason' => ['required_if:status,rejected', 'nullable', Rule::in(['spam', 'donnees-personnelles', 'injures-menaces', 'hors-sujet', 'experience-fictive-etablie'])],
         ]);
         abort_unless(DB::table('vvs_customer_reviews')->where('id', $review)->exists(), 404);
+
+        $user = $request->user();
+
+        if ($user === null) {
+            abort(403);
+        }
+
         DB::table('vvs_customer_reviews')->where('id', $review)->update([
             'status' => $data['status'],
             'moderation_reason' => $data['status'] === 'rejected' ? $data['reason'] : null,
-            'moderated_by' => $request->user()->id,
+            'moderated_by' => $user->id,
             'moderated_at' => now(),
             'updated_at' => now(),
         ]);

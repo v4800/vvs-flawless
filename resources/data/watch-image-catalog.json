@@ -60,9 +60,7 @@
             "id": 3,
             "slug": "square-roman",
             "folder": "003-square-roman",
-            "images": [
-                "01-front.webp"
-            ],
+            "images": ["01-front.webp"],
             "featured": false,
             "card_image": "01-front.webp"
         },
@@ -89,27 +87,21 @@
             "id": 5,
             "slug": "black-stainless",
             "folder": "005-black-stainless",
-            "images": [
-                "01-front.webp"
-            ],
+            "images": ["01-front.webp"],
             "featured": false
         },
         {
             "id": 6,
             "slug": "red-roman",
             "folder": "006-red-roman",
-            "images": [
-                "01-front.webp"
-            ],
+            "images": ["01-front.webp"],
             "featured": false
         },
         {
             "id": 7,
             "slug": "jubilee",
             "folder": "007-jubilee",
-            "images": [
-                "01-front.jpg"
-            ],
+            "images": ["01-front.jpg"],
             "featured": false
         },
         {
@@ -132,11 +124,7 @@
             "id": 9,
             "slug": "gold-black-daydate",
             "folder": "009-gold-black-daydate",
-            "images": [
-                "01-front.webp",
-                "02-wide.webp",
-                "03-clasp.webp"
-            ],
+            "images": ["01-front.webp", "02-wide.webp", "03-clasp.webp"],
             "featured": false,
             "legacy_images": [
                 "/images/watches/bicolore-turquoise.webp",
@@ -161,11 +149,7 @@
             "id": 11,
             "slug": "square-bicolor-paved",
             "folder": "011-square-bicolor-paved",
-            "images": [
-                "01-front.webp",
-                "02-side.webp",
-                "03-bracelet.webp"
-            ],
+            "images": ["01-front.webp", "02-side.webp", "03-bracelet.webp"],
             "featured": false,
             "card_image": "01-front-card.webp"
         },
@@ -185,11 +169,7 @@
             "id": 13,
             "slug": "women-square-36",
             "folder": "013-women-square-36",
-            "images": [
-                "01-front.webp",
-                "02-angle.webp",
-                "03-bracelet.webp"
-            ],
+            "images": ["01-front.webp", "02-angle.webp", "03-bracelet.webp"],
             "featured": false,
             "card_image": "01-front-card.webp"
         },
@@ -247,11 +227,7 @@
             "watch_id": 61,
             "slug": "cadran-bleu-roi",
             "folder": "001-blue-round",
-            "images": [
-                "01-front.webp",
-                "02-angle.webp",
-                "03-bracelet.webp"
-            ],
+            "images": ["01-front.webp", "02-angle.webp", "03-bracelet.webp"],
             "featured": false,
             "card_image": "01-front.webp",
             "legacy_images": [
@@ -325,11 +301,7 @@
             "watch_id": 909,
             "slug": "silver-roman-pave",
             "folder": "091-silver-roman-pave",
-            "images": [
-                "01-front.webp",
-                "02-angle.webp",
-                "03-bracelet.webp"
-            ],
+            "images": ["01-front.webp", "02-angle.webp", "03-bracelet.webp"],
             "card_image": "01-front-card.webp",
             "featured": false
         }

@@ -39,22 +39,38 @@ const page = usePage();
 const showProgress = ref(false);
 let progressTimer;
 
-watch(() => props.form.processing, (processing) => {
-    window.clearTimeout(progressTimer);
-    if (processing) {
-        progressTimer = window.setTimeout(() => { showProgress.value = true; }, 180);
-    } else {
-        showProgress.value = false;
-    }
-});
+watch(
+    () => props.form.processing,
+    (processing) => {
+        window.clearTimeout(progressTimer);
+        if (processing) {
+            progressTimer = window.setTimeout(() => {
+                showProgress.value = true;
+            }, 180);
+        } else {
+            showProgress.value = false;
+        }
+    },
+);
 
-onBeforeUnmount(() => { window.clearTimeout(progressTimer); });
-const requestCopy = computed(() => ({
-    fr_BE: { error: 'Vérifiez les champs signalés, puis réessayez.' },
-    nl_BE: { error: 'Controleer de gemarkeerde velden en probeer het opnieuw.' },
-    en_BE: { error: 'Check the highlighted fields and try again.' },
-    de_BE: { error: 'Prüfen Sie die markierten Felder und versuchen Sie es erneut.' },
-}[page.props.locale] ?? { error: 'Check the highlighted fields and try again.' }));
+onBeforeUnmount(() => {
+    window.clearTimeout(progressTimer);
+});
+const requestCopy = computed(
+    () =>
+        ({
+            fr_BE: { error: 'Vérifiez les champs signalés, puis réessayez.' },
+            nl_BE: {
+                error: 'Controleer de gemarkeerde velden en probeer het opnieuw.',
+            },
+            en_BE: { error: 'Check the highlighted fields and try again.' },
+            de_BE: {
+                error: 'Prüfen Sie die markierten Felder und versuchen Sie es erneut.',
+            },
+        })[page.props.locale] ?? {
+            error: 'Check the highlighted fields and try again.',
+        },
+);
 
 const formatPrice = (price) => {
     const numericPrice = Number(price);
@@ -159,7 +175,7 @@ const formatPrice = (price) => {
                     </div>
 
                     <div
-                        class="rounded-full border border-amber-300/20 bg-amber-300/[0.04] px-4 py-2 text-xs font-bold text-amber-200"
+                        class="vvs-price rounded-full border border-amber-300/20 bg-amber-300/[0.04] px-4 py-2 text-xs font-black"
                     >
                         {{ localizedMovement }}
                     </div>
@@ -493,7 +509,11 @@ const formatPrice = (price) => {
                     </div>
 
                     <div class="md:col-span-2 xl:col-span-4">
-                        <p v-if="form.hasErrors" role="alert" class="mb-4 rounded-xl border border-red-300/20 bg-red-400/5 px-4 py-3 text-sm leading-6 text-red-200">
+                        <p
+                            v-if="form.hasErrors"
+                            role="alert"
+                            class="mb-4 rounded-xl border border-red-300/20 bg-red-400/5 px-4 py-3 text-sm leading-6 text-red-200"
+                        >
                             {{ requestCopy.error }}
                         </p>
                         <button
@@ -503,7 +523,11 @@ const formatPrice = (price) => {
                             class="vvs-button-primary group flex w-full items-center justify-between rounded-xl px-6 py-5 text-sm font-bold tracking-[0.1em] uppercase focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                         >
                             <span class="flex items-center gap-3">
-                                <span v-if="showProgress" class="vvs-loading-indicator vvs-loading-indicator--dark" aria-hidden="true"></span>
+                                <span
+                                    v-if="showProgress"
+                                    class="vvs-loading-indicator vvs-loading-indicator--dark"
+                                    aria-hidden="true"
+                                ></span>
                                 {{
                                     form.processing
                                         ? translations.product.sending

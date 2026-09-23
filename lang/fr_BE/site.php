@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'Montres VVS & iced-out depuis la Belgique',
-        'description' => 'Découvrez nos montres iced-out serties de moissanite VVS, proposées depuis la Belgique avec réservation possible en Belgique, France, Allemagne et Pays-Bas selon confirmation.',
+        'tagline' => 'La culture bustdown arrive en Belgique',
+        'description' => 'Vous recherchez l’éclat d’une montre diamant ? Découvrez nos modèles iced-out sertis de moissanite VVS, disponibles sur réservation en Belgique.',
         'concept' => 'Découvrir VVS FLAWLESS',
 
         'view_3d' => 'Voir la montre en 3D',
@@ -99,7 +99,7 @@ return [
         'step_3_text' => 'Laissez vos coordonnées. Aucun paiement n’est demandé sur le site.',
 
         'step_4_title' => 'Nous vous recontactons',
-        'step_4_text' => 'Nous confirmons directement avec vous le modèle, le prix, le délai et les modalités de la commande.',
+        'step_4_text' => 'Nous confirmons avec vous le modèle, le prix, le délai et les conditions de l’acompte.',
 
         'step_5_title' => 'Recevez votre montre',
         'step_5_text' => 'Une fois la montre prête et validée, nous organisons la remise en main propre ou la livraison.',
@@ -124,12 +124,12 @@ return [
 
     'seo' => [
         'collection_title' => 'Montres VVS en moissanite iced-out | VVS FLAWLESS',
-        'collection_description' => 'Découvrez nos montres VVS serties de moissanite et nos modèles iced-out, proposés depuis la Belgique pour la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
+        'collection_description' => 'Découvrez nos montres VVS serties de moissanite et nos modèles iced-out disponibles sur réservation en Belgique, avec mouvement japonais ou suisse.',
         'product_description_suffix' => 'Montre sertie de moissanite VVS, avec mouvement japonais ou suisse, disponible sur réservation avec remise en main propre ou livraison.',
         'product_category' => 'Montre iced-out sertie de moissanite',
         'offer_name' => 'Mouvement :movement',
-        'about_title' => 'À propos de VVS FLAWLESS',
-        'about_description' => 'Découvrez VVS FLAWLESS, un projet indépendant belge consacré aux montres iced-out serties de moissanite VVS, avec demandes possibles depuis la Belgique, la France, l’Allemagne et les Pays-Bas.',
+        'about_title' => 'À propos de VVS FLAWLESS — Belgique',
+        'about_description' => 'Découvrez VVS FLAWLESS, un projet belge consacré aux montres iced-out serties de moissanite VVS et disponibles sur réservation.',
     ],
 
     'movements' => [
@@ -184,7 +184,7 @@ return [
         'piece_amount' => 'Montant de la pièce',
         'sending' => 'Envoi en cours…',
         'submit' => 'Envoyer ma réservation',
-        'reservation_note' => 'L’envoi du formulaire ne déclenche aucun paiement. Après vérification et validation des détails avec VVS FLAWLESS, un acompte fixe de 100 € est demandé avant le lancement de la préparation.',
+        'reservation_note' => 'L’envoi du formulaire ne déclenche aucun paiement. La commande est confirmée ensuite avec VVS FLAWLESS.',
         'footer_material' => 'Moissanite VVS • Couleur D',
     ],
 
@@ -196,15 +196,13 @@ return [
         'summary' => 'Récapitulatif',
         'your_watch' => 'Votre montre',
         'reserved_price' => 'Prix réservé',
-        'deposit' => 'Acompte fixe',
-        'balance' => 'Solde restant',
         'customer_information' => 'Informations client',
         'not_provided' => 'Non renseignée',
         'status' => 'Statut',
         'new_request' => 'Nouvelle demande',
         'next_title' => 'Et maintenant ?',
         'next_text' => 'Nous vous recontactons pour vérifier la disponibilité, le délai et les détails de la commande.',
-        'legal_note' => 'Ce récapitulatif confirme votre demande. La préparation ne débute qu’après validation des détails et confirmation de l’acompte.',
+        'legal_note' => 'Ce récapitulatif confirme votre réservation. La commande devient définitive après confirmation avec VVS FLAWLESS.',
         'back_collection' => 'Retour à la collection',
         'review_watch' => 'Revoir la montre',
     ],
@@ -231,7 +229,7 @@ return [
                 ['title' => '2. Confirmation', 'paragraphs' => ['Après réception de la demande, VVS FLAWLESS contacte le client afin de confirmer le modèle, le mouvement choisi, le prix et les modalités de la réservation.']],
                 ['title' => '3. Disponibilité', 'paragraphs' => ['Le délai de disponibilité généralement indiqué est de 5 à 6 jours ouvrables. Ce délai reste estimatif jusqu’à confirmation de la réservation.']],
                 ['title' => '4. Prix', 'paragraphs' => ['Le prix correspondant au modèle et au mouvement choisis est affiché sur la fiche de la montre et rappelé lors de la réservation.']],
-                ['title' => '5. Paiement', 'paragraphs' => ['Aucun paiement n’est effectué directement sur le site. Après confirmation des détails, un acompte fixe de 100 € est demandé avant le lancement de la préparation de la montre.', 'Le solde restant est organisé directement avec le client lorsque la montre est prête, selon le mode de réception convenu et dans le respect de la réglementation applicable.']],
+                ['title' => '5. Paiement', 'paragraphs' => ['Aucun paiement n’est effectué directement sur le site. Les modalités de paiement sont confirmées avec le client avant la remise ou la livraison.', 'Le paiement peut notamment être effectué en espèces ou par un moyen de paiement électronique convenu lors de la confirmation, dans le respect de la réglementation applicable.']],
                 ['title' => '6. Remise en main propre ou livraison', 'paragraphs' => ['Le client choisit la remise en main propre ou la livraison lors de sa demande. Les modalités précises sont convenues avec le client avant la finalisation de la commande.']],
                 ['title' => '7. Informations communiquées', 'paragraphs' => ['Le client s’engage à fournir des informations correctes afin que VVS FLAWLESS puisse le contacter et traiter sa demande.']],
             ],
@@ -250,17 +248,11 @@ return [
         'title' => 'Votre réservation VVS FLAWLESS',
         'hello' => 'Bonjour :name,',
         'recorded' => 'Votre demande de réservation a bien été enregistrée.',
-        'brand_line' => 'MOISSANITE VVS · BELGIQUE',
-        'recorded_badge' => 'DEMANDE ENREGISTRÉE',
-        'automated_message' => 'Message automatique lié à la demande :number.',
         'summary' => 'Récapitulatif',
         'number' => 'Numéro',
-        'date' => 'Date',
         'watch' => 'Montre',
         'movement' => 'Mouvement',
         'reserved_price' => 'Prix réservé',
-        'deposit' => 'Acompte fixe',
-        'balance' => 'Solde restant',
         'name' => 'Nom',
         'email' => 'E-mail',
         'phone' => 'Téléphone',
@@ -270,10 +262,9 @@ return [
         'status' => 'Statut',
         'your_message' => 'Votre message',
         'button' => 'Voir mon récapitulatif',
-        'next' => 'Nous vous recontactons pour vérifier les détails. Après validation, un acompte fixe de 100 € est demandé avant le lancement de la préparation.',
-        'legal_note' => 'Ce message confirme votre demande de réservation. La préparation ne débute qu’après validation des détails et confirmation de l’acompte.',
+        'next' => 'Nous vous recontactons pour vérifier les détails et finaliser la commande avec vous.',
+        'legal_note' => 'Ce message confirme votre demande de réservation. La commande devient définitive après confirmation avec VVS FLAWLESS.',
         'thanks' => 'Merci,',
-        'document_note' => 'Ce document est un récapitulatif de réservation et non une facture fiscale.',
     ],
 
     'language' => [
@@ -283,8 +274,8 @@ return [
     ],
 
     'concept' => [
-        'eyebrow' => 'VVS FLAWLESS · Projet belge',
-        'title' => 'Montres VVS & iced-out depuis la Belgique',
+        'eyebrow' => 'VVS FLAWLESS Belgique',
+        'title' => 'La culture bustdown arrive en Belgique',
         'description' => 'Une sélection de montres iced-out serties de moissanite VVS, proposées avec mouvement japonais ou suisse.',
         'cta' => 'Voir la collection',
     ],
@@ -301,7 +292,7 @@ return [
     ],
 
     'footer' => [
-        'tagline' => 'VVS FLAWLESS · Projet indépendant belge',
+        'tagline' => 'La culture bustdown arrive en Belgique',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Confidentialité',
         'terms' => 'Conditions de réservation',
@@ -312,8 +303,8 @@ return [
         'eyebrow' => 'À propos',
         'title_before' => 'Une nouvelle',
         'title_highlight' => 'culture',
-        'title_after' => 'depuis la Belgique.',
-        'paragraph_1' => 'VVS FLAWLESS est un projet indépendant belge consacré aux montres iced-out serties de moissanite, avec demandes possibles depuis la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
+        'title_after' => 'en Belgique.',
+        'paragraph_1' => 'VVS FLAWLESS est un projet belge consacré aux montres iced-out serties de moissanite.',
         'paragraph_2' => 'Vous choisissez votre modèle et son mouvement sur le site. Nous échangeons ensuite directement avec vous pour confirmer la commande et organiser sa réception.',
         'paragraph_3_before' => 'Les modèles proposés sont sertis de',
         'paragraph_3_strong' => 'moissanite VVS, couleur D',
@@ -346,7 +337,7 @@ return [
             ['question' => 'Vos montres sont-elles serties de diamants ?', 'answer' => 'Non. Les modèles présentés sur le site sont sertis de moissanite VVS. Cette pierre offre l’éclat recherché sur une montre diamant ou iced-out, mais elle reste différente du diamant.'],
             ['question' => 'La moissanite passe-t-elle au testeur diamant ?', 'answer' => 'La moissanite peut réagir positivement sur certains testeurs thermiques utilisés pour le diamant. Un testeur capable de différencier diamant et moissanite pourra cependant identifier les deux pierres séparément.'],
             ['question' => 'Quelle différence entre mouvement japonais et suisse ?', 'answer' => 'Le mouvement japonais est la configuration la plus accessible. La version suisse est l’option premium lorsqu’elle est proposée sur le modèle. Les deux prix sont affichés avant la réservation.'],
-            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons pour confirmer les détails ; après validation, un acompte fixe de 100 € est demandé avant le lancement de la préparation.'],
+            ['question' => 'Comment fonctionne une réservation ?', 'answer' => 'Choisissez la montre et le mouvement, puis envoyez le formulaire. Vous ne payez rien sur le site. Nous vous recontactons pour confirmer les détails et, si vous validez la commande, l’acompte de 25 %.'],
             ['question' => 'Quand ma montre sera-t-elle disponible ?', 'answer' => 'Comptez généralement 5 à 6 jours ouvrables. Ce délai reste indicatif jusqu’à ce que nous ayons vérifié votre commande avec vous.'],
             ['question' => 'Comment recevoir ma montre ?', 'answer' => 'Vous pouvez choisir une remise en main propre ou une livraison. Les modalités précises et les éventuels frais sont confirmés avant la finalisation de la commande.'],
             ['question' => 'Comment se passe la remise en main propre ?', 'answer' => 'Après confirmation, nous choisissons ensemble un lieu et un moment qui conviennent aux deux parties.'],
@@ -386,9 +377,9 @@ return [
         'reserve' => 'Réservez',
         'reserve_text' => 'Envoyez votre demande directement depuis le formulaire.',
         'confirm' => 'Confirmation',
-        'confirm_text' => 'Nous vérifions directement avec vous le modèle, le prix, le délai et les modalités. Après validation, un acompte fixe de 100 € lance la préparation.',
+        'confirm_text' => 'Nous vérifions les détails avec vous et expliquons l’acompte de 25 %.',
         'receive' => 'Réception',
-        'receive_text' => 'Une fois la montre prête et validée avec vous, nous organisons sa remise ou sa livraison.',
+        'receive_text' => 'Après la vidéo de confirmation, nous organisons le solde de 75 % et la réception.',
         'delay_label' => 'Disponibilité estimée',
         'delay' => '5–6 jours ouvrables',
         'delivery_label' => 'Mode de réception',
@@ -407,7 +398,7 @@ return [
 
     'reservation_trust' => [
         'title' => 'Vous ne payez rien en envoyant le formulaire',
-        'description' => 'Votre demande nous permet de vérifier avec vous la montre, le mouvement, le prix et les conditions. Après validation écrite, un acompte fixe de 100 € est demandé avant la préparation.',
+        'description' => 'Votre demande nous permet simplement de vérifier avec vous la montre, le mouvement, le prix et les conditions avant toute commande définitive.',
         'sent' => 'Demande envoyée',
         'confirmed' => 'Contact et confirmation',
         'organized' => 'Réception organisée',

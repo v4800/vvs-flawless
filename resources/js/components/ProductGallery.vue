@@ -312,7 +312,7 @@ onBeforeUnmount(() => {
                         {{ translations.product.color }}
                     </p>
 
-                    <p class="mt-1 text-sm font-bold text-amber-200">D</p>
+                    <p class="vvs-price mt-1 text-sm font-black">D</p>
                 </div>
             </div>
         </div>
@@ -387,7 +387,7 @@ onBeforeUnmount(() => {
                     {{ translations.product.reception }}
                 </p>
 
-                <p class="mt-2 text-xs font-black text-amber-200">
+                <p class="vvs-price mt-2 text-xs font-black">
                     {{ translations.product.customer_choice }}
                 </p>
             </div>

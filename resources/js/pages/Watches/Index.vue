@@ -94,17 +94,13 @@ const normalizeSearchText = (value) => {
 };
 
 const hiddenFiltersActive = computed(() => {
-    return [
-        'model',
-        'price_min',
-        'price_max',
-        'movement',
-        'availability',
-    ].some((key) => {
-        const value = props.filters[key];
+    return ['model', 'price_min', 'price_max', 'movement', 'availability'].some(
+        (key) => {
+            const value = props.filters[key];
 
-        return value !== '' && value !== null && value !== undefined;
-    });
+            return value !== '' && value !== null && value !== undefined;
+        },
+    );
 });
 
 const visibleSourcedModels = computed(() => {
@@ -154,7 +150,6 @@ const scrollToCollection = () => {
         block: 'start',
     });
 };
-
 </script>
 
 <template>
@@ -210,7 +205,9 @@ const scrollToCollection = () => {
                             ></span>
                         </div>
 
-                        <h2 class="vvs-display-title min-w-0 max-w-full break-words text-4xl leading-[0.96] sm:text-5xl lg:text-6xl">
+                        <h2
+                            class="vvs-display-title max-w-full min-w-0 text-4xl leading-[0.96] break-words sm:text-5xl lg:text-6xl"
+                        >
                             {{ translations.collection.title_before }}
                             <span class="vvs-gradient-text">
                                 {{ translations.collection.title_highlight }}
@@ -227,7 +224,7 @@ const scrollToCollection = () => {
                     <div
                         v-if="showSourcedModels || props.watches.length"
                         :aria-busy="catalogVisualLoading"
-                        class="grid gap-6 transition-opacity duration-200 sm:grid-cols-2 xl:grid-cols-3 motion-reduce:transition-none"
+                        class="grid gap-6 transition-opacity duration-200 motion-reduce:transition-none sm:grid-cols-2 xl:grid-cols-3"
                     >
                         <SourcedWatches
                             v-if="showSourcedModels"
@@ -249,10 +246,15 @@ const scrollToCollection = () => {
                         <p class="vvs-display-title text-3xl text-white">
                             {{ noResultsCopy.title }}
                         </p>
-                        <p class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400">
+                        <p
+                            class="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-400"
+                        >
                             {{ noResultsCopy.text }}
                         </p>
-                        <Link :href="page.props.localizedRoutes.watches" class="vvs-button-secondary mt-6 inline-flex min-h-11 items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300">
+                        <Link
+                            :href="page.props.localizedRoutes.watches"
+                            class="vvs-button-secondary mt-6 inline-flex min-h-11 items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                        >
                             {{ noResultsCopy.reset }}
                         </Link>
                     </div>
@@ -273,7 +275,6 @@ const scrollToCollection = () => {
             <PickupSection />
             <FaqSection />
             <ContactSection />
-
         </main>
 
         <CollectionFooter />

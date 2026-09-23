@@ -1,6 +1,6 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -10,9 +10,9 @@
 @theme inline {
     --font-sans:
         Instrument Sans, ui-sans-serif, system-ui, sans-serif,
-        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
-    --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+    --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
 
     --radius-lg: var(--radius);
     --radius-md: calc(var(--radius) - 2px);
@@ -84,9 +84,9 @@
     body,
     html {
         --font-sans:
-            "Instrument Sans", ui-sans-serif, system-ui, sans-serif,
-            "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-            "Noto Color Emoji";
+            'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+            'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+            'Noto Color Emoji';
     }
 }
 
@@ -226,7 +226,7 @@
     }
 
     .vvs-watch-title {
-        font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
         font-weight: 700;
         letter-spacing: -0.035em;
         line-height: 1.08;
@@ -258,7 +258,7 @@
 
     .vvs-brand-wordmark__vvs {
         display: block;
-        font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+        font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
         font-size: clamp(6rem, 25vw, 11rem);
         font-weight: 800;
         letter-spacing: -0.105em;
@@ -372,7 +372,7 @@
             rgb(5 5 5 / 0.82);
     }
 
-    .vvs-form :where(input:not([type="checkbox"]), select, textarea) {
+    .vvs-form :where(input:not([type='checkbox']), select, textarea) {
         border-color: rgb(255 255 255 / 0.105);
         background:
             linear-gradient(135deg, rgb(255 255 255 / 0.025), transparent 62%),
@@ -386,7 +386,7 @@
             background-color 220ms ease;
     }
 
-    .vvs-form :where(input:not([type="checkbox"]), select, textarea):focus {
+    .vvs-form :where(input:not([type='checkbox']), select, textarea):focus {
         border-color: rgb(242 213 138 / 0.58);
         box-shadow:
             0 0 0 3px rgb(217 166 46 / 0.08),
@@ -434,7 +434,7 @@
             rgb(255 255 255 / 0.44) 46%,
             transparent 70%
         );
-        content: "";
+        content: '';
         opacity: 0;
         transform: translateX(-85%);
         transition:
@@ -493,7 +493,7 @@
             var(--vvs-champagne),
             transparent
         );
-        content: "";
+        content: '';
         opacity: 0;
         transform: scaleX(0.35);
         transition:
@@ -549,7 +549,7 @@
             rgb(255 255 255 / 0.02),
             transparent 46%
         );
-        content: "";
+        content: '';
         pointer-events: none;
     }
 
@@ -644,7 +644,7 @@
             );
         background-size: 34px 34px;
         mask-image: linear-gradient(to right, black, transparent 72%);
-        content: "";
+        content: '';
         pointer-events: none;
     }
 
@@ -791,7 +791,7 @@
 }
 
 .site-header::after {
-    content: "";
+    content: '';
     position: absolute;
     right: 12%;
     bottom: -1px;
@@ -818,7 +818,7 @@
 }
 
 .watch-card::after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     z-index: 30;
@@ -857,7 +857,7 @@
 }
 
 .guide-report-mark::after {
-    content: "";
+    content: '';
     position: absolute;
     top: -35%;
     bottom: -35%;
@@ -877,8 +877,8 @@
     transform: translateX(-220%) skewX(-18deg);
 }
 
-.vvs-button-primary > [aria-hidden="true"],
-.vvs-button-secondary > [aria-hidden="true"] {
+.vvs-button-primary > [aria-hidden='true'],
+.vvs-button-secondary > [aria-hidden='true'] {
     display: inline-block;
     transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -924,8 +924,8 @@
             opacity 180ms ease;
     }
 
-    .vvs-button-primary:hover > [aria-hidden="true"],
-    .vvs-button-secondary:hover > [aria-hidden="true"] {
+    .vvs-button-primary:hover > [aria-hidden='true'],
+    .vvs-button-secondary:hover > [aria-hidden='true'] {
         transform: translateX(3px);
     }
 }
@@ -953,8 +953,8 @@
     .guide-choice-card,
     .guide-report,
     .guide-report-mark::after,
-    .vvs-button-primary > [aria-hidden="true"],
-    .vvs-button-secondary > [aria-hidden="true"] {
+    .vvs-button-primary > [aria-hidden='true'],
+    .vvs-button-secondary > [aria-hidden='true'] {
         animation: none !important;
         transition-duration: 0.01ms !important;
         transform: none !important;
@@ -994,7 +994,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 .vvs-editorial-shimmer::after {
-    content: "";
+    content: '';
     position: absolute;
     z-index: 25;
     top: -30%;
@@ -1023,7 +1023,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 .vvs-spectrum-visual::before {
-    content: "";
+    content: '';
     position: absolute;
     z-index: 24;
     top: 8%;
@@ -1110,7 +1110,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         rgb(255 248 223 / 0.18) 48%,
         transparent 72%
     );
-    content: "";
+    content: '';
     opacity: 0;
     transform: translateX(-90%);
     transition:
@@ -1194,7 +1194,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 .vvs-title-accent::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 50%;
     bottom: -0.55rem;
@@ -1276,7 +1276,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 .vvs-request-progress::after {
-    content: "";
+    content: '';
     display: block;
     height: 100%;
     width: 35%;
@@ -1315,7 +1315,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 #product-gallery-panel::after {
-    content: "";
+    content: '';
     position: absolute;
     inset: 0;
     z-index: 25;
@@ -1433,7 +1433,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         linear-gradient(90deg, rgb(255 255 255 / 0.016) 1px, transparent 1px);
     background-size: 44px 44px;
     mask-image: linear-gradient(112deg, rgb(0 0 0 / 0.72), transparent 66%);
-    content: "";
+    content: '';
 }
 
 .vvs-brand-stage {
@@ -1458,7 +1458,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     z-index: -1;
     border: 1px solid rgb(242 213 138 / 0.12);
     border-radius: inherit;
-    content: "";
+    content: '';
     pointer-events: none;
 }
 
@@ -1512,7 +1512,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     text-transform: uppercase;
 }
 
-.vvs-hero-proof > [aria-hidden="true"] {
+.vvs-hero-proof > [aria-hidden='true'] {
     color: rgb(242 213 138 / 0.54);
 }
 
@@ -1541,7 +1541,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         rgb(242 213 138 / 0.18),
         transparent
     );
-    content: "";
+    content: '';
 }
 
 .vvs-send-button {
@@ -1561,7 +1561,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     top: 50%;
     right: 1.12rem;
     color: currentColor;
-    content: "â†—";
+    content: 'â†—';
     font-size: 0.92rem;
     line-height: 1;
     opacity: 0.82;
@@ -1602,7 +1602,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     height: 0.62rem;
     border-right: 2px solid #090909;
     border-bottom: 2px solid #090909;
-    content: "";
+    content: '';
     transform: rotate(45deg) scale(0);
     transform-origin: 55% 55%;
     transition: transform 130ms ease;
@@ -1640,7 +1640,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         rgb(242 213 138 / 0.45),
         transparent
     );
-    content: "";
+    content: '';
 }
 
 #collection .vvs-display-title {
@@ -1730,7 +1730,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     inset: 0;
     z-index: 18;
     pointer-events: none;
-    content: "";
+    content: '';
     background: linear-gradient(
         180deg,
         rgb(255 248 223/0.025),
@@ -1750,13 +1750,13 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         0 30px 75px rgb(0 0 0/0.3),
         inset 0 1px 0 rgb(255 255 255/0.04);
 }
-[role="tablist"] > button[role="tab"] {
+[role='tablist'] > button[role='tab'] {
     transition:
         border-color 160ms ease,
         box-shadow 160ms ease,
         transform 160ms ease;
 }
-[role="tablist"] > button[role="tab"][aria-selected="true"] {
+[role='tablist'] > button[role='tab'][aria-selected='true'] {
     border-color: rgb(242 213 138/0.72) !important;
     box-shadow:
         0 0 0 1px rgb(242 213 138/0.15),
@@ -1776,13 +1776,13 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 .vvs-form legend {
     transition: color 160ms ease;
 }
-.vvs-form :where(input:not([type="checkbox"]), select, textarea):focus {
+.vvs-form :where(input:not([type='checkbox']), select, textarea):focus {
     border-color: rgb(242 213 138/0.62);
     box-shadow:
         0 0 0 3px rgb(217 166 46/0.075),
         inset 0 1px 0 rgb(255 255 255/0.04);
 }
-.vvs-form :where(input, select, textarea)[aria-invalid="true"] {
+.vvs-form :where(input, select, textarea)[aria-invalid='true'] {
     border-color: rgb(248 113 113/0.48) !important;
     box-shadow: 0 0 0 3px rgb(248 113 113/0.055);
 }
@@ -1807,7 +1807,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     height: 0.62rem;
     border-right: 2px solid #090909;
     border-bottom: 2px solid #090909;
-    content: "";
+    content: '';
     transform: rotate(45deg) scale(0);
     transform-origin: 55% 55%;
     transition: transform 120ms ease;
@@ -1833,8 +1833,8 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 .vvs-button-secondary:active {
     transform: translateY(1px) scale(0.992);
 }
-.vvs-button-primary > [aria-hidden="true"],
-.vvs-button-secondary > [aria-hidden="true"] {
+.vvs-button-primary > [aria-hidden='true'],
+.vvs-button-secondary > [aria-hidden='true'] {
     transition: transform 160ms ease;
 }
 
@@ -1847,7 +1847,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     width: min(11rem, 46vw);
     height: 1px;
     margin: 1.45rem auto 0;
-    content: "";
+    content: '';
     background: linear-gradient(
         90deg,
         transparent,
@@ -1871,7 +1871,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     left: 5%;
     height: 1px;
     pointer-events: none;
-    content: "";
+    content: '';
     background: linear-gradient(
         90deg,
         transparent,
@@ -1904,7 +1904,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     left: 10%;
     height: 1px;
     pointer-events: none;
-    content: "";
+    content: '';
     background: linear-gradient(
         90deg,
         transparent,
@@ -1940,30 +1940,30 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     .watch-card:hover > a:first-of-type img {
         transform: scale(1.012);
     }
-    [role="tablist"] > button[role="tab"]:hover {
+    [role='tablist'] > button[role='tab']:hover {
         border-color: rgb(242 213 138/0.34);
         transform: translate3d(0, -1px, 0);
     }
-    .vvs-button-primary:hover > [aria-hidden="true"],
-    .vvs-button-secondary:hover > [aria-hidden="true"] {
+    .vvs-button-primary:hover > [aria-hidden='true'],
+    .vvs-button-secondary:hover > [aria-hidden='true'] {
         transform: translate3d(2px, 0, 0);
     }
 }
 @media (hover: none), (pointer: coarse) {
     .watch-card,
     .watch-card img,
-    [role="tablist"] > button[role="tab"] {
+    [role='tablist'] > button[role='tab'] {
         transform: none !important;
     }
 }
 @media (prefers-reduced-motion: reduce) {
     .watch-card,
     .watch-card img,
-    [role="tablist"] > button[role="tab"],
+    [role='tablist'] > button[role='tab'],
     .vvs-button-primary,
     .vvs-button-secondary,
-    .vvs-button-primary > [aria-hidden="true"],
-    .vvs-button-secondary > [aria-hidden="true"],
+    .vvs-button-primary > [aria-hidden='true'],
+    .vvs-button-secondary > [aria-hidden='true'],
     #reservation-confirmation,
     #reservation-confirmation::after {
         animation: none !important;
@@ -2068,7 +2068,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
     inset: -0.55rem;
     border: 1px solid rgb(242 213 138 / 0.08);
     border-radius: 9999px;
-    content: "";
+    content: '';
     pointer-events: none;
 }
 
@@ -2103,7 +2103,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         rgb(242 213 138 / 0.18),
         transparent
     );
-    content: "";
+    content: '';
     pointer-events: none;
 }
 
@@ -2199,7 +2199,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
         transparent 74%
     );
 
-    content: "";
+    content: '';
     opacity: 0;
     pointer-events: none;
 
@@ -2211,8 +2211,8 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
 }
 
 /* icône déjà existante seulement — aucune nouvelle flèche */
-.vvs-button-primary > [aria-hidden="true"],
-.vvs-button-secondary > [aria-hidden="true"] {
+.vvs-button-primary > [aria-hidden='true'],
+.vvs-button-secondary > [aria-hidden='true'] {
     display: inline-block;
 
     transition:
@@ -2225,7 +2225,7 @@ html.vvs-motion-ready:not(.vvs-reduced-motion) .vvs-reveal-ready.vvs-in-view {
    ========================================================= */
 
 /* wrapper actuel autour de #collection-search */
-form[role="search"] .relative:has(#collection-search) {
+form[role='search'] .relative:has(#collection-search) {
     position: relative;
 
     padding: 1px;
@@ -2282,7 +2282,7 @@ form[role="search"] .relative:has(#collection-search) {
 }
 
 /* bouton loupe déjà existant */
-form[role="search"] .relative:has(#collection-search) > button[type="submit"] {
+form[role='search'] .relative:has(#collection-search) > button[type='submit'] {
     right: 0.42rem !important;
 
     width: 2.55rem !important;
@@ -2313,7 +2313,7 @@ form[role="search"] .relative:has(#collection-search) > button[type="submit"] {
 }
 
 /* focus de toute la barre */
-form[role="search"] .relative:has(#collection-search:focus) {
+form[role='search'] .relative:has(#collection-search:focus) {
     background: linear-gradient(
         110deg,
         rgb(242 213 138 / 0.28),
@@ -2326,9 +2326,9 @@ form[role="search"] .relative:has(#collection-search:focus) {
         0 16px 38px rgb(0 0 0 / 0.24);
 }
 
-form[role="search"]
+form[role='search']
     .relative:has(#collection-search:focus)
-    > button[type="submit"] {
+    > button[type='submit'] {
     color: #f2d58a;
     border-color: rgb(242 213 138 / 0.25);
 }
@@ -2365,12 +2365,12 @@ form[role="search"]
         transform: translate3d(24%, 0, 0);
     }
 
-    .vvs-button-primary:hover > [aria-hidden="true"],
-    .vvs-button-secondary:hover > [aria-hidden="true"] {
+    .vvs-button-primary:hover > [aria-hidden='true'],
+    .vvs-button-secondary:hover > [aria-hidden='true'] {
         transform: translate3d(2px, 0, 0);
     }
 
-    form[role="search"] .relative:has(#collection-search):hover {
+    form[role='search'] .relative:has(#collection-search):hover {
         background: linear-gradient(
             120deg,
             rgb(255 255 255 / 0.13),
@@ -2379,9 +2379,9 @@ form[role="search"]
         );
     }
 
-    form[role="search"]
+    form[role='search']
         .relative:has(#collection-search)
-        > button[type="submit"]:hover {
+        > button[type='submit']:hover {
         color: #f2d58a;
         border-color: rgb(242 213 138 / 0.28);
         transform: scale(1.035);
@@ -2404,10 +2404,10 @@ form[role="search"]
 @media (hover: none), (pointer: coarse) {
     .vvs-button-primary,
     .vvs-button-secondary,
-    form[role="search"] .relative:has(#collection-search),
-    form[role="search"]
+    form[role='search'] .relative:has(#collection-search),
+    form[role='search']
         .relative:has(#collection-search)
-        > button[type="submit"] {
+        > button[type='submit'] {
         transform: none !important;
     }
 
@@ -2426,13 +2426,13 @@ form[role="search"]
     .vvs-button-secondary,
     .vvs-button-primary::before,
     .vvs-button-secondary::before,
-    .vvs-button-primary > [aria-hidden="true"],
-    .vvs-button-secondary > [aria-hidden="true"],
-    form[role="search"] .relative:has(#collection-search),
+    .vvs-button-primary > [aria-hidden='true'],
+    .vvs-button-secondary > [aria-hidden='true'],
+    form[role='search'] .relative:has(#collection-search),
     #collection-search,
-    form[role="search"]
+    form[role='search']
         .relative:has(#collection-search)
-        > button[type="submit"] {
+        > button[type='submit'] {
         animation: none !important;
         transition: none !important;
         transform: none !important;
@@ -2876,19 +2876,31 @@ form[role="search"]
 .vvs-storefront .vvs-button-primary,
 .vvs-storefront .vvs-button-secondary {
     border-radius: 0.75rem;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.22), 0 5px 14px rgb(0 0 0 / 0.14);
-    transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.22),
+        0 5px 14px rgb(0 0 0 / 0.14);
+    transition:
+        transform 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease,
+        box-shadow 180ms ease;
 }
 .vvs-storefront .vvs-button-primary::after,
-.vvs-storefront .vvs-button-secondary::after { display: none; }
+.vvs-storefront .vvs-button-secondary::after {
+    display: none;
+}
 .vvs-storefront .vvs-button-primary > [aria-hidden='true'],
-.vvs-storefront .vvs-button-secondary > [aria-hidden='true'] { transition: transform 180ms ease; }
+.vvs-storefront .vvs-button-secondary > [aria-hidden='true'] {
+    transition: transform 180ms ease;
+}
 
 @media (hover: hover) and (pointer: fine) {
     .vvs-storefront .vvs-button-primary:hover,
     .vvs-storefront .vvs-button-secondary:hover {
         transform: translateY(-1px);
-        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.26), 0 8px 17px rgb(0 0 0 / 0.2);
+        box-shadow:
+            inset 0 1px 0 rgb(255 255 255 / 0.26),
+            0 8px 17px rgb(0 0 0 / 0.2);
     }
     .vvs-storefront .vvs-button-primary:hover > [aria-hidden='true'],
     .vvs-storefront .vvs-button-secondary:hover > [aria-hidden='true'] {
@@ -2896,13 +2908,17 @@ form[role="search"]
     }
 }
 
-.vvs-search-shell { isolation: isolate; }
+.vvs-search-shell {
+    isolation: isolate;
+}
 .vvs-storefront .vvs-search-field {
     min-height: 3.25rem;
     border: 1px solid rgb(218 184 111 / 0.66);
     background: linear-gradient(170deg, #22211e, #161615 68%, #1b1a18);
     color: #f8f7f3;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.085), 0 3px 12px rgb(0 0 0 / 0.17);
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.085),
+        0 3px 12px rgb(0 0 0 / 0.17);
 }
 .vvs-storefront .vvs-search-field::placeholder {
     color: #bdb9b0;
@@ -2910,7 +2926,9 @@ form[role="search"]
 }
 .vvs-storefront .vvs-search-field:focus-visible {
     border-color: #f2d58a;
-    box-shadow: 0 0 0 3px rgb(242 213 138 / 0.17), inset 0 1px 0 rgb(255 255 255 / 0.1);
+    box-shadow:
+        0 0 0 3px rgb(242 213 138 / 0.17),
+        inset 0 1px 0 rgb(255 255 255 / 0.1);
 }
 .vvs-storefront .vvs-search-submit {
     border: 1px solid rgb(255 248 223 / 0.52);
@@ -2975,7 +2993,9 @@ form[role="search"]
     font-weight: 700;
     text-decoration: none;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
-    transition: border-color 180ms ease, transform 180ms ease;
+    transition:
+        border-color 180ms ease,
+        transform 180ms ease;
 }
 .vvs-footer-youtube:hover,
 .vvs-footer-youtube:focus-visible {
@@ -2983,13 +3003,20 @@ form[role="search"]
     color: #fff8df;
 }
 @media (hover: hover) and (pointer: fine) {
-    .vvs-footer-youtube:hover { transform: translateY(-1px); }
+    .vvs-footer-youtube:hover {
+        transform: translateY(-1px);
+    }
 }
 @media (prefers-reduced-motion: reduce) {
     .vvs-storefront .vvs-button-primary,
     .vvs-storefront .vvs-button-secondary,
-    .vvs-footer-youtube { transition: none; transform: none; }
-    .vvs-loading-indicator { animation: none; }
+    .vvs-footer-youtube {
+        transition: none;
+        transform: none;
+    }
+    .vvs-loading-indicator {
+        animation: none;
+    }
 }
 
 /* VVS INTERACTIONS BIJOUTERIE 2026-09-21 */
@@ -3008,7 +3035,9 @@ form[role="search"]
     );
     opacity: 0;
     transform: translateX(-110%);
-    transition: transform 460ms ease, opacity 150ms ease;
+    transition:
+        transform 460ms ease,
+        opacity 150ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -3018,7 +3047,7 @@ form[role="search"]
         border-color: #f2d58a;
         box-shadow:
             inset 0 1px 0 rgb(255 255 255 / 0.35),
-            0 9px 22px rgb(166 117 38 / 0.20);
+            0 9px 22px rgb(166 117 38 / 0.2);
     }
 
     .vvs-storefront .vvs-button-primary:hover::after,
@@ -3048,7 +3077,7 @@ form[role="search"]
     background: linear-gradient(165deg, #292721, #1b1a18);
     box-shadow:
         inset 0 1px 0 rgb(255 255 255 / 0.12),
-        0 4px 14px rgb(0 0 0 / 0.20);
+        0 4px 14px rgb(0 0 0 / 0.2);
 }
 
 .vvs-storefront .vvs-search-field::placeholder {
@@ -3071,7 +3100,7 @@ form[role="search"]
     border-top-color: #fff8df;
     border-right-color: #d8a13b;
     box-shadow:
-        0 0 0 2px rgb(242 213 138 / 0.10),
+        0 0 0 2px rgb(242 213 138 / 0.1),
         0 0 9px rgb(242 213 138 / 0.15);
     animation: vvs-jewel-turn 850ms linear infinite;
 }
@@ -3097,25 +3126,35 @@ form[role="search"]
 }
 
 @keyframes vvs-jewel-turn {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .vvs-loading-indicator { animation: none; }
+    .vvs-loading-indicator {
+        animation: none;
+    }
 
     .vvs-storefront .vvs-button-primary::after,
     .vvs-storefront .vvs-button-secondary::after {
         display: none;
     }
 
-    .vvs-footer-youtube svg { transition: none; }
+    .vvs-footer-youtube svg {
+        transition: none;
+    }
 }
 /* VVS CONFIRMATION REFINEMENT 2026-09-21 */
 .vvs-confirmation {
     padding-top: clamp(7.5rem, 11vw, 9.5rem);
     padding-bottom: clamp(3rem, 8vw, 5rem);
     background:
-        radial-gradient(ellipse at 50% 5%, rgb(205 170 98 / 0.075), transparent 37rem),
+        radial-gradient(
+            ellipse at 50% 5%,
+            rgb(205 170 98 / 0.075),
+            transparent 37rem
+        ),
         #090909;
 }
 .vvs-confirmation-mark {
@@ -3153,8 +3192,12 @@ form[role="search"]
 .vvs-confirmation-card > div:first-child {
     background: linear-gradient(105deg, #191815, #0d0d0c 75%);
 }
-.vvs-confirmation-card .text-zinc-600 { color: #a1a1aa; }
-.vvs-confirmation-card .text-zinc-500 { color: #b4b4bc; }
+.vvs-confirmation-card .text-zinc-600 {
+    color: #a1a1aa;
+}
+.vvs-confirmation-card .text-zinc-500 {
+    color: #b4b4bc;
+}
 .vvs-confirmation-card h2,
 .vvs-confirmation-card p,
 .vvs-confirmation-card span {
@@ -3189,17 +3232,29 @@ form[role="search"]
     outline-offset: 3px;
 }
 @media (max-width: 639px) {
-    .vvs-confirmation { padding-top: 7.75rem; }
-    .vvs-confirmation-card > div { min-width: 0; }
+    .vvs-confirmation {
+        padding-top: 7.75rem;
+    }
+    .vvs-confirmation-card > div {
+        min-width: 0;
+    }
 }
 
 /* VVS MUTED CHAMPAGNE BUTTONS 2026-09-21 */
 .vvs-storefront .vvs-button-primary,
 main.vvs-storefront a.bg-amber-300.px-5.py-4 {
     border: 1px solid #d4bf99;
-    background: linear-gradient(115deg, #ae9169 0%, #d4bf99 48%, #e8dcc4 68%, #b69b73 100%);
+    background: linear-gradient(
+        115deg,
+        #ae9169 0%,
+        #d4bf99 48%,
+        #e8dcc4 68%,
+        #b69b73 100%
+    );
     color: #191714;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 5px 16px rgb(0 0 0 / 0.18);
+    box-shadow:
+        inset 0 1px 0 rgb(255 255 255 / 0.35),
+        0 5px 16px rgb(0 0 0 / 0.18);
 }
 .vvs-storefront .vvs-button-secondary {
     border-color: rgb(212 191 153 / 0.48);

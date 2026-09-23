@@ -45,11 +45,9 @@ final class WatchCatalog
             ? Lang::get($catalogKey, [], $locale, false)
             : null;
 
-        if (! is_array($translation) && ! is_string($catalogName)) {
+        if ($translation === [] && ! is_string($catalogName)) {
             return $watch;
         }
-
-        $translation = is_array($translation) ? $translation : [];
 
         if ($locale !== 'fr_BE') {
             foreach (['description', 'short_description'] as $field) {
@@ -111,6 +109,7 @@ final class WatchCatalog
 
         return $value;
     }
+
     public function applyCover(Watch $watch): Watch
     {
         $entry = $this->catalogEntryForWatch($watch);
@@ -216,7 +215,6 @@ final class WatchCatalog
         return $this->searchMetadataForSlug($entry['slug']);
     }
 
-
     /**
      * @return array{
      *     families: list<array{value: string, label: string}>,
@@ -234,8 +232,7 @@ final class WatchCatalog
 
         $families = array_values(array_filter(
             $metadata['families'] ?? [],
-            static fn (mixed $family): bool =>
-                is_array($family)
+            static fn (mixed $family): bool => is_array($family)
                 && is_string($family['value'] ?? null)
                 && trim($family['value']) !== ''
                 && is_string($family['label'] ?? null)
@@ -244,14 +241,12 @@ final class WatchCatalog
 
         $aliases = array_values(array_filter(
             $metadata['aliases'] ?? [],
-            static fn (mixed $alias): bool =>
-                is_string($alias) && trim($alias) !== ''
+            static fn (mixed $alias): bool => is_string($alias) && trim($alias) !== ''
         ));
 
         $keywords = array_values(array_filter(
             $metadata['keywords'] ?? [],
-            static fn (mixed $keyword): bool =>
-                is_string($keyword) && trim($keyword) !== ''
+            static fn (mixed $keyword): bool => is_string($keyword) && trim($keyword) !== ''
         ));
 
         return [

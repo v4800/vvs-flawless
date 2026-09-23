@@ -2,8 +2,8 @@
 
 return [
     'collection_seo' => [
-        'title' => 'VVS-moissanite & iced-out horloges | VVS FLAWLESS',
-        'description' => 'Ontdek VVS FLAWLESS-horloges met kleur D VVS-moissanite, aangeboden vanuit België voor België, Frankrijk, Duitsland en Nederland na bevestiging.',
+        'title' => 'VVS-moissanite & iced-out horloges in België | VVS FLAWLESS',
+        'description' => 'Ontdek VVS FLAWLESS-horloges met kleur D VVS-moissanite: iced-out en bezette modellen voor heren, dames of een uniseks stijl, op reservatie verkrijgbaar in België.',
         'product_suffix' => 'Horloge bezet met kleur D VVS-moissanite voor een zeer heldere iced-out uitstraling. De prijs staat op de productpagina; reservatie gebeurt online, gevolgd door persoonlijke overhandiging of levering na bevestiging.',
         'image_alt' => 'VVS FLAWLESS iced-out horloges bezet met kleur D VVS-moissanite',
     ],
@@ -41,12 +41,6 @@ return [
                 'title' => 'Reserveren in België',
                 'text' => 'Prijs, termijn, reservatie, persoonlijke overhandiging en levering: zo werkt VVS FLAWLESS.',
                 'cta' => 'Bekijk de België-gids',
-            ],
-            [
-                'route' => 'netherlandsGuide',
-                'title' => 'Reserveren vanuit Nederland',
-                'text' => 'Lees hoe je vanuit Nederland een aanvraag verstuurt en hoe de ontvangstvoorwaarden worden bevestigd.',
-                'cta' => 'Bekijk de Nederland-gids',
             ],
         ],
     ],
@@ -160,7 +154,7 @@ return [
         'eyebrow' => 'VVS FLAWLESS België',
         'title' => 'Een VVS-horloge reserveren in België',
         'intro' => 'VVS FLAWLESS biedt horloges bezet met kleur D VVS-moissanite, van klassieke bezette modellen tot uitgesproken iced-out ontwerpen. De vanafprijzen staan in de collectie vóór je een aanvraag verstuurt.',
-        'answer' => 'Je kiest je horloge op de website en verstuurt een aanvraag zonder onmiddellijke betaling. VVS FLAWLESS bevestigt model, prijs, termijn, ontvangstwijze en eventuele kosten rechtstreeks met jou voordat de voorbereiding start. Persoonlijke overhandiging in België is mogelijk volgens de bevestigde zone.',
+        'answer' => 'Je kiest je horloge op de website en verstuurt een aanvraag zonder onmiddellijke betaling. VVS FLAWLESS bevestigt het model, de prijs, de termijn, het adres, het uur en eventuele verplaatsingskosten vóór het voorschot. Persoonlijke overhandiging wordt overal in België op afspraak geregeld, onder meer in Luik, Verviers, Namen, Brussel, Charleroi, Antwerpen en Gent.',
         'sections' => [
             [
                 'title' => 'Kleur D VVS-moissanite',
@@ -173,14 +167,14 @@ return [
                 'title' => 'Prijs en reservatie',
                 'paragraphs' => [
                     'De collectie toont voor ieder model een vanafprijs. Het reservatieformulier veroorzaakt geen betaling; het registreert alleen je interesse en contactgegevens.',
-                    'Het formulier op de website veroorzaakt geen betaling. De definitieve details worden rechtstreeks met jou bevestigd voordat de voorbereiding van het horloge start.',
+                    'Na bevestiging van de afspraak en de voorwaarden start een voorschot van 25% de bestelling. Daarna wordt een video van het afgewerkte horloge gestuurd; het saldo van 75% wordt tijdens de afspraak betaald, na controle van het horloge.',
                 ],
             ],
             [
                 'title' => 'Termijn en ontvangst',
                 'paragraphs' => [
                     'De gebruikelijke indicatieve termijn is 5 tot 6 werkdagen na bevestiging, afhankelijk van beschikbaarheid en voorbereiding van het model.',
-                    'Persoonlijke overhandiging in België is mogelijk volgens de bevestigde zone. Plaats, tijd en eventuele kosten worden rechtstreeks met jou afgesproken voordat de voorbereiding start.',
+                    'Persoonlijke overhandiging is overal in België mogelijk op afspraak. Het adres, het uur en eventuele verplaatsingskosten worden vóór de betaling van het voorschot bevestigd.',
                 ],
             ],
             [
@@ -195,53 +189,11 @@ return [
         'faq' => [
             ['question' => 'Wat verkoopt VVS FLAWLESS?', 'answer' => 'VVS FLAWLESS biedt horloges bezet met kleur D VVS-moissanite in verschillende iced-out en bezette stijlen.'],
             ['question' => 'Moet ik betalen om een reservatie te versturen?', 'answer' => 'Nee. Het formulier veroorzaakt geen betaling. De details van de bestelling worden daarna rechtstreeks met je bevestigd.'],
-            ['question' => 'Waar kan persoonlijke overhandiging plaatsvinden?', 'answer' => 'Dat kan in België volgens de bevestigde zone. Plaats, tijd en eventuele kosten worden rechtstreeks met jou afgesproken.'],
+            ['question' => 'Waar kan persoonlijke overhandiging plaatsvinden?', 'answer' => 'Dat kan overal in België op afspraak. Het adres, het uur en eventuele verplaatsingskosten worden vóór het voorschot bevestigd.'],
             ['question' => 'Wat is de termijn?', 'answer' => 'De gebruikelijke indicatieve termijn is 5 tot 6 werkdagen na bevestiging, maar wordt voor iedere bestelling gecontroleerd.'],
         ],
         'cta_title' => 'Bekijk de beschikbare horloges',
         'cta_text' => 'Bekijk de collectie, vanafprijzen en VVS-moissanite modellen en verstuur daarna een aanvraag vanaf het horloge dat je interesseert.',
         'cta_label' => 'Bekijk de collectie',
     ],
-    'netherlands' => [
-        'seo_title' => 'VVS-moissanite & iced-out horloges in Nederland | VVS FLAWLESS',
-        'seo_description' => 'Ontdek VVS FLAWLESS-horloges met VVS-moissanite, zichtbare prijzen en reservatie vanuit Nederland na bevestiging van de ontvangstwijze.',
-        'eyebrow' => 'VVS FLAWLESS Nederland',
-        'title' => 'VVS-moissanite horloges voor Nederland',
-        'intro' => 'VVS FLAWLESS is een onafhankelijk project uit België. De collectie is ook beschikbaar voor klanten in Nederland, met zichtbare prijzen en ontvangstvoorwaarden die rechtstreeks per zone worden bevestigd.',
-        'answer' => 'Kies een model en verstuur je aanvraag via de productpagina. Er gebeurt geen betaling op de website. Model, prijs, termijn en ontvangstwijze worden rechtstreeks met jou bevestigd voordat de voorbereiding start.',
-        'sections' => [
-            [
-                'title' => 'VVS-moissanite, geen diamant',
-                'paragraphs' => [
-                    'De betreffende modellen zijn bezet met kleur D VVS-moissanite zoals op de productpagina vermeld. VVS FLAWLESS maakt het verschil tussen moissanite en diamant duidelijk.',
-                    'Gebruik de gids diamant versus moissanite als je de stenen wilt vergelijken.',
-                ],
-            ],
-            [
-                'title' => 'Prijs en aanvraag vanuit Nederland',
-                'paragraphs' => [
-                    'Beschikbare prijzen staan op de productpagina. Het formulier registreert je aanvraag zonder online betaling.',
-                    'Alle definitieve details worden rechtstreeks bevestigd voordat de voorbereiding start.',
-                ],
-            ],
-            [
-                'title' => 'Ontvangst volgens je zone',
-                'paragraphs' => [
-                    'Levering of persoonlijke overhandiging kan volgens de zone worden besproken en wordt altijd vooraf bevestigd.',
-                    'Eventuele kosten en de werkelijke termijn worden per aanvraag meegedeeld.',
-                ],
-            ],
-        ],
-        'faq_title' => 'Vragen voor Nederland',
-        'faq' => [
-            ['question' => 'Kan ik vanuit Nederland reserveren?', 'answer' => 'Ja. Stuur een aanvraag via de productpagina; daarna worden de voorwaarden rechtstreeks volgens je zone bevestigd.'],
-            ['question' => 'Betaal ik op de website?', 'answer' => 'Nee. Het formulier verwerkt geen online betaling.'],
-            ['question' => 'Zijn de horloges van diamant?', 'answer' => 'De betreffende modellen worden duidelijk als VVS-moissanite vermeld.'],
-            ['question' => 'Hoe weet ik de termijn en kosten?', 'answer' => 'Die worden rechtstreeks bevestigd op basis van het model en de gekozen ontvangstwijze.'],
-        ],
-        'cta_title' => 'Bekijk de collectie',
-        'cta_text' => 'Vergelijk modellen, prijzen en configuraties en verstuur daarna een aanvraag vanaf de productpagina.',
-        'cta_label' => 'Bekijk de horloges',
-    ],
-
 ];

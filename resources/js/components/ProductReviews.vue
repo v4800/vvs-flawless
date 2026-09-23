@@ -43,10 +43,12 @@ const copy = computed(() => {
                 rating: 'Note',
                 review: 'Votre avis',
                 placeholder: 'Décrivez votre expérience avec cette montre…',
-                confirmation: 'Je décris une expérience personnelle réelle et j’accepte la publication de cet avis.',
+                confirmation:
+                    'Je décris une expérience personnelle réelle et j’accepte la publication de cet avis.',
                 send: 'Envoyer mon avis',
                 sending: 'Envoi…',
-                received: 'Merci. Votre avis a été reçu et sera visible après modération.',
+                received:
+                    'Merci. Votre avis a été reçu et sera visible après modération.',
                 all: 'Voir tous les avis',
                 date: 'Publié le',
             },
@@ -59,10 +61,12 @@ const copy = computed(() => {
                 rating: 'Score',
                 review: 'Jouw review',
                 placeholder: 'Beschrijf je ervaring met dit horloge…',
-                confirmation: 'Ik beschrijf een echte persoonlijke ervaring en ga akkoord met de publicatie van deze review.',
+                confirmation:
+                    'Ik beschrijf een echte persoonlijke ervaring en ga akkoord met de publicatie van deze review.',
                 send: 'Review versturen',
                 sending: 'Bezig met versturen…',
-                received: 'Bedankt. Je review is ontvangen en verschijnt na moderatie.',
+                received:
+                    'Bedankt. Je review is ontvangen en verschijnt na moderatie.',
                 all: 'Alle reviews bekijken',
                 date: 'Gepubliceerd op',
             },
@@ -75,10 +79,12 @@ const copy = computed(() => {
                 rating: 'Rating',
                 review: 'Your review',
                 placeholder: 'Describe your experience with this watch…',
-                confirmation: 'I am describing a genuine personal experience and agree to the publication of this review.',
+                confirmation:
+                    'I am describing a genuine personal experience and agree to the publication of this review.',
                 send: 'Submit my review',
                 sending: 'Sending…',
-                received: 'Thank you. Your review has been received and will appear after moderation.',
+                received:
+                    'Thank you. Your review has been received and will appear after moderation.',
                 all: 'View all reviews',
                 date: 'Published on',
             },
@@ -91,30 +97,35 @@ const copy = computed(() => {
                 rating: 'Bewertung',
                 review: 'Ihre Bewertung',
                 placeholder: 'Beschreiben Sie Ihre Erfahrung mit dieser Uhr…',
-                confirmation: 'Ich beschreibe eine echte persönliche Erfahrung und stimme der Veröffentlichung dieser Bewertung zu.',
+                confirmation:
+                    'Ich beschreibe eine echte persönliche Erfahrung und stimme der Veröffentlichung dieser Bewertung zu.',
                 send: 'Bewertung senden',
                 sending: 'Wird gesendet…',
-                received: 'Danke. Ihre Bewertung wurde empfangen und erscheint nach der Moderation.',
+                received:
+                    'Danke. Ihre Bewertung wurde empfangen und erscheint nach der Moderation.',
                 all: 'Alle Bewertungen ansehen',
                 date: 'Veröffentlicht am',
             },
-        }[page.props.locale] ?? null
-    ) ?? {
-        eyebrow: 'Avis sur ce modèle',
-        title: 'L’expérience des clients',
-        empty: 'Aucun avis publié pour ce modèle pour le moment.',
-        note: 'Les avis sont modérés avant publication. Une note négative n’est pas un motif de refus.',
-        name: 'Prénom ou pseudonyme',
-        rating: 'Note',
-        review: 'Votre avis',
-        placeholder: 'Décrivez votre expérience avec cette montre…',
-        confirmation: 'Je décris une expérience personnelle réelle et j’accepte la publication de cet avis.',
-        send: 'Envoyer mon avis',
-        sending: 'Envoi…',
-        received: 'Merci. Votre avis a été reçu et sera visible après modération.',
-        all: 'Voir tous les avis',
-        date: 'Publié le',
-    };
+        }[page.props.locale] ??
+        null ?? {
+            eyebrow: 'Avis sur ce modèle',
+            title: 'L’expérience des clients',
+            empty: 'Aucun avis publié pour ce modèle pour le moment.',
+            note: 'Les avis sont modérés avant publication. Une note négative n’est pas un motif de refus.',
+            name: 'Prénom ou pseudonyme',
+            rating: 'Note',
+            review: 'Votre avis',
+            placeholder: 'Décrivez votre expérience avec cette montre…',
+            confirmation:
+                'Je décris une expérience personnelle réelle et j’accepte la publication de cet avis.',
+            send: 'Envoyer mon avis',
+            sending: 'Envoi…',
+            received:
+                'Merci. Votre avis a été reçu et sera visible après modération.',
+            all: 'Voir tous les avis',
+            date: 'Publié le',
+        }
+    );
 });
 
 const form = useForm({
@@ -156,12 +167,7 @@ const submit = () => {
         preserveScroll: true,
         onSuccess: () => {
             submitted.value = true;
-            form.reset(
-                'display_name',
-                'body',
-                'experience',
-                'website',
-            );
+            form.reset('display_name', 'body', 'experience', 'website');
             form.rating = 5;
             form.watch_id = props.watch.id;
         },
@@ -181,9 +187,7 @@ const submit = () => {
                 {{ copy.eyebrow }}
             </p>
 
-            <h2
-                class="vvs-display-title mt-3 text-4xl text-white sm:text-5xl"
-            >
+            <h2 class="vvs-display-title mt-3 text-4xl text-white sm:text-5xl">
                 {{ copy.title }}
             </h2>
 
@@ -210,11 +214,12 @@ const submit = () => {
                             class="text-sm tracking-[0.08em] text-amber-300"
                             :aria-label="`${review.rating} / 5`"
                         >
-                            {{ '★'.repeat(review.rating) }}{{ '☆'.repeat(5 - review.rating) }}
+                            {{ '★'.repeat(review.rating)
+                            }}{{ '☆'.repeat(5 - review.rating) }}
                         </p>
                     </div>
 
-                    <p class="mt-4 whitespace-pre-line leading-7 text-zinc-300">
+                    <p class="mt-4 leading-7 whitespace-pre-line text-zinc-300">
                         {{ review.body }}
                     </p>
 

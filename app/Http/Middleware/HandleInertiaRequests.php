@@ -87,15 +87,6 @@ class HandleInertiaRequests extends Middleware
                     $routePrefix.'guides.belgium',
                     absolute: false
                 ),
-                'franceGuide' => app()->getLocale() === 'fr_BE'
-                    ? route('guides.france', absolute: false)
-                    : null,
-                'germanyGuide' => app()->getLocale() === 'de_BE'
-                    ? route('de.guides.germany', absolute: false)
-                    : null,
-                'netherlandsGuide' => app()->getLocale() === 'nl_BE'
-                    ? route('nl.guides.netherlands', absolute: false)
-                    : null,
             ],
             'auth' => [
                 'user' => $request->user(),

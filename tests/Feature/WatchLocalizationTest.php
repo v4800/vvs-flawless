@@ -6,6 +6,7 @@ use App\Models\Watch;
 use App\Support\WatchCatalog;
 use App\Support\WatchSeo;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Ssr\SsrState;
 use Inertia\Testing\AssertableInertia as Assert;
 use LogicException;
 use Tests\TestCase;
@@ -75,7 +76,7 @@ class WatchLocalizationTest extends TestCase
                 // Each HTTP request gets a fresh SSR scope in production.
                 // PHPUnit reuses the application container inside this test,
                 // so forget the previous scoped SSR state before the next request.
-                app()->forgetInstance(\Inertia\Ssr\SsrState::class);
+                app()->forgetInstance(SsrState::class);
 
                 $response = $this->get(route($routeName, $watch));
 

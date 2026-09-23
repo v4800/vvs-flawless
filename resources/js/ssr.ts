@@ -29,8 +29,7 @@ const renderOnePage = (page: Page) =>
         page,
         render: renderToString,
 
-        title: (title) =>
-            title ? `${title} - ${appName}` : appName,
+        title: (title) => (title ? `${title} - ${appName}` : appName),
 
         resolve: (name) =>
             resolvePageComponent(

@@ -2,8 +2,8 @@
 
 return [
     'collection_seo' => [
-        'title' => 'Montres moissanite VVS & iced-out | VVS FLAWLESS',
-        'description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS couleur D, proposées depuis la Belgique pour la Belgique, la France, l’Allemagne et les Pays-Bas selon confirmation.',
+        'title' => 'Montres moissanite VVS & iced-out en Belgique | VVS FLAWLESS',
+        'description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS couleur D : modèles iced-out et montres serties pour homme, femme ou style unisexe, disponibles sur réservation en Belgique.',
         'product_suffix' => 'Montre sertie de moissanite VVS couleur D, pensée pour un rendu iced-out très lumineux. Prix affiché sur la fiche, réservation en ligne puis remise en main propre ou livraison selon confirmation.',
         'image_alt' => 'Montres iced-out VVS FLAWLESS serties de moissanite VVS couleur D',
     ],
@@ -41,12 +41,6 @@ return [
                 'title' => 'Réserver en Belgique',
                 'text' => 'Prix, délai, réservation, remise en main propre et livraison : tout le fonctionnement VVS FLAWLESS au même endroit.',
                 'cta' => 'Voir le guide Belgique',
-            ],
-            [
-                'route' => 'franceGuide',
-                'title' => 'Commander depuis la France',
-                'text' => 'Découvrez comment envoyer une demande depuis la France et comment les modalités de réception sont confirmées.',
-                'cta' => 'Voir le guide France',
             ],
         ],
     ],
@@ -160,7 +154,7 @@ return [
         'eyebrow' => 'VVS FLAWLESS Belgique',
         'title' => 'Réserver une montre VVS en Belgique',
         'intro' => 'VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec un style allant de la montre sertie classique aux modèles iced-out plus imposants. Les prix de départ sont visibles dans la collection avant toute demande.',
-        'answer' => 'Vous choisissez votre montre sur le site puis envoyez une demande sans paiement immédiat. VVS FLAWLESS confirme directement avec vous le modèle, le prix, le délai, le mode de réception et les éventuels frais avant toute préparation de la montre. La remise en main propre peut être organisée sur rendez-vous en Belgique selon la zone confirmée.',
+        'answer' => 'Vous choisissez votre montre sur le site puis envoyez une demande sans paiement immédiat. VVS FLAWLESS confirme le modèle, le prix, le délai, l’adresse, l’heure et les éventuels frais de déplacement avant l’acompte. La remise en main propre est organisée sur rendez-vous partout en Belgique, notamment à Liège, Verviers, Namur, Bruxelles, Charleroi, Anvers et Gand.',
         'sections' => [
             [
                 'title' => 'Moissanite VVS couleur D',
@@ -173,14 +167,14 @@ return [
                 'title' => 'Prix et réservation',
                 'paragraphs' => [
                     'La collection affiche un prix de départ pour chaque modèle. Le formulaire de réservation n’entraîne aucun paiement : il sert à enregistrer votre intérêt et vos coordonnées.',
-                    'La demande envoyée sur le site ne déclenche aucun paiement. Les détails définitifs sont confirmés directement avec vous avant que la préparation de la montre ne commence.',
+                    'Après confirmation du rendez-vous et des conditions, un acompte de 25 % lance la commande. Une vidéo de la montre terminée est ensuite envoyée ; le solde de 75 % est payé pendant le rendez-vous, après vérification de la montre.',
                 ],
             ],
             [
                 'title' => 'Délai et réception',
                 'paragraphs' => [
                     'Le délai habituellement annoncé est de 5 à 6 jours ouvrables après confirmation, sous réserve de la disponibilité du modèle et de la préparation.',
-                    'La remise en main propre est proposée sur rendez-vous en Belgique selon la zone confirmée. Le lieu, l’heure et les éventuels frais sont précisés directement avant la préparation de la montre.',
+                    'La remise en main propre est proposée sur rendez-vous partout en Belgique. L’adresse, l’heure et les éventuels frais de déplacement sont confirmés avant le versement de l’acompte.',
                 ],
             ],
             [
@@ -195,53 +189,11 @@ return [
         'faq' => [
             ['question' => 'Que vend VVS FLAWLESS ?', 'answer' => 'VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec différents styles iced-out et sertis.'],
             ['question' => 'Faut-il payer pour envoyer une réservation ?', 'answer' => 'Non. L’envoi du formulaire ne déclenche aucun paiement. Les détails de la commande sont confirmés ensuite directement avec vous.'],
-            ['question' => 'Où peut se faire la remise en main propre ?', 'answer' => 'Elle peut être organisée sur rendez-vous en Belgique selon la zone confirmée. Le lieu, l’heure et les éventuels frais sont précisés directement avec vous.'],
+            ['question' => 'Où peut se faire la remise en main propre ?', 'answer' => 'Elle peut être organisée sur rendez-vous partout en Belgique. L’adresse, l’heure et les éventuels frais de déplacement sont confirmés avant l’acompte.'],
             ['question' => 'Quel est le délai ?', 'answer' => 'Le délai indicatif habituel est de 5 à 6 jours ouvrables après confirmation, mais il est vérifié pour chaque commande.'],
         ],
         'cta_title' => 'Voir les montres disponibles',
         'cta_text' => 'Consultez la collection, les prix de départ et les modèles en moissanite VVS, puis envoyez une demande depuis la montre qui vous intéresse.',
         'cta_label' => 'Voir la collection',
     ],
-    'france' => [
-        'seo_title' => 'Montres moissanite VVS & iced-out en France | VVS FLAWLESS',
-        'seo_description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS, avec prix affichés et réservation depuis la France selon confirmation des modalités.',
-        'eyebrow' => 'VVS FLAWLESS France',
-        'title' => 'Montres moissanite VVS disponibles pour la France',
-        'intro' => 'VVS FLAWLESS est un projet indépendant basé en Belgique. La collection est également proposée aux clients en France, avec prix visibles et modalités de réception confirmées directement selon la zone.',
-        'answer' => 'Choisissez votre modèle et envoyez une demande depuis sa fiche. Aucun paiement n’est effectué sur le site. Le modèle, le prix, le délai et le mode de réception sont confirmés directement avec vous avant toute préparation.',
-        'sections' => [
-            [
-                'title' => 'Moissanite VVS, pas diamant',
-                'paragraphs' => [
-                    'Les modèles présentés sont sertis de moissanite VVS couleur D lorsque cela est indiqué sur la fiche. VVS FLAWLESS distingue clairement moissanite et diamant afin d’éviter toute ambiguïté.',
-                    'Pour comparer les deux pierres, le guide diamant ou moissanite détaille leur rendu et leurs différences.',
-                ],
-            ],
-            [
-                'title' => 'Prix et demande depuis la France',
-                'paragraphs' => [
-                    'Les prix disponibles sont affichés sur les fiches produits. Le formulaire sert à transmettre votre intérêt et vos coordonnées sans paiement en ligne.',
-                    'Avant toute préparation, les détails de la commande sont confirmés directement avec vous.',
-                ],
-            ],
-            [
-                'title' => 'Réception selon la zone',
-                'paragraphs' => [
-                    'La livraison ou une remise en main propre peut être envisagée selon la zone et doit toujours être confirmée directement avant la préparation.',
-                    'Les éventuels frais et le délai réel sont précisés au cas par cas.',
-                ],
-            ],
-        ],
-        'faq_title' => 'Questions pour la France',
-        'faq' => [
-            ['question' => 'Puis-je réserver depuis la France ?', 'answer' => 'Oui. Vous pouvez envoyer une demande depuis la fiche du modèle ; les modalités sont ensuite confirmées directement selon votre zone.'],
-            ['question' => 'Dois-je payer sur le site ?', 'answer' => 'Non. Le formulaire ne réalise aucun paiement en ligne.'],
-            ['question' => 'Les montres sont-elles en diamant ?', 'answer' => 'Les modèles concernés sont annoncés comme sertis de moissanite VVS. La matière est précisée clairement sur chaque fiche.'],
-            ['question' => 'Comment connaître le délai et les frais ?', 'answer' => 'Ils sont confirmés directement en fonction du modèle choisi et de votre mode de réception.'],
-        ],
-        'cta_title' => 'Voir la collection',
-        'cta_text' => 'Comparez les modèles, leurs prix et leurs configurations, puis envoyez une demande depuis la fiche qui vous intéresse.',
-        'cta_label' => 'Voir les montres',
-    ],
-
 ];

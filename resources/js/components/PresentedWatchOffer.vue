@@ -26,7 +26,9 @@ const htmlLang = computed(() => page.props.locale.replace('_', '-'));
         <p class="mt-8 text-xs tracking-widest text-zinc-400 uppercase">
             {{ watch.presented_copy.price_label }}
         </p>
-        <p class="vvs-price mt-2 inline-block max-w-full text-[clamp(2.25rem,9vw,3rem)] font-bold">
+        <p
+            class="vvs-price mt-2 inline-block max-w-full text-[clamp(2.25rem,9vw,3rem)] font-bold"
+        >
             {{ Number(watch.price).toFixed(0) }} €
         </p>
         <dl class="mt-8 space-y-4 border-t border-white/10 pt-6 text-sm">

@@ -60,10 +60,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
         card.addEventListener(
             'pointermove',
             (event) => {
-                if (
-                    !finePointerQuery.matches ||
-                    reducedMotionQuery.matches
-                ) {
+                if (!finePointerQuery.matches || reducedMotionQuery.matches) {
                     return;
                 }
 
@@ -73,10 +70,8 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
                     return;
                 }
 
-                const x =
-                    ((event.clientX - bounds.left) / bounds.width) * 100;
-                const y =
-                    ((event.clientY - bounds.top) / bounds.height) * 100;
+                const x = ((event.clientX - bounds.left) / bounds.width) * 100;
+                const y = ((event.clientY - bounds.top) / bounds.height) * 100;
 
                 card.style.setProperty(
                     '--vvs-pointer-x',
@@ -144,12 +139,10 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     };
 
     const prepareFilters = () => {
-        const searchInput = document.querySelector<HTMLInputElement>(
-            '#collection-search',
-        );
-        const sortSelect = document.querySelector<HTMLSelectElement>(
-            '#collection-sort',
-        );
+        const searchInput =
+            document.querySelector<HTMLInputElement>('#collection-search');
+        const sortSelect =
+            document.querySelector<HTMLSelectElement>('#collection-sort');
 
         if (searchInput) {
             const wrapper = searchInput.parentElement;
@@ -201,8 +194,9 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     };
 
     const prepareConfirmation = () => {
-        const candidates =
-            document.querySelectorAll<HTMLElement>('main.vvs-storefront div');
+        const candidates = document.querySelectorAll<HTMLElement>(
+            'main.vvs-storefront div',
+        );
 
         for (const element of candidates) {
             if (element.textContent?.trim() !== '\u2713') {
@@ -219,9 +213,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
             prepareRevealElement,
         );
 
-        root.querySelectorAll<HTMLElement>(titleSelector).forEach(
-            prepareTitle,
-        );
+        root.querySelectorAll<HTMLElement>(titleSelector).forEach(prepareTitle);
 
         root.querySelectorAll<HTMLImageElement>(editorialImageSelector).forEach(
             prepareEditorialImage,
@@ -288,10 +280,7 @@ if (typeof window !== 'undefined' && typeof document !== 'undefined') {
             subtree: true,
         });
 
-        reducedMotionQuery.addEventListener(
-            'change',
-            syncReducedMotionClass,
-        );
+        reducedMotionQuery.addEventListener('change', syncReducedMotionClass);
     };
 
     if (document.readyState === 'loading') {

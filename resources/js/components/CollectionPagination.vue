@@ -77,8 +77,12 @@ const copy = computed(() => {
                 error: 'Die Seite konnte nicht geladen werden. Bitte erneut versuchen.',
             },
         }[page.props.locale] ?? {
-            previous: 'Previous page', next: 'Next page', page: 'Page',
-            of: 'of', shown: 'results', navigation: 'Collection pages',
+            previous: 'Previous page',
+            next: 'Next page',
+            page: 'Page',
+            of: 'of',
+            shown: 'results',
+            navigation: 'Collection pages',
             loading: 'Loading page…',
             error: 'The page could not be loaded. Please try again.',
         }
@@ -102,7 +106,11 @@ const scrollToCollection = () => {
         :aria-label="copy.navigation"
         :aria-busy="loading"
     >
-        <div v-if="showProgress" class="vvs-request-progress" aria-hidden="true"></div>
+        <div
+            v-if="showProgress"
+            class="vvs-request-progress"
+            aria-hidden="true"
+        ></div>
         <Link
             v-if="pagination.previousUrl"
             :href="pagination.previousUrl"
@@ -128,8 +136,14 @@ const scrollToCollection = () => {
             </span>
         </p>
 
-        <span v-if="showProgress" role="status" class="sr-only">{{ copy.loading }}</span>
-        <span v-if="requestError && !loading" role="alert" class="w-full text-center text-sm text-red-200 sm:order-last">
+        <span v-if="showProgress" role="status" class="sr-only">{{
+            copy.loading
+        }}</span>
+        <span
+            v-if="requestError && !loading"
+            role="alert"
+            class="w-full text-center text-sm text-red-200 sm:order-last"
+        >
             {{ copy.error }}
         </span>
 

@@ -347,7 +347,7 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                                 class="guide-choice-card guide-choice-card--gold rounded-3xl border border-amber-300/20 p-7 sm:p-9"
                             >
                                 <h3
-                                    class="vvs-display-title text-4xl text-amber-200"
+                                    class="vvs-display-title vvs-gradient-text text-4xl"
                                 >
                                     {{ guide.choice_moissanite_title }}
                                 </h3>

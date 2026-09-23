@@ -39,9 +39,7 @@ const resolvedBackHref = computed(
 );
 
 const resolvedBackLabel = computed(
-    () =>
-        props.backLabel ??
-        translations.value.vvs_navigation.collection,
+    () => props.backLabel ?? translations.value.vvs_navigation.collection,
 );
 
 const languages = [
@@ -50,28 +48,28 @@ const languages = [
         flag: '🇫🇷',
         label: 'Français',
         locale: 'fr_BE',
-        hreflang: 'fr',
+        hreflang: 'fr-BE',
     },
     {
         code: 'NL',
         flag: '🇳🇱',
         label: 'Nederlands',
         locale: 'nl_BE',
-        hreflang: 'nl',
+        hreflang: 'nl-BE',
     },
     {
         code: 'EN',
         flag: '🇬🇧',
         label: 'English',
         locale: 'en_BE',
-        hreflang: 'en',
+        hreflang: 'en-BE',
     },
     {
         code: 'DE',
         flag: '🇩🇪',
         label: 'Deutsch',
         locale: 'de_BE',
-        hreflang: 'de',
+        hreflang: 'de-BE',
     },
 ];
 
@@ -82,8 +80,7 @@ const languageLinks = computed(() => {
         .map((language) => ({
             ...language,
             href: alternates.find(
-                (alternate) =>
-                    alternate.hreflang === language.hreflang,
+                (alternate) => alternate.hreflang === language.hreflang,
             )?.href,
         }))
         .filter((language) => language.href);
@@ -94,9 +91,7 @@ const currentLanguage = computed(
         languageLinks.value.find(
             (language) => language.locale === page.props.locale,
         ) ??
-        languages.find(
-            (language) => language.locale === page.props.locale,
-        ) ??
+        languages.find((language) => language.locale === page.props.locale) ??
         languages[0],
 );
 
@@ -122,22 +117,16 @@ const steps = computed(() => [
 ]);
 
 const currentStepIndex = computed(() => {
-    const index = steps.value.findIndex(
-        (step) => step.key === props.current,
-    );
+    const index = steps.value.findIndex((step) => step.key === props.current);
 
     return index >= 0 ? index : 0;
 });
 
-const currentStep = computed(
-    () => steps.value[currentStepIndex.value],
-);
+const currentStep = computed(() => steps.value[currentStepIndex.value]);
 </script>
 
 <template>
-    <div
-        class="sticky top-3 z-40 mx-auto mb-6 max-w-6xl px-3 sm:top-4 sm:px-4"
-    >
+    <div class="sticky top-3 z-40 mx-auto mb-6 max-w-6xl px-3 sm:top-4 sm:px-4">
         <div
             class="flex min-h-[60px] items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#0b0b0a]/95 px-3 py-2.5 shadow-[0_14px_38px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:px-4"
         >
@@ -164,9 +153,7 @@ const currentStep = computed(
                     </svg>
                 </span>
 
-                <span
-                    class="truncate text-xs font-semibold text-zinc-200"
-                >
+                <span class="truncate text-xs font-semibold text-zinc-200">
                     {{ resolvedBackLabel }}
                 </span>
             </Link>
@@ -237,17 +224,12 @@ const currentStep = computed(
                     class="hidden items-center md:flex"
                     :aria-label="translations.vvs_navigation.label"
                 >
-                    <template
-                        v-for="(step, index) in steps"
-                        :key="step.key"
-                    >
+                    <template v-for="(step, index) in steps" :key="step.key">
                         <a
                             v-if="step.href && step.local"
                             :href="step.href"
                             :aria-current="
-                                step.key === current
-                                    ? 'location'
-                                    : undefined
+                                step.key === current ? 'location' : undefined
                             "
                             :class="[
                                 'relative rounded px-4 py-3 text-[11px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4bf99]',
@@ -263,9 +245,7 @@ const currentStep = computed(
                             v-else-if="step.href"
                             :href="step.href"
                             :aria-current="
-                                step.key === current
-                                    ? 'page'
-                                    : undefined
+                                step.key === current ? 'page' : undefined
                             "
                             :class="[
                                 'relative rounded px-4 py-3 text-[11px] font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d4bf99]',

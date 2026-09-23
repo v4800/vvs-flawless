@@ -98,12 +98,19 @@ const zoneCopy = computed(() => {
                             {{ zoneCopy.title }}
                         </p>
 
-                        <div class="pickup-coverage-grid relative grid gap-3 rounded-2xl border border-white/10 p-3 sm:grid-cols-3">
+                        <div
+                            class="pickup-coverage-grid relative grid gap-3 rounded-2xl border border-white/10 p-3 sm:grid-cols-3"
+                        >
                             <div
                                 class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                                    <MapPin
+                                        :size="16"
+                                        :stroke-width="1.5"
+                                        class="text-amber-200"
+                                        aria-hidden="true"
+                                    />
                                     <span
                                         class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >BE</span
@@ -121,7 +128,12 @@ const zoneCopy = computed(() => {
                                 class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                                    <MapPin
+                                        :size="16"
+                                        :stroke-width="1.5"
+                                        class="text-amber-200"
+                                        aria-hidden="true"
+                                    />
                                     <span
                                         class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >FR</span
@@ -139,7 +151,12 @@ const zoneCopy = computed(() => {
                                 class="relative min-w-0 rounded-xl border border-white/10 bg-[#111]/95 p-4"
                             >
                                 <div class="flex items-center gap-3">
-                                    <MapPin :size="16" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                                    <MapPin
+                                        :size="16"
+                                        :stroke-width="1.5"
+                                        class="text-amber-200"
+                                        aria-hidden="true"
+                                    />
                                     <span
                                         class="text-[10px] font-bold tracking-[0.18em] text-zinc-300"
                                         >NL</span

@@ -8,7 +8,7 @@ final class ReservationWorkflow
 
     public const CONTACTED = 'Client contacté';
 
-    public const DEPOSIT_PAID = 'Acompte de 100 € reçu';
+    public const DEPOSIT_PAID = 'Acompte de 25 % reçu';
 
     public const PREPARING = 'Montre commandée / en préparation';
 
@@ -46,7 +46,6 @@ final class ReservationWorkflow
     {
         return array_values(array_unique([
             ...self::statuses(),
-            'Acompte de 25 % reçu',
             'Confirmée',
             'Commandée',
             'Disponible',
@@ -62,7 +61,7 @@ final class ReservationWorkflow
         return [
             'new' => [self::NEW],
             'contacted' => [self::CONTACTED, 'Confirmée'],
-            'deposit_paid' => [self::DEPOSIT_PAID, 'Acompte de 25 % reçu'],
+            'deposit_paid' => [self::DEPOSIT_PAID],
             'preparing' => [self::PREPARING, self::VIDEO_SENT, 'Commandée', 'Disponible'],
             'appointment' => [self::APPOINTMENT],
             'completed' => [self::COMPLETED, 'Terminée'],

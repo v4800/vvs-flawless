@@ -79,44 +79,7 @@ class PublicPageController extends Controller
     {
         return $this->intentGuide(
             'belgium',
-            'guides.belgium',
-            $this->belgiumAlternates('guides.belgium'),
-            match (app()->getLocale()) {
-                'nl_BE' => 'nl-BE',
-                'en_BE' => 'en-BE',
-                'de_BE' => 'de-BE',
-                default => 'fr-BE',
-            }
-        );
-    }
-
-    public function franceWatchGuide(): Response
-    {
-        return $this->intentGuide(
-            'france',
-            'guides.france',
-            [],
-            'fr-FR'
-        );
-    }
-
-    public function germanyWatchGuide(): Response
-    {
-        return $this->intentGuide(
-            'germany',
-            'guides.germany',
-            [],
-            'de-DE'
-        );
-    }
-
-    public function netherlandsWatchGuide(): Response
-    {
-        return $this->intentGuide(
-            'netherlands',
-            'guides.netherlands',
-            [],
-            'nl-NL'
+            'guides.belgium'
         );
     }
 
@@ -150,9 +113,7 @@ class PublicPageController extends Controller
 
     private function intentGuide(
         string $translationKey,
-        string $page,
-        ?array $alternates = null,
-        ?string $languageTag = null
+        string $page
     ): Response {
         $routeName = $this->localizedRoute->name($page);
         $guide = (array) trans('seo_intents.'.$translationKey);
@@ -161,9 +122,7 @@ class PublicPageController extends Controller
             'seo' => $this->articleSeo(
                 $guide,
                 $page,
-                $routeName,
-                $alternates,
-                $languageTag
+                $routeName
             ),
             'guide' => $guide,
         ]);
@@ -176,9 +135,7 @@ class PublicPageController extends Controller
     private function articleSeo(
         array $guide,
         string $page,
-        string $routeName,
-        ?array $alternates = null,
-        ?string $languageTag = null
+        string $routeName
     ): array {
         $canonical = route($routeName);
 
@@ -186,9 +143,7 @@ class PublicPageController extends Controller
             (string) ($guide['seo_title'] ?? 'VVS FLAWLESS'),
             (string) ($guide['seo_description'] ?? ''),
             $canonical,
-            $page,
-            $alternates,
-            $languageTag
+            $page
         );
 
         $graph = [
@@ -197,7 +152,11 @@ class PublicPageController extends Controller
                 'headline' => (string) ($guide['title'] ?? ''),
                 'description' => (string) ($guide['seo_description'] ?? ''),
                 'mainEntityOfPage' => $canonical,
-                'inLanguage' => $languageTag ?? $this->languageTag(),
+                'inLanguage' => str_replace(
+                    '_',
+                    '-',
+                    app()->getLocale()
+                ),
                 'about' => [
                     'Moissanite',
                     'VVS clarity',
@@ -245,15 +204,6 @@ class PublicPageController extends Controller
             $graph[] = $faqSchema;
         }
 
-        $graph[] = [
-            '@type' => 'Organization',
-            '@id' => url('/').'#organization',
-            'name' => 'VVS FLAWLESS',
-            'url' => url('/'),
-            'logo' => url('/images/vvs-flawless-profile.webp'),
-            'areaServed' => $this->serviceAreas(),
-        ];
-
         $seo['type'] = 'article';
         $seo['structuredData'] = [
             '@context' => 'https://schema.org',
@@ -270,17 +220,14 @@ class PublicPageController extends Controller
         string $title,
         string $description,
         string $canonical,
-        string $page,
-        ?array $alternates = null,
-        ?string $languageTag = null
+        string $page
     ): array {
         return [
             'title' => $title,
             'description' => $description,
             'canonical' => $canonical,
-            'alternates' => $alternates ?? $this->alternates($page),
+            'alternates' => $this->alternates($page),
             'locale' => app()->getLocale(),
-            'language' => $languageTag ?? $this->languageTag(),
             'image' => url('/images/vvs-flawless-profile.webp'),
             'imageAlt' => 'VVS FLAWLESS',
             'type' => 'website',
@@ -294,19 +241,19 @@ class PublicPageController extends Controller
     {
         return [
             [
-                'hreflang' => 'fr',
+                'hreflang' => 'fr-BE',
                 'href' => route($page),
             ],
             [
-                'hreflang' => 'nl',
+                'hreflang' => 'nl-BE',
                 'href' => route('nl.'.$page),
             ],
             [
-                'hreflang' => 'en',
+                'hreflang' => 'en-BE',
                 'href' => route('en.'.$page),
             ],
             [
-                'hreflang' => 'de',
+                'hreflang' => 'de-BE',
                 'href' => route('de.'.$page),
             ],
             [
@@ -314,30 +261,6 @@ class PublicPageController extends Controller
                 'href' => route($page),
             ],
         ];
-    }
-
-    /**
-     * @return list<array{hreflang: string, href: string}>
-     */
-    private function belgiumAlternates(string $page): array
-    {
-        return [
-            ['hreflang' => 'fr-BE', 'href' => route($page)],
-            ['hreflang' => 'nl-BE', 'href' => route('nl.'.$page)],
-            ['hreflang' => 'en-BE', 'href' => route('en.'.$page)],
-            ['hreflang' => 'de-BE', 'href' => route('de.'.$page)],
-            ['hreflang' => 'x-default', 'href' => route($page)],
-        ];
-    }
-
-    private function languageTag(): string
-    {
-        return match (app()->getLocale()) {
-            'nl_BE' => 'nl',
-            'en_BE' => 'en',
-            'de_BE' => 'de',
-            default => 'fr',
-        };
     }
 
     /**
@@ -392,10 +315,26 @@ class PublicPageController extends Controller
     private function serviceAreas(): array
     {
         return [
-            ['@type' => 'Country', 'name' => 'Belgium'],
-            ['@type' => 'Country', 'name' => 'France'],
-            ['@type' => 'Country', 'name' => 'Germany'],
-            ['@type' => 'Country', 'name' => 'Netherlands'],
+            [
+                '@type' => 'Country',
+                'name' => 'Belgium',
+            ],
+            [
+                '@type' => 'AdministrativeArea',
+                'name' => 'Wallonia',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'AdministrativeArea',
+                'name' => 'Flanders',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
         ];
     }
 }

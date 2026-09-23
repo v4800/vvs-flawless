@@ -6,16 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SendReservationEmailRequest;
 use App\Http\Requests\Admin\UpdateReservationRequest;
 use App\Mail\AdminReservationContactMail;
-use App\Mail\ReservationRecapMail;
 use App\Models\Reservation;
 use App\Models\Watch;
-use App\Support\ReservationPayment;
-use App\Support\ReservationRecapPdf;
 use App\Support\ReservationWorkflow;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Inertia\Response;
@@ -152,44 +148,6 @@ class ReservationDashboardController extends Controller
         return back()->with('success', 'Email envoyé au client.');
     }
 
-    public function downloadRecap(
-        Request $request,
-        Reservation $reservation,
-        ReservationRecapPdf $pdf
-    ): HttpResponse {
-        abort_unless((bool) $request->user()?->is_admin, 403);
-
-        return response(
-            $pdf->make($reservation),
-            200,
-            [
-                'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="'.$pdf->filename($reservation).'"',
-                'Cache-Control' => 'no-store, private, max-age=0, must-revalidate',
-                'X-Robots-Tag' => 'noindex, nofollow, noarchive',
-            ]
-        );
-    }
-
-    public function sendRecap(
-        Request $request,
-        Reservation $reservation
-    ): RedirectResponse {
-        abort_unless((bool) $request->user()?->is_admin, 403);
-
-        try {
-            Mail::to($reservation->email)
-                ->locale((string) ($reservation->locale ?: config('app.locale')))
-                ->send(new ReservationRecapMail($reservation));
-        } catch (Throwable) {
-            return back()->withErrors([
-                'email_message' => 'Le récapitulatif n’a pas pu être envoyé. Vérifie la configuration mail du site.',
-            ]);
-        }
-
-        return back()->with('success', 'Récapitulatif PDF envoyé au client.');
-    }
-
     public function archive(
         Request $request,
         Reservation $reservation
@@ -213,6 +171,7 @@ class ReservationDashboardController extends Controller
     }
 
     /**
+     * @param  Builder<Reservation>  $query
      * @param  array<string, mixed>  $filters
      */
     private function applyFilters(Builder $query, array $filters): void
@@ -304,21 +263,23 @@ class ReservationDashboardController extends Controller
             ? (float) $reservation->price
             : null;
 
-        $depositAmount = ReservationPayment::depositAmount(
-            $price,
-            $reservation->deposit_amount
-        );
-        $balanceAmount = ReservationPayment::balanceAmount(
-            $price,
-            $reservation->deposit_amount
-        );
+        $depositAmount = $price !== null
+            ? round($price * 0.25, 2)
+            : null;
 
-        $confirmedPaidAmount = ReservationPayment::confirmedPaidAmount(
-            $price,
-            $reservation->deposit_paid_at !== null,
-            $reservation->balance_paid_at !== null,
-            $reservation->deposit_amount
-        );
+        $balanceAmount = $price !== null
+            ? round($price * 0.75, 2)
+            : null;
+
+        $confirmedPaidAmount = 0.0;
+
+        if ($reservation->deposit_paid_at !== null) {
+            $confirmedPaidAmount += $depositAmount ?? 0;
+        }
+
+        if ($reservation->balance_paid_at !== null) {
+            $confirmedPaidAmount += $balanceAmount ?? 0;
+        }
 
         return [
             'id' => $reservation->id,
@@ -328,13 +289,12 @@ class ReservationDashboardController extends Controller
             'phone' => $reservation->phone,
             'city' => $reservation->city,
             'delivery_method' => $reservation->delivery_method,
-            'locale' => $reservation->locale,
             'message' => $reservation->message,
             'movement' => $reservation->movement,
             'price' => $price,
             'deposit_amount' => $depositAmount,
             'balance_amount' => $balanceAmount,
-            'confirmed_paid_amount' => $confirmedPaidAmount,
+            'confirmed_paid_amount' => round($confirmedPaidAmount, 2),
             'status' => $reservation->status,
             'watch_id' => $reservation->watch_id,
             'watch_name_snapshot' => $reservation->watch_name_snapshot,
@@ -371,7 +331,7 @@ class ReservationDashboardController extends Controller
                     'old_status' => $history->old_status,
                     'new_status' => $history->new_status,
                     'changed_by' => $history->user?->name,
-                    'created_at' => $history->created_at?->toIso8601String(),
+                    'created_at' => $history->created_at->toIso8601String(),
                 ])
                 ->values(),
         ];

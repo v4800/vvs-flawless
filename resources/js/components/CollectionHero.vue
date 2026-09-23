@@ -20,7 +20,9 @@ const hero = page.props.landingCopy.hero;
                 class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(190,158,95,0.12),transparent_42%)]"
             ></div>
 
-            <div class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center">
+            <div
+                class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center"
+            >
                 <p
                     class="vvs-eyebrow max-w-full text-[10px] tracking-[0.16em] sm:tracking-[0.28em]"
                 >
@@ -33,9 +35,7 @@ const hero = page.props.landingCopy.hero;
                     aria-label="VVS FLAWLESS"
                 >
                     <span class="vvs-brand-wordmark__vvs">VVS</span>
-                    <span class="vvs-brand-wordmark__flawless">
-                        FLAWLESS
-                    </span>
+                    <span class="vvs-brand-wordmark__flawless"> FLAWLESS </span>
                 </h1>
 
                 <p

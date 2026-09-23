@@ -22,28 +22,28 @@ const languages = [
     {
         code: 'FR',
         locale: 'fr_BE',
-        hreflang: 'fr',
+        hreflang: 'fr-BE',
         flag: '🇫🇷',
         label: 'Français',
     },
     {
         code: 'NL',
         locale: 'nl_BE',
-        hreflang: 'nl',
+        hreflang: 'nl-BE',
         flag: '🇳🇱',
         label: 'Nederlands',
     },
     {
         code: 'EN',
         locale: 'en_BE',
-        hreflang: 'en',
+        hreflang: 'en-BE',
         flag: '🇬🇧',
         label: 'English',
     },
     {
         code: 'DE',
         locale: 'de_BE',
-        hreflang: 'de',
+        hreflang: 'de-BE',
         flag: '🇩🇪',
         label: 'Deutsch',
     },
@@ -67,9 +67,7 @@ const currentLanguage = computed(
         languageOptions.value.find(
             (language) => language.locale === page.props.locale,
         ) ??
-        languages.find(
-            (language) => language.locale === page.props.locale,
-        ) ??
+        languages.find((language) => language.locale === page.props.locale) ??
         languages[0],
 );
 
@@ -168,7 +166,7 @@ onBeforeUnmount(() => {
             <Link
                 :href="localizedRoutes.watches"
                 :class="[
-                    'absolute left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 rounded-[1.15rem] transition-[top] duration-300 motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4bf99]',
+                    'absolute left-1/2 z-30 -translate-x-1/2 -translate-y-1/2 rounded-[1.15rem] transition-[top] duration-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4bf99] motion-reduce:transition-none',
                     isScrolled ? 'top-1/2' : 'top-[57%]',
                 ]"
                 aria-label="VVS FLAWLESS"

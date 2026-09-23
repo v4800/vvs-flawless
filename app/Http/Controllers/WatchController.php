@@ -78,7 +78,6 @@ class WatchController extends Controller
             $query->whereKey((int) $filters['model']);
         }
 
-
         if (isset($filters['movement'])) {
             $movement = $filters['movement'];
 
@@ -100,14 +99,9 @@ class WatchController extends Controller
         if (isset($filters['availability'])) {
             $query->where('availability', $filters['availability']);
         }
-
-        $startingPrice = $this->priceExpressionForMovement(
+        $numericStartingPrice = $this->numericPriceExpressionForMovement(
             $filters['movement'] ?? null
         );
-
-        $numericStartingPrice = 'CAST(('
-            .$startingPrice
-            .') AS DECIMAL(10, 2))';
 
         if (isset($filters['price_min'])) {
             $query->whereRaw(
@@ -332,7 +326,7 @@ class WatchController extends Controller
             return [];
         }
 
-        return $inventory
+        return array_values($inventory
             ->filter(function (Watch $watch) use ($tokens): bool {
                 $metadata = $this->catalog->searchMetadataForWatch($watch);
                 $familyLabels = collect($metadata['families'])
@@ -368,9 +362,8 @@ class WatchController extends Controller
             ->pluck('id')
             ->map(fn ($id) => (int) $id)
             ->values()
-            ->all();
+            ->all());
     }
-
 
     private function normalizeSearchText(string $value): string
     {
@@ -408,6 +401,19 @@ class WatchController extends Controller
             ->exists();
     }
 
+    /**
+     * @return literal-string
+     */
+    private function numericPriceExpressionForMovement(?string $movement): string
+    {
+        return 'CAST(('
+            .$this->priceExpressionForMovement($movement)
+            .') AS DECIMAL(10, 2))';
+    }
+
+    /**
+     * @return literal-string
+     */
     private function priceExpressionForMovement(?string $movement): string
     {
         if ($movement === 'swiss') {

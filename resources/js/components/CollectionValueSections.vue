@@ -20,7 +20,10 @@ const translations = page.props.translations;
                     aria-hidden="true"
                     class="flex h-20 w-28 items-center justify-center rounded-xl border border-amber-200/20 bg-[radial-gradient(circle_at_50%_40%,rgba(242,213,138,0.12),transparent_72%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
                 >
-                    <span class="font-serif text-4xl tracking-[-0.12em] text-amber-100">VVS</span>
+                    <span
+                        class="font-serif text-4xl tracking-[-0.12em] text-amber-100"
+                        >VVS</span
+                    >
                 </div>
 
                 <div>
@@ -53,7 +56,12 @@ const translations = page.props.translations;
             class="reveal-on-scroll vvs-luxury-card mx-auto grid max-w-[1500px] overflow-hidden rounded-2xl border sm:grid-cols-2 lg:grid-cols-4"
         >
             <div class="border-b border-white/10 p-7 sm:border-r lg:border-b-0">
-                <Gem :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                <Gem
+                    :size="21"
+                    :stroke-width="1.5"
+                    class="text-amber-200"
+                    aria-hidden="true"
+                />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.quality_title }}
                 </h3>
@@ -62,7 +70,12 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="border-b border-white/10 p-7 lg:border-r lg:border-b-0">
-                <Settings2 :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                <Settings2
+                    :size="21"
+                    :stroke-width="1.5"
+                    class="text-amber-200"
+                    aria-hidden="true"
+                />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.movements_title }}
                 </h3>
@@ -71,7 +84,12 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="border-b border-white/10 p-7 sm:border-r sm:border-b-0">
-                <MapPin :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                <MapPin
+                    :size="21"
+                    :stroke-width="1.5"
+                    class="text-amber-200"
+                    aria-hidden="true"
+                />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.delivery_title }}
                 </h3>
@@ -80,7 +98,12 @@ const translations = page.props.translations;
                 </p>
             </div>
             <div class="p-7">
-                <Clock3 :size="21" :stroke-width="1.5" class="text-amber-200" aria-hidden="true" />
+                <Clock3
+                    :size="21"
+                    :stroke-width="1.5"
+                    class="text-amber-200"
+                    aria-hidden="true"
+                />
                 <h3 class="mt-4 text-sm font-semibold tracking-wide">
                     {{ translations.services.delay_title }}
                 </h3>

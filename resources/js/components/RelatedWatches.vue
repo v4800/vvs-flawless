@@ -25,7 +25,9 @@ const startingPrice = (watch) => {
 
     if (prices.length === 0) {
         const singlePrice = Number(watch.promo_price ?? watch.price);
-        return Number.isFinite(singlePrice) && singlePrice > 0 ? singlePrice : null;
+        return Number.isFinite(singlePrice) && singlePrice > 0
+            ? singlePrice
+            : null;
     }
 
     return Math.min(...prices);
@@ -68,9 +70,7 @@ const formatPrice = (price) => {
                     :href="`${localizedRoutes.watches}/${watch.slug}`"
                     class="vvs-luxury-card vvs-luxury-card--interactive group flex flex-col self-stretch overflow-hidden rounded-2xl border"
                 >
-                    <div
-                        class="relative shrink-0 overflow-hidden bg-[#070707]"
-                    >
+                    <div class="relative shrink-0 overflow-hidden bg-[#070707]">
                         <WatchCardVisual
                             v-if="watch.card_image || watch.image"
                             :src="watch.card_image ?? watch.image"

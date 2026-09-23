@@ -4,9 +4,11 @@ import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
+import MoissaniteQualitySection from '@/components/MoissaniteQualitySection.vue';
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
 import ProductReviews from '@/components/ProductReviews.vue';
+import ProductPurchaseExperience from '@/components/ProductPurchaseExperience.vue';
 import ProductReservationSection from '@/components/ProductReservationSection.vue';
 import ProductSpecs from '@/components/ProductSpecs.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
@@ -193,7 +195,9 @@ const submit = () => {
 <template>
     <Head :title="seo.title" />
 
-    <div class="vvs-storefront min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0">
+    <div
+        class="vvs-storefront min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0"
+    >
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
@@ -207,7 +211,11 @@ const submit = () => {
             :watch-href="`${localizedRoutes.watches}/${watch.slug}`"
         />
 
-        <main id="main-content" tabindex="-1" class="w-full min-w-0 max-w-full overflow-x-clip">
+        <main
+            id="main-content"
+            tabindex="-1"
+            class="w-full max-w-full min-w-0 overflow-x-clip"
+        >
             <section
                 id="model"
                 class="relative scroll-mt-28 overflow-hidden px-4 pt-8 pb-16 sm:px-6 sm:pt-10 sm:pb-20 lg:px-10 lg:pt-14"
@@ -223,7 +231,7 @@ const submit = () => {
                 ></div>
 
                 <div
-                    class="mx-auto grid w-full min-w-0 max-w-[1400px] grid-cols-[minmax(0,1fr)] gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-16"
+                    class="mx-auto grid w-full max-w-[1400px] min-w-0 grid-cols-[minmax(0,1fr)] gap-8 sm:gap-10 lg:grid-cols-[minmax(0,1.04fr)_minmax(0,0.96fr)] lg:gap-16"
                 >
                     <ProductGallery
                         :watch="watch"
@@ -256,6 +264,13 @@ const submit = () => {
                 :translations="translations"
             />
 
+            <MoissaniteQualitySection />
+
+            <ProductPurchaseExperience
+                :watch="watch"
+                :movement="localizedMovement"
+                :selected-price="selectedPrice"
+            />
             <PurchaseGuide />
 
             <ProductReservationSection
@@ -279,7 +294,9 @@ const submit = () => {
             <CustomerConfidence />
         </main>
 
-        <footer class="min-w-0 border-t border-white/10 px-4 py-8 sm:px-6 sm:py-9">
+        <footer
+            class="min-w-0 border-t border-white/10 px-4 py-8 sm:px-6 sm:py-9"
+        >
             <div
                 class="mx-auto flex max-w-[1400px] flex-col gap-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left"
             >
@@ -337,7 +354,7 @@ const submit = () => {
         <a
             v-if="watch.single_offer"
             href="#reservation"
-            class="fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black lg:hidden sm:inset-x-4 sm:bottom-4 sm:p-4"
+            class="fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black sm:inset-x-4 sm:bottom-4 sm:p-4 lg:hidden"
         >
             {{ singleOfferPrice }} · {{ reserveLabel }}
         </a>

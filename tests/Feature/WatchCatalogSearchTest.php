@@ -94,16 +94,14 @@ class WatchCatalogSearchTest extends TestCase
                     ->where(
                         'filterOptions.models',
                         fn ($models): bool => collect($models)->every(
-                            fn ($model): bool =>
-                                ! array_key_exists('families', (array) $model)
+                            fn ($model): bool => ! array_key_exists('families', (array) $model)
                                 && ! array_key_exists('searchText', (array) $model)
                         )
                     )
                     ->where(
                         'catalogModels',
                         fn ($models): bool => collect($models)->every(
-                            fn ($model): bool =>
-                                ! array_key_exists('families', (array) $model)
+                            fn ($model): bool => ! array_key_exists('families', (array) $model)
                                 && ! array_key_exists('searchText', (array) $model)
                         )
                     )
@@ -143,8 +141,7 @@ class WatchCatalogSearchTest extends TestCase
                     )
                     ->where(
                         'seo.structuredData',
-                        fn ($data): bool =>
-                            data_get($data, '@graph.0.name')
+                        fn ($data): bool => data_get($data, '@graph.0.name')
                                 === '41 mm · Géométrique or jaune, cadran vert'
                             && data_get($data, '@graph.0.brand.name')
                                 === 'VVS FLAWLESS'
@@ -170,8 +167,7 @@ class WatchCatalogSearchTest extends TestCase
                     ->where('pagination.currentPage', 1)
                     ->where(
                         'pagination.nextUrl',
-                        fn ($url): bool =>
-                            is_string($url)
+                        fn ($url): bool => is_string($url)
                             && str_contains($url, 'q=recherche')
                             && str_contains($url, 'page=2')
                     )

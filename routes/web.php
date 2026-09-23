@@ -55,11 +55,6 @@ Route::get(
 )->name('guides.belgium');
 
 Route::get(
-    '/france/montre-moissanite-vvs-iced-out',
-    [PublicPageController::class, 'franceWatchGuide']
-)->name('guides.france');
-
-Route::get(
     '/sitemap.xml',
     [SeoController::class, 'sitemap']
 )->name('sitemap');
@@ -132,11 +127,6 @@ Route::prefix('nl')
             '/belgie/diamanten-moissanite-vvs-horloge',
             [PublicPageController::class, 'belgiumWatchGuide']
         )->name('guides.belgium');
-
-        Route::get(
-            '/nederland/vvs-moissanite-iced-out-horloges',
-            [PublicPageController::class, 'netherlandsWatchGuide']
-        )->name('guides.netherlands');
 
         Route::get(
             '/',
@@ -287,11 +277,6 @@ Route::prefix('de')
             '/belgien/moissanit-vvs-uhren',
             [PublicPageController::class, 'belgiumWatchGuide']
         )->name('guides.belgium');
-
-        Route::get(
-            '/deutschland/vvs-moissanit-iced-out-uhren',
-            [PublicPageController::class, 'germanyWatchGuide']
-        )->name('guides.germany');
 
         Route::get(
             '/',

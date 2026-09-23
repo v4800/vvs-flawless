@@ -43,3 +43,5 @@ yarn-error.log
 *.before-script-fix-*
 *.encoding-backup*
 /public/fonts-manifest.dev.json
+
+.certs/

@@ -18,7 +18,7 @@ return [
         'color_note' => 'Clean brilliance',
         'lead_time_title' => '5–6 business days',
         'lead_time_note' => 'By reservation',
-        'markets_title' => 'BE • FR • DE • NL',
+        'markets_title' => 'BE • FR • NL',
         'signature_material' => 'VVS Moissanite • Colour D',
         'signature_title' => 'Signature piece',
         'image_alt' => 'VVS FLAWLESS iced-out watch',

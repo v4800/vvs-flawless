@@ -12,17 +12,28 @@ class RestoreWatchCatalogSeeder extends Seeder
 {
     public function run(): void
     {
+        $catalogContents = file_get_contents(
+            resource_path('data/watch-image-catalog.json')
+        );
+
+        if ($catalogContents === false) {
+            throw new RuntimeException(
+                'Impossible de lire le catalogue des images.'
+            );
+        }
+
+        /** @var array{watches?: list<array<string, mixed>>} $catalog */
         $catalog = json_decode(
-            file_get_contents(
-                resource_path('data/watch-image-catalog.json')
-            ),
+            $catalogContents,
             true,
             512,
             JSON_THROW_ON_ERROR
         );
 
         $entries = collect($catalog['watches'] ?? [])
-            ->keyBy('slug');
+            ->keyBy(
+                static fn (array $entry): string => (string) ($entry['slug'] ?? '')
+            );
 
         /*
          * Les 3 premières sont déjà restaurées :
@@ -206,6 +217,17 @@ class RestoreWatchCatalogSeeder extends Seeder
             foreach ($models as $catalogSlug => $model) {
                 $entry = $entries->get($catalogSlug);
 
+                if (
+                    ! is_array($entry)
+                    || ! is_string($entry['folder'] ?? null)
+                    || ! is_array($entry['images'] ?? null)
+                    || ! is_string($entry['images'][0] ?? null)
+                ) {
+                    throw new RuntimeException(
+                        'Entrée de catalogue invalide pour '.$catalogSlug.'.'
+                    );
+                }
+
                 $copyKey = match ($model['copy']) {
                     'presented' => 'watches.presented',
                     'id' => 'watches.'.$model['id'],
@@ -277,13 +299,11 @@ class RestoreWatchCatalogSeeder extends Seeder
                     'price' => $model['price'],
                     'promo_price' => null,
 
-                    'japanese_price' =>
-                        $model['japanese_price'],
+                    'japanese_price' => $model['japanese_price'],
 
                     'japanese_promo_price' => null,
 
-                    'swiss_price' =>
-                        $model['swiss_price'],
+                    'swiss_price' => $model['swiss_price'],
 
                     'swiss_promo_price' => null,
 
@@ -303,7 +323,7 @@ class RestoreWatchCatalogSeeder extends Seeder
                     $data
                 );
 
-                $this->command?->info(
+                $this->command->info(
                     '#'.$model['id']
                     .' '.$catalogSlug
                     .' -> '.$image
@@ -317,7 +337,7 @@ class RestoreWatchCatalogSeeder extends Seeder
             );
         }
 
-        $this->command?->info(
+        $this->command->info(
             'Restauration terminée : 20 watches.'
         );
     }

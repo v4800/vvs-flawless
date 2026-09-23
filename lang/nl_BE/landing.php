@@ -18,7 +18,7 @@ return [
         'color_note' => 'Heldere schittering',
         'lead_time_title' => '5–6 werkdagen',
         'lead_time_note' => 'Op reservatie',
-        'markets_title' => 'BE • FR • DE • NL',
+        'markets_title' => 'BE • FR • NL',
         'signature_material' => 'VVS-moissanite • Kleur D',
         'signature_title' => 'Signatuurstuk',
         'image_alt' => 'Iced-out horloge van VVS FLAWLESS',

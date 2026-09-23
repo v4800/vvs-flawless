@@ -1,6 +1,6 @@
 <script setup>
-import { router, usePage } from "@inertiajs/vue3";
-import { computed, onBeforeUnmount, reactive, ref } from "vue";
+import { router, usePage } from '@inertiajs/vue3';
+import { computed, onBeforeUnmount, reactive, ref } from 'vue';
 
 const props = defineProps({
     filters: {
@@ -16,7 +16,7 @@ const props = defineProps({
         }),
     },
 });
-const emit = defineEmits(["visual-loading"]);
+const emit = defineEmits(['visual-loading']);
 
 const page = usePage();
 const filtersOpen = ref(false);
@@ -30,7 +30,7 @@ const startLoading = () => {
     requestError.value = false;
     loadingTimer = window.setTimeout(() => {
         showLoading.value = true;
-        emit("visual-loading", true);
+        emit('visual-loading', true);
     }, 180);
 };
 
@@ -39,7 +39,7 @@ const finishLoading = () => {
     loadingTimer = undefined;
     showLoading.value = false;
     loading.value = false;
-    emit("visual-loading", false);
+    emit('visual-loading', false);
 };
 
 onBeforeUnmount(finishLoading);
@@ -48,146 +48,146 @@ const copy = computed(() => {
     return (
         {
             fr_BE: {
-                search: "Rechercher une montre",
-                placeholder: "Rechercher un modèle, une référence ou un style…",
-                searchAction: "Rechercher",
-                sort: "Trier",
-                newest: "Nouveautés",
-                priceAsc: "Prix croissant",
-                priceDesc: "Prix décroissant",
-                name: "Nom A–Z",
-                filters: "Filtres",
-                filterPanel: "Filtres du catalogue",
-                model: "Modèle",
-                allModels: "Tous les modèles",
-                priceMin: "Prix min.",
-                priceMax: "Prix max.",
-                movement: "Mouvement",
-                allMovements: "Tous les mouvements",
-                availability: "Disponibilité",
-                allAvailability: "Toutes",
-                apply: "Appliquer",
-                reset: "Réinitialiser les filtres",
-                close: "Fermer les filtres",
-                loading: "Recherche des montres en cours…",
-                error: "La recherche a échoué. Réessayez.",
-                retry: "Réessayer",
+                search: 'Rechercher une montre',
+                placeholder: 'Rechercher un modèle, une référence ou un style…',
+                searchAction: 'Rechercher',
+                sort: 'Trier',
+                newest: 'Nouveautés',
+                priceAsc: 'Prix croissant',
+                priceDesc: 'Prix décroissant',
+                name: 'Nom A–Z',
+                filters: 'Filtres',
+                filterPanel: 'Filtres du catalogue',
+                model: 'Modèle',
+                allModels: 'Tous les modèles',
+                priceMin: 'Prix min.',
+                priceMax: 'Prix max.',
+                movement: 'Mouvement',
+                allMovements: 'Tous les mouvements',
+                availability: 'Disponibilité',
+                allAvailability: 'Toutes',
+                apply: 'Appliquer',
+                reset: 'Réinitialiser les filtres',
+                close: 'Fermer les filtres',
+                loading: 'Recherche des montres en cours…',
+                error: 'La recherche a échoué. Réessayez.',
+                retry: 'Réessayer',
             },
             nl_BE: {
-                search: "Horloge zoeken",
-                placeholder: "Zoek een model, referentie of stijl…",
-                searchAction: "Zoeken",
-                sort: "Sorteren",
-                newest: "Nieuwste",
-                priceAsc: "Prijs oplopend",
-                priceDesc: "Prijs aflopend",
-                name: "Naam A–Z",
-                filters: "Filters",
-                filterPanel: "Catalogusfilters",
-                model: "Model",
-                allModels: "Alle modellen",
-                priceMin: "Min. prijs",
-                priceMax: "Max. prijs",
-                movement: "Uurwerk",
-                allMovements: "Alle uurwerken",
-                availability: "Beschikbaarheid",
-                allAvailability: "Alle",
-                apply: "Toepassen",
-                reset: "Filters wissen",
-                close: "Filters sluiten",
-                loading: "Horloges zoeken…",
-                error: "Zoeken is mislukt. Probeer het opnieuw.",
-                retry: "Opnieuw proberen",
+                search: 'Horloge zoeken',
+                placeholder: 'Zoek een model, referentie of stijl…',
+                searchAction: 'Zoeken',
+                sort: 'Sorteren',
+                newest: 'Nieuwste',
+                priceAsc: 'Prijs oplopend',
+                priceDesc: 'Prijs aflopend',
+                name: 'Naam A–Z',
+                filters: 'Filters',
+                filterPanel: 'Catalogusfilters',
+                model: 'Model',
+                allModels: 'Alle modellen',
+                priceMin: 'Min. prijs',
+                priceMax: 'Max. prijs',
+                movement: 'Uurwerk',
+                allMovements: 'Alle uurwerken',
+                availability: 'Beschikbaarheid',
+                allAvailability: 'Alle',
+                apply: 'Toepassen',
+                reset: 'Filters wissen',
+                close: 'Filters sluiten',
+                loading: 'Horloges zoeken…',
+                error: 'Zoeken is mislukt. Probeer het opnieuw.',
+                retry: 'Opnieuw proberen',
             },
             en_BE: {
-                search: "Search watches",
-                placeholder: "Search a model, reference or style…",
-                searchAction: "Search",
-                sort: "Sort",
-                newest: "Newest",
-                priceAsc: "Price low to high",
-                priceDesc: "Price high to low",
-                name: "Name A–Z",
-                filters: "Filters",
-                filterPanel: "Catalogue filters",
-                model: "Model",
-                allModels: "All models",
-                priceMin: "Min. price",
-                priceMax: "Max. price",
-                movement: "Movement",
-                allMovements: "All movements",
-                availability: "Availability",
-                allAvailability: "All",
-                apply: "Apply",
-                reset: "Reset filters",
-                close: "Close filters",
-                loading: "Searching for watches…",
-                error: "Search failed. Please try again.",
-                retry: "Try again",
+                search: 'Search watches',
+                placeholder: 'Search a model, reference or style…',
+                searchAction: 'Search',
+                sort: 'Sort',
+                newest: 'Newest',
+                priceAsc: 'Price low to high',
+                priceDesc: 'Price high to low',
+                name: 'Name A–Z',
+                filters: 'Filters',
+                filterPanel: 'Catalogue filters',
+                model: 'Model',
+                allModels: 'All models',
+                priceMin: 'Min. price',
+                priceMax: 'Max. price',
+                movement: 'Movement',
+                allMovements: 'All movements',
+                availability: 'Availability',
+                allAvailability: 'All',
+                apply: 'Apply',
+                reset: 'Reset filters',
+                close: 'Close filters',
+                loading: 'Searching for watches…',
+                error: 'Search failed. Please try again.',
+                retry: 'Try again',
             },
             de_BE: {
-                search: "Uhr suchen",
-                placeholder: "Modell, Referenz oder Stil suchen…",
-                searchAction: "Suchen",
-                sort: "Sortieren",
-                newest: "Neueste",
-                priceAsc: "Preis aufsteigend",
-                priceDesc: "Preis absteigend",
-                name: "Name A–Z",
-                filters: "Filter",
-                filterPanel: "Katalogfilter",
-                model: "Modell",
-                allModels: "Alle Modelle",
-                priceMin: "Min. Preis",
-                priceMax: "Max. Preis",
-                movement: "Uhrwerk",
-                allMovements: "Alle Uhrwerke",
-                availability: "Verfügbarkeit",
-                allAvailability: "Alle",
-                apply: "Anwenden",
-                reset: "Filter zurücksetzen",
-                close: "Filter schließen",
-                loading: "Uhren werden gesucht…",
-                error: "Die Suche ist fehlgeschlagen. Bitte erneut versuchen.",
-                retry: "Erneut versuchen",
+                search: 'Uhr suchen',
+                placeholder: 'Modell, Referenz oder Stil suchen…',
+                searchAction: 'Suchen',
+                sort: 'Sortieren',
+                newest: 'Neueste',
+                priceAsc: 'Preis aufsteigend',
+                priceDesc: 'Preis absteigend',
+                name: 'Name A–Z',
+                filters: 'Filter',
+                filterPanel: 'Katalogfilter',
+                model: 'Modell',
+                allModels: 'Alle Modelle',
+                priceMin: 'Min. Preis',
+                priceMax: 'Max. Preis',
+                movement: 'Uhrwerk',
+                allMovements: 'Alle Uhrwerke',
+                availability: 'Verfügbarkeit',
+                allAvailability: 'Alle',
+                apply: 'Anwenden',
+                reset: 'Filter zurücksetzen',
+                close: 'Filter schließen',
+                loading: 'Uhren werden gesucht…',
+                error: 'Die Suche ist fehlgeschlagen. Bitte erneut versuchen.',
+                retry: 'Erneut versuchen',
             },
         }[page.props.locale] ?? {
-            search: "Search watches",
-            placeholder: "Search a model, reference or style…",
-            searchAction: "Search",
-            sort: "Sort",
-            newest: "Newest",
-            priceAsc: "Price low to high",
-            priceDesc: "Price high to low",
-            name: "Name A–Z",
-            filters: "Filters",
-            filterPanel: "Catalogue filters",
-            model: "Model",
-            allModels: "All models",
-            priceMin: "Min. price",
-            priceMax: "Max. price",
-            movement: "Movement",
-            allMovements: "All movements",
-            availability: "Availability",
-            allAvailability: "All",
-            apply: "Apply",
-            reset: "Reset filters",
-            close: "Close filters",
-            loading: "Searching for watches…",
-            error: "Search failed. Please try again.",
-            retry: "Try again",
+            search: 'Search watches',
+            placeholder: 'Search a model, reference or style…',
+            searchAction: 'Search',
+            sort: 'Sort',
+            newest: 'Newest',
+            priceAsc: 'Price low to high',
+            priceDesc: 'Price high to low',
+            name: 'Name A–Z',
+            filters: 'Filters',
+            filterPanel: 'Catalogue filters',
+            model: 'Model',
+            allModels: 'All models',
+            priceMin: 'Min. price',
+            priceMax: 'Max. price',
+            movement: 'Movement',
+            allMovements: 'All movements',
+            availability: 'Availability',
+            allAvailability: 'All',
+            apply: 'Apply',
+            reset: 'Reset filters',
+            close: 'Close filters',
+            loading: 'Searching for watches…',
+            error: 'Search failed. Please try again.',
+            retry: 'Try again',
         }
     );
 });
 
 const form = reactive({
-    q: props.filters.q ?? "",
-    model: props.filters.model ?? "",
-    price_min: props.filters.price_min ?? "",
-    price_max: props.filters.price_max ?? "",
-    movement: props.filters.movement ?? "",
-    availability: props.filters.availability ?? "",
-    sort: props.filters.sort ?? "newest",
+    q: props.filters.q ?? '',
+    model: props.filters.model ?? '',
+    price_min: props.filters.price_min ?? '',
+    price_max: props.filters.price_max ?? '',
+    movement: props.filters.movement ?? '',
+    availability: props.filters.availability ?? '',
+    sort: props.filters.sort ?? 'newest',
 });
 
 const filteredModels = computed(() => {
@@ -195,13 +195,13 @@ const filteredModels = computed(() => {
 });
 const hasActiveFilters = computed(() => {
     return (
-        form.q.trim() !== "" ||
-        form.model !== "" ||
-        form.price_min !== "" ||
-        form.price_max !== "" ||
-        form.movement !== "" ||
-        form.availability !== "" ||
-        form.sort !== "newest"
+        form.q.trim() !== '' ||
+        form.model !== '' ||
+        form.price_min !== '' ||
+        form.price_max !== '' ||
+        form.movement !== '' ||
+        form.availability !== '' ||
+        form.sort !== 'newest'
     );
 });
 
@@ -212,53 +212,53 @@ const secondaryFilterCount = computed(() => {
         form.price_max,
         form.movement,
         form.availability,
-    ].filter((value) => value !== "" && value !== null && value !== undefined)
+    ].filter((value) => value !== '' && value !== null && value !== undefined)
         .length;
 });
 
 const availabilityLabel = (value) => {
-    const normalized = String(value ?? "")
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
+    const normalized = String(value ?? '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .trim();
 
     const labels = {
         fr_BE: {
-            "sur commande": "Sur commande",
-            precommande: "Précommande",
-            disponible: "Disponible",
-            "en stock": "En stock",
-            indisponible: "Indisponible",
-            rupture: "Rupture",
-            epuise: "Épuisé",
+            'sur commande': 'Sur commande',
+            precommande: 'Précommande',
+            disponible: 'Disponible',
+            'en stock': 'En stock',
+            indisponible: 'Indisponible',
+            rupture: 'Rupture',
+            epuise: 'Épuisé',
         },
         nl_BE: {
-            "sur commande": "Op bestelling",
-            precommande: "Voorbestelling",
-            disponible: "Beschikbaar",
-            "en stock": "Op voorraad",
-            indisponible: "Niet beschikbaar",
-            rupture: "Uitverkocht",
-            epuise: "Uitverkocht",
+            'sur commande': 'Op bestelling',
+            precommande: 'Voorbestelling',
+            disponible: 'Beschikbaar',
+            'en stock': 'Op voorraad',
+            indisponible: 'Niet beschikbaar',
+            rupture: 'Uitverkocht',
+            epuise: 'Uitverkocht',
         },
         en_BE: {
-            "sur commande": "Made to order",
-            precommande: "Pre-order",
-            disponible: "Available",
-            "en stock": "In stock",
-            indisponible: "Unavailable",
-            rupture: "Out of stock",
-            epuise: "Sold out",
+            'sur commande': 'Made to order',
+            precommande: 'Pre-order',
+            disponible: 'Available',
+            'en stock': 'In stock',
+            indisponible: 'Unavailable',
+            rupture: 'Out of stock',
+            epuise: 'Sold out',
         },
         de_BE: {
-            "sur commande": "Auf Bestellung",
-            precommande: "Vorbestellung",
-            disponible: "Verfügbar",
-            "en stock": "Auf Lager",
-            indisponible: "Nicht verfügbar",
-            rupture: "Nicht auf Lager",
-            epuise: "Ausverkauft",
+            'sur commande': 'Auf Bestellung',
+            precommande: 'Vorbestellung',
+            disponible: 'Verfügbar',
+            'en stock': 'Auf Lager',
+            indisponible: 'Nicht verfügbar',
+            rupture: 'Nicht auf Lager',
+            epuise: 'Ausverkauft',
         },
     };
 
@@ -268,22 +268,22 @@ const availabilityLabel = (value) => {
 const requestParams = () => {
     const params = {};
 
-    if (form.q.trim() !== "") params.q = form.q.trim();
-    if (form.model !== "") params.model = form.model;
-    if (form.price_min !== "") params.price_min = form.price_min;
-    if (form.price_max !== "") params.price_max = form.price_max;
-    if (form.movement !== "") params.movement = form.movement;
-    if (form.availability !== "") params.availability = form.availability;
-    if (form.sort !== "newest") params.sort = form.sort;
+    if (form.q.trim() !== '') params.q = form.q.trim();
+    if (form.model !== '') params.model = form.model;
+    if (form.price_min !== '') params.price_min = form.price_min;
+    if (form.price_max !== '') params.price_max = form.price_max;
+    if (form.movement !== '') params.movement = form.movement;
+    if (form.availability !== '') params.availability = form.availability;
+    if (form.sort !== 'newest') params.sort = form.sort;
 
     return params;
 };
 
 const scrollToCollection = () => {
     requestAnimationFrame(() => {
-        document.getElementById("collection")?.scrollIntoView({
-            behavior: "auto",
-            block: "start",
+        document.getElementById('collection')?.scrollIntoView({
+            behavior: 'auto',
+            block: 'start',
         });
     });
 };
@@ -310,13 +310,13 @@ const apply = ({ closePanel = false } = {}) => {
 const reset = () => {
     if (loading.value) return;
 
-    form.q = "";
-    form.model = "";
-    form.price_min = "";
-    form.price_max = "";
-    form.movement = "";
-    form.availability = "";
-    form.sort = "newest";
+    form.q = '';
+    form.model = '';
+    form.price_min = '';
+    form.price_max = '';
+    form.movement = '';
+    form.availability = '';
+    form.sort = 'newest';
     filtersOpen.value = false;
     startLoading();
 

@@ -18,7 +18,7 @@ return [
         'color_note' => 'Klare Brillanz',
         'lead_time_title' => '5–6 Werktage',
         'lead_time_note' => 'Auf Reservierung',
-        'markets_title' => 'BE • FR • DE • NL',
+        'markets_title' => 'BE • FR • NL',
         'signature_material' => 'VVS-Moissanit • Farbe D',
         'signature_title' => 'Signature Piece',
         'image_alt' => 'VVS FLAWLESS Iced-Out-Uhr mit VVS-Moissanit',
