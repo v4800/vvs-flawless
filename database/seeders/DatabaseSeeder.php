@@ -21,5 +21,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-    }
+
+        // Corrections catalogue VVS validées le 24/09/2026.
+        $this->call(VvsCatalogCorrections20260924Seeder::class);    }
 }

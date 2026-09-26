@@ -8,7 +8,7 @@ final class ReservationWorkflow
 
     public const CONTACTED = 'Client contacté';
 
-    public const DEPOSIT_PAID = 'Acompte de 25 % reçu';
+    public const DEPOSIT_PAID = 'Acompte reçu';
 
     public const PREPARING = 'Montre commandée / en préparation';
 

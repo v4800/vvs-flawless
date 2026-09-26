@@ -94,6 +94,7 @@ class PublicPageController extends Controller
                 route($routeName),
                 'privacy'
             ),
+            'analyticsPrivacy' => trans('analytics.privacy'),
         ]);
     }
 
@@ -138,6 +139,10 @@ class PublicPageController extends Controller
         string $routeName
     ): array {
         $canonical = route($routeName);
+        $organizationId = url('/').'#organization';
+        $dateModified = (string) trans(
+            'seo_intents.editorial.updated_iso'
+        );
 
         $seo = $this->seo(
             (string) ($guide['seo_title'] ?? 'VVS FLAWLESS'),
@@ -163,18 +168,12 @@ class PublicPageController extends Controller
                     'Iced-out watches',
                     'Diamond watches',
                 ],
+                'dateModified' => $dateModified,
                 'author' => [
-                    '@type' => 'Organization',
-                    'name' => 'VVS FLAWLESS',
+                    '@id' => $organizationId,
                 ],
                 'publisher' => [
-                    '@type' => 'Organization',
-                    'name' => 'VVS FLAWLESS',
-                    'url' => url('/'),
-                    'logo' => [
-                        '@type' => 'ImageObject',
-                        'url' => url('/images/vvs-flawless-profile.webp'),
-                    ],
+                    '@id' => $organizationId,
                 ],
             ],
             [
@@ -196,7 +195,37 @@ class PublicPageController extends Controller
                     ],
                 ],
             ],
+            [
+                '@type' => 'Organization',
+                '@id' => $organizationId,
+                'name' => 'VVS FLAWLESS',
+                'url' => url('/'),
+                'logo' => [
+                    '@type' => 'ImageObject',
+                    'url' => url('/images/vvs-flawless-profile.webp'),
+                ],
+                'description' => (string) trans(
+                    'site.seo.about_description'
+                ),
+                'areaServed' => $this->serviceAreas(),
+                'knowsAbout' => [
+                    'VVS moissanite watches',
+                    'Moissanite',
+                    'Iced-out watches',
+                    'Fully set watches',
+                    'Diamond and moissanite comparison',
+                ],
+                'sameAs' => [
+                    'https://www.tiktok.com/@vvsflawless43',
+                ],
+            ],
         ];
+
+        $citations = $this->guideCitations($guide);
+
+        if ($citations !== []) {
+            $graph[0]['citation'] = $citations;
+        }
 
         $faqSchema = $this->faqSchema($guide['faq'] ?? null);
 
@@ -213,6 +242,36 @@ class PublicPageController extends Controller
         return $seo;
     }
 
+    /**
+     * @param  array<string, mixed>  $guide
+     * @return list<string>
+     */
+    private function guideCitations(array $guide): array
+    {
+        $sources = $guide['sources'] ?? null;
+
+        if (! is_array($sources)) {
+            return [];
+        }
+
+        $citations = [];
+
+        foreach ($sources as $source) {
+            if (! is_array($source)) {
+                continue;
+            }
+
+            $url = $source['url'] ?? null;
+
+            if (! is_string($url) || $url === '') {
+                continue;
+            }
+
+            $citations[] = $url;
+        }
+
+        return array_values(array_unique($citations));
+    }
     /**
      * @return array<string, mixed>
      */
@@ -330,6 +389,62 @@ class PublicPageController extends Controller
             [
                 '@type' => 'AdministrativeArea',
                 'name' => 'Flanders',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Brussels',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Antwerp',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Ghent',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Charleroi',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'LiÃ¨ge',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Namur',
+                'containedInPlace' => [
+                    '@type' => 'Country',
+                    'name' => 'Belgium',
+                ],
+            ],
+            [
+                '@type' => 'City',
+                'name' => 'Verviers',
                 'containedInPlace' => [
                     '@type' => 'Country',
                     'name' => 'Belgium',

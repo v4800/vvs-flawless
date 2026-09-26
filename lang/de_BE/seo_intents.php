@@ -3,6 +3,19 @@
 $base = require dirname(__DIR__).'/en_BE/seo_intents.php';
 
 return array_replace_recursive($base, [
+    'editorial' => [
+        'author_label' => 'Redaktion',
+        'author_name' => 'VVS FLAWLESS',
+        'updated_label' => 'Zuletzt aktualisiert',
+        'updated_iso' => '2026-09-24',
+        'updated_display' => '24. September 2026',
+        'method_title' => 'Wie wir diese Informationen prüfen',
+        'method_text' => 'VVS FLAWLESS trennt kommerzielle Angaben zu den eigenen Uhren von technischen Informationen über Edelsteine. Eigenschaften, Preise, Uhrwerke, Lieferzeiten und Reservierungsbedingungen stammen aus den Produktseiten und dem tatsächlichen Ablauf der Website. Technische Aussagen zu Diamant, Moissanit und VVS werden, wenn erforderlich, durch die angegebenen Fachquellen gestützt.',
+        'transparency' => 'VVS FLAWLESS verkauft Uhren mit VVS-Moissanit und präsentiert sich nicht als unabhängiges gemmologisches Labor.',
+        'about_label' => 'Über VVS FLAWLESS',
+        'contents_title' => 'In diesem Ratgeber',
+        'faq_link' => 'Häufige Fragen',
+    ],
     'collection_seo' => [
         'title' => 'VVS-Moissanit- & Iced-Out-Uhren in Belgien | VVS FLAWLESS',
         'description' => 'Entdecke VVS-FLAWLESS-Uhren mit VVS-Moissanit in Farbe D: Iced-Out- und Full-Set-Stile für Herren, Damen und Unisex, auf Reservierung in Belgien.',
@@ -142,9 +155,9 @@ return array_replace_recursive($base, [
     ],
     'belgium' => [
         'seo_title' => 'VVS-Moissanit- & Iced-Out-Uhren in Belgien | VVS FLAWLESS',
-        'seo_description' => 'Reserviere eine VVS-Moissanit-Uhr in Farbe D mit sichtbarem Preis und persönlicher Übergabe nach Termin überall in Belgien.',
+        'seo_description' => 'VVS-Moissanit-Uhren in Belgien mit sichtbaren Preisen und persönlicher Übergabe nach Termin in Brüssel, Antwerpen, Gent, Charleroi, Lüttich und weiteren Städten.',
         'eyebrow' => 'VVS FLAWLESS Belgien',
-        'title' => 'VVS-Uhr in Belgien reservieren',
+        'title' => 'VVS-Moissanit-Uhren in Belgien',
         'intro' => 'VVS FLAWLESS bietet Uhren mit VVS-Moissanit in Farbe D an, von klassischen Full-Set-Modellen bis zu auffälligen Iced-Out-Designs. Einstiegspreise sind bereits in der Kollektion sichtbar.',
         'answer' => 'Wähle deine Uhr auf der Website und sende eine Anfrage ohne sofortige Zahlung. VVS FLAWLESS bestätigt Modell, Preis, Lieferzeit, Adresse, Uhrzeit und mögliche Fahrtkosten vor der Anzahlung. Die persönliche Übergabe wird überall in Belgien nach Termin vereinbart, unter anderem in Lüttich, Verviers, Namur, Brüssel, Charleroi, Antwerpen und Gent.',
         'sections' => [
@@ -174,6 +187,13 @@ return array_replace_recursive($base, [
                 'paragraphs' => [
                     'Die Kollektion enthält elegante, sportliche und besonders auffällige Silhouetten. Ein Modell kann daher je nach Proportionen für Herren, Damen oder als Unisex-Uhr passen.',
                     'Auf den Produktseiten kannst du die tatsächlichen Modelle vergleichen, ohne dieselbe Uhr künstlich nach Geschlecht zu duplizieren.',
+                ],
+            ],
+            [
+                'title' => 'Persönliche Übergabe in den großen Städten Belgiens',
+                'paragraphs' => [
+                    'VVS FLAWLESS organisiert persönliche Übergaben nach Termin in Brüssel, Antwerpen, Gent, Charleroi und Lüttich sowie in Namur, Verviers und weiteren belgischen Städten.',
+                    'Ganz Belgien bleibt das Servicegebiet. Der genaue Ort, die Uhrzeit und mögliche Fahrtkosten werden vor der Anzahlung bestätigt; die genannten Städte sind wichtige Zielgebiete und keine Begrenzung.',
                 ],
             ],
         ],

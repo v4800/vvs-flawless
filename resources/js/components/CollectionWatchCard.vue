@@ -27,8 +27,14 @@ const displayImage = computed(() => {
 
 const startingPrice = computed(() => {
     const prices = [
-        props.watch.japanese_promo_price ?? props.watch.japanese_price,
-        props.watch.swiss_promo_price ?? props.watch.swiss_price,
+        props.watch.japanese_price !== null &&
+        props.watch.japanese_price !== undefined
+            ? (props.watch.japanese_promo_price ?? props.watch.japanese_price)
+            : null,
+        props.watch.swiss_price !== null &&
+        props.watch.swiss_price !== undefined
+            ? (props.watch.swiss_promo_price ?? props.watch.swiss_price)
+            : null,
     ]
         .map((price) => Number(price))
         .filter((price) => Number.isFinite(price) && price > 0);
@@ -122,7 +128,10 @@ const formattedPrice = computed(() => {
                     </span>
 
                     <span class="font-semibold text-zinc-300">
-                        {{ translations.collection.delay }}
+                        {{
+                            watch.delivery_estimate ??
+                            translations.collection.delay
+                        }}
                     </span>
                 </div>
 

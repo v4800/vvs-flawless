@@ -2,6 +2,13 @@
 import { Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
+const props = defineProps({
+    watch: {
+        type: Object,
+        required: true,
+    },
+});
+
 const page = usePage();
 const translations = computed(() => page.props.translations);
 const guideLinks = computed(() => page.props.guideLinks);
@@ -176,7 +183,10 @@ const localizedRoutes = computed(() => page.props.localizedRoutes);
                         </p>
 
                         <p class="mt-2 font-bold text-zinc-200">
-                            {{ translations.purchase_guide.delay }}
+                            {{
+                                props.watch.delivery_estimate ??
+                                translations.purchase_guide.delay
+                            }}
                         </p>
                     </div>
 

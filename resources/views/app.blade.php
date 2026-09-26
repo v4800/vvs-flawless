@@ -188,7 +188,7 @@
             content="{{ $seoImageAlt }}"
         >
 
-        {{-- Données structurées SEO --}}
+        {{-- DonnÃ©es structurÃ©es SEO --}}
 
         @if ($structuredData)
             <script
@@ -207,7 +207,7 @@
             ) !!}</script>
         @endif
 
-        {{-- Détection immédiate du thème --}}
+        {{-- DÃ©tection immÃ©diate du thÃ¨me --}}
 
         <script
             @if ($cspNonce)
@@ -354,6 +354,7 @@
                 );
             })();
         </script>
+        @include('partials.analytics-consent')
         <x-inertia::app />
     </body>
 </html>

@@ -7,6 +7,7 @@ use App\Mail\NewReservationMail;
 use App\Models\Reservation;
 use App\Models\Watch;
 use App\Support\PresentedWatch;
+use App\Support\ReservationPayment;
 use App\Support\WatchCatalog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -89,10 +90,22 @@ class ReservationController extends Controller
         if ($singleOffer) {
             $price = $watch->price;
         } elseif ($validated['movement'] === 'Suisse') {
+            abort_if(
+                $watch->swiss_price === null,
+                422,
+                'Version indisponible pour ce modele.'
+            );
+
             $price =
                 $watch->swiss_promo_price
                 ?? $watch->swiss_price;
         } else {
+            abort_if(
+                $watch->japanese_price === null,
+                422,
+                'Version indisponible pour ce modele.'
+            );
+
             $price =
                 $watch->japanese_promo_price
                 ?? $watch->japanese_price;
@@ -104,6 +117,13 @@ class ReservationController extends Controller
             'Prix indisponible.'
         );
 
+        $depositAmount = ReservationPayment::depositAmount($price);
+
+        abort_if(
+            $depositAmount === null,
+            422,
+            'Acompte indisponible.'
+        );
         do {
             $reservationNumber =
                 'VVS-'.strtoupper(Str::random(12));
@@ -129,10 +149,13 @@ class ReservationController extends Controller
 
         $reservation = Reservation::create([
             'watch_id' => $watch->id,
+            'watch_name_snapshot' => $watch->name,
+            'watch_image_snapshot' => $watch->image,
 
             'movement' => $validated['movement'],
 
             'price' => $price,
+            'deposit_amount_snapshot' => $depositAmount,
 
             'customer_name' => $validated['customer_name'],
 
@@ -319,6 +342,16 @@ class ReservationController extends Controller
 
                         'price' => (float) $reservation
                             ->price,
+
+                        'deposit_amount' => ReservationPayment::depositAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount_snapshot
+                        ),
+
+                        'balance_amount' => ReservationPayment::balanceAmount(
+                            $reservation->price,
+                            $reservation->deposit_amount_snapshot
+                        ),
 
                         'delivery_method' => $reservation
                             ->delivery_method,

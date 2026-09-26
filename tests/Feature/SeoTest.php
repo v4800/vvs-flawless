@@ -283,6 +283,64 @@ class SeoTest extends TestCase
         );
     }
 
+    public function test_guides_expose_editorial_transparency_and_organization_schema(): void
+    {
+        $editorial = trans(
+            'seo_intents.editorial',
+            [],
+            'fr_BE'
+        );
+
+        $this->assertIsArray($editorial);
+        $this->assertSame(
+            'VVS FLAWLESS',
+            $editorial['author_name']
+        );
+        $this->assertSame(
+            '2026-09-24',
+            $editorial['updated_iso']
+        );
+
+        $this->get(route('guides.vvs-watch'))
+            ->assertOk()
+            ->assertInertia(
+                fn (Assert $page) => $page
+                    ->where(
+                        'seo.structuredData.@graph.0.@type',
+                        'Article'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.0.author.@id',
+                        url('/').'#organization'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.0.publisher.@id',
+                        url('/').'#organization'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.0.dateModified',
+                        '2026-09-24'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.0.citation.0',
+                        'https://www.gia.edu/gia-about/4cs-clarity'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.2.@type',
+                        'Organization'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.2.@id',
+                        url('/').'#organization'
+                    )
+                    ->where(
+                        'seo.structuredData.@graph.2.name',
+                        'VVS FLAWLESS'
+                    )
+                    ->etc()
+            );
+    }
+
     public function test_geo_copy_explains_the_business_without_exposing_keyword_strategy(): void
     {
         $frenchIntents = trans('seo_intents', [], 'fr_BE');

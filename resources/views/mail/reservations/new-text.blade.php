@@ -1,9 +1,11 @@
-﻿VVS FLAWLESS — NOUVELLE RÉSERVATION
+VVS FLAWLESS — NOUVELLE RÉSERVATION
 
 Référence : {{ $reservation->reservation_number }}
 Montre : {{ $reservation->watch->name }}
 Mouvement : {{ $reservation->movement }}
 Prix : {{ number_format($reservation->price, 0, ',', ' ') }} €
+Acompte : {{ number_format(\App\Support\ReservationPayment::depositAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
+Solde : {{ number_format(\App\Support\ReservationPayment::balanceAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
 Statut : {{ $reservation->status }}
 
 CLIENT

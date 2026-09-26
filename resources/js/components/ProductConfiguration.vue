@@ -93,9 +93,10 @@ const formatPrice = (price) => {
 
                 <p
                     v-if="
-                        Number(
-                            watch.swiss_promo_price ?? watch.swiss_price ?? 0,
-                        ) > 0
+                        watch.japanese_price !== null &&
+                        watch.japanese_price !== undefined &&
+                        watch.swiss_price !== null &&
+                        watch.swiss_price !== undefined
                     "
                     class="hidden text-xs text-zinc-400 sm:block"
                 >
@@ -105,13 +106,16 @@ const formatPrice = (price) => {
 
             <nav
                 v-if="
-                    Number(watch.swiss_promo_price ?? watch.swiss_price ?? 0) >
-                    0
+                    watch.japanese_price !== null &&
+                    watch.japanese_price !== undefined &&
+                    watch.swiss_price !== null &&
+                    watch.swiss_price !== undefined
                 "
                 class="vvs-movement-switch mt-5 inline-flex w-full max-w-md gap-1 rounded-2xl border border-[#b9a17b]/45 bg-[#191917] p-1.5 sm:w-auto"
                 :aria-label="translations.product.choose_movement"
             >
                 <Link
+                    v-if="hasJapanese"
                     :href="`${localizedRoutes.watches}/${watch.slug}?movement=Japonais`"
                     preserve-scroll
                     :aria-current="movement === 'Japonais' ? 'page' : undefined"
@@ -125,6 +129,7 @@ const formatPrice = (price) => {
                     {{ translations.movements.japonais }}
                 </Link>
                 <Link
+                    v-if="hasSwiss"
                     :href="`${localizedRoutes.watches}/${watch.slug}?movement=Suisse`"
                     preserve-scroll
                     :aria-current="movement === 'Suisse' ? 'page' : undefined"
@@ -178,7 +183,10 @@ const formatPrice = (price) => {
                 </p>
 
                 <p class="mt-2 font-bold text-zinc-200">
-                    {{ translations.product.estimated_delay }}
+                    {{
+                        watch.delivery_estimate ??
+                        translations.product.estimated_delay
+                    }}
                 </p>
             </div>
 

@@ -88,9 +88,9 @@ return [
             'description' => 'Montre 41 mm au style classique, cadran à chiffres romains et sertissage en moissanite VVS couleur D.',
         ],
         'cadran-bleu-roi' => [
-            'name' => '41 mm · Cadran bleu roi, bracelet argenté',
-            'short_description' => 'Cadran bleu roi et bracelet argenté.',
-            'description' => 'Montre 41 mm avec cadran bleu roi, bracelet argenté et sertissage en moissanite VVS couleur D.',
+            'name' => '41 mm · Cadran rouge, bracelet argenté',
+            'short_description' => 'Cadran rouge et bracelet argenté.',
+            'description' => 'Modèle personnalisé 41 mm avec cadran rouge, bracelet argenté et sertissage en moissanite VVS couleur D.',
         ],
     ],
     42 => [

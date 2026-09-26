@@ -134,6 +134,18 @@
                                                     <div style="margin-top:7px;font-size:25px;font-weight:800;color:#d8c49e;">
                                                         {{ number_format($reservation->price, 0, ',', ' ') }} €
                                                     </div>
+                                                    <div style="margin-top:13px;font-size:10px;letter-spacing:1.2px;color:#77736c;">
+                                                        {{ strtoupper(trans('site.mail.deposit')) }}
+                                                    </div>
+                                                    <div style="margin-top:5px;font-size:15px;font-weight:800;color:#d8c49e;">
+                                                        {{ number_format(\App\Support\ReservationPayment::depositAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
+                                                    </div>
+                                                    <div style="margin-top:10px;font-size:10px;letter-spacing:1.2px;color:#77736c;">
+                                                        {{ strtoupper(trans('site.mail.balance')) }}
+                                                    </div>
+                                                    <div style="margin-top:5px;font-size:15px;font-weight:800;color:#d8c49e;">
+                                                        {{ number_format(\App\Support\ReservationPayment::balanceAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
+                                                    </div>
                                                 </td>
                                             </tr>
 

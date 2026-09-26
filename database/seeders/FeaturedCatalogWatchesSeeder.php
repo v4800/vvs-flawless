@@ -40,7 +40,7 @@ class FeaturedCatalogWatchesSeeder extends Seeder
             8 => [
                 'name' => '41 mm · Chronographe, bracelet noir',
                 'japanese_price' => 650,
-                'swiss_price' => 1000,
+                'swiss_price' => null,
                 'description' => 'Un chronographe 41 mm à bracelet noir et boîtier serti de moissanite VVS couleur D.',
             ],
         ];

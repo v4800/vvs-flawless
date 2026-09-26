@@ -110,7 +110,7 @@ const formatPrice = (price) => {
                 <div
                     class="vvs-luxury-card mt-7 overflow-hidden rounded-2xl border"
                 >
-                    <div class="grid grid-cols-[105px_1fr]">
+                    <div class="grid grid-cols-[105px_minmax(0,1fr)]">
                         <div class="bg-[#12110f]">
                             <img
                                 :src="activeImage"

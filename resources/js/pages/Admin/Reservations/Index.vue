@@ -268,7 +268,7 @@ const paginationLabel = (label) =>
 
     <AdminLayout
         title="Réservations"
-        subtitle="Acompte de 25 %, préparation, vidéo, rendez-vous puis solde pendant la remise en main propre."
+        subtitle="Acompte, préparation, vidéo, rendez-vous puis solde pendant la remise en main propre."
     >
         <section class="flex justify-end">
             <p class="text-sm text-zinc-400">
@@ -637,7 +637,7 @@ const paginationLabel = (label) =>
                                         }}</strong>
                                     </p>
                                     <p>
-                                        Acompte 25 % :
+                                        Acompte :
                                         <strong>{{
                                             formatMoney(
                                                 reservation.deposit_amount,
@@ -645,7 +645,7 @@ const paginationLabel = (label) =>
                                         }}</strong>
                                     </p>
                                     <p>
-                                        Solde 75 % :
+                                        Solde :
                                         <strong>{{
                                             formatMoney(
                                                 reservation.balance_amount,

@@ -1,4 +1,4 @@
-﻿@php
+@php
     $localizedWatch = app(\App\Support\WatchCatalog::class)
         ->localizedWatch($reservation->watch);
 
@@ -25,6 +25,8 @@ VVS FLAWLESS
 {{ trans('site.mail.watch') }} : {{ $watchName }}
 {{ trans('site.mail.movement') }} : {{ $movement }}
 {{ trans('site.mail.reserved_price') }} : {{ number_format($reservation->price, 0, ',', ' ') }} €
+{{ trans('site.mail.deposit') }} : {{ number_format(\App\Support\ReservationPayment::depositAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
+{{ trans('site.mail.balance') }} : {{ number_format(\App\Support\ReservationPayment::balanceAmount($reservation->price, $reservation->deposit_amount_snapshot), 0, ',', ' ') }} €
 {{ trans('site.mail.reception_method') }} : {{ $deliveryMethod }}
 
 @if ($reservation->message)

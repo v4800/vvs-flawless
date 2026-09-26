@@ -174,6 +174,12 @@ onBeforeUnmount(() => {
             >
                 <img
                     src="/images/vvs-flawless-profile.webp"
+                    srcset="
+                        /images/vvs-flawless-profile-112.webp  112w,
+                        /images/vvs-flawless-profile-224.webp  224w,
+                        /images/vvs-flawless-profile.webp     1254w
+                    "
+                    sizes="(min-width: 1024px) 112px, 80px"
                     alt="VVS FLAWLESS"
                     width="112"
                     height="112"

@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'editorial' => [
+        'author_label' => 'Rédaction',
+        'author_name' => 'VVS FLAWLESS',
+        'updated_label' => 'Dernière mise à jour',
+        'updated_iso' => '2026-09-24',
+        'updated_display' => '24 septembre 2026',
+        'method_title' => 'Comment nous vérifions ces informations',
+        'method_text' => 'VVS FLAWLESS distingue les informations commerciales concernant ses propres montres des informations techniques sur les pierres. Les caractéristiques, prix, mouvements, délais et modalités de réservation proviennent des fiches et du fonctionnement réel du site. Les affirmations gemmologiques sur le diamant, la moissanite ou VVS s’appuient sur les sources techniques citées lorsqu’elles sont nécessaires.',
+        'transparency' => 'VVS FLAWLESS vend des montres en moissanite VVS et ne se présente pas comme un laboratoire gemmologique indépendant.',
+        'about_label' => 'À propos de VVS FLAWLESS',
+        'contents_title' => 'Dans ce guide',
+        'faq_link' => 'Questions fréquentes',
+    ],
     'collection_seo' => [
         'title' => 'Montres moissanite VVS & iced-out en Belgique | VVS FLAWLESS',
         'description' => 'Découvrez les montres VVS FLAWLESS en moissanite VVS couleur D : modèles iced-out et montres serties pour homme, femme ou style unisexe, disponibles sur réservation en Belgique.',
@@ -150,9 +163,9 @@ return [
 
     'belgium' => [
         'seo_title' => 'Montre moissanite VVS & iced-out en Belgique | VVS FLAWLESS',
-        'seo_description' => 'Réservez une montre moissanite VVS couleur D avec prix affiché et remise en main propre sur rendez-vous partout en Belgique.',
+        'seo_description' => 'Montres moissanite VVS en Belgique : prix affichés et remise sur rendez-vous à Bruxelles, Anvers, Gand, Charleroi, Liège et ailleurs.',
         'eyebrow' => 'VVS FLAWLESS Belgique',
-        'title' => 'Réserver une montre VVS en Belgique',
+        'title' => 'Montres moissanite VVS en Belgique',
         'intro' => 'VVS FLAWLESS propose des montres serties de moissanite VVS couleur D, avec un style allant de la montre sertie classique aux modèles iced-out plus imposants. Les prix de départ sont visibles dans la collection avant toute demande.',
         'answer' => 'Vous choisissez votre montre sur le site puis envoyez une demande sans paiement immédiat. VVS FLAWLESS confirme le modèle, le prix, le délai, l’adresse, l’heure et les éventuels frais de déplacement avant l’acompte. La remise en main propre est organisée sur rendez-vous partout en Belgique, notamment à Liège, Verviers, Namur, Bruxelles, Charleroi, Anvers et Gand.',
         'sections' => [
@@ -182,6 +195,13 @@ return [
                 'paragraphs' => [
                     'La collection comprend des silhouettes plus fines, plus sportives ou plus imposantes. Une montre peut donc convenir à un homme, une femme ou être portée dans un style totalement unisexe selon ses proportions.',
                     'Les fiches permettent de comparer les modèles sans dupliquer artificiellement chaque montre par genre.',
+                ],
+            ],
+            [
+                'title' => 'Remise en main propre dans les grandes villes de Belgique',
+                'paragraphs' => [
+                    'VVS FLAWLESS organise des remises en main propre sur rendez-vous à Bruxelles, Anvers, Gand, Charleroi et Liège, ainsi qu’à Namur, Verviers et dans d’autres villes de Belgique.',
+                    'La Belgique entière reste la zone de service. Le lieu, l’heure et les éventuels frais de déplacement sont confirmés avant l’acompte ; les villes citées représentent les principales zones ciblées et non une limite de livraison.',
                 ],
             ],
         ],

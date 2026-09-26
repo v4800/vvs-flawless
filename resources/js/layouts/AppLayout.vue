@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { defineAsyncComponent, onMounted, ref } from 'vue';
 
 import VisualDisclosure from '@/components/VisualDisclosure.vue';
-import VvsCursor from '@/components/VvsCursor.vue';
 
 import type { BreadcrumbItem } from '@/types';
 
@@ -12,7 +11,20 @@ const { breadcrumbs = [] } = defineProps<{
 
 void breadcrumbs;
 
+const showVvsCursor = ref(false);
+
+const VvsCursor = defineAsyncComponent(
+    () => import('@/components/VvsCursor.vue'),
+);
+
 onMounted(() => {
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const reducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+    ).matches;
+
+    showVvsCursor.value = finePointer && !reducedMotion;
+
     window.requestAnimationFrame(() => {
         void import('@/lib/vvsSafeMotion');
     });
@@ -25,5 +37,5 @@ onMounted(() => {
     <VisualDisclosure />
 
     <!-- CURSEUR GLOBAL VVS FLAWLESS -->
-    <VvsCursor />
+    <VvsCursor v-if="showVvsCursor" />
 </template>

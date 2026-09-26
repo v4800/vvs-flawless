@@ -50,7 +50,25 @@ const copy = computed(() => copies[page.props.locale] ?? copies.fr_BE);
 const diameter = computed(
     () => props.watch.name?.match(/\b\d{2}\s*mm\b/i)?.[0] ?? null,
 );
+const availableMovements = computed(() => {
+    const movements = [];
 
+    if (
+        props.watch.japanese_price !== null &&
+        props.watch.japanese_price !== undefined
+    ) {
+        movements.push(props.translations.movements.japonais);
+    }
+
+    if (
+        props.watch.swiss_price !== null &&
+        props.watch.swiss_price !== undefined
+    ) {
+        movements.push(props.translations.movements.suisse);
+    }
+
+    return movements;
+});
 const specs = computed(() => {
     const items = [];
 
@@ -70,13 +88,21 @@ const specs = computed(() => {
             label: props.translations.product.color,
             value: 'D',
         },
-        {
+    );
+
+    if (availableMovements.value.length > 0) {
+        items.push({
             label: copy.value.movements,
-            value: `${props.translations.movements.japonais} / ${props.translations.movements.suisse}`,
-        },
+            value: availableMovements.value.join(' / '),
+        });
+    }
+
+    items.push(
         {
             label: props.translations.product.estimated_availability,
-            value: props.translations.product.estimated_delay,
+            value:
+                props.watch.delivery_estimate ??
+                props.translations.product.estimated_delay,
         },
         {
             label: props.translations.product.reception,

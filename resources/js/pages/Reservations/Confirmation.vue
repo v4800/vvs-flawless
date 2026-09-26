@@ -166,9 +166,33 @@ const formatPrice = (price) => {
                                 </p>
 
                                 <p
-                                    class="vvs-gradient-text mt-1 inline-block text-3xl font-black"
+                                    class="vvs-price mt-1 inline-block text-3xl font-black"
                                 >
                                     {{ formatPrice(reservation.price) }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-zinc-600">
+                                    {{ translations.confirmation.deposit }}
+                                </p>
+
+                                <p class="vvs-price mt-1 text-xl font-black">
+                                    {{
+                                        formatPrice(reservation.deposit_amount)
+                                    }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <p class="text-xs text-zinc-600">
+                                    {{ translations.confirmation.balance }}
+                                </p>
+
+                                <p class="vvs-price mt-1 text-xl font-black">
+                                    {{
+                                        formatPrice(reservation.balance_amount)
+                                    }}
                                 </p>
                             </div>
                         </div>

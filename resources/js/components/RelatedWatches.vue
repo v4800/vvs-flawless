@@ -17,8 +17,12 @@ const translations = computed(() => page.props.translations);
 
 const startingPrice = (watch) => {
     const prices = [
-        watch.japanese_promo_price ?? watch.japanese_price,
-        watch.swiss_promo_price ?? watch.swiss_price,
+        watch.japanese_price !== null && watch.japanese_price !== undefined
+            ? (watch.japanese_promo_price ?? watch.japanese_price)
+            : null,
+        watch.swiss_price !== null && watch.swiss_price !== undefined
+            ? (watch.swiss_promo_price ?? watch.swiss_price)
+            : null,
     ]
         .map(Number)
         .filter((price) => Number.isFinite(price) && price > 0);

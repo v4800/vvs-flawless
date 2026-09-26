@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import GuideEditorialTrust from '@/components/GuideEditorialTrust.vue';
 import VvsNavigation from '@/components/VvsNavigation.vue';
 
 const props = defineProps({
@@ -65,6 +66,8 @@ const fieldNumber = (index) => String(index + 1).padStart(2, '0');
                         </div>
                     </div>
                 </header>
+
+                <GuideEditorialTrust />
 
                 <section
                     class="border-y border-white/10 px-5 py-16 sm:px-8 sm:py-20"

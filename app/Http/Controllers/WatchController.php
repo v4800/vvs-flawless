@@ -20,9 +20,6 @@ class WatchController extends Controller
 {
     /** @var list<string> */
     public const HIDDEN_PUBLIC_SLUGS = [
-        '41-mm-carree-noire-cadran-blanc',
-        '41-mm-argentee-cadran-blanc',
-        '41-mm-classique-chiffres-romains',
     ];
 
     public function __construct(
@@ -83,16 +80,12 @@ class WatchController extends Controller
 
             $query->where(function (Builder $builder) use ($movement): void {
                 if ($movement === 'swiss') {
-                    $builder
-                        ->whereNotNull('swiss_price')
-                        ->orWhereNotNull('swiss_promo_price');
+                    $builder->whereNotNull('swiss_price');
 
                     return;
                 }
 
-                $builder
-                    ->whereNotNull('japanese_price')
-                    ->orWhereNotNull('japanese_promo_price');
+                $builder->whereNotNull('japanese_price');
             });
         }
 
@@ -236,9 +229,7 @@ class WatchController extends Controller
         Request $request,
         Watch $watch
     ): Response {
-        abort_if(in_array($watch->slug, self::HIDDEN_PUBLIC_SLUGS, true), 404);
-
-        $this->marketingAttribution->capture($request);
+$this->marketingAttribution->capture($request);
 
         $watch = $this->catalog->localizedWatch($watch);
         $gallery = $this->catalog->galleryForWatch($watch);
@@ -247,10 +238,17 @@ class WatchController extends Controller
             $watch->image = $gallery[0];
         }
 
-        $selectedMovement = $request->query('movement') === 'Suisse'
-            && ((float) ($watch->swiss_promo_price ?? $watch->swiss_price ?? 0)) > 0
-            ? 'Suisse'
-            : 'Japonais';
+        $requestedMovement = $request->query('movement');
+        $hasJapaneseMovement = $watch->japanese_price !== null;
+        $hasSwissMovement = $watch->swiss_price !== null;
+
+        $selectedMovement = match (true) {
+            $requestedMovement === 'Suisse' && $hasSwissMovement => 'Suisse',
+            $requestedMovement === 'Japonais' && $hasJapaneseMovement => 'Japonais',
+            $hasJapaneseMovement => 'Japonais',
+            $hasSwissMovement => 'Suisse',
+            default => 'Japonais',
+        };
 
         $relatedWatches = Watch::query()
             ->whereNotIn('slug', self::HIDDEN_PUBLIC_SLUGS)
@@ -388,16 +386,12 @@ class WatchController extends Controller
 
     private function movementExists(string $movement): bool
     {
-        $columns = $movement === 'swiss'
-            ? ['swiss_price', 'swiss_promo_price']
-            : ['japanese_price', 'japanese_promo_price'];
+        $column = $movement === 'swiss'
+            ? 'swiss_price'
+            : 'japanese_price';
 
         return Watch::query()
-            ->where(function (Builder $query) use ($columns): void {
-                $query
-                    ->whereNotNull($columns[0])
-                    ->orWhereNotNull($columns[1]);
-            })
+            ->whereNotNull($column)
             ->exists();
     }
 
@@ -417,19 +411,31 @@ class WatchController extends Controller
     private function priceExpressionForMovement(?string $movement): string
     {
         if ($movement === 'swiss') {
-            return 'COALESCE(swiss_promo_price, swiss_price, price)';
+            return <<<'SQL'
+CASE
+    WHEN swiss_price IS NULL THEN NULL
+    ELSE COALESCE(swiss_promo_price, swiss_price)
+END
+SQL;
         }
 
         if ($movement === 'japanese') {
-            return 'COALESCE(japanese_promo_price, japanese_price, price)';
+            return <<<'SQL'
+CASE
+    WHEN japanese_price IS NULL THEN NULL
+    ELSE COALESCE(japanese_promo_price, japanese_price)
+END
+SQL;
         }
 
         return <<<'SQL'
 CASE
-    WHEN COALESCE(japanese_promo_price, japanese_price) IS NULL
-        THEN COALESCE(swiss_promo_price, swiss_price, price)
-    WHEN COALESCE(swiss_promo_price, swiss_price) IS NULL
-        THEN COALESCE(japanese_promo_price, japanese_price, price)
+    WHEN japanese_price IS NULL AND swiss_price IS NULL
+        THEN price
+    WHEN japanese_price IS NULL
+        THEN COALESCE(swiss_promo_price, swiss_price)
+    WHEN swiss_price IS NULL
+        THEN COALESCE(japanese_promo_price, japanese_price)
     WHEN COALESCE(japanese_promo_price, japanese_price)
         <= COALESCE(swiss_promo_price, swiss_price)
         THEN COALESCE(japanese_promo_price, japanese_price)

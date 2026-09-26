@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\ReservationStatusHistory;
 use App\Support\ReservationWorkflow;
+use App\Support\ReservationPayment;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Response;
 
@@ -30,13 +31,21 @@ class AdminOverviewController extends Controller
         ));
 
         $confirmedRevenue = (float) (clone $baseQuery)
-            ->selectRaw(
-                'COALESCE(SUM('
-                .'CASE WHEN deposit_paid_at IS NOT NULL THEN price * 0.25 ELSE 0 END + '
-                .'CASE WHEN balance_paid_at IS NOT NULL THEN price * 0.75 ELSE 0 END'
-                .'), 0) as aggregate'
-            )
-            ->value('aggregate');
+            ->get([
+                'price',
+                'deposit_amount_snapshot',
+                'deposit_paid_at',
+                'balance_paid_at',
+            ])
+            ->sum(
+                fn (Reservation $reservation): float =>
+                    ReservationPayment::confirmedPaidAmount(
+                        $reservation->price,
+                        $reservation->deposit_paid_at !== null,
+                        $reservation->balance_paid_at !== null,
+                        $reservation->deposit_amount_snapshot
+                    )
+            );
 
         $recentReservations = (clone $baseQuery)
             ->latest()

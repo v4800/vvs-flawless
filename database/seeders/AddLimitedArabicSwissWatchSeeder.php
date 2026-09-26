@@ -40,13 +40,13 @@ class AddLimitedArabicSwissWatchSeeder extends Seeder
 
         $watch->slug = $slug;
         $watch->name = 'Octogonale argentée · Chiffres arabes dorés — Édition limitée';
-        $watch->price = 1050;
+        $watch->price = 1350;
         $watch->promo_price = null;
         $watch->japanese_price = null;
         $watch->japanese_promo_price = null;
-        $watch->swiss_price = 1050;
+        $watch->swiss_price = 1350;
         $watch->swiss_promo_price = null;
-        $watch->description = 'Édition limitée à finition argentée, cadran pavé et chiffres arabes dorés, entièrement sertie de moissanite VVS. Mouvement suisse, boîtier et bracelet en acier inoxydable. Poids total annoncé des pierres : environ 25 à 30 TCW.';
+        $watch->description = 'Modèle personnalisé à finition argentée, cadran pavé et chiffres arabes dorés, entièrement serti de moissanite VVS. Disponible exclusivement avec mouvement suisse.';
         $watch->availability = 'Édition limitée';
         $watch->stock_quantity = null;
         $watch->image = $directory.'01-front.webp';

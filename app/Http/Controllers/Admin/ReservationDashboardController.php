@@ -9,6 +9,7 @@ use App\Mail\AdminReservationContactMail;
 use App\Models\Reservation;
 use App\Models\Watch;
 use App\Support\ReservationWorkflow;
+use App\Support\ReservationPayment;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -263,23 +264,22 @@ class ReservationDashboardController extends Controller
             ? (float) $reservation->price
             : null;
 
-        $depositAmount = $price !== null
-            ? round($price * 0.25, 2)
-            : null;
+        $depositAmount = ReservationPayment::depositAmount(
+            $price,
+            $reservation->deposit_amount_snapshot
+        );
 
-        $balanceAmount = $price !== null
-            ? round($price * 0.75, 2)
-            : null;
+        $balanceAmount = ReservationPayment::balanceAmount(
+            $price,
+            $reservation->deposit_amount_snapshot
+        );
 
-        $confirmedPaidAmount = 0.0;
-
-        if ($reservation->deposit_paid_at !== null) {
-            $confirmedPaidAmount += $depositAmount ?? 0;
-        }
-
-        if ($reservation->balance_paid_at !== null) {
-            $confirmedPaidAmount += $balanceAmount ?? 0;
-        }
+        $confirmedPaidAmount = ReservationPayment::confirmedPaidAmount(
+            $price,
+            $reservation->deposit_paid_at !== null,
+            $reservation->balance_paid_at !== null,
+            $reservation->deposit_amount_snapshot
+        );
 
         return [
             'id' => $reservation->id,

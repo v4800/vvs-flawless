@@ -41,7 +41,7 @@ class RestoreWatchCatalogSeeder extends Seeder
          * catalog 4 -> DB #2
          * catalog 8 -> DB #3
          *
-         * Ici : les 17 restantes.
+         * Ici : les 14 restantes.
          */
         $models = [
             'blue-round' => [
@@ -57,30 +57,6 @@ class RestoreWatchCatalogSeeder extends Seeder
                 'copy' => 'catalog',
                 'price' => 900,
                 'japanese_price' => 900,
-                'swiss_price' => null,
-            ],
-
-            'black-stainless' => [
-                'id' => 54,
-                'copy' => 'catalog',
-                'price' => null,
-                'japanese_price' => null,
-                'swiss_price' => null,
-            ],
-
-            'red-roman' => [
-                'id' => 55,
-                'copy' => 'catalog',
-                'price' => null,
-                'japanese_price' => null,
-                'swiss_price' => null,
-            ],
-
-            'jubilee' => [
-                'id' => 56,
-                'copy' => 'catalog',
-                'price' => null,
-                'japanese_price' => null,
                 'swiss_price' => null,
             ],
 
@@ -331,14 +307,14 @@ class RestoreWatchCatalogSeeder extends Seeder
             }
         });
 
-        if (DB::table('watches')->count() !== 20) {
+        if (DB::table('watches')->count() !== 17) {
             throw new RuntimeException(
-                'La restauration doit terminer avec exactement 20 watches.'
+                'La restauration doit terminer avec exactement 17 watches.'
             );
         }
 
         $this->command->info(
-            'Restauration terminée : 20 watches.'
+            'Restauration terminée : 17 watches.'
         );
     }
 }

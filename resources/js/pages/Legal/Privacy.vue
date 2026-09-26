@@ -5,6 +5,11 @@ import { computed } from 'vue';
 const page = usePage();
 const localizedRoutes = computed(() => page.props.localizedRoutes);
 const content = computed(() => page.props.translations.legal.privacy);
+const analyticsPrivacy = computed(() => page.props.analyticsPrivacy ?? {});
+
+const openAnalyticsPreferences = () => {
+    window.dispatchEvent(new Event('vvs:analytics-consent-open'));
+};
 </script>
 
 <template>
@@ -40,6 +45,24 @@ const content = computed(() => page.props.translations.legal.privacy);
                         {{ section.title }}
                     </h2>
                     <p class="mt-3">{{ section.text }}</p>
+                </section>
+
+                <section v-if="analyticsPrivacy.title">
+                    <h2 class="text-xl font-black text-white">
+                        {{ analyticsPrivacy.title }}
+                    </h2>
+
+                    <p class="mt-3">
+                        {{ analyticsPrivacy.text }}
+                    </p>
+
+                    <button
+                        type="button"
+                        class="vvs-button-secondary mt-5 rounded-xl px-5 py-3 text-xs font-bold"
+                        @click="openAnalyticsPreferences"
+                    >
+                        {{ analyticsPrivacy.manage }}
+                    </button>
                 </section>
             </div>
         </main>

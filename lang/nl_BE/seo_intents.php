@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'editorial' => [
+        'author_label' => 'Redactie',
+        'author_name' => 'VVS FLAWLESS',
+        'updated_label' => 'Laatst bijgewerkt',
+        'updated_iso' => '2026-09-24',
+        'updated_display' => '24 september 2026',
+        'method_title' => 'Hoe we deze informatie controleren',
+        'method_text' => 'VVS FLAWLESS maakt onderscheid tussen commerciële informatie over de eigen horloges en technische informatie over edelstenen. Kenmerken, prijzen, uurwerken, termijnen en reservatievoorwaarden komen uit de productfiches en de werkelijke werking van de website. Technische uitspraken over diamant, moissanite en VVS worden waar nodig ondersteund door de vermelde technische bronnen.',
+        'transparency' => 'VVS FLAWLESS verkoopt VVS-moissanite horloges en presenteert zich niet als een onafhankelijk gemmologisch laboratorium.',
+        'about_label' => 'Over VVS FLAWLESS',
+        'contents_title' => 'In deze gids',
+        'faq_link' => 'Veelgestelde vragen',
+    ],
     'collection_seo' => [
         'title' => 'VVS-moissanite & iced-out horloges in België | VVS FLAWLESS',
         'description' => 'Ontdek VVS FLAWLESS-horloges met kleur D VVS-moissanite: iced-out en bezette modellen voor heren, dames of een uniseks stijl, op reservatie verkrijgbaar in België.',
@@ -150,9 +163,9 @@ return [
 
     'belgium' => [
         'seo_title' => 'VVS-moissanite & iced-out horloge in België | VVS FLAWLESS',
-        'seo_description' => 'Reserveer een kleur D VVS-moissanite horloge met zichtbare prijs en persoonlijke overhandiging op afspraak overal in België.',
+        'seo_description' => 'VVS-moissanite horloges in België met zichtbare prijzen en persoonlijke overhandiging op afspraak in Brussel, Antwerpen, Gent, Charleroi, Luik en elders.',
         'eyebrow' => 'VVS FLAWLESS België',
-        'title' => 'Een VVS-horloge reserveren in België',
+        'title' => 'VVS-moissanite horloges in België',
         'intro' => 'VVS FLAWLESS biedt horloges bezet met kleur D VVS-moissanite, van klassieke bezette modellen tot uitgesproken iced-out ontwerpen. De vanafprijzen staan in de collectie vóór je een aanvraag verstuurt.',
         'answer' => 'Je kiest je horloge op de website en verstuurt een aanvraag zonder onmiddellijke betaling. VVS FLAWLESS bevestigt het model, de prijs, de termijn, het adres, het uur en eventuele verplaatsingskosten vóór het voorschot. Persoonlijke overhandiging wordt overal in België op afspraak geregeld, onder meer in Luik, Verviers, Namen, Brussel, Charleroi, Antwerpen en Gent.',
         'sections' => [
@@ -182,6 +195,13 @@ return [
                 'paragraphs' => [
                     'De collectie bevat verfijnde, sportieve en meer uitgesproken silhouetten. Een model kan dus bij heren, dames of een volledig uniseks stijl passen, afhankelijk van de proporties.',
                     'De productpagina’s laten je modellen vergelijken zonder hetzelfde horloge kunstmatig per gender te dupliceren.',
+                ],
+            ],
+            [
+                'title' => 'Persoonlijke overhandiging in de grote Belgische steden',
+                'paragraphs' => [
+                    'VVS FLAWLESS regelt persoonlijke overhandiging op afspraak in Brussel, Antwerpen, Gent, Charleroi en Luik, maar ook in Namen, Verviers en andere Belgische steden.',
+                    'Heel België blijft het servicegebied. De exacte plaats, het uur en eventuele verplaatsingskosten worden vóór het voorschot bevestigd; de genoemde steden zijn belangrijke zones en geen beperking.',
                 ],
             ],
         ],

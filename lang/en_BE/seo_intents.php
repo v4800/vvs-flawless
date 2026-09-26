@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'editorial' => [
+        'author_label' => 'Editorial',
+        'author_name' => 'VVS FLAWLESS',
+        'updated_label' => 'Last updated',
+        'updated_iso' => '2026-09-24',
+        'updated_display' => '24 September 2026',
+        'method_title' => 'How we verify this information',
+        'method_text' => 'VVS FLAWLESS separates commercial information about its own watches from technical information about gemstones. Product specifications, prices, movements, lead times and reservation terms come from the product pages and the actual operation of the website. Technical claims about diamond, moissanite and VVS are supported by the cited technical sources where appropriate.',
+        'transparency' => 'VVS FLAWLESS sells VVS moissanite watches and does not present itself as an independent gemological laboratory.',
+        'about_label' => 'About VVS FLAWLESS',
+        'contents_title' => 'In this guide',
+        'faq_link' => 'Frequently asked questions',
+    ],
     'collection_seo' => [
         'title' => 'VVS Moissanite & Iced-Out Watches in Belgium | VVS FLAWLESS',
         'description' => 'Discover VVS FLAWLESS watches set with colour D VVS moissanite: iced-out and fully set styles for men, women or unisex wear, available by reservation in Belgium.',
@@ -150,9 +163,9 @@ return [
 
     'belgium' => [
         'seo_title' => 'VVS Moissanite & Iced-Out Watches in Belgium | VVS FLAWLESS',
-        'seo_description' => 'Reserve a colour D VVS moissanite watch with visible pricing and hand delivery by appointment anywhere in Belgium.',
+        'seo_description' => 'VVS moissanite watches in Belgium with visible pricing and hand delivery by appointment in Brussels, Antwerp, Ghent, Charleroi, Liège and beyond.',
         'eyebrow' => 'VVS FLAWLESS Belgium',
-        'title' => 'Reserve a VVS watch in Belgium',
+        'title' => 'VVS moissanite watches in Belgium',
         'intro' => 'VVS FLAWLESS offers watches set with colour D VVS moissanite, from classic fully set pieces to bolder iced-out designs. Starting prices are visible in the collection before you send a request.',
         'answer' => 'Choose your watch on the website and submit a request with no immediate payment. VVS FLAWLESS confirms the model, price, lead time, address, time and any travel fee before the deposit. Hand delivery is arranged by appointment anywhere in Belgium, including Liège, Verviers, Namur, Brussels, Charleroi, Antwerp and Ghent.',
         'sections' => [
@@ -182,6 +195,13 @@ return [
                 'paragraphs' => [
                     'The collection includes refined, sporty and more statement-focused silhouettes. A model can therefore suit men, women or fully unisex wear depending on its proportions.',
                     'Product pages let you compare the actual watches without artificially duplicating every model by gender.',
+                ],
+            ],
+            [
+                'title' => 'Hand delivery in Belgium’s major cities',
+                'paragraphs' => [
+                    'VVS FLAWLESS arranges hand delivery by appointment in Brussels, Antwerp, Ghent, Charleroi and Liège, as well as Namur, Verviers and other Belgian cities.',
+                    'Belgium remains the full service area. The exact location, time and any travel fee are confirmed before the deposit; the listed cities are priority areas rather than delivery limits.',
                 ],
             ],
         ],

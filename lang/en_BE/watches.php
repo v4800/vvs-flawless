@@ -88,9 +88,9 @@ return [
             'description' => '41 mm watch with classic styling, Roman-numeral dial and colour D VVS moissanite setting.',
         ],
         'cadran-bleu-roi' => [
-            'name' => '41 mm · Royal-blue dial, silver-tone bracelet',
-            'short_description' => 'Royal-blue dial and silver-tone bracelet.',
-            'description' => '41 mm watch with a royal-blue dial, silver-tone bracelet and colour D VVS moissanite setting.',
+            'name' => '41 mm · Red dial, silver-tone bracelet',
+            'short_description' => 'Red dial and silver-tone bracelet.',
+            'description' => '41 mm watch with a red dial, silver-tone bracelet and colour D VVS moissanite setting.',
         ],
     ],
     42 => [

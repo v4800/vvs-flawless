@@ -88,9 +88,9 @@ return [
             'description' => '41-mm-Uhr im klassischen Stil mit römischen Ziffern und VVS-Moissanit in Farbe D.',
         ],
         'cadran-bleu-roi' => [
-            'name' => '41 mm · Königsblaues Zifferblatt, silberfarbenes Armband',
-            'short_description' => 'Königsblaues Zifferblatt und silberfarbenes Armband.',
-            'description' => '41-mm-Uhr mit königsblauem Zifferblatt, silberfarbenem Armband und VVS-Moissanit in Farbe D.',
+            'name' => '41 mm · Rotes Zifferblatt, silberfarbenes Armband',
+            'short_description' => 'Rotes Zifferblatt und silberfarbenes Armband.',
+            'description' => '41-mm-Uhr mit rotem Zifferblatt, silberfarbenem Armband und VVS-Moissanit in Farbe D.',
         ],
     ],
     42 => [

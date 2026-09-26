@@ -89,6 +89,15 @@ const copy = computed(() => {
     );
 });
 
+const normalizePaginationUrl = (url) => {
+    if (!url) {
+        return null;
+    }
+
+    const parsedUrl = new URL(url, 'https://vvs-flawless.invalid');
+
+    return `${parsedUrl.pathname}${parsedUrl.search}#collection`;
+};
 const scrollToCollection = () => {
     requestAnimationFrame(() => {
         document.getElementById('collection')?.scrollIntoView({
@@ -113,7 +122,7 @@ const scrollToCollection = () => {
         ></div>
         <Link
             v-if="pagination.previousUrl"
-            :href="pagination.previousUrl"
+            :href="normalizePaginationUrl(pagination.previousUrl)"
             preserve-scroll
             @start="startLoading"
             @success="scrollToCollection"
@@ -149,7 +158,7 @@ const scrollToCollection = () => {
 
         <Link
             v-if="pagination.nextUrl"
-            :href="pagination.nextUrl"
+            :href="normalizePaginationUrl(pagination.nextUrl)"
             preserve-scroll
             @start="startLoading"
             @success="scrollToCollection"

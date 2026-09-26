@@ -241,16 +241,41 @@ final class WatchSeo
                 'name' => trans('site.product.color'),
                 'value' => 'D',
             ],
-            [
-                '@type' => 'PropertyValue',
-                'name' => trans('site.product.movement'),
-                'value' => trans('site.movements.japonais')
-                    .' / '
-                    .trans('site.movements.suisse'),
-            ],
+
         ];
 
-        if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
+        $japaneseMovementPrice =
+            $watch->japanese_promo_price
+            ?? $watch->japanese_price;
+
+        $swissMovementPrice =
+            $watch->swiss_promo_price
+            ?? $watch->swiss_price;
+
+        $movements = [];
+
+        if (
+            is_numeric($japaneseMovementPrice)
+            && (float) $japaneseMovementPrice > 0
+        ) {
+            $movements[] = trans('site.movements.japonais');
+        }
+
+        if (
+            is_numeric($swissMovementPrice)
+            && (float) $swissMovementPrice > 0
+        ) {
+            $movements[] = trans('site.movements.suisse');
+        }
+
+        if ($movements !== []) {
+            $properties[] = [
+                '@type' => 'PropertyValue',
+                'name' => trans('site.product.movement'),
+                'value' => implode(' / ', $movements),
+            ];
+        }
+                if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
             $sizeLabel = match (app()->getLocale()) {
                 'nl_BE' => 'Diameter',
                 'en_BE' => 'Case diameter',
@@ -291,10 +316,12 @@ final class WatchSeo
         $availability = $this->structuredDataAvailability($watch);
 
         $movements = [
-            'Japonais' => $watch->japanese_promo_price
-                ?? $watch->japanese_price,
-            'Suisse' => $watch->swiss_promo_price
-                ?? $watch->swiss_price,
+            'Japonais' => $watch->japanese_price !== null
+                ? ($watch->japanese_promo_price ?? $watch->japanese_price)
+                : null,
+            'Suisse' => $watch->swiss_price !== null
+                ? ($watch->swiss_promo_price ?? $watch->swiss_price)
+                : null,
         ];
 
         foreach ($movements as $movement => $price) {

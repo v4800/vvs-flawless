@@ -88,9 +88,9 @@ return [
             'description' => '41 mm horloge in klassieke stijl, met Romeinse cijfers en VVS-moissaniet in kleur D.',
         ],
         'cadran-bleu-roi' => [
-            'name' => '41 mm · Koningsblauwe wijzerplaat, zilverkleurige band',
-            'short_description' => 'Koningsblauwe wijzerplaat en zilverkleurige band.',
-            'description' => '41 mm horloge met koningsblauwe wijzerplaat, zilverkleurige band en VVS-moissaniet in kleur D.',
+            'name' => '41 mm · Rode wijzerplaat, zilverkleurige band',
+            'short_description' => 'Rode wijzerplaat en zilverkleurige band.',
+            'description' => '41 mm horloge met rode wijzerplaat, zilverkleurige band en VVS-moissaniet in kleur D.',
         ],
     ],
     42 => [

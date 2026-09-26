@@ -36,6 +36,9 @@ class Watch extends Model
         'image',
     ];
 
+    protected $appends = [
+        'delivery_estimate',
+    ];
     protected static function booted(): void
     {
         static::creating(function (Watch $watch): void {
@@ -61,6 +64,18 @@ class Watch extends Model
         });
     }
 
+    public function getDeliveryEstimateAttribute(): string
+    {
+        $customOrderSlugs = [
+            'octogonale-arabe-edition-limitee',
+            '41-mm-geometrique-cadran-champagne',
+            '41-mm-cadran-bleu-roi-bracelet-argente',
+        ];
+
+        return in_array($this->slug, $customOrderSlugs, true)
+            ? (string) __('delivery.custom')
+            : (string) __('delivery.standard');
+    }
     public function getRouteKeyName(): string
     {
         return 'slug';

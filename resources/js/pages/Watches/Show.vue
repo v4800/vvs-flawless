@@ -271,7 +271,7 @@ const submit = () => {
                 :movement="localizedMovement"
                 :selected-price="selectedPrice"
             />
-            <PurchaseGuide />
+            <PurchaseGuide :watch="watch" />
 
             <ProductReservationSection
                 :watch="watch"
