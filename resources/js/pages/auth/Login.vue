@@ -45,9 +45,9 @@ const copy = computed(() => page.props.translations.auth);
     </div>
 
     <PasskeyVerify
-         :label="copy.passkey"
-         :loading-label="copy.passkey_loading"
-         :separator="copy.separator"
+        :label="copy.passkey"
+        :loading-label="copy.passkey_loading"
+        :separator="copy.separator"
     />
 
     <Form
@@ -105,7 +105,7 @@ const copy = computed(() => page.props.translations.auth);
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                     :placeholder="copy.password_placeholder"
+                    :placeholder="copy.password_placeholder"
                     class="min-h-12 rounded-xl border-white/[0.12] bg-white/[0.035] px-4 pr-11 text-[0.94rem] text-[#fbf7ee] shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] placeholder:text-white/32 focus-visible:border-[#c8ad78]/70 focus-visible:ring-[#c8ad78]/25"
                 />
 
@@ -139,3 +139,39 @@ const copy = computed(() => page.props.translations.auth);
         </div>
     </Form>
 </template>
+
+<style scoped>
+.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']) {
+    min-height: 3rem;
+    border-color: rgb(200 173 120 / 0.38);
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 0.025);
+    color: #efe5d1;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+}
+
+.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']:hover) {
+    border-color: rgb(216 189 136 / 0.75);
+    background: rgb(200 173 120 / 0.075);
+    color: #fff8ea;
+}
+
+.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']:focus-visible) {
+    outline: 2px solid #d8bd88;
+    outline-offset: 3px;
+}
+
+.vvs-auth-passkey :deep(.relative.my-6 span) {
+    background: #0b0b0a;
+    color: rgb(255 255 255 / 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']) {
+        transition: none;
+    }
+}
+</style>
