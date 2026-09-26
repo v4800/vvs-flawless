@@ -60,7 +60,7 @@ const copy = computed(() => page.props.translations.auth);
             <div class="grid gap-2.5">
                 <Label
                     for="email"
-                    class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#c9c2b7]"
+                    class="text-[0.7rem] font-semibold tracking-[0.12em] text-[#c9c2b7] uppercase"
                 >
                     {{ copy.email }}
                 </Label>
@@ -84,7 +84,7 @@ const copy = computed(() => page.props.translations.auth);
                 <div class="flex items-center justify-between gap-3">
                     <Label
                         for="password"
-                        class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#c9c2b7]"
+                        class="text-[0.7rem] font-semibold tracking-[0.12em] text-[#c9c2b7] uppercase"
                     >
                         {{ copy.password }}
                     </Label>
@@ -159,7 +159,8 @@ const copy = computed(() => page.props.translations.auth);
     color: #fff8ea;
 }
 
-.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']:focus-visible) {
+.vvs-auth-passkey
+    :deep([data-slot='button'][data-variant='outline']:focus-visible) {
     outline: 2px solid #d8bd88;
     outline-offset: 3px;
 }
