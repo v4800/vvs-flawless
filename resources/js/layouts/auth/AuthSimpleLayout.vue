@@ -11,7 +11,9 @@ const props = defineProps<{
 const page = usePage();
 const copy = computed(() => page.props.translations.auth);
 const displayTitle = computed(() =>
-    props.title === 'Connexion administrateur' ? copy.value.login_title : props.title,
+    props.title === 'Connexion administrateur'
+        ? copy.value.login_title
+        : props.title,
 );
 const displayDescription = computed(() =>
     props.description === 'Accès réservé à VVS FLAWLESS'
@@ -30,7 +32,7 @@ const displayDescription = computed(() =>
         />
         <div
             aria-hidden="true"
-            class="pointer-events-none absolute inset-0 -z-10 opacity-[0.16] [background-image:linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] [background-size:56px_56px] [mask-image:linear-gradient(to_bottom,black,transparent_82%)]"
+            class="pointer-events-none absolute inset-0 -z-10 [background-image:linear-gradient(rgba(255,255,255,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.018)_1px,transparent_1px)] [mask-image:linear-gradient(to_bottom,black,transparent_82%)] [background-size:56px_56px] opacity-[0.16]"
         />
 
         <header
@@ -49,7 +51,9 @@ const displayDescription = computed(() =>
                     height="1024"
                     fetchpriority="high"
                 />
-                <span class="hidden border-l border-white/10 pl-3 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-white/45 sm:block">
+                <span
+                    class="hidden border-l border-white/10 pl-3 text-[0.62rem] font-semibold tracking-[0.24em] text-white/45 uppercase sm:block"
+                >
                     {{ copy.private_space }}
                 </span>
             </Link>
@@ -77,25 +81,35 @@ const displayDescription = computed(() =>
         </header>
 
         <main
-            class="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-5 pb-10 pt-5 sm:px-8 sm:pb-14 lg:grid-cols-[1fr_0.88fr] lg:gap-20 lg:px-12 lg:py-12"
+            class="relative z-10 mx-auto grid w-full max-w-7xl flex-1 items-center gap-10 px-5 pt-5 pb-10 sm:px-8 sm:pb-14 lg:grid-cols-[1fr_0.88fr] lg:gap-20 lg:px-12 lg:py-12"
         >
             <section class="mx-auto w-full max-w-xl lg:mx-0 lg:py-10">
-                <p class="flex items-center gap-3 text-[0.65rem] font-semibold uppercase tracking-[0.27em] text-[#d8bd88] sm:text-xs">
+                <p
+                    class="flex items-center gap-3 text-[0.65rem] font-semibold tracking-[0.27em] text-[#d8bd88] uppercase sm:text-xs"
+                >
                     <span class="h-px w-8 bg-[#c8ad78]/80" />
                     {{ copy.brand_eyebrow }}
                 </p>
 
-                <h2 class="mt-6 max-w-lg font-display text-4xl leading-[1.04] tracking-[-0.025em] text-[#f6f0e4] sm:text-5xl lg:text-6xl">
+                <h2
+                    class="font-display mt-6 max-w-lg text-4xl leading-[1.04] tracking-[-0.025em] text-[#f6f0e4] sm:text-5xl lg:text-6xl"
+                >
                     {{ copy.headline }}
                 </h2>
 
-                <div class="mt-7 h-px w-24 bg-gradient-to-r from-[#d7bc88]/80 to-transparent" />
+                <div
+                    class="mt-7 h-px w-24 bg-gradient-to-r from-[#d7bc88]/80 to-transparent"
+                />
 
-                <p class="mt-6 max-w-md text-sm leading-7 text-white/58 sm:text-base sm:leading-8">
+                <p
+                    class="mt-6 max-w-md text-sm leading-7 text-white/58 sm:text-base sm:leading-8"
+                >
                     {{ copy.intro }}
                 </p>
 
-                <div class="mt-10 hidden items-center gap-4 border-t border-white/10 pt-5 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-white/38 sm:flex">
+                <div
+                    class="mt-10 hidden items-center gap-4 border-t border-white/10 pt-5 text-[0.65rem] font-medium tracking-[0.18em] text-white/38 uppercase sm:flex"
+                >
                     <svg
                         aria-hidden="true"
                         viewBox="0 0 24 24"
@@ -117,18 +131,45 @@ const displayDescription = computed(() =>
                 </div>
             </section>
 
-            <section class="mx-auto w-full max-w-lg lg:mx-0 lg:justify-self-end">
-                <div class="rounded-[1.65rem] border border-[#c8ad78]/25 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.012)_38%,rgba(196,161,100,0.035))] p-px shadow-[0_28px_90px_rgba(0,0,0,0.48)]">
-                    <div class="rounded-[calc(1.65rem-1px)] border border-white/[0.045] bg-[#0b0b0a]/95 px-5 py-7 backdrop-blur-xl sm:px-8 sm:py-9 lg:px-10 lg:py-10">
-                        <div class="mb-7 flex items-center gap-3 border-b border-white/[0.08] pb-5">
-                            <span class="flex size-9 items-center justify-center rounded-full border border-[#c8ad78]/30 bg-[#c8ad78]/[0.08] text-[#e3cca0]">
-                                <svg aria-hidden="true" viewBox="0 0 20 20" fill="none" class="size-4">
-                                    <path d="M6.5 8V6a3.5 3.5 0 1 1 7 0v2m-8.2 0h9.4c.7 0 1.3.6 1.3 1.3v6.4c0 .7-.6 1.3-1.3 1.3H5.3c-.7 0-1.3-.6-1.3-1.3V9.3C4 8.6 4.6 8 5.3 8Z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
-                                    <path d="M10 11v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
+            <section
+                class="mx-auto w-full max-w-lg lg:mx-0 lg:justify-self-end"
+            >
+                <div
+                    class="rounded-[1.65rem] border border-[#c8ad78]/25 bg-[linear-gradient(145deg,rgba(255,255,255,0.055),rgba(255,255,255,0.012)_38%,rgba(196,161,100,0.035))] p-px shadow-[0_28px_90px_rgba(0,0,0,0.48)]"
+                >
+                    <div
+                        class="rounded-[calc(1.65rem-1px)] border border-white/[0.045] bg-[#0b0b0a]/95 px-5 py-7 backdrop-blur-xl sm:px-8 sm:py-9 lg:px-10 lg:py-10"
+                    >
+                        <div
+                            class="mb-7 flex items-center gap-3 border-b border-white/[0.08] pb-5"
+                        >
+                            <span
+                                class="flex size-9 items-center justify-center rounded-full border border-[#c8ad78]/30 bg-[#c8ad78]/[0.08] text-[#e3cca0]"
+                            >
+                                <svg
+                                    aria-hidden="true"
+                                    viewBox="0 0 20 20"
+                                    fill="none"
+                                    class="size-4"
+                                >
+                                    <path
+                                        d="M6.5 8V6a3.5 3.5 0 1 1 7 0v2m-8.2 0h9.4c.7 0 1.3.6 1.3 1.3v6.4c0 .7-.6 1.3-1.3 1.3H5.3c-.7 0-1.3-.6-1.3-1.3V9.3C4 8.6 4.6 8 5.3 8Z"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
+                                    <path
+                                        d="M10 11v2"
+                                        stroke="currentColor"
+                                        stroke-width="1.2"
+                                        stroke-linecap="round"
+                                    />
                                 </svg>
                             </span>
                             <div>
-                                <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#d8bd88]">
+                                <p
+                                    class="text-[0.62rem] font-semibold tracking-[0.2em] text-[#d8bd88] uppercase"
+                                >
                                     {{ copy.admin }}
                                 </p>
                                 <p class="mt-1 text-xs text-white/40">
@@ -138,7 +179,9 @@ const displayDescription = computed(() =>
                         </div>
 
                         <div class="space-y-2">
-                            <h1 class="font-display text-3xl leading-tight tracking-[-0.015em] text-[#fbf7ee] sm:text-[2.15rem]">
+                            <h1
+                                class="font-display text-3xl leading-tight tracking-[-0.015em] text-[#fbf7ee] sm:text-[2.15rem]"
+                            >
                                 {{ displayTitle }}
                             </h1>
                             <p class="text-sm leading-6 text-white/52">
@@ -152,13 +195,17 @@ const displayDescription = computed(() =>
                     </div>
                 </div>
 
-                <p class="mt-5 px-2 text-center text-[0.68rem] leading-5 text-white/35">
+                <p
+                    class="mt-5 px-2 text-center text-[0.68rem] leading-5 text-white/35"
+                >
                     {{ copy.restricted }}
                 </p>
             </section>
         </main>
 
-        <footer class="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 border-t border-white/[0.07] px-5 py-4 text-[0.62rem] font-medium uppercase tracking-[0.16em] text-white/32 sm:px-8 lg:px-12">
+        <footer
+            class="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 border-t border-white/[0.07] px-5 py-4 text-[0.62rem] font-medium tracking-[0.16em] text-white/32 uppercase sm:px-8 lg:px-12"
+        >
             <span>VVS FLAWLESS</span>
         </footer>
     </div>
