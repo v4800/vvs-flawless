@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -27,10 +28,13 @@ defineProps<{
     status?: string;
     canResetPassword: boolean;
 }>();
+
+const page = usePage();
+const copy = computed(() => page.props.translations.auth);
 </script>
 
 <template>
-    <Head title="Connexion administrateur" />
+    <Head :title="copy.login_title" />
 
     <div
         v-if="status"
@@ -41,9 +45,9 @@ defineProps<{
     </div>
 
     <PasskeyVerify
-        label="Se connecter avec une clé d’accès"
-        loading-label="Vérification en cours…"
-        separator="ou continuer avec votre adresse e-mail"
+         :label="copy.passkey"
+         :loading-label="copy.passkey_loading"
+         :separator="copy.separator"
     />
 
     <Form
@@ -58,7 +62,7 @@ defineProps<{
                     for="email"
                     class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#c9c2b7]"
                 >
-                    Adresse e-mail
+                    {{ copy.email }}
                 </Label>
 
                 <Input
@@ -82,7 +86,7 @@ defineProps<{
                         for="password"
                         class="text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#c9c2b7]"
                     >
-                        Mot de passe
+                        {{ copy.password }}
                     </Label>
 
                     <TextLink
@@ -91,7 +95,7 @@ defineProps<{
                         class="text-xs text-[#d9c397] decoration-[#d9c397]/35 underline-offset-4 hover:text-[#f2e4c9] hover:decoration-[#f2e4c9]/60"
                         :tabindex="5"
                     >
-                        Mot de passe oublié ?
+                        {{ copy.forgot_password }}
                     </TextLink>
                 </div>
 
@@ -101,7 +105,7 @@ defineProps<{
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                    placeholder="Votre mot de passe"
+                     :placeholder="copy.password_placeholder"
                     class="min-h-12 rounded-xl border-white/[0.12] bg-white/[0.035] px-4 pr-11 text-[0.94rem] text-[#fbf7ee] shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] placeholder:text-white/32 focus-visible:border-[#c8ad78]/70 focus-visible:ring-[#c8ad78]/25"
                 />
 
@@ -119,7 +123,7 @@ defineProps<{
                     class="size-4 rounded border-white/25 data-[state=checked]:border-[#d6bf91] data-[state=checked]:bg-[#d6bf91] data-[state=checked]:text-[#17140f]"
                 />
 
-                <span>Se souvenir de moi</span>
+                <span>{{ copy.remember }}</span>
             </Label>
 
             <Button
@@ -130,7 +134,7 @@ defineProps<{
                 data-test="login-button"
             >
                 <Spinner v-if="processing" />
-                <span>Se connecter</span>
+                <span>{{ copy.submit }}</span>
             </Button>
         </div>
     </Form>
