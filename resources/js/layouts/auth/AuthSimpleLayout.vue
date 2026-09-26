@@ -50,7 +50,7 @@ const displayDescription = computed(() =>
                     fetchpriority="high"
                 />
                 <span class="hidden border-l border-white/10 pl-3 text-[0.62rem] font-semibold uppercase tracking-[0.24em] text-white/45 sm:block">
-                    Espace privé
+                    {{ copy.private_space }}
                 </span>
             </Link>
 
@@ -82,7 +82,7 @@ const displayDescription = computed(() =>
             <section class="mx-auto w-full max-w-xl lg:mx-0 lg:py-10">
                 <p class="flex items-center gap-3 text-[0.65rem] font-semibold uppercase tracking-[0.27em] text-[#d8bd88] sm:text-xs">
                     <span class="h-px w-8 bg-[#c8ad78]/80" />
-                    VVS FLAWLESS
+                    {{ copy.brand_eyebrow }}
                 </p>
 
                 <h2 class="mt-6 max-w-lg font-display text-4xl leading-[1.04] tracking-[-0.025em] text-[#f6f0e4] sm:text-5xl lg:text-6xl">
@@ -92,8 +92,7 @@ const displayDescription = computed(() =>
                 <div class="mt-7 h-px w-24 bg-gradient-to-r from-[#d7bc88]/80 to-transparent" />
 
                 <p class="mt-6 max-w-md text-sm leading-7 text-white/58 sm:text-base sm:leading-8">
-                    Un espace réservé à la gestion de la maison VVS FLAWLESS.
-                    Connectez-vous pour poursuivre.
+                    {{ copy.intro }}
                 </p>
 
                 <div class="mt-10 hidden items-center gap-4 border-t border-white/10 pt-5 text-[0.65rem] font-medium uppercase tracking-[0.18em] text-white/38 sm:flex">
@@ -161,7 +160,6 @@ const displayDescription = computed(() =>
 
         <footer class="relative z-10 mx-auto flex w-full max-w-7xl items-center justify-between gap-4 border-t border-white/[0.07] px-5 py-4 text-[0.62rem] font-medium uppercase tracking-[0.16em] text-white/32 sm:px-8 lg:px-12">
             <span>VVS FLAWLESS</span>
-            <span>Liège · Belgique</span>
         </footer>
     </div>
 </template>
