@@ -1,6 +1,29 @@
 <?php
 
 return [
+    'auth' => [
+        'private_space' => 'Espace privé',
+        'return_store' => 'Retour à la boutique',
+        'brand_eyebrow' => 'Maison VVS FLAWLESS',
+        'headline' => 'L’élégance se joue aussi dans les détails.',
+        'intro' => 'Un espace réservé à la gestion de la maison VVS FLAWLESS. Connectez-vous pour poursuivre.',
+        'location' => 'Maison indépendante · Liège, Belgique',
+        'admin' => 'Accès administrateur',
+        'region' => 'VVS FLAWLESS · Belgique',
+        'restricted' => 'Les accès à cet espace sont réservés à l’équipe VVS FLAWLESS.',
+        'login_title' => 'Connexion administrateur',
+        'login_description' => 'Accès réservé à VVS FLAWLESS',
+        'email' => 'Adresse e-mail',
+        'password' => 'Mot de passe',
+        'password_placeholder' => 'Votre mot de passe',
+        'forgot_password' => 'Mot de passe oublié ?',
+        'remember' => 'Se souvenir de moi',
+        'submit' => 'Se connecter',
+        'passkey' => 'Se connecter avec une clé d’accès',
+        'passkey_loading' => 'Vérification en cours…',
+        'separator' => 'ou continuer avec votre adresse e-mail',
+        'home_aria' => 'VVS FLAWLESS — accueil',
+    ],
     'navigation' => [
         'main_label' => 'Navigation principale',
         'watches' => 'Montres',
