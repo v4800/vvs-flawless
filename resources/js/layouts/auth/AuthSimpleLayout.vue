@@ -39,7 +39,7 @@ const displayDescription = computed(() =>
             <Link
                 :href="home()"
                 class="group flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e5d2a9]"
-                 :aria-label="copy.home_aria"
+                :aria-label="copy.home_aria"
             >
                 <img
                     src="/images/branding/vvs-flawless-logo.svg"
