@@ -1,11 +1,23 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import { home } from '@/routes';
 
-defineProps<{
+const props = defineProps<{
     title?: string;
     description?: string;
 }>();
+
+const page = usePage();
+const copy = computed(() => page.props.translations.auth);
+const displayTitle = computed(() =>
+    props.title === 'Connexion administrateur' ? copy.value.login_title : props.title,
+);
+const displayDescription = computed(() =>
+    props.description === 'Accès réservé à VVS FLAWLESS'
+        ? copy.value.login_description
+        : props.description,
+);
 </script>
 
 <template>
@@ -27,7 +39,7 @@ defineProps<{
             <Link
                 :href="home()"
                 class="group flex min-w-0 items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e5d2a9]"
-                aria-label="VVS FLAWLESS — accueil"
+                 :aria-label="copy.home_aria"
             >
                 <img
                     src="/images/branding/vvs-flawless-logo.svg"
@@ -44,9 +56,9 @@ defineProps<{
 
             <Link
                 :href="home()"
-                class="inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-3.5 text-xs font-medium text-white/65 transition-colors duration-200 hover:border-[#c8ad78]/45 hover:text-[#f2dfb8] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#e5d2a9] motion-reduce:transition-none sm:px-4 sm:text-sm"
+                class="group inline-flex min-h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.025] px-3.5 text-xs font-medium text-white/65 transition-colors duration-200 hover:border-[#c8ad78]/45 hover:text-[#f2dfb8] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#e5d2a9] motion-reduce:transition-none sm:px-4 sm:text-sm"
             >
-                <span>Retour à la boutique</span>
+                <span>{{ copy.return_store }}</span>
                 <svg
                     aria-hidden="true"
                     viewBox="0 0 20 20"
@@ -74,7 +86,7 @@ defineProps<{
                 </p>
 
                 <h2 class="mt-6 max-w-lg font-display text-4xl leading-[1.04] tracking-[-0.025em] text-[#f6f0e4] sm:text-5xl lg:text-6xl">
-                    L’élégance se joue aussi dans les détails.
+                    {{ copy.headline }}
                 </h2>
 
                 <div class="mt-7 h-px w-24 bg-gradient-to-r from-[#d7bc88]/80 to-transparent" />
@@ -102,7 +114,7 @@ defineProps<{
                             fill="currentColor"
                         />
                     </svg>
-                    <span>Maison indépendante · Liège, Belgique</span>
+                    <span>{{ copy.location }}</span>
                 </div>
             </section>
 
@@ -118,20 +130,20 @@ defineProps<{
                             </span>
                             <div>
                                 <p class="text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#d8bd88]">
-                                    Accès administrateur
+                                    {{ copy.admin }}
                                 </p>
                                 <p class="mt-1 text-xs text-white/40">
-                                    VVS FLAWLESS · Belgique
+                                    {{ copy.region }}
                                 </p>
                             </div>
                         </div>
 
                         <div class="space-y-2">
                             <h1 class="font-display text-3xl leading-tight tracking-[-0.015em] text-[#fbf7ee] sm:text-[2.15rem]">
-                                {{ title }}
+                                {{ displayTitle }}
                             </h1>
                             <p class="text-sm leading-6 text-white/52">
-                                {{ description }}
+                                {{ displayDescription }}
                             </p>
                         </div>
 
@@ -142,7 +154,7 @@ defineProps<{
                 </div>
 
                 <p class="mt-5 px-2 text-center text-[0.68rem] leading-5 text-white/35">
-                    Les accès à cet espace sont réservés à l’équipe VVS FLAWLESS.
+                    {{ copy.restricted }}
                 </p>
             </section>
         </main>
