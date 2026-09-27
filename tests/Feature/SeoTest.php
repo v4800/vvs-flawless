@@ -370,9 +370,27 @@ class SeoTest extends TestCase
         $this->assertStringContainsString('Anvers', $belgiumAnswer);
 
         $pricingSection = $frenchIntents['belgium']['sections'][1]['paragraphs'][1];
-        $this->assertStringContainsString('25 %', $pricingSection);
-        $this->assertStringContainsString('75 %', $pricingSection);
+        $this->assertStringContainsString('acompte fixe de 100 €', $pricingSection);
+        $this->assertStringContainsString('solde restant', $pricingSection);
         $this->assertStringContainsString('pendant le rendez-vous', $pricingSection);
+    }
+
+    public function test_reservation_copy_uses_the_fixed_deposit_in_all_locales(): void
+    {
+        $expectedDepositCopy = [
+            'fr_BE' => 'acompte fixe de 100 €',
+            'nl_BE' => 'vast voorschot van € 100',
+            'en_BE' => 'fixed €100 deposit',
+            'de_BE' => 'feste Anzahlung von 100 €',
+        ];
+
+        foreach ($expectedDepositCopy as $locale => $expectedCopy) {
+            $intents = trans('seo_intents', [], $locale);
+            $pricingSection = $intents['belgium']['sections'][1]['paragraphs'][1];
+
+            $this->assertStringContainsString($expectedCopy, $pricingSection);
+            $this->assertDoesNotMatchRegularExpression('/(?:25|75)\\s*%/u', $pricingSection);
+        }
     }
 
     public function test_about_schema_describes_brand_and_service_area(): void
