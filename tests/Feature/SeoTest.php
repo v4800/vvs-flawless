@@ -386,6 +386,7 @@ class SeoTest extends TestCase
                     ->where('seo.structuredData.areaServed.0.name', 'Belgium')
                     ->where('seo.structuredData.areaServed.1.name', 'Wallonia')
                     ->where('seo.structuredData.areaServed.2.name', 'Flanders')
+                    ->where('seo.structuredData.areaServed.7.name', 'Liège')
                     ->etc()
             );
     }
