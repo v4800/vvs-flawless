@@ -180,7 +180,7 @@ return [
                 'title' => 'Pricing and reservation',
                 'paragraphs' => [
                     'The collection displays a starting price for each model. Submitting the reservation form does not trigger a payment; it records your interest and contact details.',
-                    'Once the appointment and conditions are confirmed, a 25% deposit starts the order. A video of the finished watch is then sent; the remaining 75% is paid during the appointment, after the watch has been inspected.',
+                    'Once the appointment and conditions are confirmed, a fixed €100 deposit starts the order. A video of the finished watch is then sent; the remaining balance is paid during the appointment, after the watch has been inspected.',
                 ],
             ],
             [
