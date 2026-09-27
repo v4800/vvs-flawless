@@ -1,6 +1,5 @@
 <?php
 
-use App\Support\ReservationPayment;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +33,7 @@ return new class extends Migration
                             ->update([
                                 'deposit_amount_snapshot' => round(
                                     min(
-                                        ReservationPayment::STANDARD_DEPOSIT_AMOUNT,
+                                        \App\Support\ReservationPayment::STANDARD_DEPOSIT_AMOUNT,
                                         $price
                                     ),
                                     2

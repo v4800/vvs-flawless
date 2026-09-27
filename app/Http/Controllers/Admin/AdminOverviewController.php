@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
 use App\Models\ReservationStatusHistory;
-use App\Support\ReservationPayment;
 use App\Support\ReservationWorkflow;
+use App\Support\ReservationPayment;
 use Illuminate\Database\Eloquent\Builder;
 use Inertia\Response;
 
@@ -38,12 +38,13 @@ class AdminOverviewController extends Controller
                 'balance_paid_at',
             ])
             ->sum(
-                fn (Reservation $reservation): float => ReservationPayment::confirmedPaidAmount(
-                    $reservation->price,
-                    $reservation->deposit_paid_at !== null,
-                    $reservation->balance_paid_at !== null,
-                    $reservation->deposit_amount_snapshot
-                )
+                fn (Reservation $reservation): float =>
+                    ReservationPayment::confirmedPaidAmount(
+                        $reservation->price,
+                        $reservation->deposit_paid_at !== null,
+                        $reservation->balance_paid_at !== null,
+                        $reservation->deposit_amount_snapshot
+                    )
             );
 
         $recentReservations = (clone $baseQuery)

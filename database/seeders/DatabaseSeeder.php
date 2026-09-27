@@ -23,6 +23,5 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Corrections catalogue VVS validées le 24/09/2026.
-        $this->call(VvsCatalogCorrections20260924Seeder::class);
-    }
+        $this->call(VvsCatalogCorrections20260924Seeder::class);    }
 }
