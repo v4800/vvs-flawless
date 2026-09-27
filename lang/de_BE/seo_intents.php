@@ -172,7 +172,7 @@ return array_replace_recursive($base, [
                 'title' => 'Preis und Reservierung',
                 'paragraphs' => [
                     'Die Kollektion zeigt für jedes Modell einen Einstiegspreis. Das Absenden des Reservierungsformulars löst keine Zahlung aus, sondern erfasst dein Interesse und deine Kontaktdaten.',
-                    'Nach Bestätigung des Termins und der Bedingungen startet eine Anzahlung von 25 % die Bestellung. Anschließend wird ein Video der fertigen Uhr gesendet; die restlichen 75 % werden beim Termin nach Prüfung der Uhr bezahlt.',
+                    'Nach Bestätigung des Termins und der Bedingungen startet die Bestellung mit einer festen Anzahlung von 100 €. Anschließend wird ein Video der fertigen Uhr gesendet; der Restbetrag wird beim Termin nach Prüfung der Uhr bezahlt.',
                 ],
             ],
             [
