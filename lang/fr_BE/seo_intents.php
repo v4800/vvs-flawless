@@ -180,7 +180,7 @@ return [
                 'title' => 'Prix et réservation',
                 'paragraphs' => [
                     'La collection affiche un prix de départ pour chaque modèle. Le formulaire de réservation n’entraîne aucun paiement : il sert à enregistrer votre intérêt et vos coordonnées.',
-                    'Après confirmation du rendez-vous et des conditions, un acompte de 25 % lance la commande. Une vidéo de la montre terminée est ensuite envoyée ; le solde de 75 % est payé pendant le rendez-vous, après vérification de la montre.',
+                    'Après confirmation du rendez-vous et des conditions, un acompte fixe de 100 € lance la commande. Une vidéo de la montre terminée est ensuite envoyée ; le solde restant est payé pendant le rendez-vous, après vérification de la montre.',
                 ],
             ],
             [
