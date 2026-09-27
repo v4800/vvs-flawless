@@ -3,29 +3,6 @@
 $base = require dirname(__DIR__).'/en_BE/site.php';
 
 return array_replace_recursive($base, [
-    'auth' => [
-        'private_space' => 'Privater Bereich',
-        'return_store' => 'Zur Boutique',
-        'brand_eyebrow' => 'Maison VVS FLAWLESS',
-        'headline' => 'Eleganz zeigt sich auch in den Details.',
-        'intro' => 'Ein geschützter Bereich zur Verwaltung von VVS FLAWLESS. Melde dich an, um fortzufahren.',
-        'location' => 'Unabhängige Maison · Lüttich, Belgien',
-        'admin' => 'Administratorzugang',
-        'region' => 'VVS FLAWLESS · Belgien',
-        'restricted' => 'Der Zugriff ist dem VVS FLAWLESS-Team vorbehalten.',
-        'login_title' => 'Administrator-Anmeldung',
-        'login_description' => 'Zugang nur für VVS FLAWLESS',
-        'email' => 'E-Mail-Adresse',
-        'password' => 'Passwort',
-        'password_placeholder' => 'Dein Passwort',
-        'forgot_password' => 'Passwort vergessen?',
-        'remember' => 'Angemeldet bleiben',
-        'submit' => 'Anmelden',
-        'passkey' => 'Mit einem Passkey anmelden',
-        'passkey_loading' => 'Überprüfung läuft…',
-        'separator' => 'oder mit E-Mail fortfahren',
-        'home_aria' => 'VVS FLAWLESS — Startseite',
-    ],
     'navigation' => [
         'main_label' => 'Hauptnavigation',
         'watches' => 'Uhren',

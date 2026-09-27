@@ -1,29 +1,6 @@
 <?php
 
 return [
-    'auth' => [
-        'private_space' => 'Privéruimte',
-        'return_store' => 'Terug naar de winkel',
-        'brand_eyebrow' => 'Maison VVS FLAWLESS',
-        'headline' => 'Elegantie zit ook in de details.',
-        'intro' => 'Een ruimte voor het beheer van VVS FLAWLESS. Meld je aan om verder te gaan.',
-        'location' => 'Onafhankelijk huis · Luik, België',
-        'admin' => 'Beheerderstoegang',
-        'region' => 'VVS FLAWLESS · België',
-        'restricted' => 'Deze ruimte is alleen toegankelijk voor het VVS FLAWLESS-team.',
-        'login_title' => 'Beheerdersaanmelding',
-        'login_description' => 'Toegang voorbehouden aan VVS FLAWLESS',
-        'email' => 'E-mailadres',
-        'password' => 'Wachtwoord',
-        'password_placeholder' => 'Je wachtwoord',
-        'forgot_password' => 'Wachtwoord vergeten?',
-        'remember' => 'Onthoud mij',
-        'submit' => 'Aanmelden',
-        'passkey' => 'Aanmelden met een toegangssleutel',
-        'passkey_loading' => 'Bezig met verifiëren…',
-        'separator' => 'of ga verder met e-mail',
-        'home_aria' => 'VVS FLAWLESS — startpagina',
-    ],
     'navigation' => [
         'main_label' => 'Hoofdnavigatie',
         'watches' => 'Horloges',
