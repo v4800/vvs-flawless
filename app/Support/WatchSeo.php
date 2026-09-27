@@ -275,7 +275,7 @@ final class WatchSeo
                 'value' => implode(' / ', $movements),
             ];
         }
-                if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
+        if (preg_match('/\b(\d{2})\s*mm\b/u', $watch->name, $matches) === 1) {
             $sizeLabel = match (app()->getLocale()) {
                 'nl_BE' => 'Diameter',
                 'en_BE' => 'Case diameter',

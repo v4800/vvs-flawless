@@ -229,7 +229,7 @@ class WatchController extends Controller
         Request $request,
         Watch $watch
     ): Response {
-$this->marketingAttribution->capture($request);
+        $this->marketingAttribution->capture($request);
 
         $watch = $this->catalog->localizedWatch($watch);
         $gallery = $this->catalog->galleryForWatch($watch);
