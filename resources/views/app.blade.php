@@ -188,7 +188,7 @@
             content="{{ $seoImageAlt }}"
         >
 
-        {{-- DonnÃ©es structurÃ©es SEO --}}
+        {{-- Données structurées SEO --}}
 
         @if ($structuredData)
             <script
@@ -207,7 +207,7 @@
             ) !!}</script>
         @endif
 
-        {{-- DÃ©tection immÃ©diate du thÃ¨me --}}
+        {{-- Détection immédiate du thème --}}
 
         <script
             @if ($cspNonce)
