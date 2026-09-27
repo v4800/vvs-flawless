@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
  * @property int $id
  * @property string $name
  * @property string|null $slug
- * @property string|int|float $price
+ * @property string|int|float|null $price
  * @property string|int|float|null $promo_price
  * @property string|int|float|null $japanese_price
  * @property string|int|float|null $japanese_promo_price
@@ -39,6 +39,7 @@ class Watch extends Model
     protected $appends = [
         'delivery_estimate',
     ];
+
     protected static function booted(): void
     {
         static::creating(function (Watch $watch): void {
@@ -76,6 +77,7 @@ class Watch extends Model
             ? (string) __('delivery.custom')
             : (string) __('delivery.standard');
     }
+
     public function getRouteKeyName(): string
     {
         return 'slug';
