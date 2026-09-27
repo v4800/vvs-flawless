@@ -1,7 +1,7 @@
 <script setup>
 import ReservationTrust from '@/components/ReservationTrust.vue';
 import { usePage } from '@inertiajs/vue3';
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, ref, watch as vueWatch } from 'vue';
 
 const props = defineProps({
     watch: {
@@ -39,7 +39,7 @@ const page = usePage();
 const showProgress = ref(false);
 let progressTimer;
 
-watch(
+vueWatch(
     () => props.form.processing,
     (processing) => {
         window.clearTimeout(progressTimer);

@@ -10,6 +10,14 @@ class VvsCatalogCorrections20260924Seeder extends Seeder
     public function run(): void
     {
         $updates = [
+            '41-mm-chronographe-camouflage' => [
+                'availability' => 'Disponible',
+            ],
+
+            '41-mm-carree-bicolore-chiffres-romains' => [
+                'availability' => 'Disponible',
+            ],
+
             'octogonale-arabe-edition-limitee' => [
                 'name' => 'Octogonale argentée · Chiffres arabes dorés — Édition limitée',
                 'price' => 1350,

@@ -110,6 +110,11 @@ class WatchController extends Controller
             );
         }
 
+        // AVAILABLE WATCHES FIRST
+        $query->orderByRaw(
+            "CASE WHEN LOWER(availability) IN ('disponible', 'en stock') THEN 0 ELSE 1 END"
+        );
+
         match ($filters['sort'] ?? 'newest') {
             'price_asc' => $query->orderByRaw($numericStartingPrice.' asc')->orderBy('id'),
             'price_desc' => $query->orderByRaw($numericStartingPrice.' desc')->orderByDesc('id'),

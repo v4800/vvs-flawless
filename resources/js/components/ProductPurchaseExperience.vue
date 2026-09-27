@@ -294,7 +294,10 @@ const formattedPrice = computed(() => {
                             <dd
                                 class="text-right text-sm font-semibold text-white"
                             >
-                                {{ copy.availabilityValue }}
+                                {{
+                                    watch.delivery_estimate ??
+                                    copy.availabilityValue
+                                }}
                             </dd>
                         </div>
                         <div
@@ -328,7 +331,12 @@ const formattedPrice = computed(() => {
                                     {{ step.title }}
                                 </h3>
                                 <p class="mt-2 text-sm leading-6 text-zinc-500">
-                                    {{ step.text }}
+                                    {{
+                                        step.number === '03'
+                                            ? (watch.delivery_estimate ??
+                                              step.text)
+                                            : step.text
+                                    }}
                                 </p>
                             </div>
                         </div>

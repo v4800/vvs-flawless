@@ -72,6 +72,14 @@ class Watch extends Model
             '41-mm-cadran-bleu-roi-bracelet-argente',
         ];
 
+        $normalizedAvailability = Str::lower(
+            Str::ascii(trim((string) $this->availability))
+        );
+
+        if (in_array($normalizedAvailability, ['disponible', 'en stock'], true)) {
+            return (string) __('delivery.immediate');
+        }
+
         return in_array($this->slug, $customOrderSlugs, true)
             ? (string) __('delivery.custom')
             : (string) __('delivery.standard');

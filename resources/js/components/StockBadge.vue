@@ -74,8 +74,9 @@ const badge = computed(() => {
         return {
             label: translations.value.stock.available,
             icon: '●',
-            classes: 'border-amber-300/30 bg-black/85 text-amber-200',
-            iconClasses: 'text-amber-300',
+            classes:
+                'border-emerald-400/50 bg-emerald-950/80 text-emerald-200 shadow-[0_0_22px_rgba(52,211,153,0.18)]',
+            iconClasses: 'text-emerald-400',
         };
     }
 
@@ -113,8 +114,9 @@ const badge = computed(() => {
     return {
         label: translations.value.stock.available,
         icon: '●',
-        classes: 'border-amber-300/30 bg-black/85 text-amber-200',
-        iconClasses: 'text-amber-300',
+        classes:
+            'border-emerald-400/50 bg-emerald-950/80 text-emerald-200 shadow-[0_0_22px_rgba(52,211,153,0.18)]',
+        iconClasses: 'text-emerald-400',
     };
 });
 </script>
