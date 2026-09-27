@@ -429,7 +429,7 @@ class PublicPageController extends Controller
             ],
             [
                 '@type' => 'City',
-                'name' => 'LiÃ¨ge',
+                'name' => 'Liège',
                 'containedInPlace' => [
                     '@type' => 'Country',
                     'name' => 'Belgium',
