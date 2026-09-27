@@ -180,7 +180,7 @@ return [
                 'title' => 'Prijs en reservatie',
                 'paragraphs' => [
                     'De collectie toont voor ieder model een vanafprijs. Het reservatieformulier veroorzaakt geen betaling; het registreert alleen je interesse en contactgegevens.',
-                    'Na bevestiging van de afspraak en de voorwaarden start een voorschot van 25% de bestelling. Daarna wordt een video van het afgewerkte horloge gestuurd; het saldo van 75% wordt tijdens de afspraak betaald, na controle van het horloge.',
+                    'Na bevestiging van de afspraak en de voorwaarden start de bestelling met een vast voorschot van € 100. Daarna wordt een video van het afgewerkte horloge gestuurd; het resterende saldo wordt tijdens de afspraak betaald, na controle van het horloge.',
                 ],
             ],
             [
