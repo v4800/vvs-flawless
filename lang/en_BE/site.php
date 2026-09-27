@@ -1,6 +1,29 @@
 <?php
 
 return [
+    'auth' => [
+        'private_space' => 'Private area',
+        'return_store' => 'Back to the boutique',
+        'brand_eyebrow' => 'Maison VVS FLAWLESS',
+        'headline' => 'Elegance lives in the details.',
+        'intro' => 'A private space for managing VVS FLAWLESS. Sign in to continue.',
+        'location' => 'Independent maison · Liège, Belgium',
+        'admin' => 'Administrator access',
+        'region' => 'VVS FLAWLESS · Belgium',
+        'restricted' => 'Access to this area is reserved for the VVS FLAWLESS team.',
+        'login_title' => 'Administrator sign in',
+        'login_description' => 'Access reserved for VVS FLAWLESS',
+        'email' => 'Email address',
+        'password' => 'Password',
+        'password_placeholder' => 'Your password',
+        'forgot_password' => 'Forgot your password?',
+        'remember' => 'Remember me',
+        'submit' => 'Sign in',
+        'passkey' => 'Sign in with a passkey',
+        'passkey_loading' => 'Verifying…',
+        'separator' => 'or continue with your email address',
+        'home_aria' => 'VVS FLAWLESS — home',
+    ],
     'navigation' => [
         'main_label' => 'Main navigation',
         'watches' => 'Watches',

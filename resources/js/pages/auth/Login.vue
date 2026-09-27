@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Form, Head } from '@inertiajs/vue3';
+import { Form, Head, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 import InputError from '@/components/InputError.vue';
 import PasswordInput from '@/components/PasswordInput.vue';
@@ -27,29 +28,42 @@ defineProps<{
     status?: string;
     canResetPassword: boolean;
 }>();
+
+const page = usePage();
+const copy = computed(() => page.props.translations.auth);
 </script>
 
 <template>
-    <Head title="Connexion administrateur" />
+    <Head :title="copy.login_title" />
 
     <div
         v-if="status"
-        class="mb-4 text-center text-sm font-medium text-green-600"
+        role="status"
+        class="mb-5 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.07] px-4 py-3 text-sm leading-6 text-emerald-200"
     >
         {{ status }}
     </div>
 
-    <PasskeyVerify />
+    <PasskeyVerify
+        :label="copy.passkey"
+        :loading-label="copy.passkey_loading"
+        :separator="copy.separator"
+    />
 
     <Form
         v-bind="store.form()"
         :reset-on-success="['password']"
         v-slot="{ errors, processing }"
-        class="flex flex-col gap-6"
+        class="flex flex-col gap-5"
     >
-        <div class="grid gap-6">
-            <div class="grid gap-2">
-                <Label for="email"> Adresse email </Label>
+        <div class="grid gap-5">
+            <div class="grid gap-2.5">
+                <Label
+                    for="email"
+                    class="text-[0.7rem] font-semibold tracking-[0.12em] text-[#c9c2b7] uppercase"
+                >
+                    {{ copy.email }}
+                </Label>
 
                 <Input
                     id="email"
@@ -60,22 +74,28 @@ defineProps<{
                     :tabindex="1"
                     autocomplete="email"
                     placeholder="email@example.com"
+                    class="min-h-12 rounded-xl border-white/[0.12] bg-white/[0.035] px-4 text-[0.94rem] text-[#fbf7ee] shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] placeholder:text-white/32 focus-visible:border-[#c8ad78]/70 focus-visible:ring-[#c8ad78]/25"
                 />
 
                 <InputError :message="errors.email" />
             </div>
 
-            <div class="grid gap-2">
-                <div class="flex items-center justify-between">
-                    <Label for="password"> Mot de passe </Label>
+            <div class="grid gap-2.5">
+                <div class="flex items-center justify-between gap-3">
+                    <Label
+                        for="password"
+                        class="text-[0.7rem] font-semibold tracking-[0.12em] text-[#c9c2b7] uppercase"
+                    >
+                        {{ copy.password }}
+                    </Label>
 
                     <TextLink
                         v-if="canResetPassword"
                         :href="request()"
-                        class="text-sm"
+                        class="text-xs text-[#d9c397] decoration-[#d9c397]/35 underline-offset-4 hover:text-[#f2e4c9] hover:decoration-[#f2e4c9]/60"
                         :tabindex="5"
                     >
-                        Mot de passe oublié ?
+                        {{ copy.forgot_password }}
                     </TextLink>
                 </div>
 
@@ -85,31 +105,74 @@ defineProps<{
                     required
                     :tabindex="2"
                     autocomplete="current-password"
-                    placeholder="Mot de passe"
+                    :placeholder="copy.password_placeholder"
+                    class="min-h-12 rounded-xl border-white/[0.12] bg-white/[0.035] px-4 pr-11 text-[0.94rem] text-[#fbf7ee] shadow-[inset_0_1px_2px_rgba(0,0,0,0.28)] placeholder:text-white/32 focus-visible:border-[#c8ad78]/70 focus-visible:ring-[#c8ad78]/25"
                 />
 
                 <InputError :message="errors.password" />
             </div>
 
-            <div class="flex items-center justify-between">
-                <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" name="remember" :tabindex="3" />
+            <Label
+                for="remember"
+                class="mt-0.5 flex cursor-pointer items-center gap-3 text-sm text-white/62"
+            >
+                <Checkbox
+                    id="remember"
+                    name="remember"
+                    :tabindex="3"
+                    class="size-4 rounded border-white/25 data-[state=checked]:border-[#d6bf91] data-[state=checked]:bg-[#d6bf91] data-[state=checked]:text-[#17140f]"
+                />
 
-                    <span> Se souvenir de moi </span>
-                </Label>
-            </div>
+                <span>{{ copy.remember }}</span>
+            </Label>
 
             <Button
                 type="submit"
-                class="mt-4 w-full"
+                class="mt-1 min-h-12 w-full rounded-xl border border-[#e2d0ad] bg-[linear-gradient(110deg,#aa8f69_0%,#dfcca7_54%,#b79b72_100%)] font-semibold tracking-[0.11em] text-[#17140f] shadow-[inset_0_1px_0_rgba(255,255,255,0.36),0_8px_24px_rgba(0,0,0,0.24)] transition duration-200 hover:-translate-y-0.5 hover:brightness-105 focus-visible:ring-2 focus-visible:ring-[#e2d0ad] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b0b0a] disabled:cursor-wait disabled:opacity-70 motion-reduce:transition-none"
                 :tabindex="4"
                 :disabled="processing"
                 data-test="login-button"
             >
                 <Spinner v-if="processing" />
-
-                Se connecter
+                <span>{{ copy.submit }}</span>
             </Button>
         </div>
     </Form>
 </template>
+
+<style scoped>
+.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']) {
+    min-height: 3rem;
+    border-color: rgb(200 173 120 / 0.38);
+    border-radius: 0.75rem;
+    background: rgb(255 255 255 / 0.025);
+    color: #efe5d1;
+    transition:
+        border-color 180ms ease,
+        background-color 180ms ease,
+        color 180ms ease;
+}
+
+.vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']:hover) {
+    border-color: rgb(216 189 136 / 0.75);
+    background: rgb(200 173 120 / 0.075);
+    color: #fff8ea;
+}
+
+.vvs-auth-passkey
+    :deep([data-slot='button'][data-variant='outline']:focus-visible) {
+    outline: 2px solid #d8bd88;
+    outline-offset: 3px;
+}
+
+.vvs-auth-passkey :deep(.relative.my-6 span) {
+    background: #0b0b0a;
+    color: rgb(255 255 255 / 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .vvs-auth-passkey :deep([data-slot='button'][data-variant='outline']) {
+        transition: none;
+    }
+}
+</style>
