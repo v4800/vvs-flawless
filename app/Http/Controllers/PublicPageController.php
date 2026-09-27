@@ -272,6 +272,7 @@ class PublicPageController extends Controller
 
         return array_values(array_unique($citations));
     }
+
     /**
      * @return array<string, mixed>
      */
