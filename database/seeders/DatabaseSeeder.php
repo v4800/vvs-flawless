@@ -17,11 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
 
-        // Corrections catalogue VVS validées le 24/09/2026.
+
+        // Corrections catalogue VVS validÃ©es le 24/09/2026.
         $this->call(VvsCatalogCorrections20260924Seeder::class);    }
 }
