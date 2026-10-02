@@ -269,6 +269,7 @@ return array_replace_recursive($base, [
         'delay_text' => 'Nach Bestätigung etwa 5 bis 6 Werktage einplanen.',
     ],
     'footer' => [
+        'delivery_areas' => 'Übergabe und Lieferung',
         'tagline' => 'Bustdown-Kultur kommt nach Belgien',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Datenschutz',
@@ -319,6 +320,7 @@ return array_replace_recursive($base, [
         ],
     ],
     'pickup' => [
+        'zones_link' => 'Gebiete und Fahrtkosten ansehen',
         'eyebrow' => 'Deine Uhr erhalten',
         'title_before' => 'Persönliche Übergabe',
         'title_highlight' => 'oder Lieferung.',
@@ -373,6 +375,13 @@ return array_replace_recursive($base, [
         'confirmed' => 'Kontakt und Bestätigung',
         'organized' => 'Empfang organisiert',
     ],
+    'product_videos' => [
+        'title' => 'Diese Uhr im Video',
+        'caption' => 'Aufnahmen dieses Modells',
+        'labels' => ['Am Handgelenk', 'Details der Uhr'],
+        'unsupported' => 'Dein Browser kann dieses Video nicht abspielen.',
+    ],
+
     'mobile_reservation' => [
         'movement' => ':movement Werk',
         'cta' => 'Reservieren',

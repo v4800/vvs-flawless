@@ -21,6 +21,9 @@ Route::get('/conditions-reservation', [PublicPageController::class, 'reservation
 Route::get('/a-propos', [PublicPageController::class, 'about'])
     ->name('about');
 
+Route::get('/remise-livraison', [PublicPageController::class, 'deliveryAreas'])
+    ->name('delivery-areas');
+
 Route::get(
     '/',
     function (Request $request) {
@@ -108,6 +111,9 @@ Route::prefix('nl')
         Route::get('/over-ons', [PublicPageController::class, 'about'])
             ->name('about');
 
+        Route::get('/overhandiging-levering', [PublicPageController::class, 'deliveryAreas'])
+            ->name('delivery-areas');
+
         Route::get(
             '/gids/diamanten-horloge-of-moissanite',
             [PublicPageController::class, 'diamondVsMoissanite']
@@ -183,6 +189,9 @@ Route::prefix('en')
         Route::get('/about', [PublicPageController::class, 'about'])
             ->name('about');
 
+        Route::get('/handover-delivery', [PublicPageController::class, 'deliveryAreas'])
+            ->name('delivery-areas');
+
         Route::get(
             '/guide/diamond-watch-or-moissanite',
             [PublicPageController::class, 'diamondVsMoissanite']
@@ -257,6 +266,9 @@ Route::prefix('de')
 
         Route::get('/ueber-uns', [PublicPageController::class, 'about'])
             ->name('about');
+
+        Route::get('/uebergabe-lieferung', [PublicPageController::class, 'deliveryAreas'])
+            ->name('delivery-areas');
 
         Route::get(
             '/ratgeber/diamantuhr-oder-moissanit',

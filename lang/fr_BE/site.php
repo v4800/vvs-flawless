@@ -296,6 +296,7 @@ return [
     ],
 
     'footer' => [
+        'delivery_areas' => 'Remise et livraison',
         'tagline' => 'La culture bustdown arrive en Belgique',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Confidentialité',
@@ -350,6 +351,7 @@ return [
     ],
 
     'pickup' => [
+        'zones_link' => 'Voir les zones et frais de déplacement',
         'eyebrow' => 'Réception de votre montre',
         'title_before' => 'Remise en main propre',
         'title_highlight' => 'ou livraison.',
@@ -406,6 +408,13 @@ return [
         'sent' => 'Demande envoyée',
         'confirmed' => 'Contact et confirmation',
         'organized' => 'Réception organisée',
+    ],
+
+    'product_videos' => [
+        'title' => 'Cette montre en vidéo',
+        'caption' => 'Vidéos du modèle présenté',
+        'labels' => ['Vue au poignet', 'Détails de la montre'],
+        'unsupported' => 'Votre navigateur ne peut pas lire cette vidéo.',
     ],
 
     'mobile_reservation' => [

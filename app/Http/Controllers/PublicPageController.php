@@ -47,6 +47,21 @@ class PublicPageController extends Controller
         ]);
     }
 
+    public function deliveryAreas(): Response
+    {
+        $copy = (array) trans('delivery_areas');
+
+        return inertia('DeliveryAreas', [
+            'seo' => $this->seo(
+                (string) ($copy['seo_title'] ?? ''),
+                (string) ($copy['seo_description'] ?? ''),
+                route($this->localizedRoute->name('delivery-areas')),
+                'delivery-areas'
+            ),
+            'copy' => $copy,
+        ]);
+    }
+
     public function diamondVsMoissanite(): Response
     {
         $page = 'guides.diamond-vs-moissanite';
@@ -272,6 +287,7 @@ class PublicPageController extends Controller
 
         return array_values(array_unique($citations));
     }
+
     /**
      * @return array<string, mixed>
      */

@@ -283,6 +283,7 @@ return [
     ],
 
     'footer' => [
+        'delivery_areas' => 'Handover and delivery',
         'tagline' => 'Bustdown culture arrives in Belgium',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Privacy',
@@ -337,6 +338,7 @@ return [
     ],
 
     'pickup' => [
+        'zones_link' => 'See areas and travel fees',
         'eyebrow' => 'Receiving your watch',
         'title_before' => 'Personal handover',
         'title_highlight' => 'or delivery.',
@@ -393,6 +395,13 @@ return [
         'sent' => 'Request sent',
         'confirmed' => 'Contact and confirmation',
         'organized' => 'Reception arranged',
+    ],
+
+    'product_videos' => [
+        'title' => 'See this watch in video',
+        'caption' => 'Footage of this exact model',
+        'labels' => ['On the wrist', 'Watch details'],
+        'unsupported' => 'Your browser cannot play this video.',
     ],
 
     'mobile_reservation' => [

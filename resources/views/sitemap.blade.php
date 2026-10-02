@@ -12,6 +12,12 @@
             'en-BE' => route('en.about'),
             'de-BE' => route('de.about'),
         ],        [
+            'fr-BE' => route('delivery-areas'),
+            'nl-BE' => route('nl.delivery-areas'),
+            'en-BE' => route('en.delivery-areas'),
+            'de-BE' => route('de.delivery-areas'),
+        ],
+        [
             'fr-BE' => route('privacy'),
             'nl-BE' => route('nl.privacy'),
             'en-BE' => route('en.privacy'),

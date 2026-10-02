@@ -43,6 +43,14 @@ const guideLinks = computed(() => {
                 </Link>
 
                 <Link
+                    v-if="localizedRoutes.deliveryAreas"
+                    :href="localizedRoutes.deliveryAreas"
+                    class="inline-flex min-h-11 items-center px-1 text-[10px] font-bold tracking-[0.1em] text-zinc-400 uppercase transition hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                >
+                    {{ translations.footer.delivery_areas }}
+                </Link>
+
+                <Link
                     v-for="guide in guideLinks"
                     :key="guide.href"
                     :href="guide.href"

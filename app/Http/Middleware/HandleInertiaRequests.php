@@ -71,6 +71,10 @@ class HandleInertiaRequests extends Middleware
                     $routePrefix.'about',
                     absolute: false
                 ),
+                'deliveryAreas' => route(
+                    $routePrefix.'delivery-areas',
+                    absolute: false
+                ),
                 'diamondGuide' => route(
                     $routePrefix.'guides.diamond-vs-moissanite',
                     absolute: false

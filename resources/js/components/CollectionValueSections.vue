@@ -11,41 +11,38 @@ const translations = page.props.translations;
 <template>
     <section id="concept" class="scroll-mt-24 px-5 pb-8 sm:px-6 lg:px-10">
         <div
-            class="reveal-on-scroll vvs-luxury-card mx-auto max-w-[1500px] overflow-hidden rounded-2xl border"
+            class="reveal-on-scroll relative mx-auto max-w-[1500px] overflow-hidden rounded-[1.75rem] border border-amber-200/15 bg-[radial-gradient(ellipse_at_85%_10%,rgba(205,160,89,0.13),transparent_45%),linear-gradient(115deg,#151310_0%,#0c0c0d_50%,#11100f_100%)] shadow-[0_24px_70px_rgba(0,0,0,0.22)]"
         >
             <div
-                class="grid items-center gap-8 p-8 md:grid-cols-[auto_1fr_auto] md:p-10"
-            >
-                <div
-                    aria-hidden="true"
-                    class="flex h-20 w-28 items-center justify-center rounded-xl border border-amber-200/20 bg-[radial-gradient(circle_at_50%_40%,rgba(242,213,138,0.12),transparent_72%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
-                >
-                    <span
-                        class="font-serif text-4xl tracking-[-0.12em] text-amber-100"
-                        >VVS</span
-                    >
-                </div>
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-200/40 to-transparent"
+            ></div>
 
-                <div>
-                    <p
-                        class="text-xs font-black tracking-[0.3em] text-amber-300 uppercase"
-                    >
-                        {{ translations.concept.eyebrow }}
-                    </p>
-                    <h2 class="vvs-display-title mt-3 text-3xl sm:text-4xl">
+            <div class="relative grid gap-10 px-7 py-10 sm:px-10 sm:py-12 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16 lg:px-16 lg:py-14">
+                <div class="min-w-0">
+                    <div class="flex items-center gap-4">
+                        <span aria-hidden="true" class="h-px w-8 bg-amber-300/70"></span>
+                        <p class="text-[0.67rem] font-bold tracking-[0.25em] text-amber-200 uppercase sm:text-xs">
+                            {{ translations.concept.eyebrow }}
+                        </p>
+                    </div>
+
+                    <h2 class="vvs-display-title mt-6 max-w-[16ch] text-[clamp(2.25rem,4vw,4rem)] leading-[1.08] text-white">
                         {{ translations.concept.title }}
                     </h2>
-                    <p class="mt-3 max-w-2xl text-sm leading-6 text-zinc-400">
+
+                    <p class="mt-6 max-w-2xl border-l border-amber-200/35 pl-5 text-sm leading-7 text-zinc-300 sm:text-base">
                         {{ translations.concept.description }}
                     </p>
                 </div>
 
                 <button
                     type="button"
-                    class="vvs-button-primary rounded-xl px-6 py-4 text-xs font-bold tracking-[0.15em] uppercase"
+                    class="group inline-flex min-h-14 w-full items-center justify-between gap-8 rounded-full border border-amber-200/50 bg-amber-200 px-6 py-4 text-left text-xs font-bold tracking-[0.13em] text-zinc-950 uppercase transition-colors hover:border-amber-100 hover:bg-amber-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200 sm:w-fit lg:mb-1"
                     @click="emit('scroll-to-collection')"
                 >
-                    {{ translations.concept.cta }}
+                    <span>{{ translations.concept.cta }}</span>
+                    <span aria-hidden="true" class="text-xl leading-none transition-transform group-hover:translate-x-1">↗</span>
                 </button>
             </div>
         </div>

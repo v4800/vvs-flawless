@@ -1,10 +1,11 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import { MapPin } from '@lucide/vue';
 import { computed } from 'vue';
 
 const page = usePage();
 const translations = computed(() => page.props.translations);
+const deliveryAreasHref = computed(() => page.props.localizedRoutes?.deliveryAreas);
 
 const zoneCopy = computed(() => {
     return (
@@ -90,6 +91,14 @@ const zoneCopy = computed(() => {
                     <p class="mt-4 max-w-2xl text-sm leading-6 text-zinc-400">
                         {{ translations.pickup.description_2 }}
                     </p>
+
+                    <Link
+                        v-if="deliveryAreasHref"
+                        :href="deliveryAreasHref"
+                        class="mt-5 inline-flex min-h-11 items-center rounded-full border border-amber-300/35 px-5 text-xs font-semibold text-amber-200 transition hover:border-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+                    >
+                        {{ translations.pickup.zones_link }}
+                    </Link>
 
                     <div class="mt-8">
                         <p

@@ -295,6 +295,7 @@ return [
     ],
 
     'footer' => [
+        'delivery_areas' => 'Overhandiging en levering',
         'tagline' => 'De bustdown-cultuur komt naar België',
         'copyright' => '© 2026 VVS FLAWLESS',
         'privacy' => 'Privacy',
@@ -349,6 +350,7 @@ return [
     ],
 
     'pickup' => [
+        'zones_link' => 'Bekijk regio’s en verplaatsingskosten',
         'eyebrow' => 'Ontvangst van je horloge',
         'title_before' => 'Persoonlijke overhandiging',
         'title_highlight' => 'of levering.',
@@ -405,6 +407,13 @@ return [
         'sent' => 'Aanvraag verzonden',
         'confirmed' => 'Contact en bevestiging',
         'organized' => 'Ontvangst georganiseerd',
+    ],
+
+    'product_videos' => [
+        'title' => 'Dit horloge op video',
+        'caption' => 'Video’s van dit model',
+        'labels' => ['Om de pols', 'Details van het horloge'],
+        'unsupported' => 'Je browser kan deze video niet afspelen.',
     ],
 
     'mobile_reservation' => [
