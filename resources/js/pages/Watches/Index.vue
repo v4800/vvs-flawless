@@ -155,7 +155,7 @@ const scrollToCollection = () => {
 <template>
     <Head :title="seo.title" />
 
-    <div class="vvs-storefront min-h-screen text-white">
+    <div class="vvs-storefront vvs-identity min-h-screen text-white">
         <a
             href="#main-content"
             class="sr-only z-[100] rounded-lg bg-amber-300 px-4 py-3 font-bold text-black focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
@@ -163,68 +163,42 @@ const scrollToCollection = () => {
             {{ translations.accessibility.skip_content }}
         </a>
 
-        <CollectionSiteHeader hide-center-brand :seo="seo" />
+        <CollectionSiteHeader :seo="seo" />
 
         <main id="main-content" tabindex="-1">
             <CollectionHero @scroll-to-collection="scrollToCollection" />
-
-            <div class="collection-toolbar-shell pt-6 pb-8 sm:pt-7 sm:pb-10">
-                <CollectionFilters
-                    :filters="props.filters"
-                    :options="props.filterOptions"
-                    @visual-loading="catalogVisualLoading = $event"
-                />
-            </div>
 
             <section
                 id="collection"
                 class="relative scroll-mt-24 overflow-hidden px-5 py-20 sm:px-6 lg:px-10"
             >
-                <div
-                    aria-hidden="true"
-                    class="absolute top-0 left-1/2 -z-10 h-[400px] w-[900px] -translate-x-1/2 rounded-full bg-amber-500/[0.035] blur-[120px]"
-                ></div>
-
                 <div class="mx-auto max-w-[1500px]">
-                    <header class="reveal-on-scroll mb-12 text-center">
-                        <div
-                            class="mb-4 flex items-center justify-center gap-3"
-                        >
-                            <span
-                                aria-hidden="true"
-                                class="h-px w-12 bg-gradient-to-r from-transparent to-amber-400"
-                            ></span>
-                            <span
-                                class="text-[11px] font-bold tracking-[0.4em] text-amber-300 uppercase"
-                            >
-                                {{ translations.collection.eyebrow }}
-                            </span>
-                            <span
-                                aria-hidden="true"
-                                class="h-px w-12 bg-gradient-to-l from-transparent to-amber-400"
-                            ></span>
+                    <header class="vvs-collection-heading">
+                        <div>
+                            <p class="vvs-editorial-label">
+                                <span aria-hidden="true">01 / </span
+                                >{{ translations.collection.eyebrow }}
+                            </p>
+                            <h2>
+                                {{ translations.collection.title_before }}
+                                {{ translations.collection.title_highlight
+                                }}<span aria-hidden="true">.</span>
+                            </h2>
                         </div>
-
-                        <h2
-                            class="vvs-display-title max-w-full min-w-0 text-4xl leading-[0.96] break-words sm:text-5xl lg:text-6xl"
-                        >
-                            {{ translations.collection.title_before }}
-                            <span class="vvs-gradient-text">
-                                {{ translations.collection.title_highlight }}
-                            </span>
-                        </h2>
-
-                        <p
-                            class="mx-auto mt-4 max-w-2xl text-sm leading-6 text-zinc-500 sm:text-base"
-                        >
-                            {{ landingCopy.collection_description }}
-                        </p>
+                        <p>{{ landingCopy.collection_description }}</p>
                     </header>
+                    <div class="collection-toolbar-shell">
+                        <CollectionFilters
+                            :filters="props.filters"
+                            :options="props.filterOptions"
+                            @visual-loading="catalogVisualLoading = $event"
+                        />
+                    </div>
 
                     <div
                         v-if="showSourcedModels || props.watches.length"
                         :aria-busy="catalogVisualLoading"
-                        class="grid gap-6 transition-opacity duration-200 motion-reduce:transition-none sm:grid-cols-2 xl:grid-cols-3"
+                        class="vvs-catalog-grid grid gap-6 transition-opacity duration-200 motion-reduce:transition-none sm:grid-cols-2 xl:grid-cols-3"
                     >
                         <SourcedWatches
                             v-if="showSourcedModels"
@@ -263,18 +237,17 @@ const scrollToCollection = () => {
                 </div>
             </section>
 
-            <SeoContentHub />
-            <OrderSteps />
-
             <CollectionValueSections
                 @scroll-to-collection="scrollToCollection"
             />
 
+            <OrderSteps />
             <AboutSection />
             <CustomerConfidence />
             <PickupSection />
             <FaqSection />
             <ContactSection />
+            <SeoContentHub />
         </main>
 
         <CollectionFooter />

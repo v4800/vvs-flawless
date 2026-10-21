@@ -64,78 +64,55 @@ const imageAlt = (model) => {
     <article
         v-for="model in models"
         :key="model.reference"
-        class="watch-card reveal-on-scroll group relative flex min-w-0 flex-col self-stretch overflow-hidden rounded-2xl border border-white/10 bg-[#090909] transition duration-300 hover:border-amber-300/25"
+        class="watch-card vvs-catalog-card"
     >
         <a
             href="#contact"
-            class="relative block w-full shrink-0 overflow-hidden bg-[#070707] focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-300"
+            class="vvs-catalog-card__image"
             :aria-label="`${translations.collection.source_request} — ${model.name}`"
         >
             <WatchCardVisual
                 :src="model.cardImage || model.image"
                 :alt="imageAlt(model)"
             />
-
-            <span
-                class="absolute top-4 left-4 z-20 rounded-full border border-amber-300/20 bg-black/80 px-3 py-2 text-[8px] font-black tracking-[0.18em] text-amber-200 uppercase"
-            >
-                {{ translations.collection.source_eyebrow }}
-            </span>
+            <span class="vvs-catalog-source-label">{{
+                translations.collection.source_eyebrow
+            }}</span>
         </a>
-
-        <div class="flex flex-1 flex-col p-5">
-            <h3
-                class="vvs-display-title min-h-[3.75rem] text-center text-2xl leading-tight text-white"
-            >
-                {{ model.name }}
+        <div class="vvs-catalog-card__body">
+            <p class="vvs-editorial-label">Moissanite VVS</p>
+            <h3>
+                <a href="#contact">{{ model.name }}</a>
             </h3>
-
             <p
-                class="mt-2 text-center text-[11px] font-bold tracking-[0.18em] text-amber-300 uppercase"
-            >
-                Moissanite VVS
-            </p>
-
-            <div
                 v-if="startingPrice(model)"
-                class="mt-4 rounded-xl border border-white/10 bg-black/35 px-4 py-3 text-center"
+                class="vvs-catalog-card__description"
             >
-                <p
-                    class="text-[9px] font-bold tracking-[0.16em] text-zinc-500 uppercase"
-                >
-                    {{ startingAtLabel }}
-                </p>
-
-                <p class="vvs-price mt-1 inline-block text-2xl font-black">
-                    {{ formatPrice(startingPrice(model)) }}
-                </p>
-            </div>
-
-            <p class="mt-3 text-center text-sm leading-5 text-zinc-400">
                 {{ detailsLabel }}
             </p>
-
-            <div class="mt-auto pt-4">
-                <div
-                    class="flex min-w-0 flex-col items-start gap-1 border-t border-white/10 pt-3 text-xs min-[380px]:flex-row min-[380px]:items-center min-[380px]:justify-between"
-                >
-                    <span class="text-zinc-600">
-                        {{ translations.collection.delivery }}
-                    </span>
-
-                    <span class="font-semibold text-zinc-300">
-                        {{ translations.collection.delay }}
-                    </span>
-                </div>
-
+            <div class="vvs-catalog-card__price-row">
+                <p v-if="startingPrice(model)">
+                    <span class="vvs-catalog-card__price-label">{{
+                        startingAtLabel
+                    }}</span>
+                    <span class="vvs-catalog-card__price">{{
+                        formatPrice(startingPrice(model))
+                    }}</span>
+                </p>
+                <p v-else class="vvs-catalog-card__description">
+                    {{ translations.collection.source_details }}
+                </p>
                 <a
                     href="#contact"
-                    class="vvs-button-secondary mt-3 flex min-h-11 w-full items-center justify-center gap-3 rounded-xl px-4 py-3 text-xs font-bold tracking-[0.08em] uppercase"
+                    class="vvs-catalog-card__action"
+                    :aria-label="`${translations.collection.source_request} — ${model.name}`"
+                    ><span aria-hidden="true">↗</span></a
                 >
-                    {{ translations.collection.source_request }}
-                    <span aria-hidden="true">→</span>
-                </a>
             </div>
+            <p class="vvs-catalog-card__delivery">
+                <span>{{ translations.collection.delivery }}</span
+                ><span>{{ translations.collection.delay }}</span>
+            </p>
         </div>
     </article>
 </template>

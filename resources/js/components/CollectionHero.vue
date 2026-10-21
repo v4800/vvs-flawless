@@ -2,73 +2,85 @@
 import { usePage } from '@inertiajs/vue3';
 
 const emit = defineEmits(['scroll-to-collection']);
-
 const page = usePage();
 const translations = page.props.translations;
 const hero = page.props.landingCopy.hero;
 </script>
 
 <template>
-    <section
-        class="vvs-brand-hero vvs-brand-hero--intro relative isolate overflow-hidden border-b border-white/10 bg-[#050505]"
-    >
-        <div
-            class="relative mx-auto flex min-h-[610px] max-w-[1500px] items-center justify-center px-5 py-20 text-center sm:min-h-[680px] sm:px-8 sm:py-24 lg:min-h-[720px] lg:px-10"
-        >
-            <div
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(190,158,95,0.12),transparent_42%)]"
-            ></div>
-
-            <div
-                class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center"
-            >
-                <p
-                    class="vvs-eyebrow max-w-full text-[10px] tracking-[0.16em] sm:tracking-[0.28em]"
-                >
-                    {{ hero.badge_stone }} · {{ hero.badge_style }} ·
-                    {{ hero.badge_culture }}
+    <section class="vvs-editorial-hero" aria-labelledby="vvs-hero-title">
+        <div class="vvs-editorial-hero__layout">
+            <div class="vvs-editorial-hero__copy">
+                <p class="vvs-editorial-label">
+                    {{ hero.badge_style }} <span aria-hidden="true">/</span>
+                    {{ page.props.landingCopy.brand_country }}
                 </p>
-
                 <h1
-                    class="vvs-brand-wordmark mt-8 w-full max-w-full"
+                    id="vvs-hero-title"
+                    class="vvs-editorial-wordmark"
                     aria-label="VVS FLAWLESS"
                 >
-                    <span class="vvs-brand-wordmark__vvs">VVS</span>
-                    <span class="vvs-brand-wordmark__flawless"> FLAWLESS </span>
+                    <span>VVS</span>
+                    <span
+                        >FLAWLESS<span class="vvs-editorial-wordmark__dot"
+                            >.</span
+                        ></span
+                    >
                 </h1>
-
-                <p
-                    class="vvs-display-title mt-9 max-w-4xl text-[clamp(2rem,6vw,4.5rem)] leading-[1.02] text-[#f5f0e7]"
-                >
+                <p class="vvs-editorial-hero__tagline">
                     {{ translations.hero.tagline }}
                 </p>
-
-                <p
-                    class="vvs-body-copy mx-auto mt-6 max-w-2xl text-sm text-zinc-400 sm:text-base lg:text-lg"
-                >
+                <p class="vvs-editorial-hero__description">
                     {{ translations.hero.description }}
                 </p>
-
-                <div
-                    class="mt-9 flex w-full max-w-xl flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center"
-                >
+                <div class="vvs-editorial-hero__actions">
                     <button
                         type="button"
-                        class="vvs-button-primary min-h-12 rounded-xl px-7 py-4 text-sm font-bold tracking-[0.1em] uppercase"
+                        class="vvs-editorial-button"
                         @click="emit('scroll-to-collection')"
                     >
                         {{ translations.concept.cta }}
+                        <span aria-hidden="true">↗</span>
                     </button>
-
-                    <a
-                        href="#concept"
-                        class="vvs-button-secondary inline-flex min-h-12 items-center justify-center rounded-xl px-7 py-4 text-sm font-semibold"
-                    >
+                    <a href="#concept" class="vvs-editorial-text-link">
                         {{ translations.hero.concept }}
                     </a>
                 </div>
             </div>
+            <figure class="vvs-editorial-hero__visual">
+                <picture>
+                    <source
+                        srcset="
+                            /images/vvs-watch-hero-480.webp   480w,
+                            /images/vvs-watch-hero-768.webp   768w,
+                            /images/vvs-watch-hero-1024.webp 1024w,
+                            /images/vvs-watch-hero.webp      1536w
+                        "
+                        sizes="(min-width: 1024px) 65vw, 100vw"
+                        type="image/webp"
+                    />
+                    <img
+                        src="/images/vvs-watch-hero-1024.webp"
+                        :alt="hero.image_alt"
+                        width="1536"
+                        height="1024"
+                        fetchpriority="high"
+                        decoding="async"
+                    />
+                </picture>
+                <figcaption>
+                    <span>{{ hero.signature_title }}</span>
+                    <span>{{ hero.signature_material }}</span>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="vvs-editorial-hero__specs">
+            <span>{{ hero.badge_stone }}</span>
+            <span>{{ hero.color_title }}</span>
+            <span>{{ hero.markets_title }}</span>
+            <a href="#collection" :aria-label="translations.concept.cta">
+                <span aria-hidden="true">↓</span>
+            </a>
         </div>
     </section>
 </template>

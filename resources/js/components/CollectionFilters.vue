@@ -352,7 +352,7 @@ const reset = () => {
                     class="flex min-w-0 flex-1"
                     @submit.prevent="apply()"
                 >
-                    <div class="vvs-search-shell relative w-full">
+                    <div class="vvs-catalog-search-shell relative w-full">
                         <label for="collection-search" class="sr-only">
                             {{ copy.search }}
                         </label>
@@ -364,14 +364,14 @@ const reset = () => {
                             name="q"
                             autocomplete="off"
                             :placeholder="copy.placeholder"
-                            class="vvs-search-input h-12 w-full rounded-[15px] px-5 pr-16 text-base text-white outline-none"
+                            class="vvs-catalog-search-input h-12 w-full rounded-[15px] px-5 pr-16 text-base text-white outline-none"
                         />
 
                         <button
                             type="submit"
                             :aria-label="copy.searchAction"
                             :disabled="loading"
-                            class="vvs-search-submit absolute top-1/2 right-1.5 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-[11px] outline-none"
+                            class="vvs-catalog-search-submit absolute top-1/2 right-1.5 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-[11px] outline-none"
                         >
                             <span
                                 v-if="showLoading"
