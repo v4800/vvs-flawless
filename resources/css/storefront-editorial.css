@@ -243,7 +243,7 @@
     max-width: none;
     margin: 1.75rem 0 0;
     font-family: var(--vvs-serif);
-    font-size: clamp(3.25rem, 5.1vw, 5.1rem);
+    font-size: clamp(3rem, 4.3vw, 4.4rem);
     line-height: 1.02;
     font-weight: 400;
     letter-spacing: -0.045em;
@@ -253,8 +253,8 @@
     max-width: 39ch;
     margin-top: 2rem;
     color: #c0b9ac;
-    font-size: 0.88rem;
-    line-height: 1.9;
+    font-size: 1rem;
+    line-height: 1.8;
 }
 .vvs-editorial-hero__actions {
     display: flex;
@@ -273,7 +273,7 @@
     border: 1px solid #d5c5a9;
     background: #d5c5a9;
     color: #171612;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     font-weight: 600;
     transition: background-color 150ms;
 }
@@ -290,7 +290,7 @@
     min-height: 44px;
     padding-block: 0.5rem;
     color: #d5c5a9;
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 6px;
@@ -312,13 +312,14 @@
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    width: 84%;
-    margin: -1px 0 0 auto;
-    padding: 1rem 1.25rem;
+    width: 100%;
+    margin: 0;
+    padding: 0.9rem 0;
     position: relative;
-    background: #d5c5a9;
-    color: #28241f;
-    font-size: 0.6rem;
+    border-top: 1px solid #514a3e;
+    background: transparent;
+    color: #b7b1a7;
+    font-size: 0.75rem;
     line-height: 1.6;
 }
 .vvs-editorial-hero__specs {
@@ -344,25 +345,25 @@
     font-size: 1.4rem;
 }
 
-/* The collection reads like a printed catalogue, with real product images. */
+/* Dark catalogue; champagne remains a restrained accent. */
 .vvs-identity #collection {
     max-width: none;
     margin: 0;
-    padding-block: 5rem;
-    background: #e9e2d6;
-    color: #171612;
+    padding-block: 3.5rem;
+    background: #10100f;
+    color: #f3eee5;
 }
 .vvs-collection-heading {
     display: grid;
     grid-template-columns: 1fr 0.7fr;
-    gap: 4rem;
-    align-items: end;
+    gap: 2.5rem;
+    align-items: center;
     margin-bottom: 2.5rem;
 }
 .vvs-collection-heading h2 {
     max-width: 18ch;
     font-family: var(--vvs-serif);
-    font-size: clamp(3rem, 5vw, 5.4rem);
+    font-size: clamp(2.5rem, 3.5vw, 3.6rem);
     font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1.03;
@@ -372,17 +373,17 @@
 }
 .vvs-collection-heading > p {
     max-width: 46ch;
-    color: #585247;
-    font-size: 0.85rem;
+    color: #b7b1a7;
+    font-size: 1rem;
     line-height: 1.85;
 }
 .vvs-identity #collection :where(button, a, input, select):focus-visible {
-    outline-color: #4e4535;
+    outline-color: #d5c5a9;
 }
 .vvs-identity .collection-toolbar-shell {
     margin-bottom: 2.5rem;
     padding: 1rem 0;
-    border-block: 1px solid #beb5a5;
+    border-block: 1px solid #393630;
 }
 .vvs-identity .collection-toolbar-shell > section {
     border: 0;
@@ -395,17 +396,17 @@
     .collection-toolbar-shell
     :is(input, select, button, [class*='bg-']) {
     border-radius: 0;
-    background: #e9e2d6;
-    color: #27231d;
+    background: #10100f;
+    color: #e7dfd1;
     box-shadow: none;
 }
 .vvs-identity
     .collection-toolbar-shell
     :is(label, legend, [class*='text-zinc-']) {
-    color: #585247;
+    color: #b7b1a7;
 }
 .vvs-identity .collection-toolbar-shell [class*='border-'] {
-    border-color: #bdb3a0;
+    border-color: #514a3e;
 }
 .vvs-identity .collection-toolbar-shell select {
     font-weight: 500;
@@ -413,18 +414,18 @@
 .vvs-catalog-search-input {
     width: 100%;
     min-height: 50px;
-    border: 1px solid #bdb3a0;
-    color: #27231d;
+    border: 1px solid #514a3e;
+    color: #e7dfd1;
 }
 .vvs-catalog-search-input::placeholder {
-    color: #6a6256;
+    color: #b7b1a7;
     opacity: 1;
 }
 .vvs-identity .collection-toolbar-shell .vvs-catalog-search-submit {
     width: 42px;
     height: 42px;
-    background: #29251f;
-    color: #eee5d6;
+    background: #d5c5a9;
+    color: #171612;
 }
 .vvs-identity #collection .vvs-catalog-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -482,7 +483,7 @@
     place-items: center;
     aspect-ratio: 3/4;
     color: #c3bbae;
-    font-size: 0.85rem;
+    font-size: 1rem;
 }
 .vvs-catalog-card__body {
     display: flex;
@@ -491,32 +492,32 @@
     padding-top: 1.4rem;
 }
 .vvs-identity #collection .vvs-editorial-label {
-    color: #706554;
+    color: #b7b1a7;
     font-size: 0.6rem;
 }
 .vvs-catalog-card__body h3 {
     margin-top: 0.3rem;
-    font-family: var(--vvs-serif);
-    font-size: clamp(1.8rem, 2.8vw, 2.7rem);
-    font-weight: 400;
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 500;
     line-height: 1.1;
     letter-spacing: -0.02em;
 }
 .vvs-catalog-card__description {
     margin-top: 0.6rem;
     margin-bottom: 1.5rem;
-    color: #5c554a;
-    font-size: 0.82rem;
+    color: #b7b1a7;
+    font-size: 0.95rem;
     line-height: 1.8;
 }
 .vvs-catalog-card__price-row {
     display: flex;
-    align-items: end;
+    align-items: center;
     justify-content: space-between;
     gap: 1rem;
     margin-top: auto;
     padding-top: 1.25rem;
-    border-top: 1px solid #c7bdab;
+    border-top: 1px solid #393630;
 }
 .vvs-catalog-card__price-row > p {
     min-width: 0;
@@ -524,11 +525,11 @@
 .vvs-catalog-card__price-label {
     display: block;
     margin-bottom: 0.3rem;
-    color: #6a6256;
-    font-size: 0.66rem;
+    color: #b7b1a7;
+    font-size: 0.8rem;
 }
 .vvs-catalog-card__price {
-    color: #28231c;
+    color: #d5c5a9;
     font-size: 1.4rem;
     font-weight: 500;
     letter-spacing: -0.03em;
@@ -540,8 +541,8 @@
     gap: 0.75rem;
     min-height: 44px;
     max-width: 65%;
-    color: #312b22;
-    font-size: 0.8rem;
+    color: #d5c5a9;
+    font-size: 0.9rem;
     line-height: 1.6;
 }
 .vvs-catalog-card__action span {
@@ -558,28 +559,28 @@
     justify-content: space-between;
     gap: 0.5rem;
     margin-top: 1rem;
-    color: #655d50;
-    font-size: 0.65rem;
+    color: #b7b1a7;
+    font-size: 0.8rem;
     line-height: 1.7;
 }
 .vvs-identity #collection > div > nav {
-    border-color: #bdb3a0;
+    border-color: #514a3e;
 }
 .vvs-identity #collection > div > nav :is(p, span) {
-    color: #534a3d;
+    color: #b7b1a7;
 }
 .vvs-identity #collection .vvs-button-secondary {
-    color: #27231d;
+    color: #e7dfd1;
     border-color: #80715b;
 }
 .vvs-identity #collection [role='status'] {
-    color: #27231d;
+    color: #e7dfd1;
 }
 .vvs-identity #collection [role='status'] .vvs-display-title {
-    color: #27231d;
+    color: #e7dfd1;
 }
 .vvs-identity #collection [role='status'] .text-zinc-400 {
-    color: #5c554a;
+    color: #b7b1a7;
 }
 @media (min-width: 1024px) {
     .vvs-identity .vvs-catalog-card:first-child {
@@ -590,7 +591,7 @@
         gap: clamp(2rem, 5vw, 5rem);
         margin-bottom: 1rem;
         padding-bottom: 3rem;
-        border-bottom: 1px solid #bdb3a0;
+        border-bottom: 1px solid #514a3e;
     }
     .vvs-catalog-card:first-child .vvs-catalog-card__image > div:first-child {
         aspect-ratio: 4/3;
@@ -599,7 +600,7 @@
         padding-top: 0;
     }
     .vvs-catalog-card:first-child h3 {
-        font-size: clamp(2.8rem, 4vw, 4.5rem);
+        font-size: clamp(1.8rem, 2.8vw, 2.8rem);
     }
     .vvs-catalog-card:first-child .vvs-catalog-card__price-row {
         margin-top: 1.5rem;
@@ -707,8 +708,8 @@
 .vvs-faq-list details p {
     padding-bottom: 1.25rem;
     color: #b7b1a7;
-    font-size: 0.88rem;
-    line-height: 1.9;
+    font-size: 1rem;
+    line-height: 1.8;
 }
 .vvs-identity :is(#pickup, #contact) {
     padding-block: 3rem;
@@ -940,14 +941,14 @@
     .vvs-editorial-hero__visual figcaption {
         width: calc(100% - 2.5rem);
         margin-inline: auto;
-        padding: 0.85rem 1rem;
-        font-size: 0.55rem;
+        padding: 0.85rem 0;
+        font-size: 0.68rem;
     }
     .vvs-editorial-hero__description {
         grid-row: 4;
         max-width: 45ch;
         margin-top: 1.5rem;
-        font-size: 0.85rem;
+        font-size: 0.95rem;
     }
     .vvs-editorial-hero__actions {
         grid-row: 5;
@@ -980,7 +981,7 @@
         gap: 2.75rem;
     }
     .vvs-catalog-card__body h3 {
-        font-size: 2.1rem;
+        font-size: 1.6rem;
     }
     .vvs-identity .vvs-catalog-stock {
         top: 0.75rem;
