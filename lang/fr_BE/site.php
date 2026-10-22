@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'Des montres qui se remarquent.',
-        'description' => 'VVS FLAWLESS, en Belgique. Choisissez votre montre sertie de moissanite VVS ; nous vérifions ensemble le modèle, le prix et la réception avant de confirmer votre commande.',
+        'tagline' => 'La moissanite VVS, à votre poignet.',
+        'description' => 'Montres iced-out, finitions argentées ou bicolores. Choisissez votre modèle ; nous confirmons le mouvement, le prix et la remise avec vous.',
         'concept' => 'Découvrir VVS FLAWLESS',
 
         'view_3d' => 'Voir la montre en 3D',

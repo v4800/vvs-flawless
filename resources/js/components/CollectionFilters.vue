@@ -353,12 +353,12 @@ const reset = () => {
                     @submit.prevent="apply()"
                 >
                     <div class="vvs-catalog-search-shell relative w-full">
-                        <label for="collection-search" class="sr-only">
+                        <label for="catalog-search" class="sr-only">
                             {{ copy.search }}
                         </label>
 
                         <input
-                            id="collection-search"
+                            id="catalog-search"
                             v-model="form.q"
                             type="search"
                             name="q"

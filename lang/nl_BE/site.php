@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'Horloges die opvallen.',
-        'description' => 'VVS FLAWLESS, in België. Kies je horloge met VVS-moissaniet; samen controleren we het model, de prijs en de ontvangst voordat we je bestelling bevestigen.',
+        'tagline' => 'VVS-moissaniet, aan je pols.',
+        'description' => 'Iced-out horloges in zilverkleurige of tweekleurige uitvoering. Kies je model; we bevestigen het uurwerk, de prijs en de overhandiging met je.',
         'concept' => 'Ontdek VVS FLAWLESS',
 
         'view_3d' => 'Bekijk het horloge in 3D',

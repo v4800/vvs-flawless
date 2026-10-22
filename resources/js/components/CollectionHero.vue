@@ -12,24 +12,12 @@ const hero = page.props.landingCopy.hero;
         <div class="vvs-editorial-hero__layout">
             <div class="vvs-editorial-hero__copy">
                 <p class="vvs-editorial-label">
-                    {{ hero.badge_style }} <span aria-hidden="true">/</span>
+                    VVS FLAWLESS <span aria-hidden="true">/</span>
                     {{ page.props.landingCopy.brand_country }}
                 </p>
-                <h1
-                    id="vvs-hero-title"
-                    class="vvs-editorial-wordmark"
-                    aria-label="VVS FLAWLESS"
-                >
-                    <span>VVS</span>
-                    <span
-                        >FLAWLESS<span class="vvs-editorial-wordmark__dot"
-                            >.</span
-                        ></span
-                    >
-                </h1>
-                <p class="vvs-editorial-hero__tagline">
+                <h1 id="vvs-hero-title" class="vvs-editorial-wordmark">
                     {{ translations.hero.tagline }}
-                </p>
+                </h1>
                 <p class="vvs-editorial-hero__description">
                     {{ translations.hero.description }}
                 </p>
@@ -56,7 +44,7 @@ const hero = page.props.landingCopy.hero;
                             /images/vvs-watch-hero-1024.webp 1024w,
                             /images/vvs-watch-hero.webp      1536w
                         "
-                        sizes="(min-width: 1024px) 65vw, 100vw"
+                        sizes="(min-width: 1024px) 58vw, 100vw"
                         type="image/webp"
                     />
                     <img

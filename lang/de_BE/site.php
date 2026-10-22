@@ -15,8 +15,8 @@ return array_replace_recursive($base, [
         'skip_content' => 'Zum Inhalt springen',
     ],
     'hero' => [
-        'tagline' => 'Uhren, die auffallen.',
-        'description' => 'VVS FLAWLESS, in Belgien. Wählen Sie Ihre Uhr mit VVS-Moissanit. Modell, Preis und Übergabe stimmen wir vor der Bestellbestätigung gemeinsam ab.',
+        'tagline' => 'VVS-Moissanit, an Ihrem Handgelenk.',
+        'description' => 'Iced-out-Uhren in silberfarbenen und zweifarbigen Ausführungen. Wählen Sie Ihr Modell; Uhrwerk, Preis und Übergabe stimmen wir mit Ihnen ab.',
         'concept' => 'VVS FLAWLESS entdecken',
         'view_3d' => 'Uhr in 3D ansehen',
         'click_to_load' => 'Zum Laden klicken',

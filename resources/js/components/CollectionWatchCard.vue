@@ -99,7 +99,8 @@ const formattedPrice = computed(() => {
                     :href="href"
                     class="vvs-catalog-card__action"
                     :aria-label="`${translations.collection.view_watch} — ${watch.name}`"
-                    ><span aria-hidden="true">↗</span></Link
+                    >{{ translations.collection.view_watch }}
+                    <span aria-hidden="true">↗</span></Link
                 >
             </div>
             <p class="vvs-catalog-card__delivery">

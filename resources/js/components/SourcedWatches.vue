@@ -106,7 +106,8 @@ const imageAlt = (model) => {
                     href="#contact"
                     class="vvs-catalog-card__action"
                     :aria-label="`${translations.collection.source_request} — ${model.name}`"
-                    ><span aria-hidden="true">↗</span></a
+                    >{{ translations.collection.source_request }}
+                    <span aria-hidden="true">↗</span></a
                 >
             </div>
             <p class="vvs-catalog-card__delivery">

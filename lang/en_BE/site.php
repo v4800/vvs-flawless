@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'Watches that stand out.',
-        'description' => 'VVS FLAWLESS, based in Belgium. Choose your VVS moissanite watch; we review the model, price and handover with you before confirming your order.',
+        'tagline' => 'VVS moissanite, on your wrist.',
+        'description' => 'Iced-out watches in silver-tone and two-tone finishes. Choose your model; we confirm the movement, price and handover with you.',
         'concept' => 'Discover VVS FLAWLESS',
         'view_3d' => 'View the watch in 3D',
         'click_to_load' => 'Click to load',
