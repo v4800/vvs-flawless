@@ -15,8 +15,8 @@ return array_replace_recursive($base, [
         'skip_content' => 'Zum Inhalt springen',
     ],
     'hero' => [
-        'tagline' => 'Bustdown-Kultur kommt nach Belgien',
-        'description' => 'Du suchst den Look einer Diamantuhr? Entdecke unsere Iced-Out-Modelle mit VVS-Moissanit, erhältlich auf Reservierung in Belgien.',
+        'tagline' => 'Uhren, die auffallen.',
+        'description' => 'VVS FLAWLESS, in Belgien. Wählen Sie Ihre Uhr mit VVS-Moissanit. Modell, Preis und Übergabe stimmen wir vor der Bestellbestätigung gemeinsam ab.',
         'concept' => 'VVS FLAWLESS entdecken',
         'view_3d' => 'Uhr in 3D ansehen',
         'click_to_load' => 'Zum Laden klicken',

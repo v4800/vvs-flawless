@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'Bustdown culture arrives in Belgium',
-        'description' => 'Looking for the sparkle of a diamond watch? Discover our iced-out models set with VVS moissanite, available by reservation in Belgium.',
+        'tagline' => 'Watches that stand out.',
+        'description' => 'VVS FLAWLESS, based in Belgium. Choose your VVS moissanite watch; we review the model, price and handover with you before confirming your order.',
         'concept' => 'Discover VVS FLAWLESS',
         'view_3d' => 'View the watch in 3D',
         'click_to_load' => 'Click to load',

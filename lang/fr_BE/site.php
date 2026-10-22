@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'La culture bustdown arrive en Belgique',
-        'description' => 'Vous recherchez l’éclat d’une montre diamant ? Découvrez nos modèles iced-out sertis de moissanite VVS, disponibles sur réservation en Belgique.',
+        'tagline' => 'Des montres qui se remarquent.',
+        'description' => 'VVS FLAWLESS, en Belgique. Choisissez votre montre sertie de moissanite VVS ; nous vérifions ensemble le modèle, le prix et la réception avant de confirmer votre commande.',
         'concept' => 'Découvrir VVS FLAWLESS',
 
         'view_3d' => 'Voir la montre en 3D',

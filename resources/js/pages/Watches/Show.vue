@@ -196,7 +196,7 @@ const submit = () => {
     <Head :title="seo.title" />
 
     <div
-        class="vvs-storefront min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0"
+        class="vvs-storefront vvs-identity vvs-product-page min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0"
     >
         <a
             href="#main-content"
@@ -264,14 +264,7 @@ const submit = () => {
                 :translations="translations"
             />
 
-            <MoissaniteQualitySection />
-
-            <ProductPurchaseExperience
-                :watch="watch"
-                :movement="localizedMovement"
-                :selected-price="selectedPrice"
-            />
-            <PurchaseGuide :watch="watch" />
+            <ProductPurchaseExperience />
 
             <ProductReservationSection
                 :watch="watch"
@@ -283,6 +276,9 @@ const submit = () => {
                 :translations="translations"
                 @submit="submit"
             />
+
+            <MoissaniteQualitySection />
+            <PurchaseGuide :watch="watch" />
 
             <ProductReviews
                 :watch="watch"
@@ -354,7 +350,7 @@ const submit = () => {
         <a
             v-if="watch.single_offer"
             href="#reservation"
-            class="fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black sm:inset-x-4 sm:bottom-4 sm:p-4 lg:hidden"
+            class="vvs-button-primary fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black sm:inset-x-4 sm:bottom-4 sm:p-4 lg:hidden"
         >
             {{ singleOfferPrice }} · {{ reserveLabel }}
         </a>

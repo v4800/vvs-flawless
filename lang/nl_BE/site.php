@@ -15,8 +15,8 @@ return [
     ],
 
     'hero' => [
-        'tagline' => 'De bustdown-cultuur komt naar België',
-        'description' => 'Op zoek naar de uitstraling van een diamanten horloge? Ontdek onze iced-out modellen bezet met VVS-moissanite, op reservatie verkrijgbaar in België.',
+        'tagline' => 'Horloges die opvallen.',
+        'description' => 'VVS FLAWLESS, in België. Kies je horloge met VVS-moissaniet; samen controleren we het model, de prijs en de ontvangst voordat we je bestelling bevestigen.',
         'concept' => 'Ontdek VVS FLAWLESS',
 
         'view_3d' => 'Bekijk het horloge in 3D',

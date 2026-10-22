@@ -1,17 +1,18 @@
-/* VVS storefront: photographic layouts, silver type and a restrained grid.
-   All overrides stay inside the collection page; account and product forms
-   retain their current styling and behavior. */
+/* VVS storefront: photographic layouts and the original black/gold palette.
+   Scoped to collection and product pages; admin and account forms are untouched. */
 .vvs-identity {
-    --vvs-editorial-paper: #f0efea;
-    --vvs-editorial-muted: #a4abad;
-    --vvs-editorial-line: #303638;
+    --vvs-editorial-paper: #f6f2e9;
+    --vvs-editorial-gold: #d9a62e;
+    --vvs-editorial-champagne: #f2d58a;
+    --vvs-editorial-muted: #b5b0a6;
+    --vvs-editorial-line: #343026;
     --font-display: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-    background: #0a0d0e;
+    background: #090909;
     color: var(--vvs-editorial-paper);
     font-family: var(--font-display);
 }
 .vvs-identity :where(button, a, summary):focus-visible {
-    outline: 2px solid #f0efea;
+    outline: 2px solid var(--vvs-editorial-champagne);
     outline-offset: 5px;
 }
 .vvs-identity .vvs-display-title {
@@ -33,7 +34,7 @@
     background: transparent;
     box-shadow: none;
 }
-.vvs-identity :is(.vvs-button-primary, .vvs-button-secondary) {
+.vvs-storefront.vvs-identity :is(.vvs-button-primary, .vvs-button-secondary) {
     border: 1px solid #657074;
     border-radius: 2px;
     background: transparent;
@@ -41,23 +42,25 @@
     box-shadow: none;
     transform: none;
 }
-.vvs-identity .vvs-button-primary {
-    border-color: var(--vvs-editorial-paper);
-    background: var(--vvs-editorial-paper);
-    color: #0a0d0e;
+.vvs-storefront.vvs-identity .vvs-button-primary {
+    border-color: var(--vvs-editorial-gold);
+    background: var(--vvs-editorial-gold);
+    color: #090909;
 }
-.vvs-identity :is(.vvs-button-primary, .vvs-button-secondary)::before,
-.vvs-identity :is(.vvs-button-primary, .vvs-button-secondary)::after {
+.vvs-storefront.vvs-identity
+    :is(.vvs-button-primary, .vvs-button-secondary)::before,
+.vvs-storefront.vvs-identity
+    :is(.vvs-button-primary, .vvs-button-secondary)::after {
     display: none;
 }
 .vvs-identity [class*='text-amber-'] {
-    color: #d9dddc;
+    color: var(--vvs-editorial-champagne);
 }
 .vvs-identity .text-zinc-500 {
     color: var(--vvs-editorial-muted);
 }
 .vvs-identity .vvs-eyebrow {
-    color: var(--vvs-editorial-muted);
+    color: var(--vvs-editorial-champagne);
     letter-spacing: 0.16em;
 }
 .vvs-identity
@@ -69,7 +72,7 @@
 }
 .vvs-editorial-label {
     margin: 0;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.64rem;
     font-weight: 600;
     line-height: 1.6;
@@ -83,8 +86,8 @@
     position: sticky;
     z-index: 50;
     top: 0;
-    border-bottom: 1px solid #303638;
-    background: #0a0d0e;
+    border-bottom: 1px solid #343026;
+    background: #090909;
 }
 .vvs-site-header__inner {
     display: flex;
@@ -114,7 +117,7 @@
 .vvs-site-header__country {
     display: block;
     margin-top: 0.22rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.56rem;
     font-weight: 400;
     letter-spacing: 0.2em;
@@ -191,7 +194,7 @@
     height: 23px;
 }
 .vvs-site-header__mobile {
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
     padding: 0.75rem 1.5rem 1.25rem;
 }
 .vvs-site-header__mobile a {
@@ -203,7 +206,7 @@
 }
 .vvs-editorial-hero {
     overflow: hidden;
-    background: #080b0c;
+    background: #080808;
 }
 .vvs-editorial-hero__layout {
     position: relative;
@@ -237,7 +240,7 @@
     letter-spacing: -0.065em;
 }
 .vvs-editorial-wordmark__dot {
-    color: #858f92;
+    color: var(--vvs-editorial-champagne);
 }
 .vvs-editorial-hero__tagline {
     max-width: 25ch;
@@ -250,7 +253,7 @@
 .vvs-editorial-hero__description {
     max-width: 43ch;
     margin-top: 1.2rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.9rem;
     line-height: 1.8;
 }
@@ -267,17 +270,17 @@
     justify-content: space-between;
     gap: 2rem;
     min-height: 50px;
-    border: 1px solid #f0efea;
+    border: 1px solid var(--vvs-editorial-gold);
     border-radius: 1px;
     padding: 0.85rem 1.1rem;
-    background: #f0efea;
-    color: #0a0d0e;
+    background: var(--vvs-editorial-gold);
+    color: #090909;
     font-size: 0.74rem;
     font-weight: 700;
     transition: background-color 150ms;
 }
 .vvs-editorial-button:hover {
-    background: #d5d9d6;
+    background: var(--vvs-editorial-champagne);
 }
 .vvs-editorial-button span {
     font-size: 1.2rem;
@@ -319,8 +322,8 @@
     width: calc(100% - 5rem);
     margin: 0 2rem 0 auto;
     padding-top: 1rem;
-    border-top: 1px solid #303638;
-    color: #a4abad;
+    border-top: 1px solid #343026;
+    color: #b5b0a6;
     font-size: 0.58rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -332,7 +335,7 @@
     width: min(100% - 5rem, 1420px);
     min-height: 68px;
     margin-inline: auto;
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
     color: #b6bfc1;
     font-size: 0.62rem;
     letter-spacing: 0.13em;
@@ -373,20 +376,20 @@
     letter-spacing: -0.065em;
 }
 .vvs-collection-heading h2 span {
-    color: #858f92;
+    color: var(--vvs-editorial-champagne);
 }
 .vvs-collection-heading > p {
     max-width: 46ch;
     padding-bottom: 0.2rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.84rem;
     line-height: 1.8;
 }
 .vvs-identity .collection-toolbar-shell {
     margin: 0 0 2.5rem;
     padding: 1.25rem 0;
-    border-top: 1px solid #303638;
-    border-bottom: 1px solid #303638;
+    border-top: 1px solid #343026;
+    border-bottom: 1px solid #343026;
 }
 .vvs-identity .collection-toolbar-shell > div {
     padding: 0;
@@ -437,7 +440,7 @@
     aspect-ratio: 3 / 4;
     place-items: center;
     font-size: 0.8rem;
-    color: #a4abad;
+    color: #b5b0a6;
 }
 .vvs-catalog-card__body {
     padding: 1.3rem 0 0;
@@ -452,7 +455,7 @@
 }
 .vvs-catalog-card__description {
     margin-top: 0.5rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.74rem;
     line-height: 1.6;
 }
@@ -463,12 +466,12 @@
     gap: 1rem;
     margin-top: 1.35rem;
     padding-top: 1rem;
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
 }
 .vvs-catalog-card__price-label {
     display: block;
     margin-bottom: 0.15rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.58rem;
 }
 .vvs-catalog-card__price {
@@ -489,8 +492,8 @@
         background-color 150ms;
 }
 .vvs-catalog-card__action:hover {
-    background: #f0efea;
-    color: #0a0d0e;
+    background: var(--vvs-editorial-gold);
+    color: #090909;
 }
 .vvs-catalog-card__delivery {
     display: flex;
@@ -498,7 +501,7 @@
     flex-wrap: wrap;
     gap: 0.4rem;
     margin-top: 1rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.58rem;
     line-height: 1.7;
 }
@@ -510,7 +513,7 @@
     width: min(100% - 5rem, 1420px);
     margin: 0 auto;
     padding: 5rem 0;
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
     scroll-margin-top: 110px;
 }
 .vvs-editorial-concept h2,
@@ -539,20 +542,20 @@
     grid-template-columns: repeat(4, 1fr);
     width: min(100% - 5rem, 1420px);
     margin: 0 auto 4rem;
-    border-top: 1px solid #303638;
-    border-bottom: 1px solid #303638;
+    border-top: 1px solid #343026;
+    border-bottom: 1px solid #343026;
     scroll-margin-top: 110px;
 }
 .vvs-editorial-services > div {
     padding: 2rem 1.75rem;
-    border-left: 1px solid #303638;
+    border-left: 1px solid #343026;
 }
 .vvs-editorial-services > div:first-child {
     padding-left: 0;
     border-left: 0;
 }
 .vvs-editorial-services__number {
-    color: #849095;
+    color: var(--vvs-editorial-champagne);
     font-size: 0.61rem;
 }
 .vvs-editorial-services h3 {
@@ -563,14 +566,14 @@
 .vvs-editorial-services p {
     max-width: 31ch;
     margin-top: 0.5rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.75rem;
     line-height: 1.8;
 }
 .vvs-editorial-order header > p:not(.vvs-editorial-label) {
     max-width: 36ch;
     margin-top: 1.5rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.86rem;
     line-height: 1.8;
 }
@@ -585,11 +588,11 @@
     display: flex;
     gap: 1.5rem;
     padding: 1.5rem 0;
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
 }
 .vvs-editorial-order__number {
     padding-top: 0.12rem;
-    color: #849095;
+    color: var(--vvs-editorial-champagne);
     font-size: 0.65rem;
 }
 .vvs-editorial-order h3 {
@@ -598,16 +601,16 @@
 }
 .vvs-editorial-order li p {
     margin-top: 0.5rem;
-    color: #a4abad;
+    color: #b5b0a6;
     font-size: 0.8rem;
     line-height: 1.75;
 }
 .vvs-identity #about {
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
 }
 .vvs-identity #about figure {
     border-radius: 1px;
-    border-color: #303638;
+    border-color: #343026;
     box-shadow: none;
 }
 .vvs-identity #about .vvs-luxury-card {
@@ -618,11 +621,11 @@
     border: 0;
 }
 .vvs-identity #contact {
-    border-top: 1px solid #303638;
+    border-top: 1px solid #343026;
 }
 .vvs-identity footer {
-    border-color: #303638;
-    background: #080b0c;
+    border-color: #343026;
+    background: #080808;
 }
 @media (max-width: 1023px) {
     .vvs-site-header__inner {
@@ -760,7 +763,7 @@
         border-left: 0;
     }
     .vvs-editorial-services > div:nth-child(n + 3) {
-        border-top: 1px solid #303638;
+        border-top: 1px solid #343026;
     }
     .vvs-editorial-order li {
         padding: 1.25rem 0;
@@ -803,7 +806,7 @@
     box-shadow: none;
 }
 .vvs-catalog-search-input::placeholder {
-    color: #a4abad;
+    color: #b5b0a6;
 }
 .vvs-catalog-search-input:focus-visible {
     border-color: #f0efea;
@@ -813,11 +816,11 @@
 .vvs-catalog-search-submit {
     width: 42px;
     height: 42px;
-    background: #f0efea;
-    color: #0a0d0e;
+    background: var(--vvs-editorial-gold);
+    color: #090909;
 }
 .vvs-catalog-search-submit:hover {
-    background: #d5d9d6;
+    background: var(--vvs-editorial-champagne);
 }
 .vvs-identity .vvs-catalog-source-label {
     position: absolute;
@@ -826,7 +829,7 @@
     padding: 0.45rem 0.6rem;
     border: 1px solid #626e72;
     background: #111718;
-    color: #d9dddc;
+    color: var(--vvs-editorial-champagne);
     font-size: 0.5rem;
     font-weight: 600;
     letter-spacing: 0.1em;
@@ -857,4 +860,142 @@
 }
 .vvs-identity .watch-card > a:first-of-type::after {
     display: none;
+}
+
+/* Gold is reserved for navigation, prices and the next action. */
+.vvs-identity
+    :is(
+        .vvs-editorial-label,
+        .vvs-editorial-text-link,
+        .vvs-catalog-card__price
+    ) {
+    color: var(--vvs-editorial-champagne);
+}
+.vvs-storefront.vvs-identity .vvs-button-primary:hover {
+    border-color: var(--vvs-editorial-champagne);
+    background: var(--vvs-editorial-champagne);
+    color: #090909;
+}
+.vvs-product-page {
+    background-image: none;
+}
+.vvs-product-page :is(.vvs-price, .vvs-eyebrow) {
+    color: var(--vvs-editorial-champagne);
+}
+.vvs-product-page :is(.vvs-watch-title, .vvs-display-title) {
+    text-wrap: pretty;
+}
+.vvs-product-page :is(input, textarea, select) {
+    border-radius: 4px;
+    font-size: 1rem;
+}
+.vvs-product-page #product-gallery-panel {
+    border-radius: 4px;
+    background: #10100f;
+}
+.vvs-product-page :is(.vvs-luxury-card, .vvs-choice-card, .vvs-form) {
+    border-radius: 4px;
+}
+.vvs-product-page #reservation {
+    scroll-margin-top: 100px;
+    border-top: 1px solid var(--vvs-editorial-line);
+    padding-block: 3.5rem;
+}
+.vvs-product-page #reservation .vvs-form {
+    background: #10100f;
+}
+.vvs-payment-summary {
+    margin-top: 1.25rem;
+    padding: 1.25rem;
+    border: 1px solid #6e5829;
+    background: #15130e;
+}
+.vvs-payment-summary dl {
+    margin-top: 1rem;
+}
+.vvs-payment-summary dl > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.6rem;
+    border-bottom: 1px solid #343026;
+}
+.vvs-payment-summary dt {
+    color: #c0bbb0;
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+.vvs-payment-summary dd {
+    flex-shrink: 0;
+    color: var(--vvs-editorial-champagne);
+    font-size: 1rem;
+    font-weight: 700;
+}
+.vvs-payment-summary__note {
+    margin-top: 0.85rem;
+    color: #b5b0a6;
+    font-size: 0.75rem;
+    line-height: 1.8;
+}
+.vvs-payment-summary--compact {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+.vvs-payment-summary--compact dl {
+    margin: 0;
+}
+.vvs-product-journey {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 4rem;
+    width: min(100% - 3rem, 1320px);
+    margin-inline: auto;
+    padding-block: 3rem;
+}
+.vvs-product-journey h2 {
+    margin-top: 1rem;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+.vvs-product-journey header > p:last-child {
+    margin-top: 1rem;
+    color: #b5b0a6;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+.vvs-product-journey li {
+    display: flex;
+    gap: 1.25rem;
+    border-top: 1px solid #343026;
+    padding-block: 1.25rem;
+}
+.vvs-product-journey li > span {
+    color: var(--vvs-editorial-champagne);
+    font-size: 0.75rem;
+}
+.vvs-product-journey h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.vvs-product-journey li p {
+    margin-top: 0.5rem;
+    color: #b5b0a6;
+    font-size: 0.85rem;
+    line-height: 1.8;
+}
+@media (max-width: 767px) {
+    .vvs-product-journey {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        width: calc(100% - 2.5rem);
+        padding-block: 2rem;
+    }
+    .vvs-product-page #reservation {
+        padding-inline: 1.25rem;
+        padding-block: 2.5rem;
+    }
+    .vvs-product-page #reservation .vvs-form {
+        padding: 1.25rem;
+    }
 }

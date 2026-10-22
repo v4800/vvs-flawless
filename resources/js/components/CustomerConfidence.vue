@@ -10,9 +10,9 @@ const copies = {
         title: 'Du choix à la remise',
         intro: 'Le lieu, l’horaire et les éventuels frais sont confirmés avec vous avant tout acompte.',
         steps: [
-            'Après confirmation des modalités, un acompte de 25 % lance la préparation de la montre.',
+            'Après confirmation des modalités, l’acompte convenu lance la préparation de la montre.',
             'Une vidéo de la montre terminée vous est envoyée avant la remise.',
-            'Pour une remise en main propre, le solde de 75 % est réglé au moment convenu.',
+            'Pour une remise en main propre, le solde restant est réglé au moment convenu.',
         ],
         location:
             'La remise n’est pas limitée à Liège : le lieu est convenu avec vous selon la commande.',
@@ -22,9 +22,9 @@ const copies = {
         title: 'Van keuze tot overdracht',
         intro: 'Plaats, tijdstip en eventuele kosten worden met jou bevestigd vóór een voorschot.',
         steps: [
-            'Na bevestiging van de voorwaarden start een voorschot van 25% de voorbereiding.',
+            'Na bevestiging van de voorwaarden start het afgesproken voorschot de voorbereiding.',
             'Je ontvangt een video van het afgewerkte horloge vóór de overdracht.',
-            'Bij persoonlijke overdracht wordt de resterende 75% betaald op het afgesproken moment.',
+            'Bij persoonlijke overdracht wordt het resterende saldo betaald op het afgesproken moment.',
         ],
         location:
             'Persoonlijke overdracht is niet beperkt tot Luik: de plaats wordt per bestelling afgesproken.',
@@ -34,9 +34,9 @@ const copies = {
         title: 'From selection to handover',
         intro: 'The location, time and any applicable fees are confirmed with you before any deposit.',
         steps: [
-            'Once the terms are confirmed, a 25% deposit starts preparation of the watch.',
+            'Once the terms are confirmed, the agreed deposit starts preparation of the watch.',
             'A video of the finished watch is sent to you before handover.',
-            'For an in-person handover, the remaining 75% is paid at the agreed time.',
+            'For an in-person handover, the remaining balance is paid at the agreed time.',
         ],
         location:
             'In-person handover is not limited to Liège: the location is agreed according to the order.',
@@ -46,9 +46,9 @@ const copies = {
         title: 'Von der Auswahl bis zur Übergabe',
         intro: 'Ort, Zeitpunkt und eventuelle Kosten werden vor einer Anzahlung mit Ihnen bestätigt.',
         steps: [
-            'Nach Bestätigung der Bedingungen startet eine Anzahlung von 25 % die Vorbereitung.',
+            'Nach Bestätigung der Bedingungen startet die vereinbarte Anzahlung die Vorbereitung.',
             'Vor der Übergabe erhalten Sie ein Video der fertigen Uhr.',
-            'Bei persönlicher Übergabe werden die restlichen 75 % zum vereinbarten Zeitpunkt bezahlt.',
+            'Bei persönlicher Übergabe wird der Restbetrag zum vereinbarten Zeitpunkt bezahlt.',
         ],
         location:
             'Die persönliche Übergabe ist nicht auf Lüttich beschränkt: der Ort wird je nach Bestellung vereinbart.',
