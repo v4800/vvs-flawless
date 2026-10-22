@@ -1,6 +1,5 @@
 <script setup>
 import PresentedWatchOffer from '@/components/PresentedWatchOffer.vue';
-import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
@@ -8,7 +7,6 @@ import MoissaniteQualitySection from '@/components/MoissaniteQualitySection.vue'
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
 import ProductReviews from '@/components/ProductReviews.vue';
-import ProductPurchaseExperience from '@/components/ProductPurchaseExperience.vue';
 import ProductReservationSection from '@/components/ProductReservationSection.vue';
 import ProductSpecs from '@/components/ProductSpecs.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
@@ -196,7 +194,7 @@ const submit = () => {
     <Head :title="seo.title" />
 
     <div
-        class="vvs-storefront min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0"
+        class="vvs-storefront vvs-identity vvs-product-page min-h-screen w-full max-w-full overflow-x-clip overscroll-x-none pb-24 text-white lg:pb-0"
     >
         <a
             href="#main-content"
@@ -264,15 +262,6 @@ const submit = () => {
                 :translations="translations"
             />
 
-            <MoissaniteQualitySection />
-
-            <ProductPurchaseExperience
-                :watch="watch"
-                :movement="localizedMovement"
-                :selected-price="selectedPrice"
-            />
-            <PurchaseGuide :watch="watch" />
-
             <ProductReservationSection
                 :watch="watch"
                 :active-image="activeImage"
@@ -284,6 +273,12 @@ const submit = () => {
                 @submit="submit"
             />
 
+            <details class="vvs-product-guide">
+                <summary>{{ page.props.guideLinks.eyebrow }}</summary>
+                <MoissaniteQualitySection />
+                <PurchaseGuide :watch="watch" />
+            </details>
+
             <ProductReviews
                 :watch="watch"
                 :reviews="reviews"
@@ -291,7 +286,6 @@ const submit = () => {
             />
 
             <RelatedWatches :watches="relatedWatches" />
-            <CustomerConfidence />
         </main>
 
         <footer
@@ -354,7 +348,7 @@ const submit = () => {
         <a
             v-if="watch.single_offer"
             href="#reservation"
-            class="fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black sm:inset-x-4 sm:bottom-4 sm:p-4 lg:hidden"
+            class="vvs-button-primary fixed inset-x-3 bottom-3 z-40 min-w-0 rounded-xl bg-amber-300 p-3.5 text-center text-sm font-bold text-black sm:inset-x-4 sm:bottom-4 sm:p-4 lg:hidden"
         >
             {{ singleOfferPrice }} · {{ reserveLabel }}
         </a>

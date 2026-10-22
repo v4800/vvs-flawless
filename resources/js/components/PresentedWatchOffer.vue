@@ -1,6 +1,7 @@
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import ReservationPriceSummary from '@/components/ReservationPriceSummary.vue';
 
 defineProps({ watch: { type: Object, required: true } });
 
@@ -31,6 +32,7 @@ const htmlLang = computed(() => page.props.locale.replace('_', '-'));
         >
             {{ Number(watch.price).toFixed(0) }} €
         </p>
+        <ReservationPriceSummary :price="Number(watch.price)" compact />
         <dl class="mt-8 space-y-4 border-t border-white/10 pt-6 text-sm">
             <div>
                 <dt class="text-zinc-400">

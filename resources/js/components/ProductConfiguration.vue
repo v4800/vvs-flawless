@@ -1,7 +1,9 @@
 <script setup>
 import { Link } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import ReservationPriceSummary from '@/components/ReservationPriceSummary.vue';
 
-defineProps({
+const props = defineProps({
     watch: {
         type: Object,
         required: true,
@@ -31,6 +33,9 @@ defineProps({
         required: true,
     },
 });
+
+const hasJapanese = computed(() => Number(props.watch.japanese_price) > 0);
+const hasSwiss = computed(() => Number(props.watch.swiss_price) > 0);
 
 const formatPrice = (price) => {
     const numericPrice = Number(price);
@@ -78,12 +83,6 @@ const formatPrice = (price) => {
                 class="flex min-w-0 flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-5"
             >
                 <div class="min-w-0">
-                    <p
-                        class="text-[10px] font-black tracking-[0.3em] text-zinc-400 uppercase"
-                    >
-                        {{ translations.product.configuration }}
-                    </p>
-
                     <h2
                         class="vvs-display-title mt-2 max-w-full text-[1.75rem] leading-tight break-words sm:text-3xl"
                     >
@@ -92,12 +91,7 @@ const formatPrice = (price) => {
                 </div>
 
                 <p
-                    v-if="
-                        watch.japanese_price !== null &&
-                        watch.japanese_price !== undefined &&
-                        watch.swiss_price !== null &&
-                        watch.swiss_price !== undefined
-                    "
+                    v-if="hasJapanese && hasSwiss"
                     class="hidden text-xs text-zinc-400 sm:block"
                 >
                     {{ translations.product.two_versions }}
@@ -105,12 +99,7 @@ const formatPrice = (price) => {
             </div>
 
             <nav
-                v-if="
-                    watch.japanese_price !== null &&
-                    watch.japanese_price !== undefined &&
-                    watch.swiss_price !== null &&
-                    watch.swiss_price !== undefined
-                "
+                v-if="hasJapanese || hasSwiss"
                 class="vvs-movement-switch mt-5 inline-flex w-full max-w-md gap-1 rounded-2xl border border-[#b9a17b]/45 bg-[#191917] p-1.5 sm:w-auto"
                 :aria-label="translations.product.choose_movement"
             >
@@ -146,7 +135,7 @@ const formatPrice = (price) => {
         </div>
 
         <div
-            class="vvs-choice-card vvs-choice-card--featured mt-5 flex min-w-0 flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
+            class="vvs-product-price vvs-choice-card vvs-choice-card--featured mt-5 flex min-w-0 flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
         >
             <div class="min-w-0">
                 <p
@@ -173,6 +162,8 @@ const formatPrice = (price) => {
                 </p>
             </div>
         </div>
+
+        <ReservationPriceSummary :price="selectedPrice" compact />
 
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <div class="vvs-choice-card min-w-0 rounded-2xl border p-4 sm:p-5">

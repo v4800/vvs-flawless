@@ -1,5 +1,6 @@
 <script setup>
 import ReservationTrust from '@/components/ReservationTrust.vue';
+import ReservationPriceSummary from '@/components/ReservationPriceSummary.vue';
 import { usePage } from '@inertiajs/vue3';
 import { computed, onBeforeUnmount, ref, watch as vueWatch } from 'vue';
 
@@ -141,11 +142,19 @@ const formatPrice = (price) => {
                     </div>
                 </div>
 
+                <ReservationPriceSummary :price="selectedPrice" />
+
                 <div
                     class="vvs-choice-card vvs-choice-card--featured mt-4 rounded-2xl border p-5"
                 >
                     <p class="text-xs font-bold text-zinc-300">
-                        ◆ {{ form.delivery_method }}
+                        ◆
+                        {{
+                            deliveryOptions.find(
+                                (option) =>
+                                    option.value === form.delivery_method,
+                            )?.label
+                        }}
                     </p>
 
                     <p class="mt-2 text-xs leading-5 text-zinc-400">

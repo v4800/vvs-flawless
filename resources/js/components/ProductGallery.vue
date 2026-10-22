@@ -355,44 +355,6 @@ onBeforeUnmount(() => {
             </button>
         </div>
 
-        <div
-            class="mt-3 grid min-w-0 grid-cols-1 gap-2 min-[360px]:grid-cols-2 sm:mt-4 sm:grid-cols-3 sm:gap-3"
-        >
-            <div class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4">
-                <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
-                >
-                    {{ translations.product.purity }}
-                </p>
-
-                <p class="vvs-price mt-2 font-black">VVS</p>
-            </div>
-
-            <div class="vvs-choice-card min-w-0 rounded-2xl border p-3 sm:p-4">
-                <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
-                >
-                    {{ translations.product.color }}
-                </p>
-
-                <p class="vvs-price mt-2 font-black">D</p>
-            </div>
-
-            <div
-                class="vvs-choice-card min-w-0 rounded-2xl border p-3 min-[360px]:col-span-2 sm:col-span-1 sm:p-4"
-            >
-                <p
-                    class="text-[9px] font-black tracking-[0.2em] text-zinc-400 uppercase"
-                >
-                    {{ translations.product.reception }}
-                </p>
-
-                <p class="vvs-price mt-2 text-xs font-black">
-                    {{ translations.product.customer_choice }}
-                </p>
-            </div>
-        </div>
-
         <Teleport v-if="isMounted" to="body">
             <div
                 v-if="lightboxOpen"
