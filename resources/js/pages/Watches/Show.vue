@@ -1,6 +1,5 @@
 <script setup>
 import PresentedWatchOffer from '@/components/PresentedWatchOffer.vue';
-import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { computed, nextTick, ref, watch as vueWatch } from 'vue';
 import MobileReservationBar from '@/components/MobileReservationBar.vue';
@@ -8,7 +7,6 @@ import MoissaniteQualitySection from '@/components/MoissaniteQualitySection.vue'
 import ProductConfiguration from '@/components/ProductConfiguration.vue';
 import ProductGallery from '@/components/ProductGallery.vue';
 import ProductReviews from '@/components/ProductReviews.vue';
-import ProductPurchaseExperience from '@/components/ProductPurchaseExperience.vue';
 import ProductReservationSection from '@/components/ProductReservationSection.vue';
 import ProductSpecs from '@/components/ProductSpecs.vue';
 import PurchaseGuide from '@/components/PurchaseGuide.vue';
@@ -264,8 +262,6 @@ const submit = () => {
                 :translations="translations"
             />
 
-            <ProductPurchaseExperience />
-
             <ProductReservationSection
                 :watch="watch"
                 :active-image="activeImage"
@@ -277,8 +273,11 @@ const submit = () => {
                 @submit="submit"
             />
 
-            <MoissaniteQualitySection />
-            <PurchaseGuide :watch="watch" />
+            <details class="vvs-product-guide">
+                <summary>{{ page.props.guideLinks.eyebrow }}</summary>
+                <MoissaniteQualitySection />
+                <PurchaseGuide :watch="watch" />
+            </details>
 
             <ProductReviews
                 :watch="watch"
@@ -287,7 +286,6 @@ const submit = () => {
             />
 
             <RelatedWatches :watches="relatedWatches" />
-            <CustomerConfidence />
         </main>
 
         <footer

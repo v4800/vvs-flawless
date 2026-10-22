@@ -115,36 +115,13 @@ const specs = computed(() => {
 </script>
 
 <template>
-    <section
-        class="border-y border-white/10 bg-zinc-950/60 px-5 py-10 sm:px-6 lg:px-10"
-    >
-        <div class="mx-auto max-w-[1400px]">
-            <header class="mb-7 max-w-3xl">
-                <p class="vvs-eyebrow">{{ copy.eyebrow }}</p>
-                <h2 class="vvs-display-title mt-3 text-3xl sm:text-4xl">
-                    {{ copy.title }}
-                </h2>
-                <p class="mt-3 text-xs leading-6 text-zinc-500">
-                    {{ copy.note }}
-                </p>
-            </header>
-
-            <dl class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                <div
-                    v-for="spec in specs"
-                    :key="spec.label"
-                    class="vvs-choice-card rounded-2xl border p-5"
-                >
-                    <dt
-                        class="text-[9px] font-black tracking-[0.2em] text-zinc-500 uppercase"
-                    >
-                        {{ spec.label }}
-                    </dt>
-                    <dd class="mt-2 text-sm font-bold text-zinc-100">
-                        {{ spec.value }}
-                    </dd>
-                </div>
-            </dl>
-        </div>
+    <section class="vvs-product-specifications" :aria-label="copy.eyebrow">
+        <h2>{{ copy.eyebrow }}</h2>
+        <dl>
+            <div v-for="spec in specs" :key="spec.label">
+                <dt>{{ spec.label }}</dt>
+                <dd>{{ spec.value }}</dd>
+            </div>
+        </dl>
     </section>
 </template>

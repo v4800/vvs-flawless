@@ -999,3 +999,149 @@
         padding: 1.25rem;
     }
 }
+
+/* Shorter, quieter supporting content. Product photography stays unchanged. */
+.vvs-about-story {
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 6rem);
+    width: min(100% - 5rem, 1320px);
+    margin: 0 auto 4rem;
+    padding-top: 3rem;
+    scroll-margin-top: 110px;
+}
+.vvs-about-story img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+.vvs-about-story h2,
+.vvs-faq-list h2 {
+    font-size: clamp(1.65rem, 3vw, 2.6rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+}
+.vvs-about-story p {
+    margin-top: 1.3rem;
+    color: #b5b0a6;
+    font-size: 0.95rem;
+    line-height: 1.9;
+}
+.vvs-faq-list {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 4rem;
+    width: min(100% - 5rem, 1320px);
+    margin-inline: auto;
+    padding-block: 3rem;
+    scroll-margin-top: 110px;
+}
+.vvs-faq-list details {
+    border-top: 1px solid var(--vvs-editorial-line);
+}
+.vvs-faq-list summary,
+.vvs-product-guide > summary {
+    padding-block: 1.25rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.7;
+}
+.vvs-faq-list details p {
+    padding: 0 0 1.25rem;
+    color: #b5b0a6;
+    font-size: 0.88rem;
+    line-height: 1.9;
+}
+.vvs-product-specifications,
+.vvs-product-guide {
+    width: min(100% - 3rem, 1320px);
+    margin-inline: auto;
+    padding-block: 2rem;
+    border-top: 1px solid var(--vvs-editorial-line);
+}
+.vvs-product-specifications {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    gap: 3rem;
+}
+.vvs-product-specifications h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.vvs-product-specifications dl > div {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1rem;
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--vvs-editorial-line);
+    font-size: 0.85rem;
+    line-height: 1.7;
+}
+.vvs-product-specifications dt {
+    color: #b5b0a6;
+}
+.vvs-product-specifications dd {
+    overflow-wrap: anywhere;
+}
+.vvs-product-guide > summary {
+    color: var(--vvs-editorial-champagne);
+}
+.vvs-identity :is(#pickup, #contact) {
+    padding-block: 3rem;
+}
+.vvs-identity :is(#pickup, #contact) .vvs-display-title {
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+}
+.vvs-identity #pickup :is(.vvs-luxury-card, .vvs-choice-card),
+.vvs-identity #contact .vvs-choice-card {
+    border-width: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+.vvs-identity :is(.vvs-eyebrow, .vvs-editorial-label) {
+    letter-spacing: 0.06em;
+    text-transform: none;
+    font-size: 0.75rem;
+}
+.vvs-product-page #reservation .vvs-choice-card {
+    border-width: 0;
+    border-top: 1px solid var(--vvs-editorial-line);
+    padding-inline: 0;
+}
+@media (max-width: 767px) {
+    .vvs-about-story,
+    .vvs-faq-list,
+    .vvs-product-specifications {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    .vvs-about-story,
+    .vvs-faq-list {
+        width: calc(100% - 2.5rem);
+    }
+    .vvs-about-story {
+        margin-bottom: 2rem;
+        padding-top: 1.5rem;
+    }
+    .vvs-faq-list {
+        padding-block: 2rem;
+    }
+}
+.vvs-product-page .vvs-product-price {
+    border-width: 0;
+    border-block: 1px solid var(--vvs-editorial-line);
+    padding-inline: 0;
+}
+.vvs-product-page :is(.vvs-button-primary, .vvs-form label, .vvs-form legend) {
+    text-transform: none;
+    letter-spacing: normal;
+}
+.vvs-product-page .vvs-form :is(label, legend) {
+    font-size: 0.8rem;
+    font-weight: 500;
+}

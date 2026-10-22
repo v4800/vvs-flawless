@@ -29,8 +29,8 @@ const currentLanguage = computed(
 );
 const navigation = computed(() => [
     { href: '#collection', label: translations.navigation.watches },
-    { href: '#concept', label: translations.navigation.about },
-    { href: '#services', label: translations.navigation.delivery },
+    { href: '#about', label: translations.navigation.about },
+    { href: '#pickup', label: translations.navigation.delivery },
     { href: '#contact', label: translations.contact.eyebrow },
 ]);
 </script>

@@ -83,12 +83,6 @@ const formatPrice = (price) => {
                 class="flex min-w-0 flex-col items-start gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-5"
             >
                 <div class="min-w-0">
-                    <p
-                        class="text-[10px] font-black tracking-[0.3em] text-zinc-400 uppercase"
-                    >
-                        {{ translations.product.configuration }}
-                    </p>
-
                     <h2
                         class="vvs-display-title mt-2 max-w-full text-[1.75rem] leading-tight break-words sm:text-3xl"
                     >
@@ -141,7 +135,7 @@ const formatPrice = (price) => {
         </div>
 
         <div
-            class="vvs-choice-card vvs-choice-card--featured mt-5 flex min-w-0 flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
+            class="vvs-product-price vvs-choice-card vvs-choice-card--featured mt-5 flex min-w-0 flex-col gap-4 rounded-2xl border p-5 sm:flex-row sm:items-center sm:justify-between sm:gap-5"
         >
             <div class="min-w-0">
                 <p

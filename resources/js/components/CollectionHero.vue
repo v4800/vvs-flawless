@@ -42,7 +42,7 @@ const hero = page.props.landingCopy.hero;
                         {{ translations.concept.cta }}
                         <span aria-hidden="true">↗</span>
                     </button>
-                    <a href="#concept" class="vvs-editorial-text-link">
+                    <a href="#about" class="vvs-editorial-text-link">
                         {{ translations.hero.concept }}
                     </a>
                 </div>

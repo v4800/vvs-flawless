@@ -1,5 +1,4 @@
 <script setup>
-import CustomerConfidence from '@/components/CustomerConfidence.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed, ref } from 'vue';
 
@@ -9,11 +8,9 @@ import ContactSection from '@/components/ContactSection.vue';
 import FaqSection from '@/components/FaqSection.vue';
 import PickupSection from '@/components/PickupSection.vue';
 import SourcedWatches from '@/components/SourcedWatches.vue';
-import SeoContentHub from '@/components/SeoContentHub.vue';
 import CollectionSiteHeader from '@/components/CollectionSiteHeader.vue';
 import CollectionHero from '@/components/CollectionHero.vue';
 import CollectionWatchCard from '@/components/CollectionWatchCard.vue';
-import CollectionValueSections from '@/components/CollectionValueSections.vue';
 import CollectionFooter from '@/components/CollectionFooter.vue';
 import CollectionFilters from '@/components/CollectionFilters.vue';
 import CollectionPagination from '@/components/CollectionPagination.vue';
@@ -175,10 +172,6 @@ const scrollToCollection = () => {
                 <div class="mx-auto max-w-[1500px]">
                     <header class="vvs-collection-heading">
                         <div>
-                            <p class="vvs-editorial-label">
-                                <span aria-hidden="true">01 / </span
-                                >{{ translations.collection.eyebrow }}
-                            </p>
                             <h2>
                                 {{ translations.collection.title_before }}
                                 {{ translations.collection.title_highlight
@@ -237,17 +230,11 @@ const scrollToCollection = () => {
                 </div>
             </section>
 
-            <CollectionValueSections
-                @scroll-to-collection="scrollToCollection"
-            />
-
             <OrderSteps />
             <AboutSection />
-            <CustomerConfidence />
             <PickupSection />
             <FaqSection />
             <ContactSection />
-            <SeoContentHub />
         </main>
 
         <CollectionFooter />

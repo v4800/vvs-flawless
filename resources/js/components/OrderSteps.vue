@@ -2,15 +2,12 @@
 import { Link, usePage } from '@inertiajs/vue3';
 const page = usePage();
 const translations = page.props.translations;
+const steps = [3, 4, 5];
 </script>
 
 <template>
     <section id="commander" class="vvs-editorial-order">
         <header>
-            <p class="vvs-editorial-label">
-                <span aria-hidden="true">03 / </span
-                >{{ translations.order.eyebrow }}
-            </p>
             <h2>
                 {{ translations.order.title_before }}
                 {{ translations.order.title_highlight }}
@@ -24,9 +21,9 @@ const translations = page.props.translations;
             >
         </header>
         <ol>
-            <li v-for="step in 5" :key="step" class="order-step">
+            <li v-for="(step, index) in steps" :key="step" class="order-step">
                 <span class="vvs-editorial-order__number" aria-hidden="true"
-                    >0{{ step }}</span
+                    >0{{ index + 1 }}</span
                 >
                 <div>
                     <h3>{{ translations.order[`step_${step}_title`] }}</h3>
