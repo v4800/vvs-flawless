@@ -428,7 +428,7 @@
     color: #171612;
 }
 .vvs-identity #collection .vvs-catalog-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 2.5rem;
     row-gap: 3.5rem;
 }
@@ -581,30 +581,6 @@
 }
 .vvs-identity #collection [role='status'] .text-zinc-400 {
     color: #b7b1a7;
-}
-@media (min-width: 1024px) {
-    .vvs-identity .vvs-catalog-card:first-child {
-        grid-column: 1 / -1;
-        display: grid;
-        grid-template-columns: 1.15fr 0.85fr;
-        align-items: center;
-        gap: clamp(2rem, 5vw, 5rem);
-        margin-bottom: 1rem;
-        padding-bottom: 3rem;
-        border-bottom: 1px solid #514a3e;
-    }
-    .vvs-catalog-card:first-child .vvs-catalog-card__image > div:first-child {
-        aspect-ratio: 4/3;
-    }
-    .vvs-catalog-card:first-child .vvs-catalog-card__body {
-        padding-top: 0;
-    }
-    .vvs-catalog-card:first-child h3 {
-        font-size: clamp(1.8rem, 2.8vw, 2.8rem);
-    }
-    .vvs-catalog-card:first-child .vvs-catalog-card__price-row {
-        margin-top: 1.5rem;
-    }
 }
 
 .vvs-editorial-order {
@@ -864,6 +840,9 @@
     margin: 0;
 }
 @media (max-width: 1023px) {
+    .vvs-identity #collection .vvs-catalog-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .vvs-site-header__inner {
         width: calc(100% - 3rem);
         min-height: 80px;
